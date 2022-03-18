@@ -1,24 +1,21 @@
 package com.hosting.rest.api.models.User;
 
-import lombok.Data;
-
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Data
-@DiscriminatorValue("1")
 @Table(name = "USER_HOST")
-public class UserHostModel extends UserModel{
+@PrimaryKeyJoinColumn(name = "ID")
+public class UserHostModel extends UserModel {
 
-    @Column(name = "BIO")
-    private String bio;
+	@Column(name = "BIO")
+	private String bio;
 
-    @Column(name = "VERIFIED")
-    private boolean isVerified;
+	@Column(name = "VERIFIED")
+	private boolean isVerified;
 
-    @Column(name = "DIRECTION")
-    private String direction;
+	@Column(name = "DIRECTION")
+	private String direction;
 }

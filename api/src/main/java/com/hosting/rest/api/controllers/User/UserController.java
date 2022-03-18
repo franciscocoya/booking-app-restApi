@@ -2,6 +2,7 @@ package com.hosting.rest.api.controllers.User;
 
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.services.User.UserServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

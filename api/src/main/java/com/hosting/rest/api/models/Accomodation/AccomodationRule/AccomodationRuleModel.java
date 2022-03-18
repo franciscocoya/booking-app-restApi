@@ -1,4 +1,4 @@
-package com.hosting.rest.api.models.Accomodation;
+package com.hosting.rest.api.models.Accomodation.AccomodationRule;
 
 import lombok.Data;
 

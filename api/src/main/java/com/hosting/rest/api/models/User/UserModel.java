@@ -1,15 +1,27 @@
 package com.hosting.rest.api.models.User;
 
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "APP_USER")
 public class UserModel {
 
@@ -18,23 +30,18 @@ public class UserModel {
     @Column(name = "ID")
     private Integer id;
 
-    @NotBlank
     @Column(name = "UNAME")
     private String name;
 
-    @NotBlank
     @Column(name = "SURNAME")
     private String surname;
 
-    @NotBlank
     @Column(name = "EMAIL")
     private String email;
 
-    @NotBlank
     @Column(name = "PHONE")
     private String phone;
 
-    @NotBlank
     @Column(name = "PASS")
     private String pass;
 
