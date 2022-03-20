@@ -3,6 +3,7 @@ package com.hosting.rest.api.services.User;
 import com.hosting.rest.api.models.User.UserModel;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -12,5 +13,6 @@ import java.util.List;
 public interface IUserService {
 
     public List<UserModel> getAllUsers();
-
+    public Optional<UserModel> getUserById(Integer userId);
+    
 }

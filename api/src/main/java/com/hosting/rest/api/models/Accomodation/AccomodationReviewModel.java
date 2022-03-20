@@ -1,10 +1,21 @@
 package com.hosting.rest.api.models.Accomodation;
 
-import lombok.Data;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import com.hosting.rest.api.models.User.UserHostModel;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "ACCOMODATION_REVIEW")
@@ -22,11 +33,13 @@ public class AccomodationReviewModel {
     @Column(name = "STARS")
     private Integer stars;
 
-    @Column(name = "ID_USER")
-    private Integer idUser;
+    @ManyToOne
+    @JoinColumn(name = "ID_USER")
+    private UserHostModel idUser;
 
-    @Column(name = "ID_ACC")
-    private String idAccomodation;
+    @ManyToOne
+    @JoinColumn(name = "ID_ACC")
+    private AccomodationModel idAccomodation;
 
     @Column(name = "CREATED_AT")
     @CreatedDate

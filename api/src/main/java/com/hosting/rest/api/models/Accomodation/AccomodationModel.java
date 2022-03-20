@@ -1,13 +1,16 @@
 package com.hosting.rest.api.models.Accomodation;
 
 
-import lombok.Data;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.math.BigDecimal;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "ACCOMODATION")
@@ -36,10 +39,12 @@ public class AccomodationModel {
     @Column(name = "AREA")
     private BigDecimal area;
 
-    @Column(name = "ID_ACC_CATEGORY")
-    private Integer idAccomodationCategory;
+    @OneToOne
+    @JoinColumn(name = "ID_ACC_CATEGORY")
+    private AccomodationCategoryModel idAccomodationCategory;
 
-    @Column(name = "ID_ACC_LOCATION")
-    private Integer idAccomodationLocation;
+    @OneToOne
+    @JoinColumn(name = "ID_ACC_LOCATION")
+    private AccomodationLocationModel idAccomodationLocation;
 
 }
