@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table( name = "BOOKING" )
 @Data
+@Table( name = "BOOKING" )
 public class BookingModel {
 
     @Id
@@ -33,4 +33,6 @@ public class BookingModel {
 
     @Column(name = "ID_ACCOMODATION")
     private String idAccomodation;
+
+    // TODO: Created_at - Actualizarlo en la base de datos y creat atributo.
 }

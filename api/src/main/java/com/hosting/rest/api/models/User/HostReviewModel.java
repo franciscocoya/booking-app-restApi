@@ -22,11 +22,13 @@ public class HostReviewModel {
     @Column(name = "STARS")
     private int stars;
 
-    @Column(name = "ID_USER_A")
-    private int idUserA;
+    @ManyToOne
+    @JoinColumn(name = "ID_USER_A")
+    private UserHostModel idUserA;
 
-    @Column(name = "ID_USER_B")
-    private int idUserB;
+    @ManyToOne
+    @JoinColumn(name = "ID_USER_B")
+    private UserModel idUserB;
 
     @Column(name = "CREATED_AT")
     @CreatedDate

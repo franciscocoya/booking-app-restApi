@@ -5,14 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table( name = "PAYMENT_CREDIT_CARD" )
 @Data
-public class PaymentCreditCardModel {
+@Table( name = "PAYMENT_CREDIT_CARD" )
+public class PaymentCreditCardModel extends PaymentModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PAYMENT")
-    private Integer idPayment;
-
+    @Column(name = "CARD_NUMBER")
     private String cardNumber;
 }

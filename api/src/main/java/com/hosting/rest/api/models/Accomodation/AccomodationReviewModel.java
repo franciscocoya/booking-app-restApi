@@ -38,7 +38,7 @@ public class AccomodationReviewModel {
     private UserHostModel idUser;
 
     @ManyToOne
-    @JoinColumn(name = "ID_ACC")
+    @JoinColumn(name = "REG_NUM")
     private AccomodationModel idAccomodation;
 
     @Column(name = "CREATED_AT")

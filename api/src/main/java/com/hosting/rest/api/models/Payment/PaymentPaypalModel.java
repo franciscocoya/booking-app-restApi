@@ -9,11 +9,6 @@ import javax.persistence.*;
 @Data
 public class PaymentPaypalModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PAYMENT")
-    private Integer idPayment;
-
     @Column(name = "ACCOUNT_EMAIL")
     private String accountEmail;
 }

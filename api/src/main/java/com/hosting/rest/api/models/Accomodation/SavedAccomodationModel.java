@@ -1,6 +1,7 @@
 package com.hosting.rest.api.models.Accomodation;
 
 
+import com.hosting.rest.api.models.User.UserHostModel;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -17,11 +18,13 @@ public class SavedAccomodationModel {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "ID_USER")
-    private Integer idUser;
+    // TODO: RELACION
+    @JoinColumn(name = "ID")
+    private UserHostModel idUser;
 
-    @Column(name = "ID_ACC")
-    private String idAccomodation;
+    // TODO: RELACION
+    @JoinColumn(name = "REG_NUM")
+    private AccomodationModel idAccomodation;
 
     @Column(name = "CREATED_AT")
     @CreatedDate

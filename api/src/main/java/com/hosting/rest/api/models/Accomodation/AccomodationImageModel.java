@@ -25,7 +25,7 @@ public class AccomodationImageModel {
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "ID_ACCOMODATION")
+    @JoinColumn(name = "REG_NUM")
     private AccomodationModel accomodation;
     
 }

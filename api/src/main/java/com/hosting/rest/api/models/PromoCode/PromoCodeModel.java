@@ -1,17 +1,18 @@
 package com.hosting.rest.api.models.PromoCode;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.models.User.UserHostModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "PROMO_CODE")
 public class PromoCodeModel {
 
@@ -28,11 +29,13 @@ public class PromoCodeModel {
     @Column(name = "DATE_END")
     private Timestamp dateEnd;
 
-    @Column(name = "ID_ACC")
-    private int idAcc;
+    @ManyToOne
+    @JoinColumn(name = "ID_ACC")
+    private AccomodationModel idAcc;
 
-    @Column(name = "ID_USER")
-    private int idUser;
+    @ManyToOne
+    @JoinColumn(name = "ID_USER")
+    private UserHostModel idUser;
 
     @Column(name = "CREATED_AT")
     @CreatedDate
