@@ -1,2 +1,3 @@
-# booking-app-restApi
-API Rest using SpringBoot framework for manage booking system
+# Accomodation booking RESTFUL API · SpringBoot
+
+API Rest using SpringBoot framework for booking system management.
