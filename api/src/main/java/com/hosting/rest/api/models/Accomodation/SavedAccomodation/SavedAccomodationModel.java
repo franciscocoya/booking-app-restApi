@@ -1,16 +1,21 @@
-package com.hosting.rest.api.models.Accomodation;
+package com.hosting.rest.api.models.Accomodation.SavedAccomodation;
 
 
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "SAVED_ACCOMODATION")
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Table(name = "SAVED_ACCOMODATION")
 public class SavedAccomodationModel {
 
     @Id
@@ -18,12 +23,12 @@ public class SavedAccomodationModel {
     @Column(name = "ID")
     private Integer id;
 
-    // TODO: RELACION
-    @JoinColumn(name = "ID")
+    @ManyToOne
+    @JoinColumn(name = "ID_USER")
     private UserHostModel idUser;
 
-    // TODO: RELACION
-    @JoinColumn(name = "REG_NUM")
+    @ManyToOne
+    @JoinColumn(name = "ID_ACC")
     private AccomodationModel idAccomodation;
 
     @Column(name = "CREATED_AT")

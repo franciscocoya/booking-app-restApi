@@ -1,13 +1,11 @@
 package com.hosting.rest.api.models.Payment;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "ID_PAYMENT")
 @Table( name = "PAYMENT_PAYPAL" )
-@Data
-public class PaymentPaypalModel {
+public class PaymentPaypalModel extends PaymentModel{
 
     @Column(name = "ACCOUNT_EMAIL")
     private String accountEmail;

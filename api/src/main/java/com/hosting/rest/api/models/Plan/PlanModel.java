@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Plan;
 
+import com.hosting.rest.api.models.Plan.PlanType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ public class PlanModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Integer idPlan;
 
     @Column(name = "PLAN_TYPE")

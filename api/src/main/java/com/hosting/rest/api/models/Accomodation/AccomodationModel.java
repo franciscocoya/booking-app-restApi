@@ -3,12 +3,7 @@ package com.hosting.rest.api.models.Accomodation;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -18,6 +13,7 @@ import lombok.Data;
 public class AccomodationModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "REG_NUM")
     private String registerNumber;
 

@@ -1,4 +1,4 @@
-package com.hosting.rest.api.models.Plan;
+package com.hosting.rest.api.models.Plan.PlanFeatureAppPlan;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
