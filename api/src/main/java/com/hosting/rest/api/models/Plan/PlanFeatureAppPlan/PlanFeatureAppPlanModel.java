@@ -14,5 +14,4 @@ public class PlanFeatureAppPlanModel {
 
     @EmbeddedId
     private PlanFeatureAppPlanId planFeatureAppPlanId;
-
 }

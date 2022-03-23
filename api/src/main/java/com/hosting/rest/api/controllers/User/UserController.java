@@ -37,6 +37,9 @@ public class UserController {
     public UserModel getUserById(@PathVariable(value="userId") Integer userId) {
     	return userService.getUserById(userId).get();
     }
-    
+
+    // TODO: Listado de usuarios verificados
+
+    // TODO: Listado de usuarios que son hosts
     
 }
