@@ -15,5 +15,5 @@ public class AccomodationCategoryModel {
     private int id;
 
     @Column(name = "ACC_CAT")
-    private int accomodationCategory;
+    private String accomodationCategory;
 }

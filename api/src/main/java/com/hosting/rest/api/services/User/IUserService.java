@@ -1,6 +1,7 @@
 package com.hosting.rest.api.services.User;
 
 import com.hosting.rest.api.models.User.UserModel;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,8 +12,6 @@ import java.util.Optional;
  * @description
  **/
 public interface IUserService {
-
-    public List<UserModel> getAllUsers();
-    public Optional<UserModel> getUserById(Integer userId);
-    
+    List<UserModel> getAllUsers();
+    Optional<UserModel> getUserById(Integer userId);
 }
