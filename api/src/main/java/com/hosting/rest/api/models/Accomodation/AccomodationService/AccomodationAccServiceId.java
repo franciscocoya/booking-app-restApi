@@ -5,6 +5,9 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 /**
  * 
  * @author Francisco Coya
@@ -12,9 +15,12 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
+@Embeddable
 public class AccomodationAccServiceId implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+
+	@Column(name = "ID_ACC")
 	private String idAccomodation;
+
+	@Column(name = "ID_ACC_SERVICE")
 	private int idAccomodationService;
 }

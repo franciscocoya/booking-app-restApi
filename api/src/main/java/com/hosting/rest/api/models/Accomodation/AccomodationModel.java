@@ -2,10 +2,12 @@ package com.hosting.rest.api.models.Accomodation;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "ACCOMODATION")
@@ -29,7 +31,7 @@ public class AccomodationModel {
     @Column(name = "PRICE_PER_NIGHT")
     private BigDecimal pricePerNight;
 
-    @Column(name = "GUEST")
+    @Column(name = "GUESTS")
     private Integer numOfGuests;
 
     @Column(name = "AREA")
@@ -42,5 +44,9 @@ public class AccomodationModel {
     @OneToOne
     @JoinColumn(name = "ID_ACC_LOCATION")
     private AccomodationLocationModel idAccomodationLocation;
+
+    @Column(name = "CREATED_AT")
+    @CreatedDate
+    private LocalDateTime createdAt;
 
 }

@@ -1,24 +1,18 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationService;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "ACCOMODATION_ACC_SERVICE")
-@IdClass(AccomodationAccServiceId.class)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Table(name = "ACCOMODATION_ACC_SERVICE")
 public class AccomodationAccServiceModel {
 
-	@Id
-	@Column(name = "ID_ACC")
-	private String idAccomodation;
-
-	@Id
-	@Column(name = "ID_ACC_SERVICE")
-	private int idAccomodationService;
+	@EmbeddedId
+	private AccomodationAccServiceId accomodationAccServiceId;
 }
