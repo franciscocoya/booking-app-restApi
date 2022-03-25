@@ -1,11 +1,15 @@
 package com.hosting.rest.api.services.Accomodation;
 
+import com.hosting.rest.api.exceptions.Accomodation.AccomodationNotFoundException;
+import com.hosting.rest.api.models.Accomodation.AccomodationLocationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountException;
 import java.util.List;
 
 /**
@@ -14,14 +18,14 @@ import java.util.List;
  * @description
  **/
 @Service
-public class AccomodationServiceImpl implements IAccomodationService {
+public abstract class AccomodationServiceImpl implements IAccomodationService {
 
     @Autowired
     private IAccomodationRepository accomodationRepo;
 
     @Override
-    public void addNewAccomodation(AccomodationModel accomodationModel) {
-        accomodationRepo.save(accomodationModel);
+    public AccomodationModel addNewAccomodation(AccomodationModel accomodationModel) {
+        return accomodationRepo.save(accomodationModel);
     }
 
     @Override
@@ -31,7 +35,8 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
     @Override
     public AccomodationModel getAccomodationById(String regNumber) {
-        return accomodationRepo.findById(regNumber).get();
+        return accomodationRepo.findById(regNumber)
+                .orElseThrow(() -> new AccomodationNotFoundException(regNumber));
     }
 
     @Override
