@@ -71,7 +71,7 @@ public class BookingServiceImpl implements IBookingService {
 	@Override
 	public int getNumOfBookingsByUserId(Integer userId) {
 		// TODO: REVISAR QUERY
-		String getNumOfBookingsByUserIdQuery = "SELECT COUNT(*) FROM BOOKING BK INNER JOIN APP_USER AU ON (BK.ID_USER = AU.ID) WHERE BK.ID_USER = :userId";
+		String getNumOfBookingsByUserIdQuery = "SELECT COUNT(*) FROM BookingModel bM INNER JOIN UserModel uM ON (bM.ID_USER = uM.ID) WHERE bM.ID_USER = :userId";
 
 		Query bookingsCount = getEntityManager().createQuery(getNumOfBookingsByUserIdQuery);
 		bookingsCount.setParameter("userId", userId);
@@ -82,7 +82,7 @@ public class BookingServiceImpl implements IBookingService {
 	@Override
 	public List<BookingModel> listAllBookingByUser(Integer userId) {
 		// TODO: REVISAR QUERY
-		String getAllBookingByUserQuery = "SELECT * FROM BOOKING BK INNER JOIN APP_USER AU ON (BK.ID_USER = AU.ID) WHERE BK.ID_USER = :userId";
+		String getAllBookingByUserQuery = "SELECT * FROM BookingModel bM INNER JOIN UserModel uM ON (bM.idHost = uM.ID) WHERE bM.ID_USER = :userId";
 
 		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(getAllBookingByUserQuery,
 				BookingModel.class);
