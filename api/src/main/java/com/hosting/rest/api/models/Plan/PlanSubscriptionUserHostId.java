@@ -21,7 +21,9 @@ import java.io.Serializable;
 @Embeddable
 public class PlanSubscriptionUserHostId implements Serializable {
 
-    @Column(name = "ID_PLAN")
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "ID_PLAN")
     private Integer idPlan;
 
     @Column(name = "ID_USER")

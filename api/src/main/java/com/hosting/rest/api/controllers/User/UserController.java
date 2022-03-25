@@ -18,28 +18,23 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    /**
-     *
-     * @return Listado de todos los usuarios de la aplicación.
-     */
+    // TODO: Crear un nuevo usuario
+
+    // TODO: Crear un nuevo usuario host
+
     @GetMapping("")
     public List<UserModel> getAllUsers(){
-        return userService.getAllUsers();
+        return userService.listAllUsers();
     }
     
-    /**
-     * 
-     * @param userId
-     * 
-     * @return Usuario con el id <code>userId</code>
-     */
     @GetMapping("{userId}")
     public UserModel getUserById(@PathVariable(value="userId") Integer userId) {
-    	return userService.getUserById(userId).get();
+    	return userService.getUserById(userId);
     }
 
     // TODO: Listado de usuarios verificados
 
     // TODO: Listado de usuarios que son hosts
+
     
 }

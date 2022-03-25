@@ -15,11 +15,15 @@ import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.User.UserHostModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ACCOMODATION_REVIEW")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "ACCOMODATION_REVIEW")
 public class AccomodationReviewModel {
 
     @Id

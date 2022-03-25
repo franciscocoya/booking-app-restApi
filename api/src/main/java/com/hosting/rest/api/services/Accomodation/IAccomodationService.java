@@ -1,11 +1,10 @@
 package com.hosting.rest.api.services.Accomodation;
 
-import com.hosting.rest.api.models.Accomodation.AccomodationLocationModel;
-import com.hosting.rest.api.models.Accomodation.AccomodationModel;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -16,12 +15,12 @@ public interface IAccomodationService{
 
     AccomodationModel addNewAccomodation(AccomodationModel accomodationModel);
 
-    List<AccomodationModel> getAllAccomodations();
+    List<AccomodationModel> listAllAccomodations();
 
     AccomodationModel getAccomodationById(String regNumber);
 
     @Query("SELECT * FROM ACCOMODATION A INNER JOIN ACCOMODATION_LOCATION AL ON (A.ID_ACC_LOCATION = AL.ID) WHERE A.REG_NUM = ?1")
-    List<AccomodationModel> getAccomodationsByCity(String cityToSearch);
+    List<AccomodationModel> listAccomodationsByCity(String cityToSearch);
 
     void removeAccomodationById(String regNumber);
 }

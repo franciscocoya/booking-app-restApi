@@ -1,14 +1,22 @@
 package com.hosting.rest.api.models.Plan;
 
-import com.hosting.rest.api.models.Plan.PlanType;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "APP_PLAN")
 public class PlanModel {
@@ -18,6 +26,7 @@ public class PlanModel {
     @Column(name = "ID")
     private Integer idPlan;
 
+    @OneToOne
     @Column(name = "PLAN_TYPE")
     private PlanType planType;
 

@@ -22,9 +22,9 @@ public class AccomodationController {
 
     @GetMapping("all")
     public List<AccomodationModel> getAllAccomodations() {
-        return accomodationService.getAllAccomodations();
+        return accomodationService.listAllAccomodations();
     }
-    
+
     @GetMapping("{regNumber}")
     public AccomodationModel getAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         return accomodationService.getAccomodationById(regNumber.trim());
@@ -32,7 +32,7 @@ public class AccomodationController {
 
     @GetMapping(value = "/cities/{city}")
     public List<AccomodationModel> getAccomodationsByCity(@PathParam(value = "city") String city) {
-        return accomodationService.getAccomodationsByCity(city.trim());
+        return accomodationService.listAccomodationsByCity(city.trim());
     }
 
     @PostMapping("/new")
@@ -44,4 +44,14 @@ public class AccomodationController {
     public void removeAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         accomodationService.removeAccomodationById(regNumber);
     }
+    
+    // TODO: Obtener todos los servicios de los alojamientos.
+    
+    // TODO: Obtener las valoraciones de un alojamiento.
+    
+    // TODO: Obtener la valoracion media de un alojamiento.
+    
+    // TODO: Obtener los 4 últimos usuarios que han valorado el alojamiento.
+       
+    
 }

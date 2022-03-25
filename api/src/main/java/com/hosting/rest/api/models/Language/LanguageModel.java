@@ -1,12 +1,16 @@
 package com.hosting.rest.api.models.Language;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table( name = "APP_LANGUAGE" )
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table( name = "APP_LANGUAGE" )
 public class LanguageModel {
 
     @Id

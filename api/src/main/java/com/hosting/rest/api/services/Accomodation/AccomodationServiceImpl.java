@@ -1,16 +1,13 @@
 package com.hosting.rest.api.services.Accomodation;
 
-import com.hosting.rest.api.exceptions.Accomodation.AccomodationNotFoundException;
-import com.hosting.rest.api.models.Accomodation.AccomodationLocationModel;
-import com.hosting.rest.api.models.Accomodation.AccomodationModel;
-import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
-import com.hosting.rest.api.repositories.User.IUserRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.AccountException;
-import java.util.List;
+import com.hosting.rest.api.exceptions.Accomodation.AccomodationNotFoundException;
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -29,7 +26,7 @@ public abstract class AccomodationServiceImpl implements IAccomodationService {
     }
 
     @Override
-    public List<AccomodationModel> getAllAccomodations(){
+    public List<AccomodationModel> listAllAccomodations(){
         return accomodationRepo.findAll();
     }
 
