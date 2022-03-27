@@ -37,4 +37,20 @@ public class UserServiceImpl implements IUserService {
 		return false;
 	}
 
+	@Override
+	public UserModel addNewUser(UserModel userToAdd) {
+		return userRepo.save(userToAdd);
+	}
+
+	@Override
+	public UserModel updateUser(UserModel userToUpdate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUserById(Integer userId) {
+		userRepo.deleteById(userId);		
+	}
+
 }

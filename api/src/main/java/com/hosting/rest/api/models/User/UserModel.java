@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -30,9 +32,11 @@ public class UserModel {
     @Column(name = "ID")
     private Integer id;
 
+    @NotNull
     @Column(name = "UNAME")
     private String name;
 
+    @NotBlank
     @Column(name = "SURNAME")
     private String surname;
 
@@ -42,6 +46,7 @@ public class UserModel {
     @Column(name = "PHONE")
     private String phone;
 
+    @NotBlank
     @Column(name = "PASS")
     private String pass;
 

@@ -3,7 +3,6 @@ package com.hosting.rest.api.models.User.HostLanguage;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.Data;

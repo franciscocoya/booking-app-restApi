@@ -11,16 +11,20 @@ import com.hosting.rest.api.models.User.UserModel;
  * @description
  **/
 public interface IUserService {
-	
-    List<UserModel> listAllUsers();
-    
-    UserModel getUserById(Integer userId);
-    
-    List<UserHostModel> listHostUsers();
-    
-    // TODO: Comprobar que un usuario es un host.
-    boolean isUserHostByUserId(Integer userId);
-    
-    
-    
+
+	UserModel addNewUser(UserModel userToAdd);
+
+	UserModel updateUser(UserModel userToUpdate);
+
+	void deleteUserById(Integer userId);
+
+	List<UserModel> listAllUsers();
+
+	UserModel getUserById(Integer userId);
+
+	List<UserHostModel> listHostUsers();
+
+	// TODO: Comprobar que un usuario es un host.
+	boolean isUserHostByUserId(Integer userId);
+
 }
