@@ -15,7 +15,7 @@ import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
  * @description
  **/
 @Service
-public abstract class AccomodationServiceImpl implements IAccomodationService {
+public class AccomodationServiceImpl implements IAccomodationService {
 
     @Autowired
     private IAccomodationRepository accomodationRepo;
@@ -40,4 +40,10 @@ public abstract class AccomodationServiceImpl implements IAccomodationService {
     public void removeAccomodationById(String regNumber) {
         accomodationRepo.deleteById(regNumber);
     }
+
+	@Override
+	public List<AccomodationModel> listAccomodationsByCity(String cityToSearch) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

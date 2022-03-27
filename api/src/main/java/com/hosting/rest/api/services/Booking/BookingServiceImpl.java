@@ -20,36 +20,38 @@ public class BookingServiceImpl implements IBookingService {
 	@Autowired
 	private IBookingRepository bookingRepo;
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@Override
 	public List<BookingModel> listBookingBetweenTwoDates(LocalDateTime dateStartToSearch,
 			LocalDateTime dateEndToSeach) {
 
 		// TODO: REVISAR QUERY
-		String listBookingBetweenTwoDatesQuery = "SELECT * FROM BOOKING WHERE CHECK_IN > :dateFinish AND CHECK_OUT < :dateEnd";
-
-		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingBetweenTwoDatesQuery,
-				BookingModel.class);
-
-		bookings.setParameter("dateStart", dateStartToSearch);
-		bookings.setParameter("dateFinish", dateEndToSeach);
-
-		return bookings.getResultList();
+//		String listBookingBetweenTwoDatesQuery = "SELECT * FROM BOOKING WHERE CHECK_IN > :dateFinish AND CHECK_OUT < :dateEnd";
+//
+//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingBetweenTwoDatesQuery,
+//				BookingModel.class);
+//
+//		bookings.setParameter("dateStart", dateStartToSearch);
+//		bookings.setParameter("dateFinish", dateEndToSeach);
+//
+//		return bookings.getResultList();
+		return null;
 	}
 
 	@Override
 	public List<BookingModel> listBookingFromYear(int yearToSearch) {
 		// TODO: REVISAR QUERY
-		String listBookingFromYearQuery = "SELECT * FROM BOOKING WHERE YEAR(CREATED_DATE) = :year";
-
-		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingFromYearQuery,
-				BookingModel.class);
-
-		bookings.setParameter("year", yearToSearch);
-
-		return bookings.getResultList();
+//		String listBookingFromYearQuery = "SELECT * FROM BOOKING WHERE YEAR(CREATED_DATE) = :year";
+//
+//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingFromYearQuery,
+//				BookingModel.class);
+//
+//		bookings.setParameter("year", yearToSearch);
+//
+//		return bookings.getResultList();
+		return null;
 	}
 
 	@Override
@@ -71,29 +73,31 @@ public class BookingServiceImpl implements IBookingService {
 	@Override
 	public int getNumOfBookingsByUserId(Integer userId) {
 		// TODO: REVISAR QUERY
-		String getNumOfBookingsByUserIdQuery = "SELECT COUNT(*) FROM BookingModel bM INNER JOIN UserModel uM ON (bM.ID_USER = uM.ID) WHERE bM.ID_USER = :userId";
-
-		Query bookingsCount = getEntityManager().createQuery(getNumOfBookingsByUserIdQuery);
-		bookingsCount.setParameter("userId", userId);
-
-		return bookingsCount.getFirstResult();
+//		String getNumOfBookingsByUserIdQuery = "SELECT COUNT(*) FROM BookingModel bM INNER JOIN UserModel uM ON (bM.ID_USER = uM.ID) WHERE bM.ID_USER = :userId";
+//
+//		Query bookingsCount = getEntityManager().createQuery(getNumOfBookingsByUserIdQuery);
+//		bookingsCount.setParameter("userId", userId);
+//
+//		return bookingsCount.getFirstResult();
+		return -1;
 	}
 
 	@Override
 	public List<BookingModel> listAllBookingByUser(Integer userId) {
 		// TODO: REVISAR QUERY
-		String getAllBookingByUserQuery = "SELECT * FROM BookingModel bM INNER JOIN UserModel uM ON (bM.idHost = uM.ID) WHERE bM.ID_USER = :userId";
-
-		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(getAllBookingByUserQuery,
-				BookingModel.class);
-
-		bookings.setParameter("userId", userId);
-
-		return bookings.getResultList();
+//		String getAllBookingByUserQuery = "SELECT * FROM BookingModel bM INNER JOIN UserModel uM ON (bM.idHost = uM.ID) WHERE bM.ID_USER = :userId";
+//
+//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(getAllBookingByUserQuery,
+//				BookingModel.class);
+//
+//		bookings.setParameter("userId", userId);
+//
+//		return bookings.getResultList();
+		return null;
 	}
 
-	private EntityManager getEntityManager() {
-		return entityManager;
-	}
+//	private EntityManager getEntityManager() {
+//		return entityManager;
+//	}
 
 }

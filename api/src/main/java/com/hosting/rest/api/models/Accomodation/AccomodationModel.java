@@ -15,7 +15,6 @@ import org.springframework.data.annotation.CreatedDate;
 public class AccomodationModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "REG_NUM")
     private String registerNumber;
 

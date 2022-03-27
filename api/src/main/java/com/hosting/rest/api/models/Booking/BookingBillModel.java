@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 public class BookingBillModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BILL_NUM")
     private String billNumber;
 
@@ -31,6 +30,7 @@ public class BookingBillModel {
     @Column(name = "DISCCOUNT")
     private BigDecimal disccount;
 
-    @Column(name = "PAYMENT_ID")
+    @ManyToOne
+    @JoinColumn(name = "PAYMENT_ID")
     private PaymentModel paymentId;
 }

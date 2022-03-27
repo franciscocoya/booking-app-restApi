@@ -2,10 +2,6 @@ package com.hosting.rest.api.services.Payment;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +11,8 @@ import com.hosting.rest.api.repositories.Payment.IPaymentRepository;
 @Service
 public class PaymentServiceImpl implements IPaymentService {
 	
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 	
 	@Autowired
 	private IPaymentRepository paymentRepo;
@@ -38,21 +34,22 @@ public class PaymentServiceImpl implements IPaymentService {
 	}
 
 	@Override
-	public List<PaymentModel> listAllPaymentMethods() {
+	public List<PaymentModel> listAllPayments() {
 		return paymentRepo.findAll();
 	}
 
 	@Override
 	public PaymentModel getPaymentFromBooking(Integer bookingId) {
 		// TODO: Completar query
-		String getPaymentFromBookingQuery = "SELECT p FROM PaymentModel p  WHERE  ";
-		TypedQuery<PaymentModel> paymentToReturn = getEntityManager().createQuery(getPaymentFromBookingQuery, PaymentModel.class);
-		
-		return paymentToReturn.getSingleResult();
+//		String getPaymentFromBookingQuery = "SELECT p FROM PaymentModel p  WHERE  ";
+//		TypedQuery<PaymentModel> paymentToReturn = getEntityManager().createQuery(getPaymentFromBookingQuery, PaymentModel.class);
+//		
+//		return paymentToReturn.getSingleResult();
+		return null;
 	}
 	
-	private EntityManager getEntityManager() {
-		return entityManager;
-	}
+//	private EntityManager getEntityManager() {
+//		return entityManager;
+//	}
 
 }

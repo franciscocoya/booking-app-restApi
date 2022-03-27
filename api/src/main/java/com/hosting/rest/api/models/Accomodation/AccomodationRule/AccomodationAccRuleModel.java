@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Entity
 @Table( name = "ACCOMODATION_ACC_RULE" )
-@IdClass(AccomodationAccRuleId.class)
 @Data
 public class AccomodationAccRuleModel {
 

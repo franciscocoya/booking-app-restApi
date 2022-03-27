@@ -16,7 +16,7 @@ public interface IPaymentService {
 	void removePaymentById(Integer paymentId);
 
 	// TODO: Listar todos los métodos de pago disponibles.
-	List<PaymentModel> listAllPaymentMethods();
+	List<PaymentModel> listAllPayments();
 
 	// TODO: Obtener el método de pago de una reserva realizada.
 	PaymentModel getPaymentFromBooking(Integer bookingId);

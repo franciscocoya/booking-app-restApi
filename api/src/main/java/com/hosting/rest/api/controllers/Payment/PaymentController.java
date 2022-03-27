@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
 
 @RestController
-@RequestMapping(name = "/payments")
+@RequestMapping(value = "/payments")
 public class PaymentController {
 
 	@Autowired
@@ -27,26 +28,26 @@ public class PaymentController {
 	}
 
 	// TODO: Actualizar un método de pago.
-	@PutMapping(name = "/{paymentId}")
-	public PaymentModel updatePaymentModel(PaymentModel paymentModel) {
+	@PutMapping(name = "/update/{paymentId}")
+	public PaymentModel updatePaymentModel(@PathVariable(name = "paymentId") PaymentModel paymentModel) {
 		return paymentService.updatePaymentById(paymentModel);
 	}
 
 	// TODO: Eliminar un método de pago.
-	@DeleteMapping(name = "/{paymentId}")
-	public void removePaymentModel(Integer paymentId) {
+	@DeleteMapping(name = "/delete/{paymentId}")
+	public void removePaymentMethod(@PathVariable(name = "paymentId") Integer paymentId) {
 		paymentService.removePaymentById(paymentId);
 	}
 
 	// TODO: Listar todos los métodos de pago disponibles.
 	@GetMapping(name = "/all")
 	public List<PaymentModel> listAllPaymentMethods() {
-		return paymentService.listAllPaymentMethods();
+		return paymentService.listAllPayments();
 	}
 
 	// TODO: Obtener el método de pago de una reserva realizada.
-	@GetMapping(name = "/bookings/{bookingId}")
-	public PaymentModel getPaymentMethodFromBooking(Integer bookingId) {
+	/*@GetMapping(name = "{bookingId}")
+	public PaymentModel getPaymentMethodFromBooking(@PathVariable(name = "bookingId") Integer bookingId) {
 		return paymentService.getPaymentFromBooking(bookingId);
-	}
+	}*/
 }

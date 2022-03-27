@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
-@OpenAPIDefinition
+//@OpenAPIDefinition
 @SpringBootApplication
 public class BookingSystemApiRestApplication {
 

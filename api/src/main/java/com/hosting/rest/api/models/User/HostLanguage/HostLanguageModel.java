@@ -11,7 +11,6 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "HOST_LANGUAGE")
-@IdClass(HostLanguageId.class)
 public class HostLanguageModel {
 
 	@EmbeddedId

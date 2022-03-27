@@ -13,7 +13,7 @@ import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
 import com.hosting.rest.api.services.PromoCode.PromoCodeServiceImpl;
 
 @RestController
-@RequestMapping(name = "/codes")
+@RequestMapping(value = "/codes")
 public class PromoCodeController {
 	
 	@Autowired
@@ -38,8 +38,8 @@ public class PromoCodeController {
 	}
 	
 	// TODO: Listado de los codigos promocionales creados por un usuario.
-	@GetMapping(name = "/{userId}/all")
+	/*@GetMapping(name = "/{userId}/all")
 	public List<PromoCodeModel> listAllPromoCodesFromUser(Integer userId){
 		return promoCodeService.listAllPromoCodeFromUser(userId);
-	}
+	}*/
 }

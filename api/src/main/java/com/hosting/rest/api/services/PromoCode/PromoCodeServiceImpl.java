@@ -7,14 +7,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
 import com.hosting.rest.api.repositories.PromoCode.IPromoCodeRepository;
 
+@Service
 public class PromoCodeServiceImpl implements IPromoCodeService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private IPromoCodeRepository promoCodeRepo;
@@ -31,18 +33,19 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 
 	@Override
 	public List<PromoCodeModel> listAllPromoCodeFromUser(Integer userId) {
-		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
-		
-		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);
-		
-		userPromoCodes.setParameter("userId", userId);
-				
-		return userPromoCodes.getResultList();
+//		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
+//		
+//		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);
+//		
+//		userPromoCodes.setParameter("userId", userId);
+//				
+//		return userPromoCodes.getResultList();
+		return null;
 	}
 
-	private EntityManager getEntityManager() {
-		return entityManager;
-	}
+//	private EntityManager getEntityManager() {
+//		return entityManager;
+//	}
 
 	@Override
 	public PromoCodeModel addNewPromoCode(PromoCodeModel promoCodeModel) {

@@ -1,16 +1,25 @@
 package com.hosting.rest.api.models.Booking;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserModel;
 
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -25,21 +34,24 @@ public class BookingModel {
     private Integer id;
 
     @Column(name = "CHECK_IN")
-    private Timestamp checkIn;
+    private LocalDateTime checkIn;
 
     @Column(name = "CHECK_OUT")
-    private Timestamp checkOut;
+    private LocalDateTime checkOut;
 
     @Column(name = "GUESTS")
     private Integer numOfGuests;
 
-    @Column(name = "BILL_NUM")
+    @OneToOne
+    @JoinColumn(name = "BILL_NUM")
     private BookingBillModel billNumber;
 
-    @Column(name = "ID_HOST")
+    @ManyToOne
+    @JoinColumn(name = "ID_HOST")
     private UserModel idHost;
 
-    @Column(name = "ID_ACCOMODATION")
+    @OneToOne
+    @JoinColumn(name = "ID_ACCOMODATION")
     private AccomodationModel idAccomodation;
 
     // TODO: Created_at - Actualizarlo en la base de datos y creat atributo.
