@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
 
 @Repository
-public interface IPromoCodeRepository extends JpaRepository<PromoCodeModel, Integer> {
+public interface IPromoCodeRepository extends JpaRepository<PromoCodeModel, String> {
 
 }

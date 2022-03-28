@@ -3,11 +3,6 @@ package com.hosting.rest.api.services.Booking;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +55,7 @@ public class BookingServiceImpl implements IBookingService {
 	}
 
 	@Override
-	public BookingModel updateBookingDataById(Integer bookingId) {
+	public BookingModel updateBookingDataById(Integer bookingId, BookingModel bookingToUpdate) {
 		// TODO:
 		return null;
 	}
@@ -94,6 +89,11 @@ public class BookingServiceImpl implements IBookingService {
 //
 //		return bookings.getResultList();
 		return null;
+	}
+
+	@Override
+	public BookingModel getBookingById(Integer bookingId) {
+		return bookingRepo.findById(bookingId).get();
 	}
 
 //	private EntityManager getEntityManager() {

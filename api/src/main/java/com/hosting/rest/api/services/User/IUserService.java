@@ -14,7 +14,7 @@ public interface IUserService {
 
 	UserModel addNewUser(UserModel userToAdd);
 
-	UserModel updateUser(UserModel userToUpdate);
+	UserModel updateUser(Integer userId, UserModel userToUpdate);
 
 	void deleteUserById(Integer userId);
 

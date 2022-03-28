@@ -17,14 +17,15 @@ public interface IBookingService {
 
 	// --
 
-	// TODO: Añadir una nueva reserva.
 	BookingModel addNewBooking(BookingModel bookingModelToCreate);
 	
-	// TODO: Modificar los datos de una reserva existente.
-	BookingModel updateBookingDataById(Integer bookingId);
+	BookingModel updateBookingDataById(Integer bookingId, BookingModel bookingToUpdate);
 	
-	// TODO: Eliminar una reserva.
+	BookingModel getBookingById(Integer bookingId);
+
 	void deleteBookingById(Integer bookingId);
+	
+	
 	
 	// TODO: Número de reservas realizadas por un usuario.
 	int getNumOfBookingsByUserId(Integer userId);

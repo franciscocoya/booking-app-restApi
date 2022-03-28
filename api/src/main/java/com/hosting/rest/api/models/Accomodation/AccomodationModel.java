@@ -6,12 +6,17 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
-@Table(name = "ACCOMODATION")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "ACCOMODATION")
 public class AccomodationModel {
 
     @Id

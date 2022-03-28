@@ -12,7 +12,7 @@ import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
  * @version v1.0.0
- * @description
+ * @description Implementa los métodos de los servicios de un alojamiento.
  **/
 @Service
 public class AccomodationServiceImpl implements IAccomodationService {
@@ -43,7 +43,6 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Override
 	public List<AccomodationModel> listAccomodationsByCity(String cityToSearch) {
-		// TODO Auto-generated method stub
-		return null;
+		return accomodationRepo.findAll();
 	}
 }

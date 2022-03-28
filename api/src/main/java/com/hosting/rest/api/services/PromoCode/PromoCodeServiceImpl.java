@@ -2,10 +2,6 @@ package com.hosting.rest.api.services.PromoCode;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +23,12 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public PromoCodeModel getPromoCodeById(Integer promoCodeId) {
-		return promoCodeRepo.getById(promoCodeId);
+	public PromoCodeModel getPromoCodeById(String promoCodeId) {
+		return promoCodeRepo.findById(promoCodeId).get();
 	}
 
 	@Override
-	public List<PromoCodeModel> listAllPromoCodeFromUser(Integer userId) {
+	public List<PromoCodeModel> listAllPromoCodeFromUser(String userId) {
 //		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
 //		
 //		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);
@@ -53,7 +49,7 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public void removePromoCodeById(Integer promoCodeId) {
+	public void removePromoCodeById(String promoCodeId) {
 		promoCodeRepo.deleteById(promoCodeId);
 	}
 }

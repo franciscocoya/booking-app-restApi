@@ -2,11 +2,11 @@ package com.hosting.rest.api.models.Accomodation.AccomodationService;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * 
@@ -17,6 +17,8 @@ import javax.persistence.Embeddable;
 @Data
 @Embeddable
 public class AccomodationAccServiceId implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "ID_ACC")
 	private String idAccomodation;

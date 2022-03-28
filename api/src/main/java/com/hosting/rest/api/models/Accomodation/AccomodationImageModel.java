@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "ACCOMODATION_IMAGE")
 @Data
+@Table(name = "ACCOMODATION_IMAGE")
 public class AccomodationImageModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

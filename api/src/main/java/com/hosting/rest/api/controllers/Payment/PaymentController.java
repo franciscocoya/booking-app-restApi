@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 @RestController
 @RequestMapping(value = "/payments")
 public class PaymentController {
@@ -21,26 +23,24 @@ public class PaymentController {
 	@Autowired
 	private PaymentServiceImpl paymentService;
 
-	// TODO: Añadir método de pago.
 	@PostMapping(name = "/new")
-	public PaymentModel addNewPaymentMethod(PaymentModel paymentModel) {
+	public PaymentModel addNewPaymentMethod(@RequestBody PaymentModel paymentModel) {
 		return paymentService.addNewPayment(paymentModel);
 	}
 
-	// TODO: Actualizar un método de pago.
-	@PutMapping(name = "/update/{paymentId}")
+	@PutMapping(name = "{paymentId}")
 	public PaymentModel updatePaymentModel(@PathVariable(name = "paymentId") PaymentModel paymentModel) {
 		return paymentService.updatePaymentById(paymentModel);
 	}
 
 	// TODO: Eliminar un método de pago.
-	@DeleteMapping(name = "/delete/{paymentId}")
+	@DeleteMapping(name = "{paymentId}")
 	public void removePaymentMethod(@PathVariable(name = "paymentId") Integer paymentId) {
 		paymentService.removePaymentById(paymentId);
 	}
 
 	// TODO: Listar todos los métodos de pago disponibles.
-	@GetMapping(name = "/all")
+	@GetMapping(name = "all")
 	public List<PaymentModel> listAllPaymentMethods() {
 		return paymentService.listAllPayments();
 	}

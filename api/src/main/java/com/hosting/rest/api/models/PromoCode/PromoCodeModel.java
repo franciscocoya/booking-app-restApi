@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,9 +27,8 @@ import lombok.NoArgsConstructor;
 public class PromoCodeModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SERIAL_NUM")
-	private int serial_num;
+	private String serial_num;
 
 	@Column(name = "AMOUNT_PERCENTAGE")
 	private BigDecimal amountPercentange;

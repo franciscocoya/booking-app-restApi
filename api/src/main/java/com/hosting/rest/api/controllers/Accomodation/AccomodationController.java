@@ -26,7 +26,7 @@ public class AccomodationController {
     @Autowired
     private AccomodationServiceImpl accomodationService;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "all")
     public List<AccomodationModel> getAllAccomodations() {
         return accomodationService.listAllAccomodations();
     }
@@ -36,17 +36,17 @@ public class AccomodationController {
         return accomodationService.getAccomodationById(regNumber.trim());
     }
 
-    @GetMapping(value = "/cities/{city}")
+    @GetMapping(value = "cities/{city}")
     public List<AccomodationModel> getAccomodationsByCity(@PathVariable(value = "city") String city) {
         return accomodationService.listAccomodationsByCity(city.trim());
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping(value = "new")
     public AccomodationModel addNewAccomodation(@RequestBody AccomodationModel accomodationModel) {
         return accomodationService.addNewAccomodation(accomodationModel);
     }
 
-    @DeleteMapping(value = "/{regNumber}")
+    @DeleteMapping(value = "{regNumber}")
     public void removeAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         accomodationService.removeAccomodationById(regNumber);
     }
