@@ -10,22 +10,24 @@ import com.hosting.rest.api.repositories.Accomodation.AccomodationService.IAccom
 
 @Service
 public class IAccomodationServiceServiceImpl implements IAccomodationServiceService {
-	
+
 	@Autowired
 	private IAccomodationServiceRepository accomodationServiceRepo;
 
 	@Override
-	public AccomodationServiceModel addNewAccomodationService(AccomodationServiceModel accomodationService) {
-		return accomodationServiceRepo.save(accomodationService);
+	public AccomodationServiceModel addNewAccomodationService(final AccomodationServiceModel accomodationService) {
+		return accomodationService != null ? accomodationServiceRepo.save(accomodationService) : null;
 	}
 
-	@Override
-	public void deleteAccomodationServiceById(Integer accomodationServiceId) {
-		accomodationServiceRepo.deleteById(accomodationServiceId);
-	}
+//	@Override
+//	public void deleteAccomodationServiceById(final Integer accomodationServiceId) {
+//		if (accomodationServiceId != null && accomodationServiceId > 0) {
+//			accomodationServiceRepo.deleteById(accomodationServiceId);
+//		}
+//	}
 
 	@Override
-	public AccomodationServiceModel updateAccomodationService(AccomodationServiceModel accomodationService) {
+	public AccomodationServiceModel updateAccomodationService(final AccomodationServiceModel accomodationService) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,14 +38,18 @@ public class IAccomodationServiceServiceImpl implements IAccomodationServiceServ
 	}
 
 	@Override
-	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(String regNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(final String regNumber) {
+		return accomodationServiceRepo.findByAccomodationId(regNumber);
 	}
 
-	@Override
-	public AccomodationServiceModel getAccomodationServiceById(Integer accomodationServiceId) {
-		return accomodationServiceRepo.findById(accomodationServiceId).get();
-	}
-	
+//	@Override
+//	public AccomodationServiceModel getAccomodationServiceById(Integer idAccomodationService) {
+//		return accomodationServiceRepo.findById(idAccomodationService).get();
+//	}
+
+//	@Override
+//	public AccomodationServiceModel getAccomodationServiceById(final Integer accomodationServiceId) {
+//		return accomodationServiceRepo.findById(accomodationServiceId).get();
+//	}
+
 }

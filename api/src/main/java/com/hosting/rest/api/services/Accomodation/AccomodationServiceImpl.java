@@ -22,7 +22,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Override
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel) {
-		return accomodationRepo.save(accomodationModel);
+		return accomodationModel != null ? accomodationRepo.save(accomodationModel) : null;
 	}
 
 	@Override

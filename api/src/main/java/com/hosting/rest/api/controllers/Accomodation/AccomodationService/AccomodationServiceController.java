@@ -23,22 +23,23 @@ public class AccomodationServiceController {
 	private IAccomodationServiceServiceImpl accomodationServiceService;
 	
 	@PostMapping("new")
-	public AccomodationServiceModel addNewAccomodationService(@RequestBody AccomodationServiceModel accomodationServiceModel) {
+	public AccomodationServiceModel addNewAccomodationService(@RequestBody final AccomodationServiceModel accomodationServiceModel) {
 		return accomodationServiceService.addNewAccomodationService(accomodationServiceModel);
 	}
 	
 	@GetMapping("{accomodationServiceId}")
-	public AccomodationServiceModel getAccomodationServiceById(@PathVariable(name = "accomodationServiceId") Integer accomodationServiceId) {
-		return accomodationServiceService.getAccomodationServiceById(accomodationServiceId);
+	public AccomodationServiceModel getAccomodationServiceById(@PathVariable(name = "accomodationServiceId") final Integer accomodationServiceId) {
+//		return accomodationServiceService.getAccomodationServiceById(accomodationServiceId);
+		return null;
 	}
 	
 	@DeleteMapping("{accomodationServiceId}")
-	public void deleteAccomodationServiceById(Integer accomodationServiceId) {
-		accomodationServiceService.deleteAccomodationServiceById(accomodationServiceId);
+	public void deleteAccomodationServiceById(final Integer accomodationServiceId) {
+//		accomodationServiceService.deleteAccomodationServiceById(accomodationServiceId);
 	}
 	
 	@PutMapping("{accomodationServiceId}")
-	public AccomodationServiceModel updateAccomodationService(@RequestBody AccomodationServiceModel accomodationService) {
+	public AccomodationServiceModel updateAccomodationService(@RequestBody final AccomodationServiceModel accomodationService) {
 		return accomodationServiceService.updateAccomodationService(accomodationService);
 	}
 	
@@ -47,8 +48,8 @@ public class AccomodationServiceController {
 		return accomodationServiceService.listAllAccomodationServices();
 	}
 	
-	@GetMapping("{accomodationId}/all")
-	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(String regNumber) {
+	@GetMapping("{regNumber}/all")
+	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(@PathVariable(name = "regNumber") final String regNumber) {
 		return accomodationServiceService.listAllAccomodationServicesFromAccomodation(regNumber);
 	}
 	

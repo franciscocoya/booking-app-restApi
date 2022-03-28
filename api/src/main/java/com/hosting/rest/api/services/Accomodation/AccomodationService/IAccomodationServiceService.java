@@ -8,9 +8,9 @@ public interface IAccomodationServiceService {
 
 	AccomodationServiceModel addNewAccomodationService(AccomodationServiceModel accomodationService);
 	
-	AccomodationServiceModel getAccomodationServiceById(Integer accomodationServiceId);
+//	AccomodationServiceModel getAccomodationServiceById(Integer idAccomodationService);
 
-	void deleteAccomodationServiceById(Integer accomodationId);
+//	void deleteAccomodationServiceById(Integer accomodationId);
 	
 	AccomodationServiceModel updateAccomodationService(AccomodationServiceModel accomodationService);
 	

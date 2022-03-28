@@ -10,12 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
-import com.hosting.rest.api.models.User.UserModel;
+import com.hosting.rest.api.models.User.UserHostModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,7 +47,7 @@ public class BookingModel {
 
     @ManyToOne
     @JoinColumn(name = "ID_HOST")
-    private UserModel idHost;
+    private UserHostModel idHost;
 
     @OneToOne
     @JoinColumn(name = "ID_ACCOMODATION")

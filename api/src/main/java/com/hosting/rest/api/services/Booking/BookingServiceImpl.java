@@ -1,6 +1,5 @@
 package com.hosting.rest.api.services.Booking;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +17,13 @@ public class BookingServiceImpl implements IBookingService {
 //	@PersistenceContext
 //	private EntityManager entityManager;
 
-	@Override
-	public List<BookingModel> listBookingBetweenTwoDates(LocalDateTime dateStartToSearch,
-			LocalDateTime dateEndToSeach) {
-
-		// TODO: REVISAR QUERY
-//		String listBookingBetweenTwoDatesQuery = "SELECT * FROM BOOKING WHERE CHECK_IN > :dateFinish AND CHECK_OUT < :dateEnd";
-//
-//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingBetweenTwoDatesQuery,
-//				BookingModel.class);
-//
-//		bookings.setParameter("dateStart", dateStartToSearch);
-//		bookings.setParameter("dateFinish", dateEndToSeach);
-//
-//		return bookings.getResultList();
-		return null;
-	}
+//	@Override
+//	public List<BookingModel> listBookingsGroupByMonth() {
+//		return null;
+//	}
 
 	@Override
-	public List<BookingModel> listBookingFromYear(int yearToSearch) {
+	public List<BookingModel> listBookingFromYear(final int yearToSearch) {
 		// TODO: REVISAR QUERY
 //		String listBookingFromYearQuery = "SELECT * FROM BOOKING WHERE YEAR(CREATED_DATE) = :year";
 //
@@ -50,49 +37,33 @@ public class BookingServiceImpl implements IBookingService {
 	}
 
 	@Override
-	public BookingModel addNewBooking(BookingModel bookingModelToCreate) {
+	public BookingModel addNewBooking(final BookingModel bookingModelToCreate) {
 		return bookingRepo.save(bookingModelToCreate);
 	}
 
 	@Override
-	public BookingModel updateBookingDataById(Integer bookingId, BookingModel bookingToUpdate) {
+	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate) {
 		// TODO:
 		return null;
 	}
 
 	@Override
-	public void deleteBookingById(Integer bookingId) {
+	public void deleteBookingById(final Integer bookingId) {
 		bookingRepo.deleteById(bookingId);
 	}
 
 	@Override
-	public int getNumOfBookingsByUserId(Integer userId) {
-		// TODO: REVISAR QUERY
-//		String getNumOfBookingsByUserIdQuery = "SELECT COUNT(*) FROM BookingModel bM INNER JOIN UserModel uM ON (bM.ID_USER = uM.ID) WHERE bM.ID_USER = :userId";
-//
-//		Query bookingsCount = getEntityManager().createQuery(getNumOfBookingsByUserIdQuery);
-//		bookingsCount.setParameter("userId", userId);
-//
-//		return bookingsCount.getFirstResult();
-		return -1;
+	public int getNumOfBookingsByUserId(final Integer userId) {
+		return bookingRepo.findByHostUser(userId).size();
 	}
 
 	@Override
-	public List<BookingModel> listAllBookingByUser(Integer userId) {
-		// TODO: REVISAR QUERY
-//		String getAllBookingByUserQuery = "SELECT * FROM BookingModel bM INNER JOIN UserModel uM ON (bM.idHost = uM.ID) WHERE bM.ID_USER = :userId";
-//
-//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(getAllBookingByUserQuery,
-//				BookingModel.class);
-//
-//		bookings.setParameter("userId", userId);
-//
-//		return bookings.getResultList();
-		return null;
+	public List<BookingModel> listAllBookingByUser(final Integer userId) {
+		return bookingRepo.findByHostUser(userId);
 	}
 
 	@Override
-	public BookingModel getBookingById(Integer bookingId) {
+	public BookingModel getBookingById(final Integer bookingId) {
 		return bookingRepo.findById(bookingId).get();
 	}
 

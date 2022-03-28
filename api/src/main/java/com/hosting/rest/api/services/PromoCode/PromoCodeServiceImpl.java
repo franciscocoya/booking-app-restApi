@@ -23,12 +23,12 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public PromoCodeModel getPromoCodeById(String promoCodeId) {
+	public PromoCodeModel getPromoCodeById(final String promoCodeId) {
 		return promoCodeRepo.findById(promoCodeId).get();
 	}
 
 	@Override
-	public List<PromoCodeModel> listAllPromoCodeFromUser(String userId) {
+	public List<PromoCodeModel> listAllPromoCodeFromUser(final String userId) {
 //		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
 //		
 //		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);
@@ -44,12 +44,12 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 //	}
 
 	@Override
-	public PromoCodeModel addNewPromoCode(PromoCodeModel promoCodeModel) {
+	public PromoCodeModel addNewPromoCode(final PromoCodeModel promoCodeModel) {
 		return promoCodeRepo.save(promoCodeModel);
 	}
 
 	@Override
-	public void removePromoCodeById(String promoCodeId) {
+	public void removePromoCodeById(final String promoCodeId) {
 		promoCodeRepo.deleteById(promoCodeId);
 	}
 }

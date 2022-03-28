@@ -10,23 +10,23 @@ import com.hosting.rest.api.repositories.Plan.IPlanRepository;
 
 @Service
 public class PlanServiceImpl implements IPlanService {
-	
+
 	@Autowired
 	private IPlanRepository planRepo;
 
 	@Override
-	public PlanModel addNewPlan(PlanModel planToAdd) {
+	public PlanModel addNewPlan(final PlanModel planToAdd) {
 		return planRepo.save(planToAdd);
 	}
 
 	@Override
-	public PlanModel udpatePlan(Integer planId, PlanModel planToUpdate) {
+	public PlanModel udpatePlan(final Integer planId, final PlanModel planToUpdate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deletePlanById(Integer planId) {
+	public void deletePlanById(final Integer planId) {
 		planRepo.deleteById(planId);
 	}
 
@@ -36,7 +36,7 @@ public class PlanServiceImpl implements IPlanService {
 	}
 
 	@Override
-	public PlanModel getPlanById(Integer planId) {
+	public PlanModel getPlanById(final Integer planId) {
 		return planRepo.findById(planId).get();
 	}
 

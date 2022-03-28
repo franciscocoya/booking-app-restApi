@@ -1,6 +1,6 @@
 package com.hosting.rest.api.models.Accomodation;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,10 +42,10 @@ public class AccomodationReviewModel {
     private UserHostModel idUser;
 
     @ManyToOne
-    @JoinColumn(name = "REG_NUM")
+    @JoinColumn(name = "ID_ACC")
     private AccomodationModel idAccomodation;
 
     @Column(name = "CREATED_AT")
     @CreatedDate
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

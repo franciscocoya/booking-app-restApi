@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 /**
  * 
@@ -14,7 +13,6 @@ import lombok.Data;
  *
  */
 @AllArgsConstructor
-@Data
 @Embeddable
 public class AccomodationAccServiceId implements Serializable{
 

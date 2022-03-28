@@ -50,8 +50,7 @@ public class AccomodationController {
     public void removeAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         accomodationService.removeAccomodationById(regNumber);
     }
-    
-    // TODO: Obtener todos los servicios de los alojamientos.
+   
     
     // TODO: Obtener las valoraciones de un alojamiento.
     

@@ -1,6 +1,6 @@
 package com.hosting.rest.api.models.User;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,26 +24,26 @@ import lombok.NoArgsConstructor;
 @Table(name = "USER_REVIEW")
 public class HostReviewModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer id;
 
-    @Column(name = "CONTENT")
-    private String content;
+	@Column(name = "CONTENT")
+	private String content;
 
-    @Column(name = "STARS")
-    private int stars;
+	@Column(name = "STARS")
+	private int stars;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_USER_A")
-    private UserHostModel idUserA;
+	@ManyToOne
+	@JoinColumn(name = "ID_USER_A")
+	private UserHostModel idUserA;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_USER_B")
-    private UserModel idUserB;
+	@ManyToOne
+	@JoinColumn(name = "ID_USER_B")
+	private UserModel idUserB; // Usuario que recibe la valoracion
 
-    @Column(name = "CREATED_AT")
-    @CreatedDate
-    private Timestamp createdAt;
+	@Column(name = "CREATED_AT")
+	@CreatedDate
+	private LocalDateTime createdAt;
 }

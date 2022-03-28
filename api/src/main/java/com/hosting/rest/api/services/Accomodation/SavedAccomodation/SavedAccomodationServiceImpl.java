@@ -15,22 +15,22 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	private ISavedAccomodationRepository savedAccomodationRepo;
 	
 	@Override
-	public SavedAccomodationModel addNewSavedAccomodation(SavedAccomodationModel accomodationToSave) {
+	public SavedAccomodationModel addNewSavedAccomodation(final SavedAccomodationModel accomodationToSave) {
 		return savedAccomodationRepo.save(accomodationToSave);
 	}
 
 	@Override
-	public SavedAccomodationModel getSavedAccomodationById(Integer savedAccomodationId) {
+	public SavedAccomodationModel getSavedAccomodationById(final Integer savedAccomodationId) {
 		return savedAccomodationRepo.findById(savedAccomodationId).get();
 	}
 
 	@Override
-	public void deleteSavedAccomodation(Integer savedAccomodationId) {
+	public void deleteSavedAccomodation(final Integer savedAccomodationId) {
 		savedAccomodationRepo.deleteById(savedAccomodationId);
 	}
 
 	@Override
-	public List<SavedAccomodationModel> listAllSavedAccomodationOfUser(Integer userId) {
+	public List<SavedAccomodationModel> listAllSavedAccomodationOfUser(final Integer userId) {
 		return null;
 	}
 
