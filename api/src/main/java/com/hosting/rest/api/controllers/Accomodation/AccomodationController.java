@@ -31,22 +31,22 @@ public class AccomodationController {
         return accomodationService.listAllAccomodations();
     }
 
-    @GetMapping(value = "{regNumber}")
+    @GetMapping("{regNumber}")
     public AccomodationModel getAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         return accomodationService.getAccomodationById(regNumber.trim());
     }
 
-    @GetMapping(value = "cities/{city}")
+    @GetMapping("cities/{city}")
     public List<AccomodationModel> getAccomodationsByCity(@PathVariable(value = "city") String city) {
         return accomodationService.listAccomodationsByCity(city.trim());
     }
 
-    @PostMapping(value = "new")
+    @PostMapping("new")
     public AccomodationModel addNewAccomodation(@RequestBody AccomodationModel accomodationModel) {
         return accomodationService.addNewAccomodation(accomodationModel);
     }
 
-    @DeleteMapping(value = "{regNumber}")
+    @DeleteMapping("{regNumber}")
     public void removeAccomodationById(@PathVariable(value = "regNumber") String regNumber) {
         accomodationService.removeAccomodationById(regNumber);
     }

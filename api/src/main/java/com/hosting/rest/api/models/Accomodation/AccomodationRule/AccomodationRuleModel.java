@@ -1,12 +1,16 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationRule;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ACCOMODATION_RULE")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "ACCOMODATION_RULE")
 public class AccomodationRuleModel {
 
     @Id
