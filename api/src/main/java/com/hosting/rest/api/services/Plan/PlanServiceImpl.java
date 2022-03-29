@@ -1,6 +1,7 @@
 package com.hosting.rest.api.services.Plan;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -9,8 +10,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValid;
 import com.hosting.rest.api.models.Plan.PlanModel;
 import com.hosting.rest.api.repositories.Plan.IPlanRepository;
 
@@ -35,7 +36,7 @@ public class PlanServiceImpl implements IPlanService {
 	}
 
 	@Override
-	public void deletePlanById(final Integer planId) {
+	public void deletePlanById(final Integer planId) throws IllegalArgumentException {
 		planRepo.deleteById(planId);
 	}
 
@@ -45,18 +46,14 @@ public class PlanServiceImpl implements IPlanService {
 	}
 
 	@Override
-	public PlanModel getPlanById(final Integer planId) throws IllegalArgumentException{
-		
+	public PlanModel getPlanById(final Integer planId) throws IllegalArgumentException, NoSuchElementException,
+			NumberFormatException, MethodArgumentTypeMismatchException {
 		return planRepo.findById(planId).get();
 	}
 
 	@Override
-	public PlanModel findByUserId(final Integer userId) throws IllegalArgumentException, NoResultException {
-
-		if (!isIntegerValid(userId)) {
-			return null;
-		}
-
+	public PlanModel findByUserId(final Integer userId)
+			throws IllegalArgumentException, NoResultException, NumberFormatException {
 		/**
 		 * Plan de subscripción del usuario host.
 		 */

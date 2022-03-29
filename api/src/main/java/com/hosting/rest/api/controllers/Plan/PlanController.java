@@ -1,6 +1,7 @@
 package com.hosting.rest.api.controllers.Plan;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.persistence.NoResultException;
 
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.hosting.rest.api.exceptions.Plan.IllegalArgument.IllegalPlanArgumentsException;
+import com.hosting.rest.api.exceptions.Plan.NotFound.PlanNotFoundException;
 import com.hosting.rest.api.models.Plan.PlanModel;
 import com.hosting.rest.api.services.Plan.PlanServiceImpl;
 
@@ -28,22 +32,54 @@ public class PlanController {
 	private PlanServiceImpl planService;
 
 	@PostMapping("new")
-	public PlanModel addNewPlan(@RequestBody PlanModel planToAdd) {
-		return planService.addNewPlan(planToAdd);
+	public PlanModel addNewPlan(@RequestBody final PlanModel planToAdd) {
+		PlanModel planToReturn = null;
+		try {
+			planToReturn = planService.addNewPlan(planToAdd);
+
+		} catch (IllegalArgumentException iae) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "");
+		}
+
+		return planToReturn;
 	}
 
 	@PutMapping("{planId}")
-	public PlanModel udpatePlan(@PathVariable(name = "planId") Integer planId, @RequestBody PlanModel planToUpdate) {
-		return planService.udpatePlan(planId, planToUpdate);
+	public PlanModel udpatePlan(@PathVariable(name = "planId") final Integer planId,
+			@RequestBody final PlanModel planToUpdate) {
+
+		PlanModel udpatedPlan = null;
+
+		try {
+			udpatedPlan = planService.udpatePlan(planId, planToUpdate);
+
+		} catch (IllegalArgumentException iae) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fue posible actualizar los datos del plan.");
+		}
+
+		return udpatedPlan;
 	}
 
 	@GetMapping("{planId}")
-	public PlanModel getPlanById(@PathVariable Integer planId) {
-		return planService.getPlanById(planId);
+	public PlanModel getPlanById(@PathVariable final Integer planId) {
+
+		PlanModel planToReturn = null;
+
+		try {
+			planToReturn = planService.getPlanById(planId);
+
+		} catch (NumberFormatException | MethodArgumentTypeMismatchException nfe) {
+			throw new IllegalPlanArgumentsException(planId);
+
+		} catch (NoSuchElementException nsee) {
+			throw new PlanNotFoundException(planId);
+		}
+
+		return planToReturn;
 	}
 
 	@DeleteMapping("{planId}")
-	public void deletePlanById(@PathVariable Integer planId) {
+	public void deletePlanById(@PathVariable final Integer planId) {
 		planService.deletePlanById(planId);
 	}
 
@@ -60,7 +96,8 @@ public class PlanController {
 			userToReturn = planService.findByUserId(userId);
 
 		} catch (IllegalArgumentException | NoResultException iae) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario está subscrito a ningún plan.");
+			throw new PlanNotFoundException(userId);
+			
 		}
 
 		return userToReturn;

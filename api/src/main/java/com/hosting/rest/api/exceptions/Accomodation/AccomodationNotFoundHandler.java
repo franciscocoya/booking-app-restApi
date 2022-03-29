@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @version v1.0.0
  * @description
  **/
-public class AccomodationNotFoundAdvice {
+public class AccomodationNotFoundHandler {
     @ResponseBody
     @ExceptionHandler(AccomodationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
