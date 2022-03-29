@@ -2,6 +2,10 @@ package com.hosting.rest.api.services.Booking;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +18,8 @@ public class BookingServiceImpl implements IBookingService {
 	@Autowired
 	private IBookingRepository bookingRepo;
 
-//	@PersistenceContext
-//	private EntityManager entityManager;
+	@PersistenceContext
+	private EntityManager em;
 
 //	@Override
 //	public List<BookingModel> listBookingsGroupByMonth() {
@@ -54,12 +58,22 @@ public class BookingServiceImpl implements IBookingService {
 
 	@Override
 	public int getNumOfBookingsByUserId(final Integer userId) {
-		return bookingRepo.findByHostUser(userId).size();
+//		return bookingRepo.findByHostUser(userId).size();
+		return -1;
 	}
 
 	@Override
-	public List<BookingModel> listAllBookingByUser(final Integer userId) {
-		return bookingRepo.findByHostUser(userId);
+	public List<BookingModel> findAllBookingByUser(final Integer userId) {
+		/**
+		 * Listado de la reservas realizadas por un usuario.
+		 */
+		String findAllBookingsOfUserQuery = "select bm from BookingModel bm inner join bm.idHost host where host.id = :userId";
+
+		TypedQuery<BookingModel> userBookings = em.createQuery(findAllBookingsOfUserQuery, BookingModel.class);
+
+		userBookings.setParameter("userId", userId);
+
+		return userBookings.getResultList();
 	}
 
 	@Override

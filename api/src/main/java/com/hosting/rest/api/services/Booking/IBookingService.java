@@ -15,20 +15,20 @@ public interface IBookingService {
 
 	// --
 
-	BookingModel addNewBooking(BookingModel bookingModelToCreate);
+	BookingModel addNewBooking(final BookingModel bookingModelToCreate);
 	
-	BookingModel updateBookingDataById(Integer bookingId, BookingModel bookingToUpdate);
+	BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate);
 	
-	BookingModel getBookingById(Integer bookingId);
+	BookingModel getBookingById(final Integer bookingId);
 
-	void deleteBookingById(Integer bookingId);
+	void deleteBookingById(final Integer bookingId);
 	
 	
 	
 	// TODO: Número de reservas realizadas por un usuario.
-	int getNumOfBookingsByUserId(Integer userId);
+	int getNumOfBookingsByUserId(final Integer userId);
 	
 	// TODO: Listado de reservas realizadas por un usuario.
-	List<BookingModel> listAllBookingByUser(Integer userId);
+	List<BookingModel> findAllBookingByUser(final Integer userId);
 
 }

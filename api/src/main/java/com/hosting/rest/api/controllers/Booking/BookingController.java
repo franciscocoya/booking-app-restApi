@@ -24,30 +24,30 @@ public class BookingController {
 	private BookingServiceImpl bookingService;
 
 	@PostMapping("new")
-	public BookingModel addNewBooking(@RequestBody BookingModel bookingToAdd) {
+	public BookingModel addNewBooking(@RequestBody final BookingModel bookingToAdd) {
 		return bookingService.addNewBooking(bookingToAdd);
 	}
 
 	@PutMapping("{bookingId}")
-	public BookingModel updateBooking(@PathVariable(name = "bookingId") Integer bookingId,
-			@RequestBody BookingModel bookingToAdd) {
+	public BookingModel updateBooking(@PathVariable(name = "bookingId") final Integer bookingId,
+			@RequestBody final BookingModel bookingToAdd) {
 		return bookingService.addNewBooking(bookingToAdd);
 	}
 
 	@DeleteMapping("{bookingId}")
-	public void updateBooking(@PathVariable(name = "bookingId") Integer bookingId) {
+	public void updateBooking(@PathVariable(name = "bookingId") final Integer bookingId) {
 		bookingService.deleteBookingById(bookingId);
 	}
 
 	@GetMapping("{bookingId}")
-	public BookingModel getBookingById(@PathVariable(name = "bookingId") Integer bookingId) {
+	public BookingModel getBookingById(@PathVariable(name = "bookingId") final Integer bookingId) {
 		return bookingService.getBookingById(bookingId);
 	}
 
 	// TODO: Listar todas las reservas de un usuario
 	@GetMapping("users/{userId}")
-	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") Integer userId) {
-		return bookingService.listAllBookingByUser(userId);
+	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") final Integer userId) {
+		return bookingService.findAllBookingByUser(userId);
 	}
 
 	// TODO: Histórico de reservas del alojamiento - ADMIN

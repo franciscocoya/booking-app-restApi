@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 /**
  * 
  * @author Francisco Coya
+ * @version v1.0.0
  *
  */
 @Embeddable
