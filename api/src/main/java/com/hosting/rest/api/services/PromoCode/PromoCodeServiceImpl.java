@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	private IPromoCodeRepository promoCodeRepo;
 
 	@Override
-	public List<PromoCodeModel> listAllPromoCodes() {
+	public List<PromoCodeModel> findAllPromoCodes() {
 		return promoCodeRepo.findAll();
 	}
 
@@ -31,22 +32,6 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public List<PromoCodeModel> findAllPromoCodeFromUser(final String userId) {
-//		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
-//		
-//		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);
-//		
-//		userPromoCodes.setParameter("userId", userId);
-//				
-//		return userPromoCodes.getResultList();
-		return null;
-	}
-
-//	private EntityManager getEntityManager() {
-//		return entityManager;
-//	}
-
-	@Override
 	public PromoCodeModel addNewPromoCode(final PromoCodeModel promoCodeModel) {
 		return promoCodeRepo.save(promoCodeModel);
 	}
@@ -54,5 +39,38 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	@Override
 	public void removePromoCodeById(final String promoCodeId) {
 		promoCodeRepo.deleteById(promoCodeId);
+	}
+
+	@Override
+	public List<PromoCodeModel> findByUser(final Integer userId) {
+
+		/**
+		 * Listado de todos los códigos promocionales creados por un usuario
+		 * <code>userId</code>.
+		 */
+		String findPromoCodesByUserIdQuery = "select pc from PromoCodeModel pc inner join pc.idUser pu"
+				+ " where pu.id = :userId";
+
+		TypedQuery<PromoCodeModel> promoCodes = em.createQuery(findPromoCodesByUserIdQuery, PromoCodeModel.class);
+
+		promoCodes.setParameter("userId", userId);
+
+		return promoCodes.getResultList();
+	}
+
+	@Override
+	public List<PromoCodeModel> findByAccomodation(String accomodationRegNumber) {
+		/**
+		 * Listado de todos los códigos promocionales disponibles en un alojamiento <code>accomodationRegNumber</code>
+		 * <code>userId</code>.
+		 */
+		String findPromoCodesByUserIdQuery = "select pc from PromoCodeModel pc inner join pc.idAcc pa"
+				+ " where pa.registerNumber = :regNum";
+
+		TypedQuery<PromoCodeModel> promoCodes = em.createQuery(findPromoCodesByUserIdQuery, PromoCodeModel.class);
+
+		promoCodes.setParameter("regNum", accomodationRegNumber);
+
+		return promoCodes.getResultList();
 	}
 }

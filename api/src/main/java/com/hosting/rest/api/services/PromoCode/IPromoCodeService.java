@@ -6,13 +6,15 @@ import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
 
 public interface IPromoCodeService{
 	
-	PromoCodeModel addNewPromoCode(final PromoCodeModel promoCodeModel);
+	public PromoCodeModel addNewPromoCode(final PromoCodeModel promoCodeModel);
 
-	List<PromoCodeModel> listAllPromoCodes();
+	public List<PromoCodeModel> findAllPromoCodes();
 	
-	PromoCodeModel getPromoCodeById(final String promoCodeId);
+	public PromoCodeModel getPromoCodeById(final String promoCodeId);
 	
-	List<PromoCodeModel> findAllPromoCodeFromUser(final String userId);
+	public List<PromoCodeModel> findByUser(final Integer userId);
+	
+	public List<PromoCodeModel> findByAccomodation(final String accomodationRegNumber);
 
-	void removePromoCodeById(final String promoCodeId);
+	public void removePromoCodeById(final String promoCodeId);
 }

@@ -24,28 +24,27 @@ public class PromoCodeController {
 	
 	// TODO: Crear codigo promocional.
 	@PostMapping("new")
-	public PromoCodeModel addNewPromoCode(@RequestBody PromoCodeModel promoCodeModel) {
+	public PromoCodeModel addNewPromoCode(@RequestBody final PromoCodeModel promoCodeModel) {
 		return promoCodeService.addNewPromoCode(promoCodeModel);
 	}
 	
 	@DeleteMapping("{promoId}")
-	public void deletePromoCode(@PathVariable(name = "promoId") String serialNumber) {
+	public void deletePromoCode(@PathVariable(name = "promoId") final String serialNumber) {
 		promoCodeService.removePromoCodeById(serialNumber);
 	}
 	
 	@GetMapping("{promoId}")
-	public PromoCodeModel getPromoCodeById(@PathVariable(name = "promoId") String promoCodeId) {
+	public PromoCodeModel getPromoCodeById(@PathVariable(name = "promoId") final String promoCodeId) {
 		return promoCodeService.getPromoCodeById(promoCodeId);
 	}
 	
 	@GetMapping("all")
 	public List<PromoCodeModel> listAllPromoCodes(){
-		return promoCodeService.listAllPromoCodes();
+		return promoCodeService.findAllPromoCodes();
 	}
 	
-	// TODO: Listado de los codigos promocionales creados por un usuario.
 	@GetMapping("{userId}/all")
-	public List<PromoCodeModel> listAllPromoCodesFromUser(Integer userId){
-		return promoCodeService.listAllPromoCodeFromUser(userId);
+	public List<PromoCodeModel> listAllPromoCodesFromUser(@PathVariable(name = "userId") final Integer userId){
+		return promoCodeService.findByUser(userId);
 	}
 }
