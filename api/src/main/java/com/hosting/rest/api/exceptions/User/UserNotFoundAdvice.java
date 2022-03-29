@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
  * @version v1.0.0
- * @description
+ * @description Se muestra si el usuario no se encuentra.
  **/
 public class UserNotFoundAdvice {
 
-    @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String userNotFoundHandler(UserNotFoundException exception){
-        return exception.getMessage();
-    }
+	@ResponseBody
+	@ExceptionHandler(UserNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public String userNotFoundHandler(UserNotFoundException exception) {
+		return exception.getMessage();
+	}
 }

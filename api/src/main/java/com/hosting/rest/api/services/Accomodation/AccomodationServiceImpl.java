@@ -2,6 +2,10 @@ package com.hosting.rest.api.services.Accomodation;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,9 @@ import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 @Service
 public class AccomodationServiceImpl implements IAccomodationService {
 
+	@PersistenceContext
+	private EntityManager em;
+	
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
 
@@ -44,15 +51,15 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Override
 	public List<AccomodationModel> listAccomodationsByCity(final String cityToSearch) {
 
-//		String listAccomodationsByCityQuery = "SELECT ac FROM AccomodationModel ac JOIN AccomodationLocationModel al WHERE al.city = :city";
-//
-//		TypedQuery<AccomodationModel> accomodations = getEntityManager().createQuery(listAccomodationsByCityQuery, AccomodationModel.class);
-//
-//		accomodations.setParameter("city", cityToSearch);
-//
-//		return null;
+		String listAccomodationsByCityQuery = "select ac from AccomodationModel ac inner join ac.idAccomodationLocation al where al.city = :city";
+
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery, AccomodationModel.class);
+
+		accomodations.setParameter("city", cityToSearch);
+
+		return accomodations.getResultList();
 		
-		return accomodationRepo.findByCity(cityToSearch);
+//		return accomodationRepo.findByCity(cityToSearch);
 	}
 
 }
