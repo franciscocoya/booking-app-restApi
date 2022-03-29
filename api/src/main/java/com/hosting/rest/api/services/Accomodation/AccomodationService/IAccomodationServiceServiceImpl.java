@@ -47,9 +47,4 @@ public class IAccomodationServiceServiceImpl implements IAccomodationServiceServ
 //		return accomodationServiceRepo.findById(idAccomodationService).get();
 //	}
 
-//	@Override
-//	public AccomodationServiceModel getAccomodationServiceById(final Integer accomodationServiceId) {
-//		return accomodationServiceRepo.findById(accomodationServiceId).get();
-//	}
-
 }

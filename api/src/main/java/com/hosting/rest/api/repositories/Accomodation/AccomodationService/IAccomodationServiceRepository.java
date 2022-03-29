@@ -11,14 +11,16 @@ import com.hosting.rest.api.models.Accomodation.AccomodationService.Accomodation
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationServiceModel;
 
 @Repository
-public interface IAccomodationServiceRepository extends JpaRepository<AccomodationServiceModel, AccomodationAccServiceId> {
+public interface IAccomodationServiceRepository
+		extends JpaRepository<AccomodationServiceModel, AccomodationAccServiceId> {
 
 	/**
-	 * Listado de todos los servicios que ofrece un alojamiento.
+	 * Listado de todos los servicios disponibles que ofrece un alojamiento.
 	 * 
-	 * @param accomodationId
+	 * @param accomodationId Número de registro del alojamiento.
 	 * @return
 	 */
-	@Query("select acs FROM AccomodationAccServiceModel accs inner join accs.accomodationAccServiceId acs where acs.idAccomodation = :regNumber")
+	@Query("select asm from AccomodationServiceModel asm, AccomodationAccServiceModel accs inner join accs.accomodationAccServiceId acs "
+			+ "where acs.idAccomodation = :regNumber and asm.id = acs.idAccomodationService")
 	public List<AccomodationServiceModel> findByAccomodationId(@Param(value = "regNumber") String accomodationId);
 }

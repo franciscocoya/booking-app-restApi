@@ -42,4 +42,9 @@ public class UserReviewController {
 	public List<HostReviewModel> findUserReviewsOfHostUser(@PathVariable(name = "userId") Integer userId) {
 		return userReviewService.findByUserId(userId);
 	}
+	
+	@GetMapping("all")
+	public List<HostReviewModel> findAllReviews() {
+		return userReviewService.findAllReviews();
+	}
 }

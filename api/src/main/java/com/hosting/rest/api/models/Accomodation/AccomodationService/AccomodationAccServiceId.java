@@ -6,15 +6,19 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @author Francisco Coya
  *
  */
-@AllArgsConstructor
 @Embeddable
-public class AccomodationAccServiceId implements Serializable{
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccomodationAccServiceId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,5 +26,5 @@ public class AccomodationAccServiceId implements Serializable{
 	private String idAccomodation;
 
 	@Column(name = "ID_ACC_SERVICE")
-	private int idAccomodationService;
+	private Integer idAccomodationService;
 }

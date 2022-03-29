@@ -12,6 +12,7 @@ import com.hosting.rest.api.models.User.HostReviewModel;
 @Repository
 public interface IUserReviewRepository extends JpaRepository<HostReviewModel, Integer> {
 
-	@Query("select hr from HostReviewModel hr inner join hr.idUserA u where u.id = :userId")
+//	@Query("select hr from HostReviewModel hr inner join hr.idUserA u where u.id = :userId")
+	@Query("select hr from HostReviewModel hr where hr.idUserA.id = :userId")
 	public List<HostReviewModel> findByUserId(@Param(value = "userId") Integer userId);
 }

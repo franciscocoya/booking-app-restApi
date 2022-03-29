@@ -1,6 +1,5 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationService;
 
-
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -11,8 +10,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ACCOMODATION_SERVICE_EXTRA")
 @PrimaryKeyJoinColumn(name = "ID")
-public class AccomodationServiceExtraModel extends AccomodationServiceModel{
+public class AccomodationServiceExtraModel extends AccomodationServiceModel {
 
-    @Column(name = "PRICE")
-    private BigDecimal price;
+	@Column(name = "PRICE")
+	private BigDecimal price;
 }

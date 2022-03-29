@@ -35,4 +35,9 @@ public class UserReviewServiceImpl implements IUserReviewService {
 		return userReviewRepo.findByUserId(userId);
 	}
 
+	@Override
+	public List<HostReviewModel> findAllReviews() {
+		return userReviewRepo.findAll();
+	}
+
 }

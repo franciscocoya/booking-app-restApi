@@ -13,4 +13,7 @@ public interface IUserReviewService {
 	void deleteUserReview(Integer userId);
 
 	public List<HostReviewModel> findByUserId(Integer userId);
+	
+	// TODO: Para pruebas
+	public List<HostReviewModel> findAllReviews();
 }
