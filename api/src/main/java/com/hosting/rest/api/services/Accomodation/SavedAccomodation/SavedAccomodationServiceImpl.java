@@ -41,7 +41,7 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	@Override
 	public List<SavedAccomodationModel> findAllSavedAccomodationsByUserId(final Integer userId) {
 
-		if (isIntegerValid(userId)) {
+		if (!isIntegerValid(userId)) {
 			return null;
 		}
 

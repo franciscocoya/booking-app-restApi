@@ -6,13 +6,15 @@ import com.hosting.rest.api.models.Plan.PlanModel;
 
 public interface IPlanService {
 	
-	PlanModel addNewPlan(PlanModel planToAdd);
+	public PlanModel addNewPlan(final PlanModel planToAdd);
 	
-	PlanModel udpatePlan(Integer planId, PlanModel planToUpdate);
+	public PlanModel udpatePlan(final Integer planId, final PlanModel planToUpdate);
 	
-	PlanModel getPlanById(Integer planId);
+	public PlanModel getPlanById(final Integer planId);
 	
-	void deletePlanById(Integer planId);
+	public void deletePlanById(final Integer planId);
 	
-	List<PlanModel> listAllPlans();
+	public List<PlanModel> findAllPlans();
+	
+	public PlanModel findByUserId(final Integer userId);
 }
