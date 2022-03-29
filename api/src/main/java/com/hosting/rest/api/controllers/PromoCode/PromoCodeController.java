@@ -44,7 +44,12 @@ public class PromoCodeController {
 	}
 	
 	@GetMapping("{userId}/all")
-	public List<PromoCodeModel> listAllPromoCodesFromUser(@PathVariable(name = "userId") final Integer userId){
+	public List<PromoCodeModel> findAllPromoCodesFromUser(@PathVariable(name = "userId") final Integer userId){
 		return promoCodeService.findByUser(userId);
+	}
+	
+	@GetMapping("accomodations/{regNumber}/all")
+	public List<PromoCodeModel> findAllPromoCodesFromAccomodation(@PathVariable(name = "regNumber") final String accomodationRegisterNumber){
+		return promoCodeService.findByAccomodation(accomodationRegisterNumber);
 	}
 }

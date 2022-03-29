@@ -59,7 +59,7 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public List<PromoCodeModel> findByAccomodation(String accomodationRegNumber) {
+	public List<PromoCodeModel> findByAccomodation(final String accomodationRegNumber) {
 		/**
 		 * Listado de todos los códigos promocionales disponibles en un alojamiento <code>accomodationRegNumber</code>
 		 * <code>userId</code>.
