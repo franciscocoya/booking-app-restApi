@@ -23,7 +23,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
 
@@ -46,20 +46,33 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	public void removeAccomodationById(final String regNumber) {
 		accomodationRepo.deleteById(regNumber);
 	}
-	
 
 	@Override
 	public List<AccomodationModel> listAccomodationsByCity(final String cityToSearch) {
-
+		/**
+		 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
+		 */
 		String listAccomodationsByCityQuery = "select ac from AccomodationModel ac inner join ac.idAccomodationLocation al where al.city = :city";
 
-		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery, AccomodationModel.class);
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
+				AccomodationModel.class);
 
 		accomodations.setParameter("city", cityToSearch);
 
 		return accomodations.getResultList();
-		
+
 //		return accomodationRepo.findByCity(cityToSearch);
+	}
+
+	@Override
+	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng, final double distance) {
+		
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(HAVERSINE_FORMULA, AccomodationModel.class);
+
+		accomodations.setParameter("latitude", lat);
+		accomodations.setParameter("longitude", lng);
+
+		return accomodations.getResultList();
 	}
 
 }
