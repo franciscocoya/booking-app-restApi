@@ -44,6 +44,11 @@ public class BookingController {
 		return bookingService.getBookingById(bookingId);
 	}
 
+	@GetMapping("{bookingId}/{year}")
+	public List<BookingModel> findByBookingYear(@PathVariable(name = "bookingId") final String regNumber, @PathVariable(name = "year") final Integer yearToSearch) {
+		return bookingService.findByBookingYear(regNumber, yearToSearch);
+	}
+
 	// TODO: Listar todas las reservas de un usuario
 	@GetMapping("users/{userId}")
 	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") final Integer userId) {

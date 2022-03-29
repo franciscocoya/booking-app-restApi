@@ -21,23 +21,21 @@ public class BookingServiceImpl implements IBookingService {
 	@PersistenceContext
 	private EntityManager em;
 
-//	@Override
-//	public List<BookingModel> listBookingsGroupByMonth() {
-//		return null;
-//	}
-
 	@Override
-	public List<BookingModel> listBookingFromYear(final int yearToSearch) {
-		// TODO: REVISAR QUERY
-//		String listBookingFromYearQuery = "SELECT * FROM BOOKING WHERE YEAR(CREATED_DATE) = :year";
-//
-//		TypedQuery<BookingModel> bookings = getEntityManager().createQuery(listBookingFromYearQuery,
-//				BookingModel.class);
-//
-//		bookings.setParameter("year", yearToSearch);
-//
-//		return bookings.getResultList();
-		return null;
+	public List<BookingModel> findByBookingYear(final String regNumber, final Integer yearToSearch) {
+		/**
+		 * Listado de reservas de un alojamiento realizadas en un año específico:
+		 * <code>yearToSearch</code>
+		 */
+		String listBookingFromYearQuery = "select bm from BookingModel bm inner join bm.idAccomodation ac"
+				+ " where YEAR(bm.createdAt) = :year" + " and ac.registerNumber = :registerNumber";
+
+		TypedQuery<BookingModel> bookings = em.createQuery(listBookingFromYearQuery, BookingModel.class);
+
+		bookings.setParameter("year", yearToSearch);
+		bookings.setParameter("registerNumber", regNumber);
+
+		return bookings.getResultList();
 	}
 
 	@Override
@@ -67,7 +65,7 @@ public class BookingServiceImpl implements IBookingService {
 		/**
 		 * Listado de la reservas realizadas por un usuario.
 		 */
-		String findAllBookingsOfUserQuery = "select bm from BookingModel bm inner join bm.idHost host where host.id = :userId";
+		String findAllBookingsOfUserQuery = "select bm from BookingModel bm inner join bm.idUser host where host.id = :userId";
 
 		TypedQuery<BookingModel> userBookings = em.createQuery(findAllBookingsOfUserQuery, BookingModel.class);
 
@@ -80,9 +78,4 @@ public class BookingServiceImpl implements IBookingService {
 	public BookingModel getBookingById(final Integer bookingId) {
 		return bookingRepo.findById(bookingId).get();
 	}
-
-//	private EntityManager getEntityManager() {
-//		return entityManager;
-//	}
-
 }

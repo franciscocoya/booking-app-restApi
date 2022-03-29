@@ -2,6 +2,9 @@ package com.hosting.rest.api.services.PromoCode;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +14,8 @@ import com.hosting.rest.api.repositories.PromoCode.IPromoCodeRepository;
 @Service
 public class PromoCodeServiceImpl implements IPromoCodeService {
 
-//	@PersistenceContext
-//	private EntityManager entityManager;
+	@PersistenceContext
+	private EntityManager em;
 
 	@Autowired
 	private IPromoCodeRepository promoCodeRepo;
@@ -28,7 +31,7 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public List<PromoCodeModel> listAllPromoCodeFromUser(final String userId) {
+	public List<PromoCodeModel> findAllPromoCodeFromUser(final String userId) {
 //		String listAllPromoCodeFromUserQuery = "SELECT * FROM PromoCodeModel PC INNER JOIN UserModel AU ON (PC.ID_USER = AU.ID) WHERE PC.ID_USER = :idUser";
 //		
 //		TypedQuery<PromoCodeModel> userPromoCodes = getEntityManager().createQuery(listAllPromoCodeFromUserQuery, PromoCodeModel.class);

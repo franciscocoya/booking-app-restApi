@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
-import com.hosting.rest.api.models.User.UserHostModel;
+import com.hosting.rest.api.models.User.UserModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,8 +47,8 @@ public class BookingModel {
 	private BookingBillModel billNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_HOST")
-	private UserHostModel idHost;
+	@JoinColumn(name = "ID_USER")
+	private UserModel idUser;
 
 	@OneToOne
 	@JoinColumn(name = "ID_ACCOMODATION")

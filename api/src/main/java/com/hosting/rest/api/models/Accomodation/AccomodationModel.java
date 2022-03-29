@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.hosting.rest.api.models.User.UserHostModel;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -48,6 +50,10 @@ public class AccomodationModel {
     @OneToOne
     @JoinColumn(name = "ID_ACC_LOCATION")
     private AccomodationLocationModel idAccomodationLocation;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_USER_OWNER")
+    private UserHostModel idUserHost;
 
     @Column(name = "CREATED_AT")
     @CreatedDate

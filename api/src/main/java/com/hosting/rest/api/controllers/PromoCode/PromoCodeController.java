@@ -44,8 +44,8 @@ public class PromoCodeController {
 	}
 	
 	// TODO: Listado de los codigos promocionales creados por un usuario.
-	/*@GetMapping(name = "/{userId}/all")
+	@GetMapping("{userId}/all")
 	public List<PromoCodeModel> listAllPromoCodesFromUser(Integer userId){
 		return promoCodeService.listAllPromoCodeFromUser(userId);
-	}*/
+	}
 }
