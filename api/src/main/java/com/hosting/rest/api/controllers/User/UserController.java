@@ -40,9 +40,14 @@ public class UserController {
     	return userService.updateUser(userId, userModelToUpdate);
     }
 
+    @GetMapping("all/started")
+    public List<UserModel> getAllStartedUsers(){
+        return userService.findAllStartedUsers();
+    }
+    
     @GetMapping("/all")
     public List<UserModel> getAllUsers(){
-        return userService.listAllUsers();
+        return userService.findAllUsers();
     }
     
     @GetMapping("{userId}")

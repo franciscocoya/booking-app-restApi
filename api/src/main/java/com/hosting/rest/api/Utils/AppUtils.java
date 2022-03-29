@@ -6,7 +6,7 @@ package com.hosting.rest.api.Utils;
  * @version v1.0.0
  *
  */
-public class EntityUtils {
+public class AppUtils {
 
 	/**
 	 * Comprueba que un id de tipo Integer se a válido.
@@ -14,7 +14,7 @@ public class EntityUtils {
 	 * @param idToCheck
 	 * @return
 	 */
-	public static boolean isIntegerIdValid(Integer idToCheck) {
+	public static boolean isIntegerValid(Integer idToCheck) {
 		return idToCheck != null && idToCheck > 0;
 	}
 
@@ -24,7 +24,7 @@ public class EntityUtils {
 	 * @param idToCheck
 	 * @return
 	 */
-	public static boolean isStringIdNotBlank(String idToCheck) {
+	public static boolean isStringNotBlank(String idToCheck) {
 		return !idToCheck.isBlank() && idToCheck.length() > 0 && isStringNotNull(idToCheck);
 	}
 

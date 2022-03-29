@@ -6,14 +6,11 @@ import com.hosting.rest.api.models.User.HostReviewModel;
 
 public interface IUserReviewService {
 
-	public HostReviewModel addNewUserReview(HostReviewModel newUserReview);
+	public HostReviewModel addNewUserReview(final HostReviewModel newUserReview);
 
-	public HostReviewModel updateUserReview(Integer userId, HostReviewModel userReviewToUpdate);
+	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate);
 
-	void deleteUserReview(Integer userId);
+	void deleteUserReview(final Integer userId);
 
-	public List<HostReviewModel> findByUserId(Integer userId);
-	
-	// TODO: Para pruebas
-	public List<HostReviewModel> findAllReviews();
+	public List<HostReviewModel> findByUserId(final Integer userId);
 }

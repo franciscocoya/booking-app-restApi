@@ -23,28 +23,23 @@ public class UserReviewController {
 	private UserReviewServiceImpl userReviewService;
 
 	@PostMapping("new")
-	public HostReviewModel addNewHostReview(@RequestBody HostReviewModel userReviewToAdd) {
+	public HostReviewModel addNewHostReview(@RequestBody final HostReviewModel userReviewToAdd) {
 		return userReviewService.addNewUserReview(userReviewToAdd);
 	}
 
 	@PutMapping("{userId}")
-	public HostReviewModel updateHostReview(@PathVariable(name = "userId") Integer userId,
+	public HostReviewModel updateHostReview(@PathVariable(value = "userId") final Integer userId,
 			@RequestBody HostReviewModel userReviewToAdd) {
-		return null;
+		return userReviewService.updateUserReview(userId, userReviewToAdd);
 	}
 
 	@DeleteMapping("{userId}")
-	public void deleteHostReview(@PathVariable(name = "userId") Integer userId) {
+	public void deleteHostReview(@PathVariable(value = "userId") final Integer userId) {
 		userReviewService.deleteUserReview(userId);
 	}
 
 	@GetMapping("{userId}")
-	public List<HostReviewModel> findUserReviewsOfHostUser(@PathVariable(name = "userId") Integer userId) {
+	public List<HostReviewModel> findUserReviewsOfHostUser(@PathVariable(value = "userId") final Integer userId) {
 		return userReviewService.findByUserId(userId);
-	}
-	
-	@GetMapping("all")
-	public List<HostReviewModel> findAllReviews() {
-		return userReviewService.findAllReviews();
 	}
 }

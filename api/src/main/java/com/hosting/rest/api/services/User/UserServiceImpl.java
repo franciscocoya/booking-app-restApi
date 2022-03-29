@@ -2,22 +2,28 @@ package com.hosting.rest.api.services.User;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.User.UserNotFoundException;
-import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
+	@PersistenceContext
+	private EntityManager em;
+
 	@Autowired
 	private IUserRepository userRepo;
 
 	@Override
-	public List<UserModel> listAllUsers() {
+	public List<UserModel> findAllStartedUsers() {
 		return userRepo.findAll();
 	}
 
@@ -27,14 +33,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<UserHostModel> listHostUsers() {
-		return null;
-	}
+	public List<UserModel> findAllUsers() {
+		// TODO:
+		String findAllHostUsersQuery = "select um" + " from UserModel um, UserHostModel uhm"
+				+ " where um.id = uhm.id";
 
-	@Override
-	public boolean isUserHostByUserId(Integer userId) {
-		// TODO Auto-generated method stub
-		return false;
+		TypedQuery<UserModel> allUsers = em.createQuery(findAllHostUsersQuery, UserModel.class);
+
+		return allUsers.getResultList();
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void deleteUserById(Integer userId) {
-		userRepo.deleteById(userId);		
+		userRepo.deleteById(userId);
 	}
 
 }

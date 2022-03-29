@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,27 +17,23 @@ import com.hosting.rest.api.services.Booking.BookingBill.BookingBillServiceImpl;
 @RestController
 @RequestMapping(value = "/bills")
 public class BookingBillController {
-	
+
 	@Autowired
 	private BookingBillServiceImpl bookingBillService;
-	
-	// TODO: Crear una nueva factura
+
 	@PostMapping(name = "/new")
-	public BookingBillModel addNewBookingBill(BookingBillModel bookingBillModel) {
-		// TODO;
-		return null;
+	public BookingBillModel addNewBookingBill(@RequestBody BookingBillModel bookingBillModel) {
+		return bookingBillService.addNewBookingBill(bookingBillModel);
 	}
-	
-	// TODO: Eliminar una factura
+
 	@DeleteMapping(name = "/delete/{bookingBillId}")
-	public void removeBookingBillById(@PathVariable(name = "bookingBillId") String bookingBillId) {
-		// TODO;
+	public void removeBookingBillById(@PathVariable(name = "bookingBillId") final String bookingBillId) {
+		bookingBillService.deleteBookingBill(bookingBillId);
 	}
-	
-	// TODO: Listar todas las facturas de una reserva - histórico
-	@GetMapping(name = "/booking/{bookingId}")
-	public List<BookingBillModel> listBookingBillHistory(@PathVariable(name = "bookingId") String bookingId) {
-		// TODO;
-		return null;
+
+	@GetMapping(name = "/booking/{accomodationRegNumber}")
+	public List<BookingBillModel> listBookingBillHistory(
+			@PathVariable(name = "accomodationRegNumber") final String accomodationRegNumber) {
+		return bookingBillService.findAllBookingBillsByAccomodation(accomodationRegNumber);
 	}
 }
