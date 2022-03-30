@@ -1,8 +1,11 @@
 package com.hosting.rest.api.services.Accomodation;
 
+import static com.hosting.rest.api.Utils.AppUtils.isDoubleValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -97,21 +100,42 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
 				AccomodationModel.class);
+
 		accomodations.setParameter("city", cityToSearch);
 
 		return accomodations != null ? accomodations.getResultList() : null;
 	}
 
 	@Override
-	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng,
-			final double distance) {
+	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng, final double distance) {
 
-		// TODO:
+		if (!isValidGeographicCoordinate(lat)) {
+			throw new IllegalAccomodationArgumentsException("La latitud introducida no es válida.");
+		}
 
-		TypedQuery<AccomodationModel> accomodations = em.createQuery(HAVERSINE_FORMULA, AccomodationModel.class);
+		if (!isValidGeographicCoordinate(lng)) {
+			throw new IllegalAccomodationArgumentsException("La longitud introducida no es válida.");
+		}
+
+		if (!isDoubleValidAndPositive(distance)) {
+			throw new IllegalAccomodationArgumentsException("La distancia introducida no es válida.");
+		}
+
+		/**
+		 * Listar los alojamientos en un radio de <code>distance</code>
+		 */
+		// + " and acloc.latitude = :latitude and acloc.longitude = :longitude"
+		String findByNearbyLocationQuery = "select am"
+				+ " from AccomodationModel am inner join am.idAccomodationLocation acloc" + " where "
+				+ HAVERSINE_FORMULA + " < :distance" + " order by " + HAVERSINE_FORMULA + " desc";
+		// + " limit " + ACCOMODATION_LIMIT_RESULTS
+
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByNearbyLocationQuery,
+				AccomodationModel.class);
 
 		accomodations.setParameter("latitude", lat);
 		accomodations.setParameter("longitude", lng);
+		accomodations.setParameter("distance", distance);
 
 		return accomodations.getResultList();
 	}

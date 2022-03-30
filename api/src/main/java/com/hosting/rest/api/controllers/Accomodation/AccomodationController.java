@@ -1,5 +1,6 @@
 package com.hosting.rest.api.controllers.Accomodation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
@@ -27,6 +29,11 @@ public class AccomodationController {
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
 
+	@PostMapping("new")
+	public AccomodationModel addNewAccomodation(@RequestBody final AccomodationModel accomodationModel) {
+		return accomodationService.addNewAccomodation(accomodationModel);
+	}
+
 	@GetMapping(value = "all")
 	public List<AccomodationModel> getAllAccomodations() {
 		return accomodationService.findAllAccomodations();
@@ -42,9 +49,12 @@ public class AccomodationController {
 		return accomodationService.findByCity(city.trim());
 	}
 
-	@PostMapping("new")
-	public AccomodationModel addNewAccomodation(@RequestBody final AccomodationModel accomodationModel) {
-		return accomodationService.addNewAccomodation(accomodationModel);
+	@GetMapping
+	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
+			@RequestParam(name = "lng") final BigDecimal longitude,
+			@RequestParam(name = "distance") final Double distance) {
+
+		return accomodationService.findByNearby(latitude, longitude, distance);
 	}
 
 	@PatchMapping("{regNumber}")
