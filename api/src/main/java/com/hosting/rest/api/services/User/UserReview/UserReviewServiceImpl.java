@@ -13,8 +13,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
-import com.hosting.rest.api.exceptions.Accomodation.NotFound.AccomodationNotFoundException;
 import com.hosting.rest.api.exceptions.User.UserReview.IllegalArgument.IllegalUserReviewArgumentException;
 import com.hosting.rest.api.models.User.HostReviewModel;
 import com.hosting.rest.api.repositories.User.UserReview.IUserReviewRepository;
@@ -49,13 +47,13 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate) {
 
 		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalAccomodationArgumentsException("El id del usuario introducido no es válido.");
+			//throw new IllegalAccomodationArgumentsException("El id del usuario introducido no es válido.");
 		}
 
 		HostReviewModel originalHostReview = userReviewRepo.findById(userId).get();
 
 		if (!isNotNull(originalHostReview)) {
-			throw new AccomodationNotFoundException("La valoración de un usuario a actualizar no existe.");
+			//throw new AccomodationNotFoundException("La valoración de un usuario a actualizar no existe.");
 		}
 
 		// Contenido de la review
@@ -69,6 +67,10 @@ public class UserReviewServiceImpl implements IUserReviewService {
 
 	@Override
 	public void deleteUserReview(final Integer userId) {
+		// TODO: Comprobar id valido
+		
+		// TODO: Comprobar que existe el usuario a borrar
+		
 		userReviewRepo.deleteById(userId);
 	}
 
