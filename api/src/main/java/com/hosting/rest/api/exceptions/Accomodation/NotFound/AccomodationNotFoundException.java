@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation;
+package com.hosting.rest.api.exceptions.Accomodation.NotFound;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -13,7 +13,7 @@ public class AccomodationNotFoundException extends RuntimeException {
 		super();
 	}
 
-	public AccomodationNotFoundException(String regNumber) {
-		super("No se encontró ningún alojamiento con número de registro [" + regNumber + " ]");
+	public AccomodationNotFoundException(String message) {
+		super(message);
 	}
 }

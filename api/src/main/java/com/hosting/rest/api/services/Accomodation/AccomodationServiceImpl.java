@@ -1,5 +1,8 @@
 package com.hosting.rest.api.services.Accomodation;
 
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
-import com.hosting.rest.api.exceptions.Accomodation.AccomodationNotFoundException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.NotFound.AccomodationNotFoundException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 
@@ -31,7 +34,25 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Override
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel) {
-		return accomodationModel != null ? accomodationRepo.save(accomodationModel) : null;
+
+		// Si el alojamiento es null o no se pasa el número de registro o el
+		// propietario.
+		if (!isNotNull(accomodationModel) || !isNotNull(accomodationModel.getRegisterNumber())
+				|| !isNotNull(accomodationModel.getIdUserHost())) {
+			throw new IllegalAccomodationArgumentsException(
+					"Los datos introducidos para el alojamiento no son válidos o falta alguna propiedad.");
+		}
+
+		// Comprobación del número de registro del alojamiento a registrar
+		boolean existsAccomodation = accomodationRepo.existsById(accomodationModel.getRegisterNumber());
+
+		if (existsAccomodation) {
+			throw new IllegalAccomodationArgumentsException(
+					"Ya se encuentra registrado un alojamiento con número de registro ["
+							+ accomodationModel.getRegisterNumber() + " ].");
+		}
+
+		return accomodationRepo.save(accomodationModel);
 	}
 
 	@Override
@@ -45,12 +66,30 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	}
 
 	@Override
-	public void removeAccomodationById(final String regNumber) {
+	public String removeAccomodationById(final String regNumber) {
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalAccomodationArgumentsException("El número de registro pasado como parámetro está vacío.");
+		}
+
+		boolean existsAccomodation = accomodationRepo.existsById(regNumber);
+
+		if (!existsAccomodation) {
+			throw new AccomodationNotFoundException(
+					"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
+		}
+
 		accomodationRepo.deleteById(regNumber);
+
+		return "Alojamiento con número de registro [ " + regNumber + " ] eliminado correctamente";
 	}
 
 	@Override
 	public List<AccomodationModel> findByCity(final String cityToSearch) {
+		if (!isStringNotBlank(cityToSearch)) {
+			throw new IllegalAccomodationArgumentsException(
+					"El valor [ " + cityToSearch + " ] está vacío o no es válido.");
+		}
+
 		/**
 		 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
 		 */
@@ -58,16 +97,15 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
 				AccomodationModel.class);
-
 		accomodations.setParameter("city", cityToSearch);
 
-		return accomodations.getResultList();
+		return accomodations != null ? accomodations.getResultList() : null;
 	}
 
 	@Override
 	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng,
 			final double distance) {
-		
+
 		// TODO:
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(HAVERSINE_FORMULA, AccomodationModel.class);
@@ -83,8 +121,13 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	public AccomodationModel updateAccomodationById(final String regNumber,
 			final AccomodationModel accomodationToUpdate) {
 
+		if (!isStringNotBlank(regNumber)) {
+			throw new AccomodationNotFoundException(
+					"No se encontró ningún alojamiento con el número de registro [ " + regNumber + " ]");
+		}
+
 		// Detalles del alojamiento original
-		AccomodationModel originalAccomodation = isStringNotBlank(regNumber) ? getAccomodationById(regNumber) : null;
+		AccomodationModel originalAccomodation = getAccomodationById(regNumber);
 
 		if (originalAccomodation != null) {
 			// Número de habitaciones
@@ -111,7 +154,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 			}
 		}
 
-		return originalAccomodation != null ? accomodationRepo.save(originalAccomodation) : null;
+		return accomodationRepo.save(originalAccomodation);
 	}
 
 }

@@ -25,7 +25,7 @@ public class AppUtils {
 	 * @return
 	 */
 	public static boolean isStringNotBlank(String idToCheck) {
-		return !idToCheck.isBlank() && idToCheck.length() > 0 && isStringNotNull(idToCheck);
+		return !idToCheck.isBlank() && idToCheck.length() > 0 && isNotNull(idToCheck);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class AppUtils {
 	 * @param strToCheck
 	 * @return true si <code>strToCheck</code> no es null y false en caso contrario.
 	 */
-	private static boolean isStringNotNull(String strToCheck) {
+	public static boolean isNotNull(Object strToCheck) {
 		return strToCheck != null;
 	}
 }

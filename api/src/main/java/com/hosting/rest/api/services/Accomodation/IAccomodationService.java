@@ -30,7 +30,7 @@ public interface IAccomodationService {
 	
 	public AccomodationModel updateAccomodationById(final String regNumber, final AccomodationModel accomodationToUpdate);
 
-	public void removeAccomodationById(final String regNumber);
+	public String removeAccomodationById(final String regNumber);
 
 	public List<AccomodationModel> findByCity(final String cityToSearch);
 
