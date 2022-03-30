@@ -97,7 +97,8 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		/**
 		 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
 		 */
-		String listAccomodationsByCityQuery = "select ac from AccomodationModel ac inner join ac.idAccomodationLocation al where al.city = :city";
+		String listAccomodationsByCityQuery = "SELECT ac "
+				+ "FROM AccomodationModel ac INNER JOIN ac.idAccomodationLocation al " + "WHERE al.city = :city";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
 				AccomodationModel.class);
@@ -126,9 +127,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		 * Listar los alojamientos en un radio de <code>distance</code>
 		 */
 		// + " and acloc.latitude = :latitude and acloc.longitude = :longitude"
-		String findByNearbyLocationQuery = "select am"
-				+ " from AccomodationModel am inner join am.idAccomodationLocation acloc" + " where "
-				+ HAVERSINE_FORMULA + " < :distance" + " order by " + HAVERSINE_FORMULA + " desc";
+		String findByNearbyLocationQuery = "SELECT am "
+				+ "FROM AccomodationModel am INNER JOIN am.idAccomodationLocation acloc " + "WHERE " + HAVERSINE_FORMULA
+				+ " < :distance" + " ORDER BY " + HAVERSINE_FORMULA + " DESC";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByNearbyLocationQuery,
 				AccomodationModel.class);
@@ -188,9 +189,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 			throw new IllegalAccomodationArgumentsException("La categoría introducida está vacía o no es válida.");
 		}
 
-		String findByAccomodationCategoryQuery = "select am"
-				+ " from AccomodationModel am inner join am.idAccomodationCategory acc"
-				+ " where acc.accomodationCategory = :category";
+		String findByAccomodationCategoryQuery = "SELECT am "
+				+ "FROM AccomodationModel am INNER JOIN am.idAccomodationCategory acc "
+				+ "WHERE acc.accomodationCategory = :category";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByAccomodationCategoryQuery,
 				AccomodationModel.class);
@@ -210,8 +211,8 @@ public class AccomodationServiceImpl implements IAccomodationService {
 			throw new IllegalAccomodationArgumentsException("El precio máximo introducido no es válido.");
 		}
 
-		String findByAccomodationCategoryQuery = "select am" + " from AccomodationModel am"
-				+ " where am.pricePerNight between :minPrice and :maxPrice" + " order by am.pricePerNight desc";
+		String findByAccomodationCategoryQuery = "SELECT am " + "FROM AccomodationModel am "
+				+ "WHERE am.pricePerNight BETWEEN :minPrice and :maxPrice " + "ORDER BY am.pricePerNight DESC";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByAccomodationCategoryQuery,
 				AccomodationModel.class);

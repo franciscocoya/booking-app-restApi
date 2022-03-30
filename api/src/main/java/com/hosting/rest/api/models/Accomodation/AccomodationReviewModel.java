@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.hosting.rest.api.models.User.UserHostModel;
+import com.hosting.rest.api.models.User.UserModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,7 +39,7 @@ public class AccomodationReviewModel {
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
-    private UserHostModel idUser;
+    private UserModel idUser;
 
     @ManyToOne
     @JoinColumn(name = "ID_ACC")

@@ -5,14 +5,23 @@ import java.util.List;
 import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
 
 public interface IAccomodationReviewService {
+	
+	public static final int LATEST_ACCOMODATION_REVIEWS_LIMIT = 4;
 
-	AccomodationReviewModel addNewAccomodationReview(AccomodationReviewModel accomodationToAdd);
+	public AccomodationReviewModel addNewAccomodationReview(final AccomodationReviewModel accomodationToAdd);
 
-	AccomodationReviewModel getAccomodationReviewById(Integer accomodationReviewId);
+	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId);
 
-	AccomodationReviewModel udpateAccomodationReview(AccomodationReviewModel accomodationToUpdate);
+	public AccomodationReviewModel udpateAccomodationReview(final AccomodationReviewModel accomodationToUpdate);
 
-	void deleteAccomodationReviewById(Integer accomodationReviewId);
+	public void deleteAccomodationReviewById(final Integer accomodationReviewId);
 
-	List<AccomodationReviewModel> findAllAccomodationReviews(String regNumber);
+	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber);
+
+	public List<AccomodationReviewModel> findByUserId(final Integer userId);
+
+	public Double getAccomodationReviewAverageStars(final String regNumber);
+
+	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber);
+
 }

@@ -54,9 +54,22 @@ public class AccomodationReviewController {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
 
-	// TODO: Obtener las valoraciones de un alojamiento.
+	@GetMapping("/u/{userId}/all")
+	public List<AccomodationReviewModel> findAllAccomodationReviewsByUserId(
+			@PathVariable(value = "userId") final Integer userId) {
+		return accomodationReviewService.findByUserId(userId);
+	}
 
-	// TODO: Obtener la valoracion media de un alojamiento.
+	@GetMapping("{registerNumber}/stars")
+	public Double getAccomodationReviewStarsAverage(@PathVariable(value = "registerNumber") final String regNumber) {
+		return accomodationReviewService.getAccomodationReviewAverageStars(regNumber);
+	}
+
+	@GetMapping("{registerNumber}/latest")
+	public List<AccomodationReviewModel> findLastAccomodationReviews(
+			@PathVariable(value = "registerNumber") final String regNumber) {
+		return accomodationReviewService.findLatestAccomodationReviews(regNumber);
+	}
 
 	// TODO: Obtener los 4 últimos usuarios que han valorado el alojamiento.
 

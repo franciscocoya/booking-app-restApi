@@ -36,14 +36,14 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 
 	@Override
 	public List<AccomodationServiceModel> findAllAccomodationServicesFromAccomodation(final String regNumber)
-	throws IllegalArgumentException{
+			throws IllegalArgumentException {
 		/**
 		 * Listado de todos los servicios que ofrece un alojamiento, el número de
 		 * registro es pasado como parámetro: <code>regNumber</code>.
 		 */
-		String findAllAccomodationServicesByRegisterNumberQuery = "select asm from AccomodationServiceModel asm,"
-				+ " AccomodationAccServiceModel accs inner join accs.accomodationAccServiceId acs"
-				+ " where acs.idAccomodation = :regNumber and asm.id = acs.idAccomodationService";
+		String findAllAccomodationServicesByRegisterNumberQuery = "SELECT asm "
+				+ "FROM AccomodationServiceModel asm, AccomodationAccServiceModel accs INNER JOIN accs.accomodationAccServiceId acs "
+				+ "WHERE acs.idAccomodation = :regNumber AND asm.id = acs.idAccomodationService";
 
 		TypedQuery<AccomodationServiceModel> accomodationServices = em
 				.createQuery(findAllAccomodationServicesByRegisterNumberQuery, AccomodationServiceModel.class);
@@ -62,9 +62,9 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 		/**
 		 * Eliminar un servicio de un alojamiento.
 		 */
-		String deleteAccServiceByRegNumberAndAccServiceId = "delete from AccomodationAccServiceModel accs"
-				+ " where accs.accomodationAccServiceId.idAccomodation = :regNumber"
-				+ " and accs.accomodationAccServiceId.idAccomodationService = :accServiceId";
+		String deleteAccServiceByRegNumberAndAccServiceId = "DELETE FROM AccomodationAccServiceModel accs"
+				+ " WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber"
+				+ " AND accs.accomodationAccServiceId.idAccomodationService = :accServiceId";
 
 		Query deletedAccomodationService = em.createQuery(deleteAccServiceByRegNumberAndAccServiceId);
 

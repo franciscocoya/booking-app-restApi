@@ -45,8 +45,8 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 			return null;
 		}
 
-		String findAllSavedAccomodationsByUserIdQuery = "select sam"
-				+ " from SavedAccomodationModel sam inner join sam.idUser u" + " where u.id = :userId";
+		String findAllSavedAccomodationsByUserIdQuery = "SELECT sam "
+				+ "FROM SavedAccomodationModel sam INNER JOIN sam.idUser u " + "WHERE u.id = :userId";
 
 		TypedQuery<SavedAccomodationModel> savedAccomodations = em.createQuery(findAllSavedAccomodationsByUserIdQuery,
 				SavedAccomodationModel.class);
