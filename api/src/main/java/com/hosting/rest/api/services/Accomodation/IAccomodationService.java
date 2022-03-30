@@ -12,9 +12,8 @@ import com.hosting.rest.api.models.Accomodation.AccomodationModel;
  **/
 public interface IAccomodationService {
 
-	
 	public static final int ACCOMODATION_LIMIT_RESULTS = 100;
-	
+
 	public static final int EARTH_RADIUS = 6371; // En Km
 
 	/**
@@ -31,12 +30,18 @@ public interface IAccomodationService {
 	public List<AccomodationModel> findAllAccomodations();
 
 	public AccomodationModel getAccomodationById(final String regNumber);
-	
-	public AccomodationModel updateAccomodationById(final String regNumber, final AccomodationModel accomodationToUpdate);
+
+	public AccomodationModel updateAccomodationById(final String regNumber,
+			final AccomodationModel accomodationToUpdate);
 
 	public String removeAccomodationById(final String regNumber);
 
 	public List<AccomodationModel> findByCity(final String cityToSearch);
 
-	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng, final double distanceRadius);
+	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng,
+			final double distanceRadius);
+
+	public List<AccomodationModel> findByCategory(final String accomodationCategory);
+
+	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice);
 }

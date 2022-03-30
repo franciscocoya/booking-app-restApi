@@ -1,6 +1,6 @@
 package com.hosting.rest.api.services.User.UserReview;
 
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValid;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 
 import java.util.List;
@@ -34,12 +34,12 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	@Transactional
 	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate) {
 
-		HostReviewModel originalHostReview = isIntegerValid(userId) ? userReviewRepo.findById(userId).get() : null;
+		HostReviewModel originalHostReview = isIntegerValidAndPositive(userId) ? userReviewRepo.findById(userId).get() : null;
 
 		String contentToUpdate = isStringNotBlank(userReviewToUpdate.getContent()) ? userReviewToUpdate.getContent()
 				: originalHostReview.getContent();
 
-		Integer starsToUpdate = isIntegerValid(userReviewToUpdate.getStars()) ? userReviewToUpdate.getStars()
+		Integer starsToUpdate = isIntegerValidAndPositive(userReviewToUpdate.getStars()) ? userReviewToUpdate.getStars()
 				: originalHostReview.getStars();
 
 		// Contenido de la review
@@ -60,7 +60,7 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	public List<HostReviewModel> findByUserId(final Integer userId) {
 		
 		// TODO: Revisar
-		if(!isIntegerValid(userId)) {
+		if(!isIntegerValidAndPositive(userId)) {
 			return null;
 		}
 		

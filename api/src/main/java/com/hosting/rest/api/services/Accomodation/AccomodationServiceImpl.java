@@ -4,6 +4,7 @@ import static com.hosting.rest.api.Utils.AppUtils.isDoubleValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -109,11 +110,11 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Override
 	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng, final double distance) {
 
-		if (!isValidGeographicCoordinate(lat)) {
+		if (!isValidGeographicCoordinate(lat, true)) {
 			throw new IllegalAccomodationArgumentsException("La latitud introducida no es válida.");
 		}
 
-		if (!isValidGeographicCoordinate(lng)) {
+		if (!isValidGeographicCoordinate(lng, false)) {
 			throw new IllegalAccomodationArgumentsException("La longitud introducida no es válida.");
 		}
 
@@ -179,6 +180,47 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		}
 
 		return accomodationRepo.save(originalAccomodation);
+	}
+
+	@Override
+	public List<AccomodationModel> findByCategory(final String accomodationCategory) {
+
+		if (!isStringNotBlank(accomodationCategory)) {
+			throw new IllegalAccomodationArgumentsException("La categoría introducida está vacía o no es válida.");
+		}
+
+		String findByAccomodationCategoryQuery = "select am"
+				+ " from AccomodationModel am inner join am.idAccomodationCategory acc"
+				+ " where acc.accomodationCategory = :category";
+
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByAccomodationCategoryQuery,
+				AccomodationModel.class);
+
+		accomodations.setParameter("category", accomodationCategory);
+
+		return accomodations.getResultList();
+	}
+
+	@Override
+	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice) {
+		if (!isBigDecimalValid(minPrice)) {
+			throw new IllegalAccomodationArgumentsException("El precio mínimo introducido no es válido.");
+		}
+
+		if (!isBigDecimalValid(maxPrice)) {
+			throw new IllegalAccomodationArgumentsException("El precio máximo introducido no es válido.");
+		}
+
+		String findByAccomodationCategoryQuery = "select am" + " from AccomodationModel am"
+				+ " where am.pricePerNight between :minPrice and :maxPrice" + " order by am.pricePerNight desc";
+
+		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByAccomodationCategoryQuery,
+				AccomodationModel.class);
+
+		accomodations.setParameter("minPrice", minPrice);
+		accomodations.setParameter("maxPrice", maxPrice);
+
+		return accomodations.getResultList();
 	}
 
 }

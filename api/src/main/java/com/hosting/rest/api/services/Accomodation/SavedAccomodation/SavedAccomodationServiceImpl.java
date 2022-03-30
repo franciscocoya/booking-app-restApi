@@ -1,6 +1,6 @@
 package com.hosting.rest.api.services.Accomodation.SavedAccomodation;
 
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValid;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	@Override
 	public List<SavedAccomodationModel> findAllSavedAccomodationsByUserId(final Integer userId) {
 
-		if (!isIntegerValid(userId)) {
+		if (!isIntegerValidAndPositive(userId)) {
 			return null;
 		}
 

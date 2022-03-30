@@ -10,7 +10,8 @@ import java.math.BigDecimal;
  */
 public class AppUtils {
 
-	private static final String VALID_COORDINATE_REGEX = "-?[1-9][0-9]*(\\.[0-9]+)?,\\s*-?[1-9][0-9]*(\\.[0-9]+)?";
+//	private static final String VALID_LATITUDE_REGEX = "^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$";
+//	private static final String VALID_LONGITUDE_REGEX = "^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$";
 
 	/**
 	 * Comprueba que un id de tipo Integer se a válido.
@@ -19,11 +20,17 @@ public class AppUtils {
 	 * @return
 	 */
 	public static boolean isIntegerValidAndPositive(final Integer idToCheck) {
-		return idToCheck != null && idToCheck > 0;
+		return isNotNull(idToCheck) && idToCheck > 0;
 	}
-	
+
+	/**
+	 * Comprueba que un valor de tipo double sea válido y positivo.
+	 * 
+	 * @param doubleValueToCheck
+	 * @return
+	 */
 	public static boolean isDoubleValidAndPositive(final Double doubleValueToCheck) {
-		return doubleValueToCheck != null && doubleValueToCheck > 0;
+		return isNotNull(doubleValueToCheck) && doubleValueToCheck > 0;
 	}
 
 	/**
@@ -34,6 +41,17 @@ public class AppUtils {
 	 */
 	public static boolean isStringNotBlank(final String idToCheck) {
 		return !idToCheck.isBlank() && idToCheck.length() > 0 && isNotNull(idToCheck);
+	}
+
+	/**
+	 * Comprueba que un valor de tipo bigDecimal <code>bigDecimalToCheck</code> es
+	 * válido.
+	 * 
+	 * @param bigDecimalToCheck
+	 * @return
+	 */
+	public static boolean isBigDecimalValid(final BigDecimal bigDecimalToCheck) {
+		return isNotNull(bigDecimalToCheck);
 	}
 
 	/**
@@ -52,8 +70,8 @@ public class AppUtils {
 	 * @param coordinateToValidate
 	 * @return
 	 */
-	public static boolean isValidGeographicCoordinate(final BigDecimal coordinateToValidate) {
-		//&& String.valueOf(coordinateToValidate).matches(VALID_COORDINATE_REGEX)
-		return coordinateToValidate != null ;
+	public static boolean isValidGeographicCoordinate(final BigDecimal coordinateToValidate, final boolean isLatitude) {
+		return coordinateToValidate != null;
+//				&& coordinateToValidate.toString().matches(isLatitude ? VALID_LATITUDE_REGEX : VALID_LONGITUDE_REGEX);
 	}
 }

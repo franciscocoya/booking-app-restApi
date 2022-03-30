@@ -49,12 +49,23 @@ public class AccomodationController {
 		return accomodationService.findByCity(city.trim());
 	}
 
-	@GetMapping
+	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,
 			@RequestParam(name = "distance") final Double distance) {
 
 		return accomodationService.findByNearby(latitude, longitude, distance);
+	}
+
+	@GetMapping("category/{categoryName}")
+	public List<AccomodationModel> findByCategory(@PathVariable(value = "categoryName") final String categoryToFind) {
+		return accomodationService.findByCategory(categoryToFind);
+	}
+
+	@GetMapping("price")
+	public List<AccomodationModel> findByPriceRange(@RequestParam(name = "minPrice") final BigDecimal minPrice,
+			@RequestParam(name = "maxPrice") final BigDecimal maxPrice) {
+		return accomodationService.findByPriceRange(minPrice, maxPrice);
 	}
 
 	@PatchMapping("{regNumber}")
