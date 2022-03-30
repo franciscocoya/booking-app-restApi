@@ -3,7 +3,6 @@ package com.hosting.rest.api.Utils;
 import java.math.BigDecimal;
 
 /**
- * 
  * @author Francisco Coya
  * @version v1.0.0
  *

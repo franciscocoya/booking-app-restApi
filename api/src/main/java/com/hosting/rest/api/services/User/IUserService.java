@@ -11,15 +11,15 @@ import com.hosting.rest.api.models.User.UserModel;
  **/
 public interface IUserService {
 
-	UserModel addNewUser(UserModel userToAdd);
+	public UserModel addNewUser(final UserModel userToAdd);
 
-	UserModel updateUser(Integer userId, UserModel userToUpdate);
+	public UserModel updateUser(final Integer userId, final UserModel userToUpdate);
 
-	void deleteUserById(Integer userId);
+	public void deleteUserById(final Integer userId);
 
-	List<UserModel> findAllStartedUsers();
+	public List<UserModel> findAllStartedUsers();
 
-	UserModel getUserById(Integer userId);
+	public UserModel getUserById(final Integer userId);
 
-	List<UserModel> findAllUsers();
+	public List<UserModel> findAllUsers();
 }

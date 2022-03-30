@@ -10,7 +10,7 @@ public interface IUserReviewService {
 
 	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate);
 
-	void deleteUserReview(final Integer userId);
+	public void deleteUserReview(final Integer userId);
 
 	public List<HostReviewModel> findByUserId(final Integer userId);
 }

@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserModel;
 
@@ -56,7 +55,6 @@ public class BookingModel {
 	private AccomodationModel idAccomodation;
 
 	@Column(name = "CREATED_AT")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@CreatedDate
 	private LocalDateTime createdAt;
 }

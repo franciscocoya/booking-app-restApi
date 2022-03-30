@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
+@Getter
 @Table(name = "USER_HOST")
 @PrimaryKeyJoinColumn(name = "ID")
 public class UserHostModel extends UserModel {

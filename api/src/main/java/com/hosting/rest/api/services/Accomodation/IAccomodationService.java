@@ -12,13 +12,14 @@ import com.hosting.rest.api.models.Accomodation.AccomodationModel;
  **/
 public interface IAccomodationService {
 
-	public static final int ACCOMODATION_LIMIT_RESULTS = 100;
+	public static final int ACCOMODATION_LIMIT_RESULTS = 50;
 
 	public static final int EARTH_RADIUS = 6371; // En Km
 
 	/**
-	 * Fórmula para realizar el cálculo de un radio a partir de unas coordenadas de
-	 * origen.
+	 * Fórmula para realizar el cálculo la distancia en base a un radio desde un
+	 * origen de coordenadas.
+	 * 
 	 * {@link https://gautamsuraj.medium.com/haversine-formula-for-spring-data-jpa-db6a53516dc9}
 	 */
 	public static final String HAVERSINE_FORMULA = "(" + EARTH_RADIUS

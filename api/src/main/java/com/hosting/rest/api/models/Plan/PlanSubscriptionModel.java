@@ -1,15 +1,16 @@
 package com.hosting.rest.api.models.Plan;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Entity
 @Data
@@ -21,7 +22,6 @@ public class PlanSubscriptionModel {
     private PlanSubscriptionUserHostId planSubscriptionUserHostId;
     
     @Column(name = "CREATED_AT")
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @CreatedDate
     private LocalDateTime createdAt;
 }

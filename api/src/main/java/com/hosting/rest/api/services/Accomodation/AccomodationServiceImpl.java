@@ -129,7 +129,6 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		String findByNearbyLocationQuery = "select am"
 				+ " from AccomodationModel am inner join am.idAccomodationLocation acloc" + " where "
 				+ HAVERSINE_FORMULA + " < :distance" + " order by " + HAVERSINE_FORMULA + " desc";
-		// + " limit " + ACCOMODATION_LIMIT_RESULTS
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(findByNearbyLocationQuery,
 				AccomodationModel.class);
@@ -138,7 +137,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		accomodations.setParameter("longitude", lng);
 		accomodations.setParameter("distance", distance);
 
-		return accomodations.getResultList();
+		return accomodations.setMaxResults(ACCOMODATION_LIMIT_RESULTS).getResultList();
 	}
 
 	@Override

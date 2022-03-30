@@ -1,7 +1,7 @@
 package com.hosting.rest.api.services.User.UserReview;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
-import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 
 import java.util.List;
 
@@ -13,6 +13,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.NotFound.AccomodationNotFoundException;
+import com.hosting.rest.api.exceptions.User.UserReview.IllegalArgument.IllegalUserReviewArgumentException;
 import com.hosting.rest.api.models.User.HostReviewModel;
 import com.hosting.rest.api.repositories.User.UserReview.IUserReviewRepository;
 
@@ -27,6 +30,17 @@ public class UserReviewServiceImpl implements IUserReviewService {
 
 	@Override
 	public HostReviewModel addNewUserReview(final HostReviewModel newUserReview) {
+		if (!isNotNull(newUserReview)) {
+			throw new IllegalUserReviewArgumentException(
+					"Los datos introducidos para el nuevo usuario no son válidos.");
+		}
+
+		boolean existsUserReview = userReviewRepo.findById(newUserReview.getId()).get() != null;
+
+		if (existsUserReview) {
+			throw new IllegalUserReviewArgumentException("Ya existe una valoración para el usuario.");
+		}
+
 		return userReviewRepo.save(newUserReview);
 	}
 
@@ -34,21 +48,23 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	@Transactional
 	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate) {
 
-		HostReviewModel originalHostReview = isIntegerValidAndPositive(userId) ? userReviewRepo.findById(userId).get() : null;
+		if (!isIntegerValidAndPositive(userId)) {
+			throw new IllegalAccomodationArgumentsException("El id del usuario introducido no es válido.");
+		}
 
-		String contentToUpdate = isStringNotBlank(userReviewToUpdate.getContent()) ? userReviewToUpdate.getContent()
-				: originalHostReview.getContent();
+		HostReviewModel originalHostReview = userReviewRepo.findById(userId).get();
 
-		Integer starsToUpdate = isIntegerValidAndPositive(userReviewToUpdate.getStars()) ? userReviewToUpdate.getStars()
-				: originalHostReview.getStars();
+		if (!isNotNull(originalHostReview)) {
+			throw new AccomodationNotFoundException("La valoración de un usuario a actualizar no existe.");
+		}
 
 		// Contenido de la review
-		originalHostReview.setContent(contentToUpdate);
+		originalHostReview.setContent(userReviewToUpdate.getContent());
 
 		// Estrellas de la review
-		originalHostReview.setStars(starsToUpdate);
+		originalHostReview.setStars(userReviewToUpdate.getStars());
 
-		return originalHostReview != null ? userReviewRepo.save(originalHostReview) : null;
+		return userReviewRepo.save(originalHostReview);
 	}
 
 	@Override
@@ -58,16 +74,17 @@ public class UserReviewServiceImpl implements IUserReviewService {
 
 	@Override
 	public List<HostReviewModel> findByUserId(final Integer userId) {
-		
+
 		// TODO: Revisar
-		if(!isIntegerValidAndPositive(userId)) {
-			return null;
+		if (!isIntegerValidAndPositive(userId)) {
+			throw new IllegalUserReviewArgumentException("El id de usuario [ " + userId + " ] no es válido.");
 		}
-		
+
 		/**
 		 * Listado de las valoraciones a un usuario <code>userId</code>.
 		 */
-		String findByUserIdQuery = "select hr" + " from HostReviewModel hr inner join hr.idUserA hu" + " where hu.id = :userId";
+		String findByUserIdQuery = "SELECT hr " + " FROM HostReviewModel hr " + " INNER JOIN hr.idUserA hu "
+				+ " WHERE hu.id = :userId";
 
 		TypedQuery<HostReviewModel> userReviews = em.createQuery(findByUserIdQuery, HostReviewModel.class);
 
