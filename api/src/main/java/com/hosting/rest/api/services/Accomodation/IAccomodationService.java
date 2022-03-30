@@ -24,13 +24,15 @@ public interface IAccomodationService {
 
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel);
 
-	public List<AccomodationModel> listAllAccomodations();
+	public List<AccomodationModel> findAllAccomodations();
 
 	public AccomodationModel getAccomodationById(final String regNumber);
+	
+	public AccomodationModel updateAccomodationById(final String regNumber, final AccomodationModel accomodationToUpdate);
 
 	public void removeAccomodationById(final String regNumber);
 
-	public List<AccomodationModel> listAccomodationsByCity(final String cityToSearch);
+	public List<AccomodationModel> findByCity(final String cityToSearch);
 
 	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng, final double distanceRadius);
 }

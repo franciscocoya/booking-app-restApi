@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewServiceImpl;
 
+/**
+ * @author Francisco Coya Abajo
+ * @version v1.0.0
+ * @apiNote Controlador de valoraciones de un alojamiento.
+ */
 @RestController
 @RequestMapping("accomodations/reviews")
 public class AccomodationReviewController {
@@ -34,6 +39,7 @@ public class AccomodationReviewController {
 	public AccomodationReviewModel updateAccomodationReview(
 			@PathVariable(value = "accomodationReviewId") final Integer accomodationReviewId,
 			@Valid @RequestBody AccomodationReviewModel accomodationReviewToUpdate) {
+		// TODO:
 		return null;
 	}
 
@@ -47,5 +53,11 @@ public class AccomodationReviewController {
 			@PathVariable(value = "registerNumber") final String regNumber) {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
+
+	// TODO: Obtener las valoraciones de un alojamiento.
+
+	// TODO: Obtener la valoracion media de un alojamiento.
+
+	// TODO: Obtener los 4 últimos usuarios que han valorado el alojamiento.
 
 }

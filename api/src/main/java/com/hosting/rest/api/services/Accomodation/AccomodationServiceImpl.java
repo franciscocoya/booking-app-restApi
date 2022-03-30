@@ -7,8 +7,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import com.hosting.rest.api.exceptions.Accomodation.AccomodationNotFoundException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
@@ -33,7 +35,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	}
 
 	@Override
-	public List<AccomodationModel> listAllAccomodations() {
+	public List<AccomodationModel> findAllAccomodations() {
 		return accomodationRepo.findAll();
 	}
 
@@ -48,7 +50,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	}
 
 	@Override
-	public List<AccomodationModel> listAccomodationsByCity(final String cityToSearch) {
+	public List<AccomodationModel> findByCity(final String cityToSearch) {
 		/**
 		 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
 		 */
@@ -60,19 +62,56 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		accomodations.setParameter("city", cityToSearch);
 
 		return accomodations.getResultList();
-
-//		return accomodationRepo.findByCity(cityToSearch);
 	}
 
 	@Override
-	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng, final double distance) {
+	public List<AccomodationModel> findByRadiusFromCoordinates(final double lat, final double lng,
+			final double distance) {
 		
+		// TODO:
+
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(HAVERSINE_FORMULA, AccomodationModel.class);
 
 		accomodations.setParameter("latitude", lat);
 		accomodations.setParameter("longitude", lng);
 
 		return accomodations.getResultList();
+	}
+
+	@Override
+	@Modifying
+	public AccomodationModel updateAccomodationById(final String regNumber,
+			final AccomodationModel accomodationToUpdate) {
+
+		// Detalles del alojamiento original
+		AccomodationModel originalAccomodation = isStringNotBlank(regNumber) ? getAccomodationById(regNumber) : null;
+
+		if (originalAccomodation != null) {
+			// Número de habitaciones
+			originalAccomodation.setNumOfBedRooms(accomodationToUpdate.getNumOfBedRooms());
+
+			// Número de baños
+			originalAccomodation.setNumOfBathRooms(accomodationToUpdate.getNumOfBathRooms());
+
+			// Número de camas
+			originalAccomodation.setNumOfBeds(accomodationToUpdate.getNumOfBeds());
+
+			// Número de invitados
+			originalAccomodation.setNumOfGuests(accomodationToUpdate.getNumOfGuests());
+
+			// Precio por noche
+			originalAccomodation.setPricePerNight(accomodationToUpdate.getPricePerNight());
+
+			// Superficie de la vivienda
+			originalAccomodation.setArea(accomodationToUpdate.getArea());
+
+			// Propietario de la vivienda
+			if (accomodationToUpdate.getIdUserHost() != null) {
+				originalAccomodation.setIdUserHost(accomodationToUpdate.getIdUserHost());
+			}
+		}
+
+		return originalAccomodation != null ? accomodationRepo.save(originalAccomodation) : null;
 	}
 
 }

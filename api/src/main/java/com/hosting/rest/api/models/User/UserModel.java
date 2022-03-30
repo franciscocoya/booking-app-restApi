@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,6 +51,7 @@ public class UserModel {
     private String profileImage;
 
     @Column(name = "CREATED_AT")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @CreatedDate
     private LocalDateTime createdAt;
 }

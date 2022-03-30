@@ -19,9 +19,11 @@ import java.io.Serializable;
 @Embeddable
 public class PlanFeatureAppPlanId implements Serializable {
 
-    @Column(name = "ID_PLAN")
-    private Integer idPlan;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "ID_PLAN_FEATURE")
-    private Integer idPlanFeature;
+	@Column(name = "ID_PLAN")
+	private Integer idPlan;
+
+	@Column(name = "ID_PLAN_FEATURE")
+	private Integer idPlanFeature;
 }
