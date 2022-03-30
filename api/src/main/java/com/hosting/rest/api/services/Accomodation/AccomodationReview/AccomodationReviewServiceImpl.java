@@ -1,12 +1,13 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationReview;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 
 	@Override
 	public AccomodationReviewModel addNewAccomodationReview(final AccomodationReviewModel accomodationToAdd) {
+
+		if (!isNotNull(accomodationToAdd)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"Los datos introducidos para la creación de la valoración no son válidos.");
+		}
+
 		return accomodationReviewRepo.save(accomodationToAdd);
 	}
 
@@ -38,16 +45,35 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 
 	@Override
 	public void deleteAccomodationReviewById(final Integer accomodationReviewId) {
-		accomodationReviewRepo.deleteById(accomodationReviewId);
+		if (!isIntegerValidAndPositive(accomodationReviewId)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
+		}
+
+		boolean existsAccomodationReview = accomodationReviewRepo.findById(accomodationReviewId).get() != null;
+
+		if (existsAccomodationReview) {
+			accomodationReviewRepo.deleteById(accomodationReviewId);
+		}
 	}
 
 	@Override
 	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber) {
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"El número de registro [ " + regNumber + " ] no es válido.");
+		}
+
 		return accomodationReviewRepo.findByAccomodationId(regNumber);
 	}
 
 	@Override
 	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId) {
+		if (!isIntegerValidAndPositive(accomodationReviewId)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
+		}
+
 		return accomodationReviewRepo.findById(accomodationReviewId).get();
 	}
 
@@ -71,6 +97,11 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 
 	@Override
 	public Double getAccomodationReviewAverageStars(final String regNumber) {
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"El número de registro [ " + regNumber + " ] no es válido.");
+		}
+
 		String getAccomodationReviewAverageStars = "SELECT AVG(arm.stars) "
 				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idAccomodation ac "
 				+ "WHERE ac.registerNumber = :regNumber";
@@ -84,6 +115,11 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 
 	@Override
 	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber) {
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalAccomodationReviewArgumentsException(
+					"El número de registro [ " + regNumber + " ] no es válido.");
+		}
+
 		String findLasAccomodationReviewsQuery = "SELECT arm "
 				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idAccomodation ac " + "WHERE ac.id = :regNumber "
 				+ "ORDER BY arm.createdAt DESC";
