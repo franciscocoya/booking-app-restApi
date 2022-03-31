@@ -10,12 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 
 import lombok.AllArgsConstructor;
@@ -53,12 +52,11 @@ public class UserModel {
     @Column(name = "PROFILE_IMG")
     private String profileImage;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "ID_APP_CONFIGURATION")
     private UserConfigurationModel idUserConfiguration;
 
     @Column(name = "CREATED_AT")
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @CreatedDate
     private LocalDateTime createdAt;
 }

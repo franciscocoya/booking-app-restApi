@@ -23,7 +23,7 @@ public class PaymentController {
 	@Autowired
 	private PaymentServiceImpl paymentService;
 
-	@PostMapping("/new")
+	@PostMapping("new")
 	public PaymentModel addNewPaymentMethod(@RequestBody final PaymentModel paymentModel) {
 		return paymentService.addNewPayment(paymentModel);
 	}

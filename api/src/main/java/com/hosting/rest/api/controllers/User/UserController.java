@@ -2,8 +2,6 @@ package com.hosting.rest.api.controllers.User;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +23,23 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	// TODO: Crear un nuevo usuario
-	@PostMapping(value = "/new")
+	@PostMapping(value = "new")
 	public UserModel addNewUser(@RequestBody final UserModel userToCreate) {
 		return userService.addNewUser(userToCreate);
 	}
 
 	@DeleteMapping(value = "{userId}")
-	public void deleteUserById(@PathVariable(value = "userId") final Integer userId) {
-		userService.deleteUserById(userId);
+	public void deleteUserById(@PathVariable(value = "userId") final String userId) {
+		try {
+			userService.deleteUserById(Integer.parseInt(userId));
+		} catch (NumberFormatException nfe) {
+			// TODO: handle exception
+		}
+
 	}
 
 	@PutMapping("{userId}")
-	public UserModel udpateUser(@PathVariable(name = "userId") final Integer userId,
-			@Valid @RequestBody UserModel userModelToUpdate) {
+	public UserModel udpateUser(@PathVariable(name = "userId") final Integer userId, @RequestBody UserModel userModelToUpdate) {
 		return userService.updateUser(userId, userModelToUpdate);
 	}
 
@@ -47,21 +48,21 @@ public class UserController {
 		return userService.findAllStartedUsers();
 	}
 
-	@GetMapping("/all")
+	@GetMapping("all")
 	public List<UserModel> getAllUsers() {
 		return userService.findAllUsers();
 	}
 
 	@GetMapping("{userId}")
-	public UserModel getUserById(@PathVariable(value = "userId") final Integer userId) {
+	public UserModel getUserById(@PathVariable(value = "userId") final String userId) {
 		UserModel userToReturn = null;
 		try {
-			userToReturn = userService.getUserById(userId);
-			
+			userToReturn = userService.getUserById(Integer.parseInt(userId));
+
 		} catch (NumberFormatException nfe) {
 			throw new IllegalUserArgumentsException("El id del usuario ha de ser un valor numérico.");
 		}
-		
+
 		return userToReturn;
 	}
 

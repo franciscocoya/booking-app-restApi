@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.hosting.rest.api.models.User.UserModel;
@@ -21,9 +23,11 @@ public class UserSearchHistoryModel {
 	@Column(name = "ID")
 	private Integer idUserSearchHistory;
 
-	@Column(name = "ID_USER")
+	@ManyToOne
+	@JoinColumn(name = "ID_USER")
 	private UserModel idUser;
 
-	@Column(name = "ID_SEARCH")
-	private SearchModel idSearch;
+	@ManyToOne
+	@JoinColumn(name = "ID_SEARCH")
+	private SearchModel searches;
 }

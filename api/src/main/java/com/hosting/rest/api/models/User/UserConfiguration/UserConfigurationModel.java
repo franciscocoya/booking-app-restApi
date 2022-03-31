@@ -6,16 +6,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.hosting.rest.api.models.Currency.CurrencyModel;
 import com.hosting.rest.api.models.Language.LanguageModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER_CONFIGURATION")
 public class UserConfigurationModel {
 
@@ -24,11 +28,11 @@ public class UserConfigurationModel {
 	@Column(name = "ID")
 	private Integer idUserConfiguration;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "ID_APP_LANGUAGE")
 	private LanguageModel idLanguage;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "ID_CURRENCY")
 	private CurrencyModel idCurrency;
 }

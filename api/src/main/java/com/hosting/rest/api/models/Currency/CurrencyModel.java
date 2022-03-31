@@ -7,10 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "APP_CURRENCY")
 public class CurrencyModel {
 
@@ -29,5 +33,5 @@ public class CurrencyModel {
 	private String currencyEntity;
 
 	@Column(name = "CURRENCY_CODE")
-	private String currencyCode;
+	private Integer currencyCode;
 }
