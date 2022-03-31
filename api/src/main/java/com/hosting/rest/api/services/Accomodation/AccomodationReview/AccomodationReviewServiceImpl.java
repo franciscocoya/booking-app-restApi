@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.IllegalArgument.IllegalAccomodationReviewArgumentsException;
 import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
 import com.hosting.rest.api.exceptions.User.IllegalArgument.IllegalUserArgumentsException;
-import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationReview.IAccomodationReviewRepository;
 
 @Service

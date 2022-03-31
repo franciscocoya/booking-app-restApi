@@ -1,4 +1,4 @@
-package com.hosting.rest.api.models.Accomodation;
+package com.hosting.rest.api.models.Accomodation.AccomodationReview;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserModel;
 
 import lombok.AllArgsConstructor;

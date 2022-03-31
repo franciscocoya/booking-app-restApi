@@ -2,7 +2,7 @@ package com.hosting.rest.api.services.Accomodation.AccomodationReview;
 
 import java.util.List;
 
-import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 
 public interface IAccomodationReviewService {
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.User.IllegalArgument.IllegalUserArgumentsException;
-import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewServiceImpl;
 
 /**
