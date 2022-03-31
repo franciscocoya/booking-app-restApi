@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.User.IllegalArgument;
+package com.hosting.rest.api.exceptions.Booking.BookingBill.IllegalArguments;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
  * @version v1.0.0
- * @description Manejador de la exception IllegalUserArgumentsException
+ * @description Manejador de la exception IllegalBookingBillArgumentsException
  **/
 @ControllerAdvice
-public class IllegalUserArgumentHandler {
+public class IllegalBookingBillArgumentHandler {
 	@ResponseBody
-	@ExceptionHandler({ IllegalUserArgumentsException.class })
+	@ExceptionHandler({ IllegalBookingBillArgumentsException.class })
 	public ResponseEntity<Map<String, String>> userIllegalArgsHandler(final HttpServletRequest req,
-			final IllegalUserArgumentsException exception) {
+			final IllegalBookingBillArgumentsException exception) {
 
 		Map<String, String> errorResponse = new HashMap<>();
 

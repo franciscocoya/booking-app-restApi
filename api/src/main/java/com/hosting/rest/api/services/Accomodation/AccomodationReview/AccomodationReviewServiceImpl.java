@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.IllegalArgument.IllegalAccomodationReviewArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
+import com.hosting.rest.api.exceptions.User.IllegalArgument.IllegalUserArgumentsException;
 import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationReview.IAccomodationReviewRepository;
 
@@ -64,7 +66,16 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 					"El número de registro [ " + regNumber + " ] no es válido.");
 		}
 
-		return accomodationReviewRepo.findByAccomodationId(regNumber);
+		String findByAccomodationIdQuery = "SELECT ar "
+				+ "FROM AccomodationReviewModel ar INNER JOIN ar.idAccomodation ac "
+				+ "WHERE ac.registerNumber = :regNumber";
+
+		TypedQuery<AccomodationReviewModel> accomodationReviews = em.createQuery(findByAccomodationIdQuery,
+				AccomodationReviewModel.class);
+
+		accomodationReviews.setParameter("regNumber", regNumber);
+
+		return accomodationReviews.getResultList();
 	}
 
 	@Override
@@ -78,10 +89,10 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	}
 
 	@Override
-	public List<AccomodationReviewModel> findByUserId(final Integer userId) {
+	public List<AccomodationReviewModel> findByUserId(final Integer userId) throws NumberFormatException {
 
 		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalAccomodationReviewArgumentsException("El id de usuario [ " + userId + " ] no es válido.");
+			throw new IllegalUserArgumentsException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
 		String findAccomodationByUserIdQuery = "SELECT arm "
@@ -130,6 +141,15 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 		latestReviews.setParameter("regNumber", regNumber);
 
 		return latestReviews.setMaxResults(LATEST_ACCOMODATION_REVIEWS_LIMIT).getResultList();
+	}
+
+	@Override
+	public Integer countAccomodationReviewFromAccomodation(final String regNumber) {
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalAccomodationArgumentsException("El número de registro " + regNumber + " no es válido.");
+		}
+
+		return null;
 	}
 
 }

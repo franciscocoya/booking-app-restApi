@@ -15,23 +15,23 @@ import com.hosting.rest.api.models.Booking.BookingBillModel;
 import com.hosting.rest.api.services.Booking.BookingBill.BookingBillServiceImpl;
 
 @RestController
-@RequestMapping(value = "/bills")
+@RequestMapping(value = "bills")
 public class BookingBillController {
 
 	@Autowired
 	private BookingBillServiceImpl bookingBillService;
 
-	@PostMapping(name = "/new")
+	@PostMapping("new")
 	public BookingBillModel addNewBookingBill(@RequestBody BookingBillModel bookingBillModel) {
 		return bookingBillService.addNewBookingBill(bookingBillModel);
 	}
 
-	@DeleteMapping(name = "/delete/{bookingBillId}")
+	@DeleteMapping("{bookingBillId}")
 	public void removeBookingBillById(@PathVariable(name = "bookingBillId") final String bookingBillId) {
 		bookingBillService.deleteBookingBill(bookingBillId);
 	}
 
-	@GetMapping(name = "/booking/{accomodationRegNumber}")
+	@GetMapping("booking/{accomodationRegNumber}")
 	public List<BookingBillModel> listBookingBillHistory(
 			@PathVariable(name = "accomodationRegNumber") final String accomodationRegNumber) {
 		return bookingBillService.findAllBookingBillsByAccomodation(accomodationRegNumber);
