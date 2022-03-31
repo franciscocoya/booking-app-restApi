@@ -54,7 +54,7 @@ public class AccomodationReviewController {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
 
-	@GetMapping("/u/{userId}/all")
+	@GetMapping("/u/{userId}")
 	public List<AccomodationReviewModel> findAllAccomodationReviewsByUserId(
 			@PathVariable(value = "userId") final Integer userId) {
 		return accomodationReviewService.findByUserId(userId);

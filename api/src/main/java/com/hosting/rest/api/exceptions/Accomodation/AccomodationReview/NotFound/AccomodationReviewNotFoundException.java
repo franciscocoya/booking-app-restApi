@@ -14,7 +14,7 @@ public class AccomodationReviewNotFoundException extends RuntimeException {
 		super();
 	}
 
-	public AccomodationReviewNotFoundException(String message) {
+	public AccomodationReviewNotFoundException(final String message) {
 		super(message);
 	}
 }

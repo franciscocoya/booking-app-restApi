@@ -17,7 +17,7 @@ public class PlanNotFoundHandler {
 	@ResponseBody
 	@ExceptionHandler(PlanNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String planNotFoundHandler(PlanNotFoundException e) {
+	public String planNotFoundHandler(final PlanNotFoundException e) {
 		return e.getMessage();
 	}
 }

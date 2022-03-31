@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AccomodationrReviewNotFoundHandler {
 	@ResponseBody
 	@ExceptionHandler(AccomodationReviewNotFoundException.class)
-	public ResponseEntity<Map<String, String>> accomodationReviewNotFoundHandler(HttpServletRequest req,
-			AccomodationReviewNotFoundException exception) {
+	public ResponseEntity<Map<String, String>> accomodationReviewNotFoundHandler(final HttpServletRequest req,
+			final AccomodationReviewNotFoundException exception) {
 		
 		Map<String, String> errorResponse = new HashMap<>();
 

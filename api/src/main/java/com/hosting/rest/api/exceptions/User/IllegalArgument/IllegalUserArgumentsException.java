@@ -14,7 +14,7 @@ public class IllegalUserArgumentsException extends RuntimeException {
 		super();
 	}
 
-	public IllegalUserArgumentsException(String message) {
+	public IllegalUserArgumentsException(final String message) {
 		super(message);
 	}
 

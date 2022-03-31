@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IllegalUserArgumentHandler {
 	@ResponseBody
 	@ExceptionHandler(IllegalUserArgumentsException.class)
-	public ResponseEntity<Map<String, String>> userIllegalArgsHandler(HttpServletRequest req,
-			IllegalUserArgumentsException exception) {
+	public ResponseEntity<Map<String, String>> userIllegalArgsHandler(final HttpServletRequest req,
+			final IllegalUserArgumentsException exception) {
 
 		Map<String, String> errorResponse = new HashMap<>();
 

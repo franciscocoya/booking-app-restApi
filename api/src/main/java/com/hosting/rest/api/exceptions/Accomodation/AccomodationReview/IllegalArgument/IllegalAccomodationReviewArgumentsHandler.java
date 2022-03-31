@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IllegalAccomodationReviewArgumentsHandler {
 	@ResponseBody
 	@ExceptionHandler(IllegalAccomodationReviewArgumentsException.class)
-	public ResponseEntity<Map<String, String>> accomodationReviewIllegalArgsHandler(HttpServletRequest req,
-			IllegalAccomodationReviewArgumentsException exception) {
+	public ResponseEntity<Map<String, String>> accomodationReviewIllegalArgsHandler(final HttpServletRequest req,
+			final IllegalAccomodationReviewArgumentsException exception) {
 		
 		Map<String, String> errorResponse = new HashMap<>();
 

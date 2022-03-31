@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
+@Getter
 @Table(name = "ACCOMODATION_SERVICE_EXTRA")
 @PrimaryKeyJoinColumn(name = "ID")
 public class AccomodationServiceExtraModel extends AccomodationServiceModel {

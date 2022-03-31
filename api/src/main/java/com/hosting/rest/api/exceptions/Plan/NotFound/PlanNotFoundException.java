@@ -13,7 +13,7 @@ public class PlanNotFoundException extends RuntimeException {
 		super();
 	}
 
-	public PlanNotFoundException(Integer planId) {
+	public PlanNotFoundException(final Integer planId) {
 		super("No se encontró ningún plan con id: [" + planId + "]");
 	}
 }
