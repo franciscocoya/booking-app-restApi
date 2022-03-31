@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.IllegalArgument;
+package com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.AccomodationReviewReply.IllegalArgument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
  * @version v1.0.0
- * @description Manejador de la exception IllegalAccomodationArgumentsException
+ * @description Manejador de la exception IllegalAccomodationReviewReplyArgumentsException
  **/
 @ControllerAdvice
-public class IllegalAccomodationReviewArgumentsHandler {
+public class IllegalAccomodationReviewReplyArgumentsHandler {
 	@ResponseBody
-	@ExceptionHandler(IllegalAccomodationReviewArgumentsException.class)
+	@ExceptionHandler(IllegalAccomodationReviewReplyArgumentsException.class)
 	public ResponseEntity<Map<String, String>> accomodationReviewIllegalArgsHandler(final HttpServletRequest req,
-			final IllegalAccomodationReviewArgumentsException exception) {
+			final IllegalAccomodationReviewReplyArgumentsException exception) {
 		
 		Map<String, String> errorResponse = new HashMap<>();
 

@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.AccomodationReviewReply.IllegalArgument.IllegalAccomodationReviewReplyArgumentsException;
 import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewReply.AccomodationReviewReplyModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationReview.AccomodationReviewReply.IAccomodationReviewReplyRepository;
 
@@ -23,13 +24,27 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 	public AccomodationReviewReplyModel addNewAccomodationReviewReply(
 			final AccomodationReviewReplyModel accomodationReviewReplyToAdd) {
 		// TODO Auto-generated method stub
+
+		boolean existsAccomodationReviewReply = accomodationReviewReplyRepo
+				.existsById(accomodationReviewReplyToAdd.getAccomodationReviewReplyId());
+
+		if (existsAccomodationReviewReply) {
+			throw new IllegalAccomodationReviewReplyArgumentsException(
+					"La respuesta a la valoración del alojamiento ya existe");
+		}
+
 		return accomodationReviewReplyRepo.save(accomodationReviewReplyToAdd);
 	}
 
 	@Override
-	public void deleteAccomodationReviewReplyById(final Integer accomodationReviewReplyId) {
-		// TODO Auto-generated method stub
-		//accomodationReviewReplyRepo.deleteById(accomodationReviewReplyId);
+	public void deleteAccomodationReviewReplyById(final Integer accomodationReviewId) {
+		String deleteAccomodationReviewReplyQuery = "DELETE FROM AccomodationReviewReplyModel arrm "
+				+ "WHERE arrm.accomodationReviewReplyId.idAccomodationReview = :accomodationReviewId";
+
+		TypedQuery<Void> accomodationReviewReplyDeleted = em.createQuery(deleteAccomodationReviewReplyQuery,
+				Void.class);
+
+		accomodationReviewReplyDeleted.executeUpdate();
 	}
 
 	@Override
