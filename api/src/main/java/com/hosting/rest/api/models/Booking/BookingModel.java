@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Booking;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -42,9 +43,17 @@ public class BookingModel {
 	@Column(name = "GUESTS")
 	private Integer numOfGuests;
 
-	@OneToOne
-	@JoinColumn(name = "BILL_NUM")
-	private BookingBillModel billNumber;
+	@Column(name = "AMOUNT")
+	private BigDecimal amount;
+
+	@Column(name = "DISCCOUNT")
+	private BigDecimal disccount;
+
+	@Column(name = "SERVICE_FEE")
+	private BigDecimal serviceFee;
+
+	@Column(name = "TOTAL")
+	private BigDecimal total;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_USER")
@@ -53,6 +62,10 @@ public class BookingModel {
 	@OneToOne
 	@JoinColumn(name = "ID_ACCOMODATION")
 	private AccomodationModel idAccomodation;
+
+	@OneToOne
+	@JoinColumn(name = "ID_PAYMENT")
+	private AccomodationModel idPayment;
 
 	@Column(name = "CREATED_AT")
 	@CreatedDate

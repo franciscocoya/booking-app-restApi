@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class HostLanguageModel {
 
 	@EmbeddedId
-	private HostLanguageLanguageId hostLanguageLanguageId;
-
+	private HostLanguageLanguageId idHostLanguage;
+	
 	@Column(name = "IS_NATIVE")
 	private boolean isNative;
 
