@@ -37,7 +37,6 @@ public class AccomodationReviewReplyController {
 			@PathVariable(name = "accomodationReviewId") final String accomodationReviewId) {
 
 		AccomodationReviewReplyModel accomodationReviewReplyToReturn = null;
-		String res = "";
 
 		try {
 			accomodationReviewReplyToReturn = accomodationReviewReplyService
@@ -51,13 +50,13 @@ public class AccomodationReviewReplyController {
 		return accomodationReviewReplyToReturn;
 	}
 
-	@DeleteMapping("{replyId}")
+	@DeleteMapping("{accomodationReviewId}")
 	public void deleteByAccomodationReviewReply(
-			@PathVariable(name = "replyId") final String accomodationReviewReplyId) {
+			@PathVariable(name = "accomodationReviewId") final String accomodationReviewId) {
 
 		try {
 			accomodationReviewReplyService
-					.deleteAccomodationReviewReplyById(Integer.parseInt(accomodationReviewReplyId));
+					.deleteAccomodationReviewReplyById(Integer.parseInt(accomodationReviewId));
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalAccomodationReviewReplyArgumentsException(

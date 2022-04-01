@@ -1,9 +1,11 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewReply;
 
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +46,26 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 
 	@Override
 	public void deleteAccomodationReviewReplyById(final Integer accomodationReviewId) {
-		String deleteAccomodationReviewReplyQuery = "DELETE FROM AccomodationReviewReplyModel arrm INNER JOIN arrm.accomodationReview arm"
-				+ "WHERE arm.id = :accomodationReviewId";
+//		String deleteAccomodationReviewReplyQuery = "DELETE FROM AccomodationReviewReplyModel arrm "
+//				+ "WHERE arrm.accomodationReview.id = :accomodationReviewId";
 
-		TypedQuery<Void> accomodationReviewReplyDeleted = em.createQuery(deleteAccomodationReviewReplyQuery,
-				Void.class);
+		if (!isIntegerValidAndPositive(accomodationReviewId)) {
+			throw new IllegalAccomodationReviewReplyArgumentsException(
+					"El id de la valoración del alojamiento no es válido.");
+		}
 
-		accomodationReviewReplyDeleted.executeUpdate();
+		// Obtención de la repuesta a partir del id de la valoración.
+		AccomodationReviewReplyModel accomodationReviewReplyDeleted = findByReviewId(accomodationReviewId);
+
+		if (accomodationReviewReplyDeleted != null) {
+			accomodationReviewReplyRepo.delete(accomodationReviewReplyDeleted);
+		}
+
+//		Query accomodationReviewReplyDeleted = em.createQuery(deleteAccomodationReviewReplyQuery);
+//
+//		accomodationReviewReplyDeleted.setParameter("accomodationReviewId", accomodationReviewId);
+//
+//		accomodationReviewReplyDeleted.executeUpdate();
 	}
 
 	@Override
