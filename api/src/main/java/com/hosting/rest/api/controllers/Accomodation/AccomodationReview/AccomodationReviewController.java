@@ -38,15 +38,30 @@ public class AccomodationReviewController {
 
 	@PutMapping("{accomodationReviewId}")
 	public AccomodationReviewModel updateAccomodationReview(
-			@PathVariable(value = "accomodationReviewId") final Integer accomodationReviewId,
+			@PathVariable(value = "accomodationReviewId") final String accomodationReviewId,
 			@Valid @RequestBody AccomodationReviewModel accomodationReviewToUpdate) {
-		// TODO:
-		return null;
+		AccomodationReviewModel accomodationReviewToReturn = null;
+
+		try {
+			accomodationReviewToReturn = accomodationReviewService.udpateAccomodationReview(accomodationReviewToUpdate);
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
+		}
+
+		return accomodationReviewToReturn;
 	}
 
 	@DeleteMapping("{accomodationReviewId}")
-	public void deleteAccomodationReviewById(final Integer accomodationReviewId) {
-		accomodationReviewService.deleteAccomodationReviewById(accomodationReviewId);
+	public void deleteAccomodationReviewById(final String accomodationReviewId) {
+		try {
+			accomodationReviewService.deleteAccomodationReviewById(Integer.parseInt(accomodationReviewId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
+		}
 	}
 
 	@GetMapping("{registerNumber}")
@@ -80,7 +95,5 @@ public class AccomodationReviewController {
 			@PathVariable(value = "registerNumber") final String regNumber) {
 		return accomodationReviewService.findLatestAccomodationReviews(regNumber);
 	}
-
-	// TODO: Obtener los 4 últimos usuarios que han valorado el alojamiento.
 
 }

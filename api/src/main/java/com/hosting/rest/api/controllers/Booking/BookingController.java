@@ -65,7 +65,6 @@ public class BookingController {
 		return bookingService.findByBookingYear(regNumber, yearToSearch);
 	}
 
-	// TODO: Listar todas las reservas de un usuario
 	@GetMapping("users/{userId}")
 	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") final String userId) {
 		List<BookingModel> bookingsToReturn = null;
@@ -79,5 +78,16 @@ public class BookingController {
 		return bookingsToReturn;
 	}
 
-	// TODO: Histórico de reservas del alojamiento - ADMIN
+	@GetMapping("users/{userId}/count")
+	public int countUserBookings(@PathVariable(name = "userId") final String userId) {
+		int numOfBookings = 0;
+
+		try {
+			numOfBookings = bookingService.getNumOfBookingsByUserId(Integer.parseInt(userId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+		}
+		return numOfBookings;
+	}
 }

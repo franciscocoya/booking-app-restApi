@@ -82,13 +82,7 @@ public class BookingServiceImpl implements IBookingService {
 
 		bookingRepo.deleteById(bookingId);
 	}
-
-	@Override
-	public int getNumOfBookingsByUserId(final Integer userId) {
-//		return bookingRepo.findByHostUser(userId).size();
-		return -1;
-	}
-
+	
 	@Override
 	public List<BookingModel> findAllBookingByUser(final Integer userId) {
 		/**
@@ -111,5 +105,10 @@ public class BookingServiceImpl implements IBookingService {
 		}
 
 		return bookingRepo.findById(bookingId).get();
+	}
+
+	@Override
+	public int getNumOfBookingsByUserId(final Integer userId) {
+		return findAllBookingByUser(userId).size();
 	}
 }

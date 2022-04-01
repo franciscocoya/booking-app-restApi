@@ -22,10 +22,8 @@ public interface IBookingService {
 
 	void deleteBookingById(final Integer bookingId);
 
-	// TODO: Número de reservas realizadas por un usuario.
 	int getNumOfBookingsByUserId(final Integer userId);
 
-	// TODO: Listado de reservas realizadas por un usuario.
 	List<BookingModel> findAllBookingByUser(final Integer userId);
 
 }
