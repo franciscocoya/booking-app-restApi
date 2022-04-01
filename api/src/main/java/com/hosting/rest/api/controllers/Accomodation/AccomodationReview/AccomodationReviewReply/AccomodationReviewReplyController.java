@@ -28,22 +28,24 @@ public class AccomodationReviewReplyController {
 			throw new IllegalAccomodationReviewReplyArgumentsException(
 					"Alguno de los parámetros de la respuesta de la valoración del alojamiento no es válido.");
 		}
-		
+
 		return accomodationReviewReplyService.addNewAccomodationReviewReply(accomodationReviewReplyToAdd);
 	}
 
-	@GetMapping("{replyId}")
-	public AccomodationReviewReplyModel findByAccomodationReviewReplyId(
-			@PathVariable(name = "replyId") final String accomodationReviewReplyId) {
+	@GetMapping("r/{accomodationReviewId}")
+	public AccomodationReviewReplyModel findByAccomodationReviewId(
+			@PathVariable(name = "accomodationReviewId") final String accomodationReviewId) {
+
 		AccomodationReviewReplyModel accomodationReviewReplyToReturn = null;
+		String res = "";
 
 		try {
 			accomodationReviewReplyToReturn = accomodationReviewReplyService
-					.findByReviewId(Integer.parseInt(accomodationReviewReplyId));
+					.findByReviewId(Integer.parseInt(accomodationReviewId));
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalAccomodationReviewReplyArgumentsException(
-					"El id de la respuesta a la valoración del alojamiento no es válido.");
+					"El id de la valoración del alojamiento no es válido.");
 		}
 
 		return accomodationReviewReplyToReturn;

@@ -1,5 +1,7 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewReply;
 
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,10 +25,14 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 	@Override
 	public AccomodationReviewReplyModel addNewAccomodationReviewReply(
 			final AccomodationReviewReplyModel accomodationReviewReplyToAdd) {
-		// TODO Auto-generated method stub
 
-		boolean existsAccomodationReviewReply = accomodationReviewReplyRepo
-				.existsById(accomodationReviewReplyToAdd.getAccomodationReviewReplyId());
+		if (!isNotNull(accomodationReviewReplyToAdd)) {
+			throw new IllegalAccomodationReviewReplyArgumentsException(
+					"La respuesta a la valoración del alojamiento no es válida.");
+		}
+
+		boolean existsAccomodationReviewReply = findByReviewId(
+				accomodationReviewReplyToAdd.getAccomodationReview().getId()) != null;
 
 		if (existsAccomodationReviewReply) {
 			throw new IllegalAccomodationReviewReplyArgumentsException(
@@ -38,8 +44,8 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 
 	@Override
 	public void deleteAccomodationReviewReplyById(final Integer accomodationReviewId) {
-		String deleteAccomodationReviewReplyQuery = "DELETE FROM AccomodationReviewReplyModel arrm "
-				+ "WHERE arrm.accomodationReviewReplyId.idAccomodationReview = :accomodationReviewId";
+		String deleteAccomodationReviewReplyQuery = "DELETE FROM AccomodationReviewReplyModel arrm INNER JOIN arrm.accomodationReview arm"
+				+ "WHERE arm.id = :accomodationReviewId";
 
 		TypedQuery<Void> accomodationReviewReplyDeleted = em.createQuery(deleteAccomodationReviewReplyQuery,
 				Void.class);
@@ -50,8 +56,8 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 	@Override
 	public AccomodationReviewReplyModel findByReviewId(final Integer accomodationReviewId) {
 		String findByReviewIdQuery = "SELECT arrm "
-				+ "FROM AccomodationReviewReplyModel arrm INNER JOIN arrm.accomodationReviewReplyId.idAccomodationReview arm"
-				+ "WHERE arn.id = :accomodationReviewId";
+				+ "FROM AccomodationReviewReplyModel arrm INNER JOIN arrm.accomodationReview arm "
+				+ "WHERE arm.id = :accomodationReviewId";
 
 		TypedQuery<AccomodationReviewReplyModel> accomodationReviewReply = em.createQuery(findByReviewIdQuery,
 				AccomodationReviewReplyModel.class);
