@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.AccomodationReviewReply.IllegalArgument.IllegalAccomodationReviewReplyArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewReply.AccomodationReviewReplyModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewReply.AccomodationReviewReplyServiceImpl;
 
@@ -25,7 +25,7 @@ public class AccomodationReviewReplyController {
 	public AccomodationReviewReplyModel addNewAccomodationReviewReply(
 			final AccomodationReviewReplyModel accomodationReviewReplyToAdd) {
 		if (!isNotNull(accomodationReviewReplyToAdd)) {
-			throw new IllegalAccomodationReviewReplyArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"Alguno de los parámetros de la respuesta de la valoración del alojamiento no es válido.");
 		}
 
@@ -43,8 +43,7 @@ public class AccomodationReviewReplyController {
 					.findByReviewId(Integer.parseInt(accomodationReviewId));
 
 		} catch (NumberFormatException nfe) {
-			throw new IllegalAccomodationReviewReplyArgumentsException(
-					"El id de la valoración del alojamiento no es válido.");
+			throw new IllegalArgumentsCustomException("El id de la valoración del alojamiento no es válido.");
 		}
 
 		return accomodationReviewReplyToReturn;
@@ -55,11 +54,10 @@ public class AccomodationReviewReplyController {
 			@PathVariable(name = "accomodationReviewId") final String accomodationReviewId) {
 
 		try {
-			accomodationReviewReplyService
-					.deleteAccomodationReviewReplyById(Integer.parseInt(accomodationReviewId));
+			accomodationReviewReplyService.deleteAccomodationReviewReplyById(Integer.parseInt(accomodationReviewId));
 
 		} catch (NumberFormatException nfe) {
-			throw new IllegalAccomodationReviewReplyArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"El id de la respuesta a la valoración del alojamiento no es válido.");
 		}
 

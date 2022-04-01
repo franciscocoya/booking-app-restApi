@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.User.UserReview.IllegalArgument.IllegalUserReviewArgumentException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.User.HostReviewModel;
 import com.hosting.rest.api.repositories.User.UserReview.IUserReviewRepository;
 
@@ -29,14 +29,14 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	@Override
 	public HostReviewModel addNewUserReview(final HostReviewModel newUserReview) {
 		if (!isNotNull(newUserReview)) {
-			throw new IllegalUserReviewArgumentException(
+			throw new IllegalArgumentsCustomException(
 					"Los datos introducidos para el nuevo usuario no son válidos.");
 		}
 
 		boolean existsUserReview = userReviewRepo.findById(newUserReview.getId()).get() != null;
 
 		if (existsUserReview) {
-			throw new IllegalUserReviewArgumentException("Ya existe una valoración para el usuario.");
+			throw new IllegalArgumentsCustomException("Ya existe una valoración para el usuario.");
 		}
 
 		return userReviewRepo.save(newUserReview);
@@ -79,7 +79,7 @@ public class UserReviewServiceImpl implements IUserReviewService {
 
 		// TODO: Revisar
 		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalUserReviewArgumentException("El id de usuario [ " + userId + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
 		/**

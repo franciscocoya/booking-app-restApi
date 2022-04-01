@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
-import com.hosting.rest.api.exceptions.Accomodation.NotFound.AccomodationNotFoundException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.Accomodation.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 
@@ -43,7 +43,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// propietario.
 		if (!isNotNull(accomodationModel) || !isNotNull(accomodationModel.getRegisterNumber())
 				|| !isNotNull(accomodationModel.getIdUserHost())) {
-			throw new IllegalAccomodationArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"Los datos introducidos para el alojamiento no son válidos o falta alguna propiedad.");
 		}
 
@@ -51,7 +51,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		boolean existsAccomodation = accomodationRepo.existsById(accomodationModel.getRegisterNumber());
 
 		if (existsAccomodation) {
-			throw new IllegalAccomodationArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"Ya se encuentra registrado un alojamiento con número de registro ["
 							+ accomodationModel.getRegisterNumber() + " ].");
 		}
@@ -66,19 +66,19 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Override
 	public AccomodationModel getAccomodationById(final String regNumber) {
-		return accomodationRepo.findById(regNumber).orElseThrow(() -> new AccomodationNotFoundException(regNumber));
+		return accomodationRepo.findById(regNumber).orElseThrow(() -> new NotFoundCustomException(regNumber));
 	}
 
 	@Override
 	public String removeAccomodationById(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalAccomodationArgumentsException("El número de registro pasado como parámetro está vacío.");
+			throw new IllegalArgumentsCustomException("El número de registro pasado como parámetro está vacío.");
 		}
 
 		boolean existsAccomodation = accomodationRepo.existsById(regNumber);
 
 		if (!existsAccomodation) {
-			throw new AccomodationNotFoundException(
+			throw new NotFoundCustomException(
 					"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
 		}
 
@@ -90,7 +90,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Override
 	public List<AccomodationModel> findByCity(final String cityToSearch) {
 		if (!isStringNotBlank(cityToSearch)) {
-			throw new IllegalAccomodationArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"El valor [ " + cityToSearch + " ] está vacío o no es válido.");
 		}
 
@@ -112,15 +112,15 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng, final double distance) {
 
 		if (!isValidGeographicCoordinate(lat, true)) {
-			throw new IllegalAccomodationArgumentsException("La latitud introducida no es válida.");
+			throw new IllegalArgumentsCustomException("La latitud introducida no es válida.");
 		}
 
 		if (!isValidGeographicCoordinate(lng, false)) {
-			throw new IllegalAccomodationArgumentsException("La longitud introducida no es válida.");
+			throw new IllegalArgumentsCustomException("La longitud introducida no es válida.");
 		}
 
 		if (!isDoubleValidAndPositive(distance)) {
-			throw new IllegalAccomodationArgumentsException("La distancia introducida no es válida.");
+			throw new IllegalArgumentsCustomException("La distancia introducida no es válida.");
 		}
 
 		/**
@@ -147,7 +147,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 			final AccomodationModel accomodationToUpdate) {
 
 		if (!isStringNotBlank(regNumber)) {
-			throw new AccomodationNotFoundException(
+			throw new NotFoundCustomException(
 					"No se encontró ningún alojamiento con el número de registro [ " + regNumber + " ]");
 		}
 
@@ -186,7 +186,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	public List<AccomodationModel> findByCategory(final String accomodationCategory) {
 
 		if (!isStringNotBlank(accomodationCategory)) {
-			throw new IllegalAccomodationArgumentsException("La categoría introducida está vacía o no es válida.");
+			throw new IllegalArgumentsCustomException("La categoría introducida está vacía o no es válida.");
 		}
 
 		String findByAccomodationCategoryQuery = "SELECT am "
@@ -204,11 +204,11 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Override
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice) {
 		if (!isBigDecimalValid(minPrice)) {
-			throw new IllegalAccomodationArgumentsException("El precio mínimo introducido no es válido.");
+			throw new IllegalArgumentsCustomException("El precio mínimo introducido no es válido.");
 		}
 
 		if (!isBigDecimalValid(maxPrice)) {
-			throw new IllegalAccomodationArgumentsException("El precio máximo introducido no es válido.");
+			throw new IllegalArgumentsCustomException("El precio máximo introducido no es válido.");
 		}
 
 		String findByAccomodationCategoryQuery = "SELECT am " + "FROM AccomodationModel am "

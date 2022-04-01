@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.AccomodationReviewReply.IllegalArgument;
+package com.hosting.rest.api.exceptions.Accomodation.IllegalArguments;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
  * @version v1.0.0
- * @description Manejador de la exception IllegalAccomodationReviewReplyArgumentsException
+ * @description Manejador de la exception IllegalAccomodationArgumentsException
  **/
 @ControllerAdvice
-public class IllegalAccomodationReviewReplyArgumentsHandler {
+public class IllegalArgumentsCustomHandler {
 	@ResponseBody
-	@ExceptionHandler(IllegalAccomodationReviewReplyArgumentsException.class)
-	public ResponseEntity<Map<String, String>> accomodationReviewIllegalArgsHandler(final HttpServletRequest req,
-			final IllegalAccomodationReviewReplyArgumentsException exception) {
+	@ExceptionHandler(IllegalArgumentsCustomException.class)
+	public ResponseEntity<Map<String, String>> accomodationIllegalArgsHandler(HttpServletRequest req,
+			IllegalArgumentsCustomException exception) {
 		
 		Map<String, String> errorResponse = new HashMap<>();
 
 		errorResponse.put("path", req.getServletPath());
-		errorResponse.put("status", HttpStatus.BAD_REQUEST.toString());
+		errorResponse.put("status", HttpStatus.NOT_FOUND.toString());
 		errorResponse.put("message", exception.getMessage());
 		
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

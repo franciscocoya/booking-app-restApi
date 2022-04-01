@@ -24,6 +24,9 @@ public class SavedAccomodationController {
 	
 	@PostMapping("new")
 	public SavedAccomodationModel addNewSavedAccomodation(@RequestBody final SavedAccomodationModel savedAccomodationToCreate) {
+		
+		
+		
 		return savedAccomodationService.addNewSavedAccomodation(savedAccomodationToCreate);
 	}
 	

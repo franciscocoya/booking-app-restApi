@@ -13,9 +13,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.Accomodation.AccomodationReview.IllegalArgument.IllegalAccomodationReviewArgumentsException;
-import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalAccomodationArgumentsException;
-import com.hosting.rest.api.exceptions.User.IllegalArgument.IllegalUserArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationReview.IAccomodationReviewRepository;
 
@@ -32,7 +30,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	public AccomodationReviewModel addNewAccomodationReview(final AccomodationReviewModel accomodationToAdd) {
 
 		if (!isNotNull(accomodationToAdd)) {
-			throw new IllegalAccomodationReviewArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"Los datos introducidos para la creación de la valoración no son válidos.");
 		}
 
@@ -48,7 +46,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public void deleteAccomodationReviewById(final Integer accomodationReviewId) {
 		if (!isIntegerValidAndPositive(accomodationReviewId)) {
-			throw new IllegalAccomodationReviewArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
 		}
 
@@ -62,8 +60,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalAccomodationReviewArgumentsException(
-					"El número de registro [ " + regNumber + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
 		}
 
 		String findByAccomodationIdQuery = "SELECT ar "
@@ -81,7 +78,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId) {
 		if (!isIntegerValidAndPositive(accomodationReviewId)) {
-			throw new IllegalAccomodationReviewArgumentsException(
+			throw new IllegalArgumentsCustomException(
 					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
 		}
 
@@ -92,7 +89,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	public List<AccomodationReviewModel> findByUserId(final Integer userId) throws NumberFormatException {
 
 		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalUserArgumentsException("El id de usuario [ " + userId + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
 		String findAccomodationByUserIdQuery = "SELECT arm "
@@ -109,8 +106,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public Double getAccomodationReviewAverageStars(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalAccomodationReviewArgumentsException(
-					"El número de registro [ " + regNumber + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
 		}
 
 		String getAccomodationReviewAverageStars = "SELECT AVG(arm.stars) "
@@ -127,8 +123,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalAccomodationReviewArgumentsException(
-					"El número de registro [ " + regNumber + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
 		}
 
 		String findLasAccomodationReviewsQuery = "SELECT arm "
@@ -146,7 +141,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public Integer countAccomodationReviewFromAccomodation(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalAccomodationArgumentsException("El número de registro " + regNumber + " no es válido.");
+			throw new IllegalArgumentsCustomException("El número de registro " + regNumber + " no es válido.");
 		}
 
 		return null;

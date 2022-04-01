@@ -2,11 +2,13 @@ package com.hosting.rest.api.models.Plan.PlanFeatureAppPlan;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "PLAN_FEATURE")
 public class PlanFeatureModel {

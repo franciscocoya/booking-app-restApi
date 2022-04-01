@@ -5,15 +5,15 @@ package com.hosting.rest.api.exceptions.Accomodation.NotFound;
  * @version v1.0.0
  * @description Excepción que se lanza cuando no se encuentra un alojamiento.
  **/
-public class AccomodationNotFoundException extends RuntimeException {
+public class NotFoundCustomException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public AccomodationNotFoundException() {
+	public NotFoundCustomException() {
 		super();
 	}
 
-	public AccomodationNotFoundException(String message) {
+	public NotFoundCustomException(String message) {
 		super(message);
 	}
 }

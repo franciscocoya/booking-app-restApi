@@ -6,19 +6,19 @@ package com.hosting.rest.api.exceptions.Accomodation.IllegalArguments;
  * @description Se muestra cuando se introduce mal el número de registro del
  *              alojamiento.
  **/
-public class IllegalAccomodationArgumentsException extends RuntimeException {
+public class IllegalArgumentsCustomException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public IllegalAccomodationArgumentsException() {
+	public IllegalArgumentsCustomException() {
 		super();
 	}
 
-	public IllegalAccomodationArgumentsException(final String message) {
+	public IllegalArgumentsCustomException(final String message) {
 		super(message);
 	}
 
-	public IllegalAccomodationArgumentsException(final String message, final String param) {
+	public IllegalArgumentsCustomException(final String message, final String param) {
 		super(message + " [ " + param + " ] no es válido.");
 	}
 

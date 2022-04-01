@@ -50,7 +50,7 @@ public class AppUtils {
 	 * @return
 	 */
 	public static boolean isBigDecimalValid(final BigDecimal bigDecimalToCheck) {
-		return isNotNull(bigDecimalToCheck);
+		return !isNotNull(bigDecimalToCheck);
 	}
 
 	/**

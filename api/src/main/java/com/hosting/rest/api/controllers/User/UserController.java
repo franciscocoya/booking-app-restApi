@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hosting.rest.api.exceptions.User.IllegalArgument.IllegalUserArgumentsException;
+import com.hosting.rest.api.exceptions.Accomodation.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.services.User.UserServiceImpl;
 
@@ -60,7 +60,7 @@ public class UserController {
 			userToReturn = userService.getUserById(Integer.parseInt(userId));
 
 		} catch (NumberFormatException nfe) {
-			throw new IllegalUserArgumentsException("El id del usuario ha de ser un valor numérico.");
+			throw new IllegalArgumentsCustomException("El id del usuario ha de ser un valor numérico.");
 		}
 
 		return userToReturn;
