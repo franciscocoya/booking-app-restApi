@@ -55,6 +55,23 @@ public class AccomodationServiceController {
 		return accomodationServiceService.updateAccomodationService(accomodationService);
 	}
 
+	@GetMapping("{accomodationServiceId}")
+	public AccomodationServiceModel getAccomodationServiceById(
+			@PathVariable(name = "accomodationServiceId") final String accomodationServiceId) {
+		AccomodationServiceModel accomodationServiceToReturn = null;
+
+		try {
+			accomodationServiceToReturn = accomodationServiceService
+					.getAccomodationServiceById(Integer.parseInt(accomodationServiceId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
+		}
+
+		return accomodationServiceToReturn;
+	}
+
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccServiceModel addNewServiceToAccomodation(
 			@PathVariable(name = "regNumber") final String regNumber,
@@ -81,21 +98,14 @@ public class AccomodationServiceController {
 		return accomodationServiceService.findAllAccomodationServicesFromAccomodation(regNumber);
 	}
 
-	@GetMapping("{accomodationServiceId}")
-	public AccomodationServiceModel getAccomodationServiceById(
-			@PathVariable(name = "accomodationServiceId") final String accomodationServiceId) {
-		AccomodationServiceModel accomodationServiceToReturn = null;
+	@GetMapping("{regNumber}/{accomodationServiceId}")
+	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(
+			@PathVariable(name = "regNumber") final String regNumber,
+			@PathVariable(name = "accomodationServiceId") final Integer accomodationServiceId) {
 
-		try {
-			accomodationServiceToReturn = accomodationServiceService
-					.getAccomodationServiceById(Integer.parseInt(accomodationServiceId));
-
-		} catch (NumberFormatException nfe) {
-			throw new IllegalArgumentsCustomException(
-					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
-		}
-
-		return accomodationServiceToReturn;
+		// TODO: Crear el método en el servicio
+		return null;
+		// return accomodationServiceService.;
 	}
 
 }

@@ -45,6 +45,7 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 					"No se puede añadir el servicio indicado ya que no se encuentra disponible.");
 		}
 
+		// TODO: Revisar query para inserción con clave compuesta
 		String addNewAccomodationAccServiceQuery = "INSERT INTO ACCOMODATION_ACC_SERVICE( ID_ACC, ID_ACC_SERVICE ) VALUES(:accomodationId, :regNumber)";
 
 		Query addNewServiceToAccomodation = em.createNativeQuery(addNewAccomodationAccServiceQuery);
@@ -70,9 +71,9 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 					"El id del servicio [ " + accomodationServiceId + " ] no es válido.");
 		}
 
-		String deleteAccServiceByRegNumberAndAccServiceId = "DELETE FROM AccomodationAccServiceModel accsm"
-				+ " WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber"
-				+ " AND accs.accomodationAccServiceId.idAccomodationService = :accServiceId";
+		String deleteAccServiceByRegNumberAndAccServiceId = "DELETE FROM AccomodationAccServiceModel accsm "
+				+ " WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber "
+				+ " AND accs.accomodationAccServiceId.idAccomodationService = :accServiceId ";
 
 		Query deletedAccomodationService = em.createQuery(deleteAccServiceByRegNumberAndAccServiceId);
 
@@ -80,7 +81,6 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 		deletedAccomodationService.setParameter("accServiceId", accomodationServiceId);
 
 		deletedAccomodationService.executeUpdate();
-
 	}
 
 	@Override
@@ -91,7 +91,10 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
 		}
 
-		String getAccomodationAccServiceByRegNumberAndAccomodationServiceIdQuery = "SELECT accs FROM AccomodationAccService accs WHERE ";
+		String getAccomodationAccServiceByRegNumberAndAccomodationServiceIdQuery = "SELECT accs "
+				+ "FROM AccomodationAccService accs "
+				+ "WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber "
+				+ "AND accs.accomodationAccServiceId.idAccomodationService = :accomodationServiceId ";
 
 		TypedQuery<AccomodationAccServiceModel> accomodationAccService = em.createQuery(
 				getAccomodationAccServiceByRegNumberAndAccomodationServiceIdQuery, AccomodationAccServiceModel.class);
