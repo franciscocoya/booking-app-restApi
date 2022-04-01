@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation.NotFound;
+package com.hosting.rest.api.exceptions.NotFound;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya

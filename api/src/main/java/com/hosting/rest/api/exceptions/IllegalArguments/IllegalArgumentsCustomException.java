@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation.IllegalArguments;
+package com.hosting.rest.api.exceptions.IllegalArguments;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya

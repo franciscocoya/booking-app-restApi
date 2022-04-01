@@ -1,4 +1,4 @@
-package com.hosting.rest.api.exceptions.Accomodation.NotFound;
+package com.hosting.rest.api.exceptions.NotFound;
 
 import java.util.HashMap;
 import java.util.Map;
