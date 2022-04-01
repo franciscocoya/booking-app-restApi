@@ -1,16 +1,21 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationService;
 
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationServiceModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationService.IAccomodationServiceRepository;
 
@@ -25,18 +30,39 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 
 	@Override
 	public AccomodationServiceModel addNewAccomodationService(final AccomodationServiceModel accomodationService) {
-		return accomodationService != null ? accomodationServiceRepo.save(accomodationService) : null;
+		if (!isNotNull(accomodationService)) {
+			throw new IllegalArgumentsCustomException(
+					"Alguno de los datos introducidos para el servicion del alojamiento no es válido.");
+		}
+
+		return accomodationServiceRepo.save(accomodationService);
 	}
 
 	@Override
 	public AccomodationServiceModel updateAccomodationService(final AccomodationServiceModel accomodationService) {
-		// TODO Auto-generated method stub
+
+		if (accomodationService == null) {
+			throw new IllegalArgumentsCustomException(
+					"Alguno de los datos del servicio de alojamiento introducido no es válido.");
+		}
+
+		boolean existsAccomodationService = false;
+
+		if (!existsAccomodationService) {
+			throw new NotFoundCustomException("El servicio de alojamiento a actualizar no existe.");
+		}
+
 		return null;
 	}
 
 	@Override
 	public List<AccomodationServiceModel> findAllAccomodationServicesFromAccomodation(final String regNumber)
 			throws IllegalArgumentException {
+
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
+		}
+
 		/**
 		 * Listado de todos los servicios que ofrece un alojamiento, el número de
 		 * registro es pasado como parámetro: <code>regNumber</code>.
@@ -55,23 +81,22 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 
 	@Override
 	@Transactional
-	public void deleteAccomodationServiceById(final String accomodationRegNumber, final Integer accomodationServiceId) {
+	public void deleteAccomodationServiceById(final Integer accomodationServiceId) {
+		if (!isIntegerValidAndPositive(accomodationServiceId)) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio [ " + accomodationServiceId + " ] no es válido.");
+		}
 
-		// TODO: Control de parametros
-
-		/**
-		 * Eliminar un servicio de un alojamiento.
-		 */
-		String deleteAccServiceByRegNumberAndAccServiceId = "DELETE FROM AccomodationAccServiceModel accs"
-				+ " WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber"
-				+ " AND accs.accomodationAccServiceId.idAccomodationService = :accServiceId";
-
-		Query deletedAccomodationService = em.createQuery(deleteAccServiceByRegNumberAndAccServiceId);
-
-		deletedAccomodationService.setParameter("regNumber", accomodationRegNumber);
-		deletedAccomodationService.setParameter("accServiceId", accomodationServiceId);
-
-		deletedAccomodationService.executeUpdate();
+		accomodationServiceRepo.deleteById(accomodationServiceId);
 	}
 
+	@Override
+	public AccomodationServiceModel getAccomodationServiceById(final Integer accomodationServiceId) {
+		if (!isIntegerValidAndPositive(accomodationServiceId)) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
+		}
+
+		return accomodationServiceRepo.findById(accomodationServiceId).get();
+	}
 }
