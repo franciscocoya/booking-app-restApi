@@ -1,5 +1,7 @@
 package com.hosting.rest.api.services.Booking;
 
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Booking.BookingModel;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 
@@ -27,8 +31,8 @@ public class BookingServiceImpl implements IBookingService {
 		 * Listado de reservas de un alojamiento realizadas en un año específico:
 		 * <code>yearToSearch</code>
 		 */
-		String listBookingFromYearQuery = "select bm from BookingModel bm inner join bm.idAccomodation ac"
-				+ " where YEAR(bm.createdAt) = :year" + " and ac.registerNumber = :registerNumber";
+		String listBookingFromYearQuery = "SELECT bm " + "FROM BookingModel bm INNER JOIN bm.idAccomodation ac "
+				+ "WHERE YEAR(bm.createdAt) = :year AND ac.registerNumber = :registerNumber";
 
 		TypedQuery<BookingModel> bookings = em.createQuery(listBookingFromYearQuery, BookingModel.class);
 
@@ -40,17 +44,42 @@ public class BookingServiceImpl implements IBookingService {
 
 	@Override
 	public BookingModel addNewBooking(final BookingModel bookingModelToCreate) {
+		if (bookingModelToCreate == null) {
+			throw new IllegalArgumentsCustomException("Los datos de la reserva a crear no son válidos.");
+		}
+
 		return bookingRepo.save(bookingModelToCreate);
 	}
 
 	@Override
 	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate) {
-		// TODO:
+		boolean existsBooking = bookingRepo.existsById(bookingId);
+
+		if (!isIntegerValidAndPositive(bookingId)) {
+			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
+		}
+
+		if (!existsBooking) {
+			throw new NotFoundCustomException("La reserva a actualizar no existe.");
+		}
+
+		// TODO: Actualizar la reserva
+
 		return null;
 	}
 
 	@Override
 	public void deleteBookingById(final Integer bookingId) {
+		boolean existsBooking = bookingRepo.existsById(bookingId);
+
+		if (!isIntegerValidAndPositive(bookingId)) {
+			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
+		}
+
+		if (!existsBooking) {
+			throw new NotFoundCustomException("La reserva a eliminar no existe.");
+		}
+
 		bookingRepo.deleteById(bookingId);
 	}
 
@@ -65,7 +94,8 @@ public class BookingServiceImpl implements IBookingService {
 		/**
 		 * Listado de la reservas realizadas por un usuario.
 		 */
-		String findAllBookingsOfUserQuery = "select bm from BookingModel bm inner join bm.idUser host where host.id = :userId";
+		String findAllBookingsOfUserQuery = "SELECT bm " + "FROM BookingModel bm INNER JOIN bm.idUser host "
+				+ "WHERE host.id = :userId";
 
 		TypedQuery<BookingModel> userBookings = em.createQuery(findAllBookingsOfUserQuery, BookingModel.class);
 
@@ -76,6 +106,10 @@ public class BookingServiceImpl implements IBookingService {
 
 	@Override
 	public BookingModel getBookingById(final Integer bookingId) {
+		if (!isIntegerValidAndPositive(bookingId)) {
+			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
+		}
+
 		return bookingRepo.findById(bookingId).get();
 	}
 }

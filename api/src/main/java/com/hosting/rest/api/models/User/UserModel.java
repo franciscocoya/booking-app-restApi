@@ -29,34 +29,34 @@ import lombok.NoArgsConstructor;
 @Table(name = "APP_USER")
 public class UserModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer id;
 
-    @Column(name = "UNAME")
-    private String name;
+	@Column(name = "UNAME")
+	private String name;
 
-    @Column(name = "SURNAME")
-    private String surname;
+	@Column(name = "SURNAME")
+	private String surname;
 
-    @Column(name = "EMAIL")
-    private String email;
+	@Column(name = "EMAIL")
+	private String email;
 
-    @Column(name = "PHONE")
-    private String phone;
+	@Column(name = "PHONE")
+	private String phone;
 
-    @Column(name = "PASS")
-    private String pass;
+	@Column(name = "PASS")
+	private String pass;
 
-    @Column(name = "PROFILE_IMG")
-    private String profileImage;
-    
-    @OneToOne
-    @JoinColumn(name = "ID_APP_CONFIGURATION")
-    private UserConfigurationModel idUserConfiguration;
+	@Column(name = "PROFILE_IMG")
+	private String profileImage;
 
-    @Column(name = "CREATED_AT")
-    @CreatedDate
-    private LocalDateTime createdAt;
+	@OneToOne
+	@JoinColumn(name = "ID_APP_CONFIGURATION")
+	private UserConfigurationModel idUserConfiguration;
+
+	@Column(name = "CREATED_AT")
+	@CreatedDate
+	private LocalDateTime createdAt;
 }

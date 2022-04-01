@@ -6,13 +6,13 @@ import com.hosting.rest.api.models.Payment.PaymentModel;
 
 public interface IPaymentService {
 
-	PaymentModel addNewPayment(PaymentModel paymentModel);
+	public PaymentModel addNewPayment(final PaymentModel paymentModel);
 
-	PaymentModel updatePaymentById(PaymentModel paymentModel);
+	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentModel);
 
-	void removePaymentById(Integer paymentId);
+	public void removePaymentById(final Integer paymentId);
 
-	List<PaymentModel> listAllPayments();
+	public List<PaymentModel> findAllPayments();
 
-	PaymentModel getPaymentFromBooking(Integer bookingId);
+	public PaymentModel findByBookingId(final Integer bookingId);
 }

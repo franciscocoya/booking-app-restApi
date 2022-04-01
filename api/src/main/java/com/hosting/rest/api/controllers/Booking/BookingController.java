@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Booking.BookingModel;
 import com.hosting.rest.api.services.Booking.BookingServiceImpl;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("bookings")
+@RequestMapping("/bookings")
 public class BookingController {
 
 	@Autowired
@@ -35,24 +36,47 @@ public class BookingController {
 	}
 
 	@DeleteMapping("{bookingId}")
-	public void updateBooking(@PathVariable(name = "bookingId") final Integer bookingId) {
-		bookingService.deleteBookingById(bookingId);
+	public void deleteBooking(@PathVariable(name = "bookingId") final String bookingId) {
+
+		try {
+			bookingService.deleteBookingById(Integer.parseInt(bookingId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
+		}
 	}
 
 	@GetMapping("{bookingId}")
-	public BookingModel getBookingById(@PathVariable(name = "bookingId") final Integer bookingId) {
-		return bookingService.getBookingById(bookingId);
+	public BookingModel getBookingById(@PathVariable(name = "bookingId") final String bookingId) {
+		BookingModel bookingToReturn = null;
+
+		try {
+			bookingToReturn = bookingService.getBookingById(Integer.parseInt(bookingId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
+		}
+		return bookingToReturn;
 	}
 
 	@GetMapping("{bookingId}/{year}")
-	public List<BookingModel> findByBookingYear(@PathVariable(name = "bookingId") final String regNumber, @PathVariable(name = "year") final Integer yearToSearch) {
+	public List<BookingModel> findByBookingYear(@PathVariable(name = "bookingId") final String regNumber,
+			@PathVariable(name = "year") final Integer yearToSearch) {
 		return bookingService.findByBookingYear(regNumber, yearToSearch);
 	}
 
 	// TODO: Listar todas las reservas de un usuario
 	@GetMapping("users/{userId}")
-	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") final Integer userId) {
-		return bookingService.findAllBookingByUser(userId);
+	public List<BookingModel> listAllUserBookings(@PathVariable(name = "userId") final String userId) {
+		List<BookingModel> bookingsToReturn = null;
+
+		try {
+			bookingsToReturn = bookingService.findAllBookingByUser(Integer.parseInt(userId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+		}
+		return bookingsToReturn;
 	}
 
 	// TODO: Histórico de reservas del alojamiento - ADMIN

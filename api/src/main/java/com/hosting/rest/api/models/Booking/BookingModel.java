@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.models.User.UserModel;
 
 import lombok.AllArgsConstructor;
@@ -64,8 +65,8 @@ public class BookingModel {
 	private AccomodationModel idAccomodation;
 
 	@OneToOne
-	@JoinColumn(name = "ID_PAYMENT")
-	private AccomodationModel idPayment;
+	@JoinColumn(name = "PAYMENT_ID")
+	private PaymentModel idPayment;
 
 	@Column(name = "CREATED_AT")
 	@CreatedDate

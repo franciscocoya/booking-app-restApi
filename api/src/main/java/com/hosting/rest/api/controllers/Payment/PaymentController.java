@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
 
@@ -25,12 +26,21 @@ public class PaymentController {
 
 	@PostMapping("new")
 	public PaymentModel addNewPaymentMethod(@RequestBody final PaymentModel paymentModel) {
+		if (paymentModel == null) {
+			throw new IllegalArgumentsCustomException("Los datos para el método de pago a crear no son válidos.");
+		}
+
 		return paymentService.addNewPayment(paymentModel);
 	}
 
 	@PutMapping("{paymentId}")
-	public PaymentModel updatePaymentModel(@PathVariable(value = "paymentId") final PaymentModel paymentModel) {
-		return paymentService.updatePaymentById(paymentModel);
+	public PaymentModel updatePaymentModel(@PathVariable(value = "paymentId") final Integer paymentId,
+			@RequestBody final PaymentModel paymentModel) {
+		if (paymentModel == null) {
+			throw new IllegalArgumentsCustomException("Los datos para el método de pago a actualizar no son válidos.");
+		}
+
+		return paymentService.updatePaymentById(paymentId, paymentModel);
 	}
 
 	@DeleteMapping("{paymentId}")
@@ -40,11 +50,11 @@ public class PaymentController {
 
 	@GetMapping("all")
 	public List<PaymentModel> listAllPaymentMethods() {
-		return paymentService.listAllPayments();
+		return paymentService.findAllPayments();
 	}
 
 	@GetMapping("{bookingId}")
 	public PaymentModel getPaymentMethodFromBooking(@PathVariable(value = "bookingId") final Integer bookingId) {
-		return paymentService.getPaymentFromBooking(bookingId);
+		return paymentService.findByBookingId(bookingId);
 	}
 }
