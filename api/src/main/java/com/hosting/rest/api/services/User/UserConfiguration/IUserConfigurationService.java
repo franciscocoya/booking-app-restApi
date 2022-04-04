@@ -13,7 +13,5 @@ public interface IUserConfigurationService {
 
 	public UserConfigurationModel findByUserId(final Integer userId);
 
-	public void deleteUserConfigurationByUserId(final Integer userId);
-	
 	public void deleteUserConfiguration(final Integer userConfigurationId);
 }

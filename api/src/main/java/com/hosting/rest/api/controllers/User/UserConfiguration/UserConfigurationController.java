@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl;
 
@@ -27,7 +28,7 @@ public class UserConfigurationController {
 		return userConfigurationService.addNewUserConfiguration(userConfigurationToAdd);
 	}
 
-	@PutMapping
+	@PutMapping("{userId}")
 	public UserConfigurationModel udpateUserConfiguration(@PathVariable(name = "userId") final String userId,
 			@RequestBody final UserConfigurationModel userConfigurationToUpdate) {
 		UserConfigurationModel userConfigurationToReturn = null;
@@ -36,7 +37,7 @@ public class UserConfigurationController {
 			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
 					userConfigurationToUpdate);
 		} catch (NumberFormatException nfe) {
-			// TODO: handle exception
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
 
 		return userConfigurationToReturn;
@@ -46,17 +47,10 @@ public class UserConfigurationController {
 	public void deleteUserConfiguration(@PathVariable(name = "userConfigId") final String userConfigurationId) {
 		try {
 			userConfigurationService.deleteUserConfiguration(Integer.parseInt(userConfigurationId));
-		} catch (NumberFormatException nfe) {
-			// TODO: handle exception
-		}
-	}
 
-	@DeleteMapping("u/{userId}")
-	public void deleteUserConfigurationByUserId(@PathVariable(name = "userId") final String userId) {
-		try {
-			userConfigurationService.deleteUserConfigurationByUserId(Integer.parseInt(userId));
 		} catch (NumberFormatException nfe) {
-			// TODO: handle exception
+			throw new IllegalArgumentsCustomException(
+					"El id de la configuración del usuario [ " + userConfigurationId + " ] no es un número.");
 		}
 	}
 
@@ -66,8 +60,9 @@ public class UserConfigurationController {
 
 		try {
 			userConfigurationToReturn = userConfigurationService.findByUserId(Integer.parseInt(userId));
+			
 		} catch (NumberFormatException nfe) {
-			// TODO: handle exception
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
 		return userConfigurationToReturn;
 	}
