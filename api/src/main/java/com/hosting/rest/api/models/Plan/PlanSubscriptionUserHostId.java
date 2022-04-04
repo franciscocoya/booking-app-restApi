@@ -1,13 +1,13 @@
 package com.hosting.rest.api.models.Plan;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -17,7 +17,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Embeddable
 public class PlanSubscriptionUserHostId implements Serializable {
 

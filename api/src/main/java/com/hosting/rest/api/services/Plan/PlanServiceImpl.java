@@ -1,15 +1,21 @@
 package com.hosting.rest.api.services.Plan;
 
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Plan.PlanModel;
 import com.hosting.rest.api.repositories.Plan.IPlanRepository;
@@ -24,26 +30,58 @@ public class PlanServiceImpl implements IPlanService {
 	private IPlanRepository planRepo;
 
 	@Override
-	public PlanModel addNewPlan(final PlanModel planToAdd) throws NullPointerException {
+	public PlanModel addNewPlan(final PlanModel planToAdd) {
+		if (!isNotNull(planToAdd)) {
+			throw new IllegalArgumentsCustomException("Los datos del plan a añadir no existen o están incompletos.");
+		}
+		
+		System.out.println(planToAdd);
+
+		boolean existsPlan = planRepo.existsById(planToAdd.getIdPlan());
+
+		if (existsPlan) {
+			throw new IllegalArgumentsCustomException("El plan a añadir ya existe.");
+		}
+
 		return planRepo.save(planToAdd);
 	}
 
-	@Modifying
+	@Transactional
 	@Override
-	public PlanModel udpatePlan(final Integer planId, final PlanModel planToUpdate)
-			throws NumberFormatException, NullPointerException {
-		
+	public void udpatePlan(final Integer planId, final PlanModel planToUpdate) throws NumberFormatException {
+
+		if (!isIntegerValidAndPositive(planId)) {
+			throw new IllegalArgumentsCustomException("El id del plan " + planId + " no es válido.");
+		}
+
+		if (!isNotNull(planToUpdate)) {
+			throw new IllegalArgumentsCustomException("El contenido del plan a actualizar no es válido.");
+		}
+
+		if (!isBigDecimalValid(planToUpdate.getPrice())) {
+			throw new IllegalArgumentsCustomException("El precio del plan no es válido.");
+		}
+
 		boolean existsPlanToUpdate = planRepo.existsById(planId);
 
 		if (!existsPlanToUpdate) {
 			throw new NotFoundCustomException("No existe un plan con id [ " + planId + " ].");
 		}
 
-		PlanModel originalPlan = getPlanById(planId);
-		// Nuevo precio del plan
-		originalPlan.setPrice(planToUpdate.getPrice());
+//		PlanModel originalPlan = getPlanById(planId);
 
-		return planRepo.save(originalPlan);
+		String updatePlanModelQuery = "UPDATE PlanModel pm SET pm.price = :planPrice WHERE pm.idPlan = :planId";
+
+		Query updatedPlan = em.createQuery(updatePlanModelQuery);
+
+		updatedPlan.setParameter("planPrice", planToUpdate.getPrice());
+		updatedPlan.setParameter("planId", planId);
+
+		updatedPlan.executeUpdate();
+		// Nuevo precio del plan
+//		originalPlan.setPrice(planToUpdate.getPrice());
+//
+//		return planRepo.save(originalPlan);
 	}
 
 	@Override

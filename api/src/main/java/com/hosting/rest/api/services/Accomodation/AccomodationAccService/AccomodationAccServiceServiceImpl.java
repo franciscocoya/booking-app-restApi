@@ -5,6 +5,7 @@ import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
+import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceId;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationServiceModel;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationService.IAccomodationAccServiceRepo;
@@ -38,25 +39,12 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 					"Alguno de los valores introducidos para el servicio del alojamiento no es válido.");
 		}
 
-		boolean existsService = getAccomodationAccServiceById(accomodationServiceToAdd.getId(), regNumber) != null;
+		// Clave compuesta por el número de registro del alojamiento y el id del
+		// servicio a añadir al alojamiento.
+		AccomodationAccServiceId newAccomodationServiceId = new AccomodationAccServiceId(regNumber,
+				accomodationServiceToAdd.getId());
 
-		if (!existsService) {
-			throw new NotFoundCustomException(
-					"No se puede añadir el servicio indicado ya que no se encuentra disponible.");
-		}
-
-		// TODO: Revisar query para inserción con clave compuesta
-		String addNewAccomodationAccServiceQuery = "INSERT INTO ACCOMODATION_ACC_SERVICE( ID_ACC, ID_ACC_SERVICE ) VALUES(:accomodationId, :regNumber)";
-
-		Query addNewServiceToAccomodation = em.createNativeQuery(addNewAccomodationAccServiceQuery);
-
-		addNewServiceToAccomodation.setParameter("accomodationId", accomodationServiceToAdd.getId());
-		addNewServiceToAccomodation.setParameter("regNumber", regNumber);
-
-		addNewServiceToAccomodation.executeUpdate();
-
-		return null;
-//		return accomodationAccServiceRepo.save(accomodationAccServiceToAdd);
+		return accomodationAccServiceRepo.save(new AccomodationAccServiceModel(newAccomodationServiceId));
 	}
 
 	@Override
@@ -86,24 +74,32 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 	@Override
 	public AccomodationAccServiceModel getAccomodationAccServiceById(final Integer accomodationServiceId,
 			final String regNumber) {
+
+		AccomodationAccServiceModel accomodationServiceToReturn = null;
+
 		if (!isIntegerValidAndPositive(accomodationServiceId)) {
 			throw new IllegalArgumentsCustomException(
 					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
 		}
 
 		String getAccomodationAccServiceByRegNumberAndAccomodationServiceIdQuery = "SELECT accs "
-				+ "FROM AccomodationAccService accs "
+				+ "FROM AccomodationAccServiceModel accs "
 				+ "WHERE accs.accomodationAccServiceId.idAccomodation = :regNumber "
-				+ "AND accs.accomodationAccServiceId.idAccomodationService = :accomodationServiceId ";
+				+ "AND accs.accomodationAccServiceId.idAccomodationService = :accomodationServiceId";
 
-		TypedQuery<AccomodationAccServiceModel> accomodationAccService = em.createQuery(
+		TypedQuery<AccomodationAccServiceModel> accomodationAccServiceToReturn = em.createQuery(
 				getAccomodationAccServiceByRegNumberAndAccomodationServiceIdQuery, AccomodationAccServiceModel.class);
 
-		accomodationAccService.setParameter("regNumber", regNumber);
-		accomodationAccService.setParameter("accomodationServiceId", accomodationServiceId);
+		accomodationAccServiceToReturn.setParameter("regNumber", regNumber);
+		accomodationAccServiceToReturn.setParameter("accomodationServiceId", accomodationServiceId);
 
-		return accomodationAccService.getSingleResult();
+		try {
+			accomodationServiceToReturn = accomodationAccServiceToReturn.getSingleResult();
+		} catch (NoResultException nre) {
+			throw new IllegalArgumentsCustomException("Error... " + nre.getMessage());
+		}
 
+		return accomodationServiceToReturn;
 	}
 
 }

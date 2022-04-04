@@ -8,7 +8,7 @@ public interface IPlanService {
 
 	public PlanModel addNewPlan(final PlanModel planToAdd);
 
-	public PlanModel udpatePlan(final Integer planId, final PlanModel planToUpdate);
+	public void udpatePlan(final Integer planId, final PlanModel planToUpdate);
 
 	public PlanModel getPlanById(final Integer planId);
 

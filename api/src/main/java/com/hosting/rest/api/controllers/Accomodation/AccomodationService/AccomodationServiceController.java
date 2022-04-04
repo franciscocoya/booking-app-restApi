@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationServiceModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationAccService.AccomodationAccServiceServiceImpl;
@@ -72,10 +73,19 @@ public class AccomodationServiceController {
 		return accomodationServiceToReturn;
 	}
 
+	/**
+	 * Añade un nuevo servicio a un alojamiento.
+	 * 
+	 * @param regNumber
+	 * @param accomodationServiceToAdd
+	 * 
+	 * @return
+	 */
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccServiceModel addNewServiceToAccomodation(
 			@PathVariable(name = "regNumber") final String regNumber,
-			@RequestBody AccomodationServiceModel accomodationServiceToAdd) {
+			@RequestBody final AccomodationServiceModel accomodationServiceToAdd) {
+
 		if (!isStringNotBlank(regNumber)) {
 			throw new IllegalArgumentsCustomException(
 					"El número de registro de alojamiento está vacío o no es válido.");
@@ -86,7 +96,13 @@ public class AccomodationServiceController {
 					"Alguno de los valores del servicio del alojamiento añadir no es válido.");
 		}
 
-		// TODO: Comprobar que el servicio existe
+		// Comprobar que el servicio a añadir al alojamiento existe.
+		boolean existsAccomodationService = accomodationServiceService
+				.getAccomodationServiceById(accomodationServiceToAdd.getId()) != null;
+
+		if (!existsAccomodationService) {
+			throw new NotFoundCustomException("El servicio a añadir al alojamiento no existe.");
+		}
 
 		return accomodationAccServiceService.addNewAccomodationServiceToAccomodation(regNumber,
 				accomodationServiceToAdd);
@@ -96,16 +112,6 @@ public class AccomodationServiceController {
 	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(
 			@PathVariable(name = "regNumber") final String regNumber) {
 		return accomodationServiceService.findAllAccomodationServicesFromAccomodation(regNumber);
-	}
-
-	@GetMapping("{regNumber}/{accomodationServiceId}")
-	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(
-			@PathVariable(name = "regNumber") final String regNumber,
-			@PathVariable(name = "accomodationServiceId") final Integer accomodationServiceId) {
-
-		// TODO: Crear el método en el servicio
-		return null;
-		// return accomodationServiceService.;
 	}
 
 }
