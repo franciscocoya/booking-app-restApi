@@ -8,7 +8,7 @@ public interface IAccomodationRuleService {
 
 	public AccomodationRuleModel addNewAccomodationRule(final AccomodationRuleModel accomodationRuleToAdd);
 
-	public AccomodationRuleModel updateAccomodationRule(final Integer accomodationRuleId,
+	public void updateAccomodationRule(final Integer accomodationRuleId,
 			final AccomodationRuleModel accomodationRuleToAdd);
 
 	public AccomodationRuleModel findById(final Integer accomodationRuleId);
