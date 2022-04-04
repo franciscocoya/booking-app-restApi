@@ -36,6 +36,7 @@ public class UserConfigurationController {
 		try {
 			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
 					userConfigurationToUpdate);
+			
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
@@ -44,7 +45,7 @@ public class UserConfigurationController {
 	}
 
 	@DeleteMapping("{userConfigId}")
-	public void deleteUserConfiguration(@PathVariable(name = "userConfigId") final String userConfigurationId) {
+	public void deleteUserConfiguration(@PathVariable(value = "userConfigId") final String userConfigurationId) {
 		try {
 			userConfigurationService.deleteUserConfiguration(Integer.parseInt(userConfigurationId));
 

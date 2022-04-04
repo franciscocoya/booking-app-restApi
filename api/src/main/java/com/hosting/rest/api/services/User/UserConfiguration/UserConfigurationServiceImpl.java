@@ -1,7 +1,7 @@
 package com.hosting.rest.api.services.User.UserConfiguration;
 
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +18,8 @@ import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurati
 
 @Service
 public class UserConfigurationServiceImpl implements IUserConfigurationService {
+
+//	private static final Logger logger = LogManager.getLogger(UserConfigurationServiceImpl.class);
 
 	@PersistenceContext
 	private EntityManager em;
@@ -40,6 +42,8 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	public UserConfigurationModel updateUserConfiguration(final Integer userId,
 			final UserConfigurationModel userConfigurationModelToUpdate) {
 
+		UserConfigurationModel newUserConfiguration = new UserConfigurationModel();
+
 		if (!isIntegerValidAndPositive(userId)) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
@@ -57,9 +61,11 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 			throw new NotFoundCustomException("La configuración del usuario a actualizar no existe.");
 		}
 
-		// TODO: Actualizar datos de la configuración
+		// TODO: Actualizar datos de lenguaje y moneda en la configuración
 		
-		return null;
+		
+
+		return userConfigurationRepo.save(newUserConfiguration);
 	}
 
 	@Override
@@ -88,6 +94,7 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		return userConfig.getSingleResult();
 	}
 
+	@Transactional
 	@Override
 	public void deleteUserConfiguration(final Integer userConfigurationId) {
 		if (!isIntegerValidAndPositive(userConfigurationId)) {
@@ -96,7 +103,6 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		}
 
 		userConfigurationRepo.deleteById(userConfigurationId);
-
 	}
 
 }
