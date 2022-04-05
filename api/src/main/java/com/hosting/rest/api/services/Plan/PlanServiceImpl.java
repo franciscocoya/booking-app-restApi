@@ -34,12 +34,16 @@ public class PlanServiceImpl implements IPlanService {
 		if (!isNotNull(planToAdd)) {
 			throw new IllegalArgumentsCustomException("Los datos del plan a añadir no existen o están incompletos.");
 		}
+		
+		System.out.println(planToAdd);
 
 		boolean existsPlan = planRepo.existsById(planToAdd.getIdPlan());
 
 		if (existsPlan) {
 			throw new IllegalArgumentsCustomException("El plan a añadir ya existe.");
 		}
+		
+		// TODO: Error java.lang.IllegalArgumentException: The given id must not be null!
 
 		return planRepo.save(planToAdd);
 	}
