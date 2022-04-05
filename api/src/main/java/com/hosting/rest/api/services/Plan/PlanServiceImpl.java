@@ -1,8 +1,8 @@
 package com.hosting.rest.api.services.Plan;
 
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,8 +34,6 @@ public class PlanServiceImpl implements IPlanService {
 		if (!isNotNull(planToAdd)) {
 			throw new IllegalArgumentsCustomException("Los datos del plan a añadir no existen o están incompletos.");
 		}
-
-		System.out.println(planToAdd);
 
 		boolean existsPlan = planRepo.existsById(planToAdd.getIdPlan());
 
@@ -73,7 +71,11 @@ public class PlanServiceImpl implements IPlanService {
 	}
 
 	@Override
-	public void deletePlanById(final Integer planId) throws IllegalArgumentException, NumberFormatException {
+	public void deletePlanById(final Integer planId) throws NumberFormatException {
+
+		if (!isIntegerValidAndPositive(planId)) {
+			throw new IllegalArgumentsCustomException("El id el plan [ " + planId + " ] a eliminar no es válido.");
+		}
 
 		boolean existsPlanToRemove = planRepo.existsById(planId);
 
@@ -89,11 +91,20 @@ public class PlanServiceImpl implements IPlanService {
 
 	@Override
 	public PlanModel getPlanById(final Integer planId) throws NumberFormatException, IllegalArgumentException {
+		if (!isIntegerValidAndPositive(planId)) {
+			throw new IllegalArgumentsCustomException("El id el plan [ " + planId + " ] a obtener no es válido.");
+		}
+
 		return planRepo.findById(planId).get();
 	}
 
 	@Override
 	public PlanModel findByUserId(final Integer userId) throws IllegalArgumentException, NumberFormatException {
+		
+		if (!isIntegerValidAndPositive(userId)) {
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] a obtener no es válido.");
+		}
+
 		/**
 		 * Plan de subscripción del usuario host.
 		 */

@@ -31,7 +31,7 @@ public class PlanController {
 	private PlanServiceImpl planService;
 
 	@PostMapping("new")
-	public PlanModel addNewPlan(@RequestBody final PlanModel planToAdd) {
+	public PlanModel addNewPlan(@Valid @RequestBody final PlanModel planToAdd) {
 		return planService.addNewPlan(planToAdd);
 	}
 
