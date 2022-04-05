@@ -1,6 +1,7 @@
 package com.hosting.rest.api.services.User.UserHost;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 
 import java.util.List;
@@ -32,29 +33,60 @@ public class IUserHostServiceImpl implements IUserHostService {
 	@Autowired
 	private IUserRepository userRepo;
 
+	@Transactional
 	@Override
-	public UserHostModel upgradeUserToUserHost(final Integer userId, final UserHostModel userHostToAdd) {
+	public UserHostModel upgradeUserToUserHost(final Integer userId, final String userHostDni,
+			final String userHostDirection) {
 
 		if (!isIntegerValidAndPositive(userId)) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] a añadir no es válido.");
 		}
 
-		if (!isNotNull(userHostToAdd)) {
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores introducidos para el usuario host no es válido.");
+		if (!isStringNotBlank(userHostDni)) {
+			throw new IllegalArgumentsCustomException("El DNI introducido para el host no es válido.");
+		}
+
+		if (!isStringNotBlank(userHostDirection)) {
+			throw new IllegalArgumentsCustomException("La dirección introducida para el host no es válido.");
 		}
 
 		if (!userRepo.existsById(userId)) {
 			throw new NotFoundCustomException("El usuario a actualizar a host no existe.");
 		}
 
-		return userHostRepo.save(userHostToAdd);
+		UserModel oldUser = userRepo.findById(userId).get();
+
+		UserHostModel newUserHost = new UserHostModel();
+
+		newUserHost.setId(userId);
+		newUserHost.setName(oldUser.getName());
+		newUserHost.setSurname(oldUser.getSurname());
+		newUserHost.setEmail(oldUser.getEmail());
+		newUserHost.setPhone(oldUser.getPhone());
+		newUserHost.setPass(oldUser.getPass());
+		newUserHost.setProfileImage(oldUser.getProfileImage());
+		newUserHost.setDni(userHostDni);
+		newUserHost.setDirection(userHostDirection);
+
+		userRepo.deleteById(userId);
+
+		return userHostRepo.save(newUserHost);
 	}
 
 	@Override
 	public void updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate) {
-		// TODO Auto-generated method stub
 
+		if (!isIntegerValidAndPositive(userId)) {
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
+		}
+
+		if (!isNotNull(userHostToUpdate)) {
+			throw new IllegalArgumentsCustomException("Alguno de los valores del usuario host a crear no es válido.");
+		}
+
+		// TODO: Actualizar
+
+		// userHostRepo.save();
 	}
 
 	@Transactional
@@ -75,16 +107,19 @@ public class IUserHostServiceImpl implements IUserHostService {
 		UserHostModel userToDelete = userHostRepo.findById(userId).get();
 		int newUserId = (int) userRepo.count();
 
+		// Copiar los datos del usuario host que son comunes al usuario.
 		UserModel newUser = new UserModel(newUserId + 1, userToDelete.getName(), userToDelete.getSurname(),
 				userToDelete.getEmail(), userToDelete.getPhone(), userToDelete.getPass(),
 				userToDelete.getProfileImage(), userToDelete.getIdUserConfiguration(), userToDelete.getCreatedAt());
 
 		userRepo.save(newUser);
 
+		// Eliminar el usuario host
 		userHostRepo.deleteById(userId);
 
 		String updateNewUserIdQuery = "UPDATE UserModel um SET um.id = :newUserId WHERE um.id = :oldUserId";
 
+		// Actualizar el id que tenía anteriormente el usuario
 		em.createQuery(updateNewUserIdQuery).setParameter("oldUserId", newUserId + 1).setParameter("newUserId", userId)
 				.executeUpdate();
 	}

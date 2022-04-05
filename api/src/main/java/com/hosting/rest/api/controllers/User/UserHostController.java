@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
@@ -23,14 +24,14 @@ public class UserHostController {
 	@Autowired
 	private IUserHostServiceImpl userHostService;
 
-	@PostMapping(value = "{userId}/upgrade")
+	@PostMapping("{userId}/upgrade")
 	public UserHostModel upgradeExistingUserToUserHost(@PathVariable(value = "userId") final String userId,
-			@RequestBody final UserHostModel userHostContent) {
+			@RequestParam(name = "dni") final String userHostDni, @RequestParam(name = "direction") final String useHostDirection) {
 
 		UserHostModel userHostAdded = null;
 
 		try {
-			userHostAdded = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostContent);
+			userHostAdded = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostDni, useHostDirection);
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] a añadir no es un número.");

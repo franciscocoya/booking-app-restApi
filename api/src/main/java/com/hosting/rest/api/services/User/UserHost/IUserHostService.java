@@ -6,7 +6,7 @@ import com.hosting.rest.api.models.User.UserHostModel;
 
 public interface IUserHostService {
 
-	public UserHostModel upgradeUserToUserHost(final Integer userId, final UserHostModel userHostToAdd);
+	public UserHostModel upgradeUserToUserHost(final Integer userId, final String userHostDni, final String userHostDirection);
 
 	public void updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate);
 

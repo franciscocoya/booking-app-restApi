@@ -35,8 +35,6 @@ public class UserConfigurationController {
 
 		try {
 			
-			System.out.println("ID LANG: " + userConfigurationToUpdate.getIdLanguage().getId());
-			
 			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
 					userConfigurationToUpdate.getIdLanguage(), userConfigurationToUpdate.getIdCurrency());
 
