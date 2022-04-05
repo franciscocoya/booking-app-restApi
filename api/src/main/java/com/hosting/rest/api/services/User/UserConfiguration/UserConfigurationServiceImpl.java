@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
+import com.hosting.rest.api.models.Currency.CurrencyModel;
+import com.hosting.rest.api.models.Language.LanguageModel;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurationRepository;
 
@@ -39,33 +41,34 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 
 	@Transactional
 	@Override
-	public UserConfigurationModel updateUserConfiguration(final Integer userId,
-			final UserConfigurationModel userConfigurationModelToUpdate) {
-
-		UserConfigurationModel newUserConfiguration = new UserConfigurationModel();
+	public UserConfigurationModel updateUserConfiguration(final Integer userId, final LanguageModel newLanguage,
+			final CurrencyModel newCurrency) {
 
 		if (!isIntegerValidAndPositive(userId)) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
 
-		if (!isNotNull(userConfigurationModelToUpdate)) {
+		if (!isNotNull(newLanguage)) {
 			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la configuración introducidos no es válido.");
+					"Alguno de los valores de la configuración del lenguaje no es válido.");
+		}
+
+		if (!isNotNull(newCurrency)) {
+			throw new IllegalArgumentsCustomException(
+					"Alguno de los valores de la configuración de la divisa no es válido.");
 		}
 
 		// Comprobar si existe una configuación para el usuario
-		boolean existsUserConfiguration = userConfigurationRepo
-				.existsById(userConfigurationModelToUpdate.getIdUserConfiguration());
+		UserConfigurationModel originalUserConfiguration = findByUserId(userId);
 
-		if (!existsUserConfiguration) {
+		if (originalUserConfiguration == null) {
 			throw new NotFoundCustomException("La configuración del usuario a actualizar no existe.");
 		}
 
-		// TODO: Actualizar datos de lenguaje y moneda en la configuración
-		
-		
+		originalUserConfiguration.setIdCurrency(newCurrency);
+		originalUserConfiguration.setIdLanguage(newLanguage);
 
-		return userConfigurationRepo.save(newUserConfiguration);
+		return userConfigurationRepo.saveAndFlush(originalUserConfiguration);
 	}
 
 	@Override

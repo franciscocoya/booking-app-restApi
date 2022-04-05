@@ -3,6 +3,7 @@ package com.hosting.rest.api.models.PromoCode;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class PromoCodeModel {
 	@JoinColumn(name = "ID_ACC")
 	private AccomodationModel idAcc;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_USER")
 	private UserHostModel idUser;
 

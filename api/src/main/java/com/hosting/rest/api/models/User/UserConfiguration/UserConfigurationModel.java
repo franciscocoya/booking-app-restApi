@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.hosting.rest.api.models.Currency.CurrencyModel;
@@ -28,11 +28,11 @@ public class UserConfigurationModel {
 	@Column(name = "ID")
 	private Integer idUserConfiguration;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ID_APP_LANGUAGE")
 	private LanguageModel idLanguage;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ID_CURRENCY")
 	private CurrencyModel idCurrency;
 }

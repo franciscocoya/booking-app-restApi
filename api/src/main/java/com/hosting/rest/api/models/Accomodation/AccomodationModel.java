@@ -4,6 +4,7 @@ package com.hosting.rest.api.models.Accomodation;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -57,7 +58,7 @@ public class AccomodationModel {
     @JoinColumn(name = "ID_ACC_LOCATION")
     private AccomodationLocationModel idAccomodationLocation;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_USER_OWNER")
     private UserHostModel idUserHost;
 

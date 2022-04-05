@@ -32,14 +32,15 @@ public class UserController {
 	public void deleteUserById(@PathVariable(value = "userId") final String userId) {
 		try {
 			userService.deleteUserById(Integer.parseInt(userId));
+			
 		} catch (NumberFormatException nfe) {
-			// TODO: handle exception
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
-
 	}
 
 	@PutMapping("{userId}")
-	public UserModel udpateUser(@PathVariable(name = "userId") final Integer userId, @RequestBody UserModel userModelToUpdate) {
+	public UserModel udpateUser(@PathVariable(name = "userId") final Integer userId,
+			@RequestBody UserModel userModelToUpdate) {
 		return userService.updateUser(userId, userModelToUpdate);
 	}
 
@@ -65,9 +66,4 @@ public class UserController {
 
 		return userToReturn;
 	}
-
-	// TODO: Listado de usuarios verificados
-
-	// TODO: Listado de usuarios que son hosts
-
 }

@@ -1,6 +1,7 @@
 package com.hosting.rest.api.models.User;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "USER_HOST")
 @PrimaryKeyJoinColumn(name = "ID")
+@DiscriminatorValue("H")
 public class UserHostModel extends UserModel {
 
 	@Column(name = "DNI")

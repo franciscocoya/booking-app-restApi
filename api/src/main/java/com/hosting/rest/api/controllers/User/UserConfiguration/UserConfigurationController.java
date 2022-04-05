@@ -29,14 +29,17 @@ public class UserConfigurationController {
 	}
 
 	@PutMapping("{userId}")
-	public UserConfigurationModel udpateUserConfiguration(@PathVariable(name = "userId") final String userId,
+	public UserConfigurationModel udpateUserConfiguration(@PathVariable(value = "userId") final String userId,
 			@RequestBody final UserConfigurationModel userConfigurationToUpdate) {
 		UserConfigurationModel userConfigurationToReturn = null;
 
 		try {
-			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
-					userConfigurationToUpdate);
 			
+			System.out.println("ID LANG: " + userConfigurationToUpdate.getIdLanguage().getId());
+			
+			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
+					userConfigurationToUpdate.getIdLanguage(), userConfigurationToUpdate.getIdCurrency());
+
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
@@ -61,7 +64,7 @@ public class UserConfigurationController {
 
 		try {
 			userConfigurationToReturn = userConfigurationService.findByUserId(Integer.parseInt(userId));
-			
+
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
