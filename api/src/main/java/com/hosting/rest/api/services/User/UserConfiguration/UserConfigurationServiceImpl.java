@@ -33,7 +33,7 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	public UserConfigurationModel addNewUserConfiguration(final UserConfigurationModel newUserConfigurationModel) {
 		if (!isNotNull(newUserConfigurationModel)) {
 			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la configuración a añadir no es válido.");
+					"Alguno de los valores de la configuración del usuario a añadir no es válido.");
 		}
 
 		return userConfigurationRepo.save(newUserConfigurationModel);
@@ -91,8 +91,10 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 				+ "WHERE um.id = :userId";
 
 		TypedQuery<UserConfigurationModel> userConfig = em.createQuery(findByUserIdQuery, UserConfigurationModel.class);
-
+		
 		userConfig.setParameter("userId", userId);
+		
+		// TODO: Si el usuario no tiene configuración, se muestra un 500 - CORREGIR
 
 		return userConfig.getSingleResult();
 	}

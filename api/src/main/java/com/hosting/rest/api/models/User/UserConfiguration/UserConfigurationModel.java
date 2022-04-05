@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.User.UserConfiguration;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,11 +29,11 @@ public class UserConfigurationModel {
 	@Column(name = "ID")
 	private Integer idUserConfiguration;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_APP_LANGUAGE")
 	private LanguageModel idLanguage;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CURRENCY")
 	private CurrencyModel idCurrency;
 }
