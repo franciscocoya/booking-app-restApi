@@ -1,15 +1,19 @@
 package com.hosting.rest.api.controllers.Plan;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
@@ -31,12 +35,12 @@ public class PlanController {
 		return planService.addNewPlan(planToAdd);
 	}
 
-	@PatchMapping("{planId}")
+	@PutMapping("{planId}")
 	public void udpatePlan(@PathVariable(name = "planId") final String planId,
-			@RequestBody final PlanModel planToUpdate) {
+			@Valid @RequestParam(name = "price") final BigDecimal newPrice) {
 
 		try {
-			planService.udpatePlan(Integer.parseInt(planId), planToUpdate);
+			planService.udpatePlan(Integer.parseInt(planId), newPrice);
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del plan [ " + planId + " ] no es válido.");

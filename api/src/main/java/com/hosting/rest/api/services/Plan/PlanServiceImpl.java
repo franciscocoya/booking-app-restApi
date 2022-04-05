@@ -1,14 +1,14 @@
 package com.hosting.rest.api.services.Plan;
 
-import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -34,7 +34,7 @@ public class PlanServiceImpl implements IPlanService {
 		if (!isNotNull(planToAdd)) {
 			throw new IllegalArgumentsCustomException("Los datos del plan a añadir no existen o están incompletos.");
 		}
-		
+
 		System.out.println(planToAdd);
 
 		boolean existsPlan = planRepo.existsById(planToAdd.getIdPlan());
@@ -48,18 +48,14 @@ public class PlanServiceImpl implements IPlanService {
 
 	@Transactional
 	@Override
-	public void udpatePlan(final Integer planId, final PlanModel planToUpdate) throws NumberFormatException {
+	public void udpatePlan(final Integer planId, final BigDecimal newPrice) throws NumberFormatException {
 
 		if (!isIntegerValidAndPositive(planId)) {
 			throw new IllegalArgumentsCustomException("El id del plan " + planId + " no es válido.");
 		}
 
-		if (!isNotNull(planToUpdate)) {
-			throw new IllegalArgumentsCustomException("El contenido del plan a actualizar no es válido.");
-		}
-
-		if (!isBigDecimalValid(planToUpdate.getPrice())) {
-			throw new IllegalArgumentsCustomException("El precio del plan no es válido.");
+		if (!isBigDecimalValid(newPrice)) {
+			throw new IllegalArgumentsCustomException("El precio del plan introducido no es válido.");
 		}
 
 		boolean existsPlanToUpdate = planRepo.existsById(planId);
@@ -72,16 +68,8 @@ public class PlanServiceImpl implements IPlanService {
 
 		String updatePlanModelQuery = "UPDATE PlanModel pm SET pm.price = :planPrice WHERE pm.idPlan = :planId";
 
-		Query updatedPlan = em.createQuery(updatePlanModelQuery);
-
-		updatedPlan.setParameter("planPrice", planToUpdate.getPrice());
-		updatedPlan.setParameter("planId", planId);
-
-		updatedPlan.executeUpdate();
-		// Nuevo precio del plan
-//		originalPlan.setPrice(planToUpdate.getPrice());
-//
-//		return planRepo.save(originalPlan);
+		em.createQuery(updatePlanModelQuery).setParameter("planPrice", newPrice).setParameter("planId", planId)
+				.executeUpdate();
 	}
 
 	@Override

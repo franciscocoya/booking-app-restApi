@@ -50,7 +50,22 @@ public class AppUtils {
 	 * @return
 	 */
 	public static boolean isBigDecimalValid(final BigDecimal bigDecimalToCheck) {
-		return !isNotNull(bigDecimalToCheck);
+		return isNotNull(bigDecimalToCheck);
+	}
+
+	/**
+	 * {@link #isBigDecimalValid(BigDecimal)}
+	 * 
+	 * Comprueba además que el valor sea positivo o no, en fución de
+	 * <code>mustBePositive</code>
+	 * 
+	 * @param bigDecimalToCheck
+	 * @param mustBePositive
+	 * @return
+	 */
+	public static boolean isBigDecimalValid(final BigDecimal bigDecimalToCheck, boolean mustBePositive) {
+		boolean isValid = mustBePositive ? bigDecimalToCheck.signum() == 1 : false;
+		return isValid && isNotNull(bigDecimalToCheck);
 	}
 
 	/**
