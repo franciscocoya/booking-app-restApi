@@ -48,7 +48,7 @@ public class SearchServiceImpl implements ISearchService {
 
 		if (!isNotNull(searchToAdd)) {
 			log.error("La búsqueda a añadir no es válida.");
-			throw new IllegalArgumentsCustomException("La búsqueda a añadir no es válida.");
+//			throw new IllegalArgumentsCustomException("La búsqueda a añadir no es válida.");
 		}
 
 		return searchRepo.save(searchToAdd);
@@ -57,7 +57,8 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public void deleteSearchById(final Integer searchId) {
 		if (!isIntegerValidAndPositive(searchId)) {
-			throw new IllegalArgumentsCustomException("El id de búsqueda [ " + searchId + " ] no es válido.");
+			log.error("El id de búsqueda [ " + searchId + " ] no es válido.");
+//			throw new IllegalArgumentsCustomException("El id de búsqueda [ " + searchId + " ] no es válido.");
 		}
 
 		if (!searchRepo.existsById(searchId)) {
@@ -70,7 +71,8 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public List<SearchModel> findByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+			log.error("El id de usuario [ " + userId + " ] no es válido.");
+//			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
 		if (!userRepo.existsById(userId)) {
