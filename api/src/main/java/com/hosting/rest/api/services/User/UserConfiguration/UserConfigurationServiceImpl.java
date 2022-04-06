@@ -18,6 +18,7 @@ import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Currency.CurrencyModel;
 import com.hosting.rest.api.models.Language.LanguageModel;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
+import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurationRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,9 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 
 	@Autowired
 	private IUserConfigurationRepository userConfigurationRepo;
+
+	@Autowired
+	private IUserRepository userRepo;
 
 	@Override
 	public UserConfigurationModel addNewUserConfiguration(final UserConfigurationModel newUserConfigurationToAdd) {
@@ -98,14 +102,19 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
 
+		// Antes de buscar la configuración, se comprueba que el usuario exista.
+		boolean existsUser = userRepo.existsById(userId);
+
+		if (!existsUser) {
+			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
+		}
+
 		String findByUserIdQuery = "SELECT ucm " + "FROM UserModel um INNER JOIN um.idUserConfiguration ucm "
 				+ "WHERE um.id = :userId";
 
 		TypedQuery<UserConfigurationModel> userConfig = em.createQuery(findByUserIdQuery, UserConfigurationModel.class);
 
 		userConfig.setParameter("userId", userId);
-
-		// TODO: Si el usuario no tiene configuración, se muestra un 500 - CORREGIR
 
 		return userConfig.getSingleResult();
 	}

@@ -34,7 +34,7 @@ public class UserConfigurationController {
 
 	@PutMapping("{userId}")
 	public UserConfigurationModel udpateUserConfiguration(@PathVariable(value = "userId") final String userId,
-			@RequestBody final UserConfigurationModel userConfigurationToUpdate) {
+			@Valid @RequestBody final UserConfigurationModel userConfigurationToUpdate) {
 		UserConfigurationModel userConfigurationToReturn = null;
 
 		try {

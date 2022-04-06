@@ -2428,3 +2428,738 @@ java.lang.IllegalArgumentException: The given id must not be null!
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
 	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2022-04-06 11:28:26,310 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-176] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:28:26,311 INFO com.zaxxer.hikari.HikariDataSource [Thread-176] HikariPool-44 - Shutdown initiated...
+2022-04-06 11:28:26,313 INFO com.zaxxer.hikari.HikariDataSource [Thread-176] HikariPool-44 - Shutdown completed.
+2022-04-06 11:28:26,419 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:28:26,419 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:28:26,671 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:28:26,751 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 79 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:28:26,855 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:28:26,855 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:28:26,855 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:28:26,879 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:28:26,879 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 458 ms
+2022-04-06 11:28:26,937 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:28:26,945 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-45 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:28:26,945 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-45 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:28:26,945 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-45 - Starting...
+2022-04-06 11:28:26,950 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-45 - Start completed.
+2022-04-06 11:28:26,950 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:28:26,996 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:28:26,997 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:28:26,997 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:28:27,141 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:28:27,141 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:28:27,178 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:28:27,570 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:28:28,002 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:28:28,026 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:28:28,033 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.64 seconds (JVM running for 3985.752)
+2022-04-06 11:28:28,035 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:28:43,379 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-180] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:28:43,379 INFO com.zaxxer.hikari.HikariDataSource [Thread-180] HikariPool-45 - Shutdown initiated...
+2022-04-06 11:28:43,382 INFO com.zaxxer.hikari.HikariDataSource [Thread-180] HikariPool-45 - Shutdown completed.
+2022-04-06 11:28:43,512 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:28:43,512 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:28:43,773 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:28:43,855 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 82 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:28:43,962 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:28:43,963 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:28:43,963 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:28:43,995 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:28:43,995 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 481 ms
+2022-04-06 11:28:44,071 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:28:44,079 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-46 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:28:44,079 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-46 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:28:44,079 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-46 - Starting...
+2022-04-06 11:28:44,084 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-46 - Start completed.
+2022-04-06 11:28:44,084 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:28:44,149 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:28:44,150 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:28:44,150 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:28:44,275 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:28:44,275 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:28:44,322 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:28:44,727 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:28:45,207 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:28:45,225 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:28:45,230 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.753 seconds (JVM running for 4002.949)
+2022-04-06 11:28:45,231 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:28:57,233 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [http-nio-8085-exec-3] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-06 11:28:57,234 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-3] Initializing Servlet 'dispatcherServlet'
+2022-04-06 11:28:57,235 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-3] Completed initialization in 1 ms
+2022-04-06 11:28:57,251 ERROR org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api].[dispatcherServlet] [http-nio-8085-exec-3] Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null!; nested exception is java.lang.IllegalArgumentException: The given id must not be null!] with root cause
+java.lang.IllegalArgumentException: The given id must not be null!
+	at org.springframework.util.Assert.notNull(Assert.java:201) ~[spring-core-5.3.16.jar:5.3.16]
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.existsById(SimpleJpaRepository.java:364) ~[spring-data-jpa-2.6.2.jar:2.6.2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:289) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:137) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:121) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:529) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:285) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:639) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:163) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:138) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80) ~[spring-data-commons-2.6.2.jar:2.6.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:174) ~[spring-data-jpa-2.6.2.jar:2.6.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215) ~[spring-aop-5.3.16.jar:5.3.16]
+	at jdk.proxy49/jdk.proxy49.$Proxy1097.existsById(Unknown Source) ~[na:na]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl.addNewUserConfiguration(UserConfigurationServiceImpl.java:44) ~[classes/:na]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$FastClassBySpringCGLIB$$84a6b48d.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698) ~[spring-aop-5.3.16.jar:5.3.16]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$EnhancerBySpringCGLIB$$5b06c58d.addNewUserConfiguration(<generated>) ~[classes/:na]
+	at com.hosting.rest.api.controllers.User.UserConfiguration.UserConfigurationController.addNewUserConfiguration(UserConfigurationController.java:32) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:359) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:889) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1735) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2022-04-06 11:29:08,129 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-184] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:29:08,130 INFO com.zaxxer.hikari.HikariDataSource [Thread-184] HikariPool-46 - Shutdown initiated...
+2022-04-06 11:29:08,133 INFO com.zaxxer.hikari.HikariDataSource [Thread-184] HikariPool-46 - Shutdown completed.
+2022-04-06 11:29:08,257 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:29:08,257 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:29:08,516 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:29:08,597 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 80 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:29:08,697 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:29:08,698 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:29:08,698 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:29:08,722 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:29:08,722 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 463 ms
+2022-04-06 11:29:08,781 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:29:08,791 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-47 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:29:08,791 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-47 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:29:08,791 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-47 - Starting...
+2022-04-06 11:29:08,796 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-47 - Start completed.
+2022-04-06 11:29:08,796 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:29:08,852 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:29:08,852 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:29:08,852 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:29:08,998 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:29:08,998 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:29:09,036 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:29:09,444 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:29:09,871 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:29:09,885 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:29:09,889 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.668 seconds (JVM running for 4027.608)
+2022-04-06 11:29:09,891 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:31:13,080 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [http-nio-8085-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-06 11:31:13,080 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-04-06 11:31:13,082 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Completed initialization in 1 ms
+2022-04-06 11:31:25,541 ERROR org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api].[dispatcherServlet] [http-nio-8085-exec-7] Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed; nested exception is javax.persistence.NoResultException: No entity found for query] with root cause
+javax.persistence.NoResultException: No entity found for query
+	at org.hibernate.query.internal.AbstractProducedQuery.getSingleResult(AbstractProducedQuery.java:1667) ~[hibernate-core-5.6.7.Final.jar:5.6.7.Final]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl.findByUserId(UserConfigurationServiceImpl.java:110) ~[classes/:na]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$FastClassBySpringCGLIB$$84a6b48d.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689) ~[spring-aop-5.3.16.jar:5.3.16]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$EnhancerBySpringCGLIB$$5b06c58d.findByUserId(<generated>) ~[classes/:na]
+	at com.hosting.rest.api.controllers.User.UserConfiguration.UserConfigurationController.findByUserId(UserConfigurationController.java:68) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:359) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:889) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1735) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2022-04-06 11:31:28,301 ERROR org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api].[dispatcherServlet] [http-nio-8085-exec-9] Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed; nested exception is javax.persistence.NoResultException: No entity found for query] with root cause
+javax.persistence.NoResultException: No entity found for query
+	at org.hibernate.query.internal.AbstractProducedQuery.getSingleResult(AbstractProducedQuery.java:1667) ~[hibernate-core-5.6.7.Final.jar:5.6.7.Final]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl.findByUserId(UserConfigurationServiceImpl.java:110) ~[classes/:na]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$FastClassBySpringCGLIB$$84a6b48d.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.16.jar:5.3.16]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689) ~[spring-aop-5.3.16.jar:5.3.16]
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl$$EnhancerBySpringCGLIB$$5b06c58d.findByUserId(<generated>) ~[classes/:na]
+	at com.hosting.rest.api.controllers.User.UserConfiguration.UserConfigurationController.findByUserId(UserConfigurationController.java:68) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.16.jar:5.3.16]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.58.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.6.2.jar:5.6.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.16.jar:5.3.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:359) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:889) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1735) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.58.jar:9.0.58]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2022-04-06 11:32:20,293 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-188] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:20,294 INFO com.zaxxer.hikari.HikariDataSource [Thread-188] HikariPool-47 - Shutdown initiated...
+2022-04-06 11:32:20,297 INFO com.zaxxer.hikari.HikariDataSource [Thread-188] HikariPool-47 - Shutdown completed.
+2022-04-06 11:32:20,432 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:32:20,432 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:32:20,719 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:32:20,805 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 85 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:32:20,933 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:32:20,933 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:32:20,933 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:32:20,960 INFO org.apache.catalina.core.ContainerBase.[Tomcat-2].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:32:20,960 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 526 ms
+2022-04-06 11:32:21,029 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:32:21,036 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-48 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:32:21,036 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-48 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:32:21,036 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-48 - Starting...
+2022-04-06 11:32:21,041 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-48 - Start completed.
+2022-04-06 11:32:21,041 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:32:21,089 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:32:21,090 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:21,090 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:21,279 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:32:21,279 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:21,322 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:32:22,080 WARN org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userConfigurationController': Unsatisfied dependency expressed through field 'userConfigurationService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userConfigurationServiceImpl' defined in file [C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes\com\hosting\rest\api\services\User\UserConfiguration\UserConfigurationServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	user cannot be resolved to a variable
+
+2022-04-06 11:32:22,083 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:22,083 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-48 - Shutdown initiated...
+2022-04-06 11:32:22,086 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-48 - Shutdown completed.
+2022-04-06 11:32:22,086 INFO org.apache.catalina.core.StandardService [restartedMain] Stopping service [Tomcat]
+2022-04-06 11:32:22,091 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-04-06 11:32:22,096 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userConfigurationController': Unsatisfied dependency expressed through field 'userConfigurationService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userConfigurationServiceImpl' defined in file [C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes\com\hosting\rest\api\services\User\UserConfiguration\UserConfigurationServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	user cannot be resolved to a variable
+
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:659) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:639) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[spring-boot-2.6.4.jar:2.6.4]
+	at com.hosting.rest.api.BookingSystemApiRestApplication.main(BookingSystemApiRestApplication.java:9) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userConfigurationServiceImpl' defined in file [C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes\com\hosting\rest\api\services\User\UserConfiguration\UserConfigurationServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	user cannot be resolved to a variable
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1389) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1309) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:656) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 25 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	user cannot be resolved to a variable
+
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:224) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1326) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 36 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Duplicate field UserConfigurationServiceImpl.userConfigurationRepo
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	user cannot be resolved to a variable
+
+	at com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl.<init>(UserConfigurationServiceImpl.java:34) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:211) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 38 common frames omitted
+2022-04-06 11:32:23,644 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:32:23,644 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:32:23,964 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:32:24,057 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 92 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:32:24,155 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:32:24,156 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:32:24,156 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:32:24,182 INFO org.apache.catalina.core.ContainerBase.[Tomcat-3].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:32:24,182 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 536 ms
+2022-04-06 11:32:24,265 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:32:24,279 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-49 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:32:24,279 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-49 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:32:24,279 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-49 - Starting...
+2022-04-06 11:32:24,285 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-49 - Start completed.
+2022-04-06 11:32:24,285 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:32:24,338 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:32:24,338 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:24,338 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:24,460 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:32:24,460 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:24,497 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:32:24,926 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:32:25,372 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:32:25,387 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:32:25,391 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.772 seconds (JVM running for 4223.112)
+2022-04-06 11:32:25,393 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:32:36,826 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-192] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:36,827 INFO com.zaxxer.hikari.HikariDataSource [Thread-192] HikariPool-49 - Shutdown initiated...
+2022-04-06 11:32:36,830 INFO com.zaxxer.hikari.HikariDataSource [Thread-192] HikariPool-49 - Shutdown completed.
+2022-04-06 11:32:36,962 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:32:36,962 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:32:37,368 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:32:37,778 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 373 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:32:38,291 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:32:38,291 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:32:38,291 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:32:38,327 INFO org.apache.catalina.core.ContainerBase.[Tomcat-3].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:32:38,327 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1363 ms
+2022-04-06 11:32:38,413 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:32:38,420 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-50 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:32:38,420 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-50 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:32:38,420 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-50 - Starting...
+2022-04-06 11:32:38,424 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-50 - Start completed.
+2022-04-06 11:32:38,424 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:32:38,480 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:32:38,480 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:38,480 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:38,655 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:32:38,655 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:38,733 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:32:39,146 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:32:39,585 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:32:39,672 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:32:39,682 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.75 seconds (JVM running for 4237.403)
+2022-04-06 11:32:39,684 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:32:50,065 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-199] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:50,066 INFO com.zaxxer.hikari.HikariDataSource [Thread-199] HikariPool-50 - Shutdown initiated...
+2022-04-06 11:32:50,069 INFO com.zaxxer.hikari.HikariDataSource [Thread-199] HikariPool-50 - Shutdown completed.
+2022-04-06 11:32:50,191 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:32:50,192 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:32:50,445 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:32:50,527 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 82 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:32:50,652 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:32:50,653 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:32:50,653 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:32:50,680 INFO org.apache.catalina.core.ContainerBase.[Tomcat-3].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:32:50,680 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 487 ms
+2022-04-06 11:32:50,743 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:32:50,754 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-51 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:32:50,754 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-51 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:32:50,754 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-51 - Starting...
+2022-04-06 11:32:50,759 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-51 - Start completed.
+2022-04-06 11:32:50,759 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:32:50,802 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:32:50,802 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:50,802 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:32:50,949 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:32:50,950 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:32:50,996 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:32:51,450 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:32:51,969 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:32:51,988 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:32:51,992 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.833 seconds (JVM running for 4249.713)
+2022-04-06 11:32:51,993 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:33:04,186 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-203] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:04,187 INFO com.zaxxer.hikari.HikariDataSource [Thread-203] HikariPool-51 - Shutdown initiated...
+2022-04-06 11:33:04,190 INFO com.zaxxer.hikari.HikariDataSource [Thread-203] HikariPool-51 - Shutdown completed.
+2022-04-06 11:33:07,549 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:33:07,549 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:33:08,165 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:33:08,258 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 92 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:33:08,360 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:33:08,361 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:33:08,361 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:33:08,386 INFO org.apache.catalina.core.ContainerBase.[Tomcat-4].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:33:08,386 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 834 ms
+2022-04-06 11:33:08,447 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:33:08,455 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-52 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:33:08,455 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-52 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:33:08,455 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-52 - Starting...
+2022-04-06 11:33:08,459 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-52 - Start completed.
+2022-04-06 11:33:08,460 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:33:08,510 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:33:08,510 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:08,511 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:08,660 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:33:08,660 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:08,696 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:33:09,107 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:33:09,899 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:33:09,920 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:33:09,924 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.402 seconds (JVM running for 4267.646)
+2022-04-06 11:33:09,926 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:33:11,424 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-207] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:11,424 INFO com.zaxxer.hikari.HikariDataSource [Thread-207] HikariPool-52 - Shutdown initiated...
+2022-04-06 11:33:11,426 INFO com.zaxxer.hikari.HikariDataSource [Thread-207] HikariPool-52 - Shutdown completed.
+2022-04-06 11:33:11,538 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:33:11,538 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:33:11,881 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:33:11,974 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 93 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:33:12,083 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:33:12,084 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:33:12,084 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:33:12,110 INFO org.apache.catalina.core.ContainerBase.[Tomcat-4].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:33:12,111 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 571 ms
+2022-04-06 11:33:12,166 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:33:12,172 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-53 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:33:12,173 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-53 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:33:12,173 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-53 - Starting...
+2022-04-06 11:33:12,177 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-53 - Start completed.
+2022-04-06 11:33:12,178 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:33:12,249 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:33:12,250 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:12,250 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:12,395 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:33:12,396 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:12,432 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:33:12,824 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:33:13,326 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:33:13,341 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:33:13,345 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.834 seconds (JVM running for 4271.067)
+2022-04-06 11:33:13,346 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:33:19,155 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-214] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:19,156 INFO com.zaxxer.hikari.HikariDataSource [Thread-214] HikariPool-53 - Shutdown initiated...
+2022-04-06 11:33:19,158 INFO com.zaxxer.hikari.HikariDataSource [Thread-214] HikariPool-53 - Shutdown completed.
+2022-04-06 11:33:19,287 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:33:19,287 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:33:19,561 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:33:19,652 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 90 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:33:19,820 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:33:19,821 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:33:19,821 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:33:19,844 INFO org.apache.catalina.core.ContainerBase.[Tomcat-4].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:33:19,844 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 555 ms
+2022-04-06 11:33:19,917 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:33:19,930 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-54 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:33:19,930 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-54 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:33:19,930 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-54 - Starting...
+2022-04-06 11:33:19,936 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-54 - Start completed.
+2022-04-06 11:33:19,936 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:33:19,995 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:33:19,995 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:19,995 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:20,115 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:33:20,115 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:20,160 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:33:20,533 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:33:21,060 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:33:21,076 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:33:21,080 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.829 seconds (JVM running for 4278.802)
+2022-04-06 11:33:21,082 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:33:39,714 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-218] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:39,714 INFO com.zaxxer.hikari.HikariDataSource [Thread-218] HikariPool-54 - Shutdown initiated...
+2022-04-06 11:33:39,716 INFO com.zaxxer.hikari.HikariDataSource [Thread-218] HikariPool-54 - Shutdown completed.
+2022-04-06 11:33:39,868 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 24244 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by Practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-06 11:33:39,869 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-06 11:33:40,170 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-06 11:33:40,261 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 91 ms. Found 17 JPA repository interfaces.
+2022-04-06 11:33:40,380 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-06 11:33:40,380 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-06 11:33:40,380 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-06 11:33:40,407 INFO org.apache.catalina.core.ContainerBase.[Tomcat-4].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-06 11:33:40,407 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 536 ms
+2022-04-06 11:33:40,467 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-06 11:33:40,474 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-55 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-06 11:33:40,474 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-55 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-06 11:33:40,474 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-55 - Starting...
+2022-04-06 11:33:40,479 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-55 - Start completed.
+2022-04-06 11:33:40,480 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-06 11:33:40,529 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-06 11:33:40,529 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:40,529 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-06 11:33:40,701 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-06 11:33:40,701 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-06 11:33:40,743 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-06 11:33:41,320 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-06 11:33:41,734 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-06 11:33:41,750 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-06 11:33:41,756 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 1.935 seconds (JVM running for 4299.478)
+2022-04-06 11:33:41,759 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-06 11:33:44,953 INFO org.apache.catalina.core.ContainerBase.[Tomcat-4].[localhost].[/api] [http-nio-8085-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-06 11:33:44,953 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-04-06 11:33:44,957 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Completed initialization in 4 ms
+2022-04-06 11:33:47,171 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-3] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 7 ] no existe.]
+2022-04-06 11:33:50,231 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-4] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ -1 ] no es válido.]
