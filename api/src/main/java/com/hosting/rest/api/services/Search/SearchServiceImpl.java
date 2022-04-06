@@ -15,8 +15,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class SearchServiceImpl implements ISearchService {
-	
-//	private static final Logger LOG = LoggerFactory.getLogger(SearchServiceImpl.class);
 
 	@Autowired
 	private ISearchRepository searchRepo;
@@ -43,12 +39,13 @@ public class SearchServiceImpl implements ISearchService {
 	@PersistenceContext
 	private EntityManager em;
 
+
 	@Override
 	public SearchModel addNewSearch(final SearchModel searchToAdd) {
 
 		if (!isNotNull(searchToAdd)) {
 			log.error("La búsqueda a añadir no es válida.");
-//			throw new IllegalArgumentsCustomException("La búsqueda a añadir no es válida.");
+			throw new IllegalArgumentsCustomException("La búsqueda a añadir no es válida.");
 		}
 
 		return searchRepo.save(searchToAdd);
@@ -58,9 +55,10 @@ public class SearchServiceImpl implements ISearchService {
 	public void deleteSearchById(final Integer searchId) {
 		if (!isIntegerValidAndPositive(searchId)) {
 			log.error("El id de búsqueda [ " + searchId + " ] no es válido.");
-//			throw new IllegalArgumentsCustomException("El id de búsqueda [ " + searchId + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El id de búsqueda [ " + searchId + " ] no es válido.");
 		}
 
+		// Comprobar que la búsqueda existe
 		if (!searchRepo.existsById(searchId)) {
 			throw new NotFoundCustomException("La búsqueda a eliminar no existe");
 		}
@@ -72,10 +70,12 @@ public class SearchServiceImpl implements ISearchService {
 	public List<SearchModel> findByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
 			log.error("El id de usuario [ " + userId + " ] no es válido.");
-//			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
+		// Comprobar que el usuario existe
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario a listar sus búsquedas no existe");
 			throw new NotFoundCustomException("El usuario a listar sus búsquedas no existe");
 		}
 
@@ -92,13 +92,18 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public List<SearchModel> findLatestByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id de usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
+		// Comprobar que el usuario existe
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario a listar sus últimas búsquedas no existe");
 			throw new NotFoundCustomException("El usuario a listar sus últimas búsquedas no existe");
 		}
 
+		// Realizar la consulta paar obtener las últimas búsquedas realizadas por el
+		// usuario.
 		String findLatestSearchesByUserIdQuery = "SELECT sm "
 				+ "FROM UserSearchHistoryModel ushm INNER JOIN ushm.idSearch sm " + "WHERE ushm.idUser.id = :userId "
 				+ "ORDER BY ushm.idUser.createdAt DESC";
@@ -114,13 +119,17 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public List<SearchModel> findRepeatedSearchesByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id de usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
 
+		// Comprobar que el usuario existe.
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario a listar sus búsquedas más frecuentes no existe");
 			throw new NotFoundCustomException("El usuario a listar sus búsquedas más frecuentes no existe");
 		}
 
+		// Obtener las búsquedas más frecuentes del usuario.
 		String findLatestSearchesByUserIdQuery = "SELECT sm "
 				+ "FROM UserSearchHistoryModel ushm INNER JOIN ushm.idSearch sm " + "WHERE ushm.idUser.id = :userId "
 				+ "GROUP BY sm.word " + "ORDER BY ushm.idUser.createdAt DESC ";
@@ -136,9 +145,11 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public List<SearchModel> findByPattern(final String wordPatternToSearch) {
 		if (!isStringNotBlank(wordPatternToSearch)) {
+			log.error("El patrón introducido está vacío o no es válido.");
 			throw new IllegalArgumentsCustomException("El patrón introducido está vacío o no es válido.");
 		}
 
+		// Obtener las búsquedas que coincidan con el patrón pasado como parámetro.
 		String findSearchedMatchesWithPattern = "SELECT sm " + "FROM SearchModel sm "
 				+ "WHERE LOWER(sm.word) LIKE LOWER(CONCAT('%', :searchPattern, '%' ))";
 
@@ -166,16 +177,19 @@ public class SearchServiceImpl implements ISearchService {
 			final LocalDateTime dateEndToSearch) {
 
 		if (!isDateValid(dateStartToSearch)) {
+			log.error("La primera fecha para realizar el listado de búsquedas no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"La primera fecha para realizar el listado de búsquedas no es válida.");
 		}
 
 		if (!isDateValid(dateEndToSearch)) {
+			log.error("La segunda fecha para realizar el listado de búsquedas no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"La segunda fecha para realizar el listado de búsquedas no es válida.");
 		}
 
 		if (!isFirstDateLessThanSecondDate(dateStartToSearch, dateEndToSearch)) {
+			log.error("La fecha " + dateStartToSearch + " tiene que ser anterior a la fecha " + dateEndToSearch);
 			throw new IllegalArgumentsCustomException(
 					"La fecha " + dateStartToSearch + " tiene que ser anterior a la fecha " + dateEndToSearch);
 		}
@@ -200,6 +214,7 @@ public class SearchServiceImpl implements ISearchService {
 		String deleteUserSearchHistoryQuery = "DELETE FROM UserSearchHistoryModel ushm WHERE ushm.idUser.id = :userId";
 
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 			throw new NotFoundCustomException(
 					"El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 		}
@@ -215,16 +230,20 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public void deleteUserSearchByUserId(final Integer userId, final Integer searchId) {
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("La usuario con id [ " + searchId + " ] a eliminar la búsqueda [ " + searchId + " no es válido.");
 			throw new NotFoundCustomException(
 					"La usuario con id [ " + searchId + " ] a eliminar la búsqueda [ " + searchId + " no es válido.");
 		}
 
 		if (!isIntegerValidAndPositive(searchId)) {
+			log.error("La búsqueda con id [ " + searchId + " ] a eliminar del historial del usuario [ " + userId
+					+ " no es válida.");
 			throw new NotFoundCustomException("La búsqueda con id [ " + searchId
 					+ " ] a eliminar del historial del usuario [ " + userId + " no es válida.");
 		}
 
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 			throw new NotFoundCustomException(
 					"El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 		}
@@ -238,7 +257,5 @@ public class SearchServiceImpl implements ISearchService {
 		moreSearchedWords.setParameter("searchId", searchId);
 
 		moreSearchedWords.executeUpdate();
-
 	}
-
 }
