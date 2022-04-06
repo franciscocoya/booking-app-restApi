@@ -1,5 +1,9 @@
 package com.hosting.rest.api.controllers.User.UserConfiguration;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +28,7 @@ public class UserConfigurationController {
 
 	@PostMapping("new")
 	public UserConfigurationModel addNewUserConfiguration(
-			@RequestBody final UserConfigurationModel userConfigurationToAdd) {
+			@Valid @RequestBody final UserConfigurationModel userConfigurationToAdd) {
 		return userConfigurationService.addNewUserConfiguration(userConfigurationToAdd);
 	}
 
@@ -34,7 +38,7 @@ public class UserConfigurationController {
 		UserConfigurationModel userConfigurationToReturn = null;
 
 		try {
-			
+
 			userConfigurationToReturn = userConfigurationService.updateUserConfiguration(Integer.parseInt(userId),
 					userConfigurationToUpdate.getIdLanguage(), userConfigurationToUpdate.getIdCurrency());
 
@@ -66,6 +70,12 @@ public class UserConfigurationController {
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es un número.");
 		}
+
 		return userConfigurationToReturn;
+	}
+
+	@GetMapping("all")
+	public List<UserConfigurationModel> findAll() {
+		return userConfigurationService.findAll();
 	}
 }

@@ -3,6 +3,8 @@ package com.hosting.rest.api.services.User.UserConfiguration;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -18,10 +20,11 @@ import com.hosting.rest.api.models.Language.LanguageModel;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurationRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserConfigurationServiceImpl implements IUserConfigurationService {
-
-//	private static final Logger logger = LogManager.getLogger(UserConfigurationServiceImpl.class);
 
 	@PersistenceContext
 	private EntityManager em;
@@ -30,13 +33,21 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	private IUserConfigurationRepository userConfigurationRepo;
 
 	@Override
-	public UserConfigurationModel addNewUserConfiguration(final UserConfigurationModel newUserConfigurationModel) {
-		if (!isNotNull(newUserConfigurationModel)) {
+	public UserConfigurationModel addNewUserConfiguration(final UserConfigurationModel newUserConfigurationToAdd) {
+		if (!isNotNull(newUserConfigurationToAdd)) {
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la configuración del usuario a añadir no es válido.");
 		}
 
-		return userConfigurationRepo.save(newUserConfigurationModel);
+		boolean existsUserConfiguration = userConfigurationRepo
+				.existsById(newUserConfigurationToAdd.getIdUserConfiguration());
+
+		if (existsUserConfiguration) {
+			log.error("Ya existe una configuración con las mismas características.");
+			throw new IllegalArgumentsCustomException("Ya existe una configuración con las mismas características.");
+		}
+
+		return userConfigurationRepo.save(newUserConfigurationToAdd);
 	}
 
 	@Transactional
@@ -91,9 +102,9 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 				+ "WHERE um.id = :userId";
 
 		TypedQuery<UserConfigurationModel> userConfig = em.createQuery(findByUserIdQuery, UserConfigurationModel.class);
-		
+
 		userConfig.setParameter("userId", userId);
-		
+
 		// TODO: Si el usuario no tiene configuración, se muestra un 500 - CORREGIR
 
 		return userConfig.getSingleResult();
@@ -108,6 +119,11 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		}
 
 		userConfigurationRepo.deleteById(userConfigurationId);
+	}
+
+	@Override
+	public List<UserConfigurationModel> findAll() {
+		return userConfigurationRepo.findAll();
 	}
 
 }

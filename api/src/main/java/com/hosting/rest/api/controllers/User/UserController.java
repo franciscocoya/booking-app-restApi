@@ -23,12 +23,12 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	@PostMapping(value = "new")
+	@PostMapping("new")
 	public UserModel addNewUser(@RequestBody final UserModel userToCreate) {
 		return userService.addNewUser(userToCreate);
 	}
 
-	@DeleteMapping(value = "{userId}")
+	@DeleteMapping("{userId}")
 	public void deleteUserById(@PathVariable(value = "userId") final String userId) {
 		try {
 			userService.deleteUserById(Integer.parseInt(userId));
@@ -57,6 +57,7 @@ public class UserController {
 	@GetMapping("{userId}")
 	public UserModel getUserById(@PathVariable(value = "userId") final String userId) {
 		UserModel userToReturn = null;
+		
 		try {
 			userToReturn = userService.getUserById(Integer.parseInt(userId));
 

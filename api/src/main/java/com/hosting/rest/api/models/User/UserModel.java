@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 
 import lombok.AllArgsConstructor;
@@ -46,6 +47,7 @@ public class UserModel {
 	@Column(name = "PHONE")
 	private String phone;
 
+	@JsonIgnore
 	@Column(name = "PASS")
 	private String pass;
 

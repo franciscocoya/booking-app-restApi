@@ -17,6 +17,9 @@ import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements IUserService {
 
@@ -34,6 +37,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserModel getUserById(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id de usuario [ " + userId + " ] no es válido o está vacío.");
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido o está vacío.");
 		}
 
@@ -43,7 +47,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<UserModel> findAllUsers() {
-		String findAllHostUsersQuery = "SELECT um " + " FROM UserModel um" + " WHERE TYPE(um) IN (UserModel, UserHostModel)";
+		String findAllHostUsersQuery = "SELECT um " + " FROM UserModel um"
+				+ " WHERE TYPE(um) IN (UserModel, UserHostModel)";
 
 		TypedQuery<UserModel> allUsers = em.createQuery(findAllHostUsersQuery, UserModel.class);
 
@@ -57,7 +62,7 @@ public class UserServiceImpl implements IUserService {
 			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
 		}
 
-		boolean existsUser = userRepo.findById(userToAdd.getId()).get() != null;
+		boolean existsUser = userRepo.existsById(userToAdd.getId());
 
 		if (existsUser) {
 			throw new IllegalArgumentsCustomException("Ya existe un usuario en la aplicación.");
@@ -69,14 +74,19 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserModel updateUser(final Integer userId, final UserModel userToUpdate) {
 
+		if (!isIntegerValidAndPositive(userId)) {
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+		}
+
 		if (!isNotNull(userToUpdate)) {
-			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a actualizar falta o no es válida.");
+			throw new IllegalArgumentsCustomException(
+					"Alguna propiedad del usuario a actualizar falta o no es válida.");
 		}
 
 		boolean existsUser = userRepo.findById(userToUpdate.getId()).get() != null;
 
 		if (!existsUser) {
-			throw new IllegalArgumentsCustomException("El usuario con id [ " + userId + " ] no existe.");
+			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
 		}
 
 		UserModel originalUser = userRepo.findById(userId).get();

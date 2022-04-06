@@ -29,9 +29,6 @@ public class CurrencyModel {
 	@Column(name = "CURRENCY_NAME")
 	private String currencyName;
 
-	@Column(name = "CURRENCY_ENTITY")
-	private String currencyEntity;
-
 	@Column(name = "CURRENCY_CODE")
 	private Integer currencyCode;
 }
