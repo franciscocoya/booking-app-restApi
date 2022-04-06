@@ -26,6 +26,14 @@ import com.hosting.rest.api.repositories.User.IUserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.0
+ * @apiNote Servicio que gestiona las búsquedas realizadas por los usuario en la
+ *          aplicación.
+ *
+ */
 @Slf4j
 @Service
 public class SearchServiceImpl implements ISearchService {
@@ -39,10 +47,19 @@ public class SearchServiceImpl implements ISearchService {
 	@PersistenceContext
 	private EntityManager em;
 
-
+	/**
+	 * Añade una nueva búsqueda <code>searchToAdd</code>. Una búsqueda contiene una
+	 * sentencia.
+	 * 
+	 * @param searchToAdd
+	 * 
+	 * @return Búsqueda añadida.
+	 * 
+	 */
 	@Override
 	public SearchModel addNewSearch(final SearchModel searchToAdd) {
 
+		// Comprobar que la búsqueda a añadir no es null.
 		if (!isNotNull(searchToAdd)) {
 			log.error("La búsqueda a añadir no es válida.");
 			throw new IllegalArgumentsCustomException("La búsqueda a añadir no es válida.");
@@ -51,6 +68,12 @@ public class SearchServiceImpl implements ISearchService {
 		return searchRepo.save(searchToAdd);
 	}
 
+	/**
+	 * Elimina una búsqueda por su id <code>searchId</code>
+	 * 
+	 * @param searchId
+	 * 
+	 */
 	@Override
 	public void deleteSearchById(final Integer searchId) {
 		if (!isIntegerValidAndPositive(searchId)) {
@@ -66,6 +89,13 @@ public class SearchServiceImpl implements ISearchService {
 		searchRepo.deleteById(searchId);
 	}
 
+	/**
+	 * Lista las búsquedas realizadas por un usuario <code>userId</code>
+	 * 
+	 * @param userId
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<SearchModel> findByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
@@ -89,6 +119,14 @@ public class SearchServiceImpl implements ISearchService {
 		return searchsByUser.getResultList();
 	}
 
+	/**
+	 * Lista las últimas búsquedas realizadas por el usuario <code>userId</code>.
+	 * 
+	 * @param userId
+	 * 
+	 * @return
+	 * 
+	 */
 	@Override
 	public List<SearchModel> findLatestByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
@@ -116,6 +154,9 @@ public class SearchServiceImpl implements ISearchService {
 		return latestSearchsByUser.setMaxResults(MAX_LATEST_SEARCH_RESULTS).getResultList();
 	}
 
+	/**
+	 * Lista las búsquedas más frecuentes del usuario <code>userId</code>.
+	 */
 	@Override
 	public List<SearchModel> findRepeatedSearchesByUserId(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
@@ -142,6 +183,10 @@ public class SearchServiceImpl implements ISearchService {
 		return moreSearchedWordsByUser.setMaxResults(MAX_REPEATED_WORDS_SEARCH_RESULTS).getResultList();
 	}
 
+	/**
+	 * Lista todas las búsquedas que contengan un patrón
+	 * <code>wordPatternToSearch</code> pasado como parámetro.
+	 */
 	@Override
 	public List<SearchModel> findByPattern(final String wordPatternToSearch) {
 		if (!isStringNotBlank(wordPatternToSearch)) {
@@ -161,6 +206,9 @@ public class SearchServiceImpl implements ISearchService {
 		return searchesMatchWithPattern.getResultList();
 	}
 
+	/**
+	 * Lista las búsquedas más frecuentes.
+	 */
 	@Override
 	public List<SearchModel> findWordsMoreSearched() {
 		String findMoreSearchedWordsQuery = "SELECT sm "
@@ -172,22 +220,29 @@ public class SearchServiceImpl implements ISearchService {
 		return moreSearchedWords.setMaxResults(MAX_SEARCHED_SEARCH_RESULTS).getResultList();
 	}
 
+	/**
+	 * Lista las búsquedas más frecuentes comprendidas en un espacio temporal entre
+	 * <code>dateStartToSearch</code> y <code>dateEndToSearch</code>
+	 */
 	@Override
 	public List<SearchModel> findWordsMoreSearchedBetweenTwoDates(final LocalDateTime dateStartToSearch,
 			final LocalDateTime dateEndToSearch) {
 
+		// Comprobar que la primera fecha es válida.
 		if (!isDateValid(dateStartToSearch)) {
 			log.error("La primera fecha para realizar el listado de búsquedas no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"La primera fecha para realizar el listado de búsquedas no es válida.");
 		}
 
+		// Comprobar que la segunda fecha es válida.
 		if (!isDateValid(dateEndToSearch)) {
 			log.error("La segunda fecha para realizar el listado de búsquedas no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"La segunda fecha para realizar el listado de búsquedas no es válida.");
 		}
 
+		// Comprobar que la primera fecha sea anterior a la segunda.
 		if (!isFirstDateLessThanSecondDate(dateStartToSearch, dateEndToSearch)) {
 			log.error("La fecha " + dateStartToSearch + " tiene que ser anterior a la fecha " + dateEndToSearch);
 			throw new IllegalArgumentsCustomException(
@@ -208,11 +263,15 @@ public class SearchServiceImpl implements ISearchService {
 		return moreSearchedWordsBetweenTwoDates.setMaxResults(MAX_SEARCHED_SEARCH_RESULTS).getResultList();
 	}
 
+	/**
+	 * Borrado del historial de búsquedas de un usuario <code>userId</code>
+	 */
 	@Transactional
 	@Override
 	public void deleteAllUserSearchHistory(final Integer userId) {
 		String deleteUserSearchHistoryQuery = "DELETE FROM UserSearchHistoryModel ushm WHERE ushm.idUser.id = :userId";
 
+		// Comprobar que existe un usuario con el el id pasado como parametro.
 		if (!userRepo.existsById(userId)) {
 			log.error("El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 			throw new NotFoundCustomException(
@@ -226,15 +285,22 @@ public class SearchServiceImpl implements ISearchService {
 		moreSearchedWords.executeUpdate();
 	}
 
+	/**
+	 * Borrado de una búsqueda <code>searchId</code> realizada por un determinado
+	 * usuario <code>userId</code>.
+	 */
 	@Transactional
 	@Override
 	public void deleteUserSearchByUserId(final Integer userId, final Integer searchId) {
+
+		// Comprobar que el id de usuario es válido.
 		if (!isIntegerValidAndPositive(userId)) {
 			log.error("La usuario con id [ " + searchId + " ] a eliminar la búsqueda [ " + searchId + " no es válido.");
 			throw new NotFoundCustomException(
 					"La usuario con id [ " + searchId + " ] a eliminar la búsqueda [ " + searchId + " no es válido.");
 		}
 
+		// Comprobar que existe un usuario con el userId.
 		if (!isIntegerValidAndPositive(searchId)) {
 			log.error("La búsqueda con id [ " + searchId + " ] a eliminar del historial del usuario [ " + userId
 					+ " no es válida.");
@@ -242,6 +308,7 @@ public class SearchServiceImpl implements ISearchService {
 					+ " ] a eliminar del historial del usuario [ " + userId + " no es válida.");
 		}
 
+		// Comprobar que el usuario existe
 		if (!userRepo.existsById(userId)) {
 			log.error("El usuario con id [ " + userId + " ] a eliminar su historial de búsquedas no existe.");
 			throw new NotFoundCustomException(
