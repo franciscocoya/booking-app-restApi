@@ -29,5 +29,5 @@ public class UserSearchHistoryModel {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_SEARCH")
-	private SearchModel searches;
+	private SearchModel idSearch;
 }

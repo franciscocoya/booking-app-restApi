@@ -1,6 +1,7 @@
 package com.hosting.rest.api.Utils;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author Francisco Coya
@@ -87,5 +88,31 @@ public class AppUtils {
 	public static boolean isValidGeographicCoordinate(final BigDecimal coordinateToValidate, final boolean isLatitude) {
 		return coordinateToValidate != null;
 //				&& coordinateToValidate.toString().matches(isLatitude ? VALID_LATITUDE_REGEX : VALID_LONGITUDE_REGEX);
+	}
+
+	/**
+	 * Comprueba que, dadas dos fechas <code>firstDateToCompare</code> y
+	 * <code>secondDateToCompare</code>, la primera fecha sea inferior a la segunda.
+	 * 
+	 * @param firstDateToCompare
+	 * @param secondDateToCompare
+	 * 
+	 * @return Devuelve true si la primera fecha es inferior a la segunda y false en
+	 *         caso contrario.
+	 */
+	public static boolean isFirstDateLessThanSecondDate(final LocalDateTime firstDateToCompare,
+			final LocalDateTime secondDateToCompare) {
+		return firstDateToCompare.isBefore(secondDateToCompare);
+	}
+
+	/**
+	 * Comprueba que una fecha pasada como parámetro es válida. Para ello comprueba
+	 * que sea distinta de null.
+	 * 
+	 * @param dateToCheck
+	 * @return
+	 */
+	public static boolean isDateValid(final LocalDateTime dateToCheck) {
+		return isNotNull(dateToCheck);
 	}
 }

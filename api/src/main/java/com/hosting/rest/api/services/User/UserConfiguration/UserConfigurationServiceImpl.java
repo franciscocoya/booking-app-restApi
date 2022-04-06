@@ -43,15 +43,15 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 					"Alguno de los valores de la configuración del usuario a añadir no es válido.");
 		}
 
-		boolean existsUserConfiguration = userConfigurationRepo
-				.existsById(newUserConfigurationToAdd.getIdUserConfiguration());
+//		boolean existsUserConfiguration = userConfigurationRepo
+//				.existsById(newUserConfigurationToAdd.getIdUserConfiguration());
+//
+//		if (existsUserConfiguration) {
+//			log.error("Ya existe una configuración con las mismas características.");
+//			throw new IllegalArgumentsCustomException("Ya existe una configuración con las mismas características.");
+//		}
 
-		if (existsUserConfiguration) {
-			log.error("Ya existe una configuración con las mismas características.");
-			throw new IllegalArgumentsCustomException("Ya existe una configuración con las mismas características.");
-		}
-
-		return userConfigurationRepo.save(newUserConfigurationToAdd);
+		return newUserConfigurationToAdd != null ? userConfigurationRepo.save(newUserConfigurationToAdd) : null;
 	}
 
 	@Transactional
@@ -71,6 +71,13 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		if (!isNotNull(newCurrency)) {
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la configuración de la divisa no es válido.");
+		}
+
+		// Antes de buscar la configuración, se comprueba que el usuario exista.
+		boolean existsUser = userRepo.existsById(userId);
+
+		if (!existsUser) {
+			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
 		}
 
 		// Comprobar si existe una configuación para el usuario
