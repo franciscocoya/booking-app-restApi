@@ -23,6 +23,14 @@ import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurati
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.0
+ * @apiNote Servicio que gestiona la configuración de un usuario de la
+ *          aplicación.
+ *
+ */
 @Slf4j
 @Service
 public class UserConfigurationServiceImpl implements IUserConfigurationService {
@@ -36,39 +44,60 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	@Autowired
 	private IUserRepository userRepo;
 
+	/**
+	 * Añade una nueva configuración de usuario.
+	 * 
+	 * @param newUserConfigurationToAdd
+	 * 
+	 * @return
+	 */
 	@Override
 	public UserConfigurationModel addNewUserConfiguration(final UserConfigurationModel newUserConfigurationToAdd) {
 		if (!isNotNull(newUserConfigurationToAdd)) {
+			log.error("Alguno de los valores de la configuración del usuario a añadir no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la configuración del usuario a añadir no es válido.");
 		}
 
-//		boolean existsUserConfiguration = userConfigurationRepo
-//				.existsById(newUserConfigurationToAdd.getIdUserConfiguration());
-//
-//		if (existsUserConfiguration) {
-//			log.error("Ya existe una configuración con las mismas características.");
-//			throw new IllegalArgumentsCustomException("Ya existe una configuración con las mismas características.");
-//		}
+		if (userConfigurationRepo.existsById(newUserConfigurationToAdd.getIdUserConfiguration())) {
+			log.error("Ya existe una configuración con las mismas características.");
+			throw new IllegalArgumentsCustomException("Ya existe una configuración con las mismas características.");
+		}
 
 		return newUserConfigurationToAdd != null ? userConfigurationRepo.save(newUserConfigurationToAdd) : null;
 	}
 
+	/**
+	 * Actualiza los datos de la configuración del usuario <code>userId</code> con
+	 * los datos respectivos a lenguaje y divisa.
+	 * 
+	 * @param userId
+	 * @param newLanguage
+	 * @param newCurrency
+	 */
 	@Transactional
 	@Override
 	public UserConfigurationModel updateUserConfiguration(final Integer userId, final LanguageModel newLanguage,
 			final CurrencyModel newCurrency) {
 
+		// TODO: Revisar este método para optimizarlo.
+
+		// Comprobar que el id de usuario es válido.
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
 
+		// Comprobar que el lenguaje no es null.
 		if (!isNotNull(newLanguage)) {
+			log.error("Alguno de los valores de la configuración del lenguaje no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la configuración del lenguaje no es válido.");
 		}
 
+		// Comprobar que la divisa no es null
 		if (!isNotNull(newCurrency)) {
+			log.error("Alguno de los valores de la configuración de la divisa no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la configuración de la divisa no es válido.");
 		}
@@ -77,6 +106,7 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		boolean existsUser = userRepo.existsById(userId);
 
 		if (!existsUser) {
+			log.error("El usuario con id [ " + userId + " ] no existe.");
 			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
 		}
 
@@ -84,6 +114,7 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		UserConfigurationModel originalUserConfiguration = findByUserId(userId);
 
 		if (originalUserConfiguration == null) {
+			log.error("La configuración del usuario a actualizar no existe.");
 			throw new NotFoundCustomException("La configuración del usuario a actualizar no existe.");
 		}
 
@@ -93,9 +124,14 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		return userConfigurationRepo.saveAndFlush(originalUserConfiguration);
 	}
 
+	/**
+	 * @param userConfigurationId
+	 * @return Devuelve los datos de la configuración a partir de su id.
+	 */
 	@Override
 	public UserConfigurationModel findById(final Integer userConfigurationId) {
 		if (!isIntegerValidAndPositive(userConfigurationId)) {
+			log.error("El id de la configuración del usuario [ " + userConfigurationId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la configuración del usuario [ " + userConfigurationId + " ] no es válido.");
 		}
@@ -103,9 +139,18 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		return userConfigurationRepo.findById(userConfigurationId).get();
 	}
 
+	/**
+	 * @param userId
+	 * 
+	 * @return Devuelve los datos de configuración del usuario <code>userId</code>
+	 *         pasado como parametro.
+	 */
 	@Override
 	public UserConfigurationModel findByUserId(final Integer userId) {
+
+		// Comprobar que el id de usuario es válido.
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
 
@@ -113,6 +158,7 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		boolean existsUser = userRepo.existsById(userId);
 
 		if (!existsUser) {
+			log.error("El usuario con id [ " + userId + " ] no existe.");
 			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
 		}
 
@@ -126,10 +172,16 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		return userConfig.getSingleResult();
 	}
 
+	/**
+	 * Elimina la configuración de usuario cuyo id es pasado como parámetro.
+	 * 
+	 * @param userConfigurationId
+	 */
 	@Transactional
 	@Override
 	public void deleteUserConfiguration(final Integer userConfigurationId) {
 		if (!isIntegerValidAndPositive(userConfigurationId)) {
+			log.error("El id de la configuración del usuario [ " + userConfigurationId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la configuración del usuario [ " + userConfigurationId + " ] no es válido.");
 		}
@@ -137,6 +189,9 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 		userConfigurationRepo.deleteById(userConfigurationId);
 	}
 
+	/**
+	 * Listado de todas las configuraciones de usuario disponibles.
+	 */
 	@Override
 	public List<UserConfigurationModel> findAll() {
 		return userConfigurationRepo.findAll();
