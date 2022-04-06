@@ -19,6 +19,14 @@ import com.hosting.rest.api.repositories.User.IUserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.0
+ * @apiNote Servicio que gestiona todas las acciones de un usuario de la
+ *          aplicación.
+ *
+ */
 @Slf4j
 @Service
 public class UserServiceImpl implements IUserService {
@@ -30,10 +38,28 @@ public class UserServiceImpl implements IUserService {
 	private IUserRepository userRepo;
 
 	@Override
-	public List<UserModel> findAllStartedUsers() {
-		return userRepo.findAll();
+	public UserModel addNewUser(final UserModel userToAdd) {
+
+		if (!isNotNull(userToAdd)) {
+			log.error("Alguna propiedad del usuario a crear falta o no es válida.");
+			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
+		}
+
+		boolean existsUser = userRepo.existsById(userToAdd.getId());
+
+		if (existsUser) {
+			log.error("Ya existe un usuario en la aplicación.");
+			throw new IllegalArgumentsCustomException("Ya existe un usuario en la aplicación.");
+		}
+
+		return userRepo.save(userToAdd);
 	}
 
+	/**
+	 * @param userId
+	 * 
+	 * @return Devuelve un usuario a partir del id pasado como parámetro.
+	 */
 	@Override
 	public UserModel getUserById(final Integer userId) {
 		if (!isIntegerValidAndPositive(userId)) {
@@ -45,6 +71,80 @@ public class UserServiceImpl implements IUserService {
 				.orElseThrow(() -> new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe."));
 	}
 
+	/**
+	 * Actualiza los datos de un usuario.
+	 * 
+	 * @param userId
+	 * @param userToUpdate
+	 * 
+	 * @return Devuelve el usuario con los datos actualizados.
+	 */
+	@Override
+	public UserModel updateUser(final Integer userId, final UserModel userToUpdate) {
+
+		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id de usuario [ " + userId + " ] no es válido.");
+			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
+		}
+
+		if (!isNotNull(userToUpdate)) {
+			log.error("Alguna propiedad del usuario a actualizar falta o no es válida.");
+			throw new IllegalArgumentsCustomException(
+					"Alguna propiedad del usuario a actualizar falta o no es válida.");
+		}
+
+		boolean existsUser = userRepo.findById(userToUpdate.getId()).get() != null;
+
+		// Comprobar que el usuario existe para poder actualizar sus datos.
+		if (!existsUser) {
+			log.error("El usuario con id [ " + userId + " ] no existe.");
+			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
+		}
+
+		UserModel originalUser = userRepo.findById(userId).get();
+
+		// Datos del usuario
+		originalUser.setName(userToUpdate.getName());
+		originalUser.setSurname(userToUpdate.getSurname());
+		originalUser.setSurname(userToUpdate.getSurname());
+		originalUser.setEmail(userToUpdate.getEmail());
+
+		return originalUser != null ? userRepo.save(originalUser) : null;
+	}
+
+	/**
+	 * Elimina un usuario dado su id.
+	 * 
+	 * @param userId
+	 */
+	@Override
+	public void deleteUserById(final Integer userId) {
+		if (!isIntegerValidAndPositive(userId)) {
+			log.error("Alguna propiedad del usuario a crear falta o no es válida.");
+			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
+		}
+
+		boolean existsUser = userRepo.findById(userId).get() != null;
+
+		if (!existsUser) {
+			log.error("No existe un usuario con id [ " + userId + " ]");
+			throw new NotFoundCustomException("No existe un usuario con id [ " + userId + " ]");
+		}
+
+		userRepo.deleteById(userId);
+	}
+
+	/**
+	 * Listado de los usuarios registrados (No hosts) de la aplicación.
+	 */
+	@Override
+	public List<UserModel> findAllStartedUsers() {
+		return userRepo.findAll();
+	}
+
+	/**
+	 * @return Listado de todos los usuarios de la aplicación.
+	 */
 	@Override
 	public List<UserModel> findAllUsers() {
 		String findAllHostUsersQuery = "SELECT um " + " FROM UserModel um"
@@ -53,71 +153,5 @@ public class UserServiceImpl implements IUserService {
 		TypedQuery<UserModel> allUsers = em.createQuery(findAllHostUsersQuery, UserModel.class);
 
 		return allUsers.getResultList();
-	}
-
-	@Override
-	public UserModel addNewUser(final UserModel userToAdd) {
-
-		if (!isNotNull(userToAdd)) {
-			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
-		}
-
-		boolean existsUser = userRepo.existsById(userToAdd.getId());
-
-		if (existsUser) {
-			throw new IllegalArgumentsCustomException("Ya existe un usuario en la aplicación.");
-		}
-
-		return userRepo.save(userToAdd);
-	}
-
-	@Override
-	public UserModel updateUser(final Integer userId, final UserModel userToUpdate) {
-
-		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
-
-		if (!isNotNull(userToUpdate)) {
-			throw new IllegalArgumentsCustomException(
-					"Alguna propiedad del usuario a actualizar falta o no es válida.");
-		}
-
-		boolean existsUser = userRepo.findById(userToUpdate.getId()).get() != null;
-
-		if (!existsUser) {
-			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
-		}
-
-		UserModel originalUser = userRepo.findById(userId).get();
-
-		// Nombre del usuario
-		originalUser.setName(userToUpdate.getName());
-
-		// Apellidos del usuario
-		originalUser.setSurname(userToUpdate.getSurname());
-
-		// Número de teléfono
-		originalUser.setSurname(userToUpdate.getSurname());
-
-		// Email
-		originalUser.setEmail(userToUpdate.getEmail());
-
-		return originalUser != null ? userRepo.save(originalUser) : null;
-	}
-
-	@Override
-	public void deleteUserById(final Integer userId) {
-		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
-		}
-
-		boolean existsUser = userRepo.findById(userId).get() != null;
-
-		if (!existsUser) {
-			throw new NotFoundCustomException("No existe un usuario con id [ " + userId + " ]");
-		}
-
-		userRepo.deleteById(userId);
 	}
 }
