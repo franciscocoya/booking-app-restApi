@@ -9,10 +9,27 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
+import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.PromoCode.IPromoCodeRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.2
+ * @apiNote Servicio que gestiona los códigos promocionales de los alojamientos.
+ *
+ */
 @Service
+@Slf4j
 public class PromoCodeServiceImpl implements IPromoCodeService {
 
 	@PersistenceContext
@@ -21,35 +38,91 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	@Autowired
 	private IPromoCodeRepository promoCodeRepo;
 
+	@Autowired
+	private IAccomodationRepository accomodationRepo;
+
+	/**
+	 * Listado de todos los códigos promocionales creados en la aplicación.
+	 */
 	@Override
 	public List<PromoCodeModel> findAllPromoCodes() {
 		return promoCodeRepo.findAll();
 	}
 
+	/**
+	 * Obtención de un código promocional con el id <code>promoCodeId</code> pasado
+	 * como parámetro.
+	 * 
+	 * @param promoCodeId
+	 */
 	@Override
 	public PromoCodeModel getPromoCodeById(final String promoCodeId) {
+
+		if (!isStringNotBlank(promoCodeId)) {
+			log.error("El código promocional con id " + promoCodeId + " a añadir está vacío.");
+			throw new IllegalArgumentsCustomException(
+					"El código promocional con id " + promoCodeId + " a añadir está vacío.");
+		}
+
 		return promoCodeRepo.findById(promoCodeId).get();
 	}
 
+	/**
+	 * Creación de un código promocional con los datos del modelo pasado como
+	 * parámetro.
+	 * 
+	 * @param promoCodeModel
+	 */
 	@Override
 	public PromoCodeModel addNewPromoCode(final PromoCodeModel promoCodeModel) {
+		if (!isNotNull(promoCodeModel)) {
+			log.error("Alguno de los valores del código promocional introducido no es válido.");
+			throw new IllegalArgumentsCustomException(
+					"Alguno de los valores del código promocional introducido no es válido.");
+		}
+
+		// Comprobar si existe el código promocional a añadir
+		if (promoCodeRepo.existsById(promoCodeModel.getSerial_num())) {
+			log.error("El código promocional con id " + promoCodeModel.getSerial_num() + " ya existe.");
+			throw new IllegalArgumentsCustomException(
+					"El código promocional con id " + promoCodeModel.getSerial_num() + " ya existe.");
+		}
+
 		return promoCodeRepo.save(promoCodeModel);
 	}
 
+	/**
+	 * Borrado de un código promocional por su id <code>promoCodeId</code>
+	 * 
+	 * @param promoCodeId
+	 */
 	@Override
 	public void removePromoCodeById(final String promoCodeId) {
+		if (!isStringNotBlank(promoCodeId)) {
+			log.error("El código promocional con id " + promoCodeId + " a eliminar está vacío.");
+			throw new IllegalArgumentsCustomException(
+					"El código promocional con id " + promoCodeId + " a eliminar está vacío.");
+		}
+
 		promoCodeRepo.deleteById(promoCodeId);
 	}
 
+	/**
+	 * Listado de los códigos promocionales creados por el usuario
+	 * <code>userId</code> pasado como parámetro.
+	 * 
+	 * @param userId
+	 */
 	@Override
 	public List<PromoCodeModel> findByUser(final Integer userId) {
 
-		/**
-		 * Listado de todos los códigos promocionales creados por un usuario
-		 * <code>userId</code>.
-		 */
-		String findPromoCodesByUserIdQuery = "select pc from PromoCodeModel pc inner join pc.idUser pu"
-				+ " where pu.id = :userId";
+		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario " + userId + " no es válido.");
+			throw new IllegalArgumentsCustomException("El id del usuario " + userId + " no es válido.");
+		}
+
+		String findPromoCodesByUserIdQuery = "SELECT pc FROM PromoCodeModel pc INNER JOIN pc.idUser pu"
+				+ " WHERE pu.id = :userId";
 
 		TypedQuery<PromoCodeModel> promoCodes = em.createQuery(findPromoCodesByUserIdQuery, PromoCodeModel.class);
 
@@ -58,14 +131,34 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 		return promoCodes.getResultList();
 	}
 
+	/**
+	 * Listado de todos los códigos promocionales disponibles en un alojamiento
+	 * <code>accomodationRegNumber</code> <code>userId</code>.
+	 * 
+	 * @param accomodationRegNumber
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<PromoCodeModel> findByAccomodation(final String accomodationRegNumber) {
-		/**
-		 * Listado de todos los códigos promocionales disponibles en un alojamiento <code>accomodationRegNumber</code>
-		 * <code>userId</code>.
-		 */
-		String findPromoCodesByUserIdQuery = "select pc from PromoCodeModel pc inner join pc.idAcc pa"
-				+ " where pa.registerNumber = :regNum";
+
+		if (!isStringNotBlank(accomodationRegNumber)) {
+			log.error("El número de registro del alojamiento " + accomodationRegNumber + " a a buscar está vacío.");
+			throw new IllegalArgumentsCustomException(
+					"El número de registro del alojamiento " + accomodationRegNumber + " a a buscar está vacío.");
+		}
+
+		// Comprobar que existe un alohamiento con el número de registro pasado como
+		// parámetro.
+		if (!accomodationRepo.existsById(accomodationRegNumber)) {
+			log.error("No existe ningún alojamiento registrado con el número " + accomodationRegNumber
+					+ " en la aplicación.");
+			throw new NotFoundCustomException("No existe ningún alojamiento registrado con el número "
+					+ accomodationRegNumber + " en la aplicación.");
+		}
+
+		String findPromoCodesByUserIdQuery = "SELECT pc FROM PromoCodeModel pc INNER JOIN pc.idAcc pa"
+				+ " WHERE pa.registerNumber = :regNum";
 
 		TypedQuery<PromoCodeModel> promoCodes = em.createQuery(findPromoCodesByUserIdQuery, PromoCodeModel.class);
 

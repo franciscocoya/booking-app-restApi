@@ -21,7 +21,17 @@ import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.0
+ * @apiNote Servicio que gestiona las acciones de un usuario host.
+ *
+ */
 @Service
+@Slf4j
 public class IUserHostServiceImpl implements IUserHostService {
 
 	@PersistenceContext
@@ -39,18 +49,22 @@ public class IUserHostServiceImpl implements IUserHostService {
 			final String userHostDirection) {
 
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario [ " + userId + " ] a añadir no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] a añadir no es válido.");
 		}
 
 		if (!isStringNotBlank(userHostDni)) {
+			log.error("El DNI introducido para el host no es válido.");
 			throw new IllegalArgumentsCustomException("El DNI introducido para el host no es válido.");
 		}
 
 		if (!isStringNotBlank(userHostDirection)) {
+			log.error("La dirección introducida para el host no es válido.");
 			throw new IllegalArgumentsCustomException("La dirección introducida para el host no es válido.");
 		}
 
 		if (!userRepo.existsById(userId)) {
+			log.error("El usuario a actualizar a host no existe.");
 			throw new NotFoundCustomException("El usuario a actualizar a host no existe.");
 		}
 
@@ -77,10 +91,12 @@ public class IUserHostServiceImpl implements IUserHostService {
 	public void updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate) {
 
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
 
 		if (!isNotNull(userHostToUpdate)) {
+			log.error("Alguno de los valores del usuario host a crear no es válido.");
 			throw new IllegalArgumentsCustomException("Alguno de los valores del usuario host a crear no es válido.");
 		}
 
@@ -94,6 +110,7 @@ public class IUserHostServiceImpl implements IUserHostService {
 	public void downgradeUserHostToUser(final Integer userId) {
 
 		if (!isIntegerValidAndPositive(userId)) {
+			log.error("El id del usuario host [ " + userId + " ] a eliminar no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"El id del usuario host [ " + userId + " ] a eliminar no es válido.");
 		}
