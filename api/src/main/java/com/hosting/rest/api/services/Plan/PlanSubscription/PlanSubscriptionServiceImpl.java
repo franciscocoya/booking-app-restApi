@@ -18,7 +18,17 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.models.Plan.PlanSubscriptionModel;
 import com.hosting.rest.api.repositories.Plan.PlanSubscription.IPlanSubscriptionRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.2
+ * @apiNote Servicio que gestiona las subscripciones usuario - plan.
+ *
+ */
 @Service
+@Slf4j
 public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 	@PersistenceContext
@@ -27,6 +37,7 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	@Autowired
 	private IPlanSubscriptionRepository planSubscriptionRepo;
 
+	
 	@Override
 	public PlanSubscriptionModel addNewPlanSubscription(final PlanSubscriptionModel planSubscriptionToAdd) {
 		if (!isNotNull(planSubscriptionToAdd)) {
@@ -85,7 +96,6 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 		return existsSubscription.getSingleResult();
 	}
-	
 
 	@Transactional
 	@Override
