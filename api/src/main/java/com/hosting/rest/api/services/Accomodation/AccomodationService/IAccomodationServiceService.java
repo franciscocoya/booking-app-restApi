@@ -12,7 +12,7 @@ public interface IAccomodationServiceService {
 
 	public void deleteAccomodationServiceById(final Integer accomodationServiceId);
 
-	public AccomodationServiceModel updateAccomodationService(final AccomodationServiceModel accomodationService);
+	public AccomodationServiceModel updateAccomodationService(final Integer accomodationServiceId, final AccomodationServiceModel accomodationService);
 
 	public List<AccomodationServiceModel> findAllAccomodationServicesFromAccomodation(final String regNumber);
 }
