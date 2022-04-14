@@ -292,10 +292,12 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Override
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice) {
 		if (!isBigDecimalValid(minPrice)) {
+			log.error("El precio mínimo introducido no es válido.");
 			throw new IllegalArgumentsCustomException("El precio mínimo introducido no es válido.");
 		}
 
 		if (!isBigDecimalValid(maxPrice)) {
+			log.error("El precio máximo introducido no es válido.");
 			throw new IllegalArgumentsCustomException("El precio máximo introducido no es válido.");
 		}
 
