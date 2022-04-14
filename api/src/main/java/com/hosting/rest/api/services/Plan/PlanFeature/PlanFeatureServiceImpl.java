@@ -100,9 +100,9 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 		}
 
 		if (!isNotNull(planFeatureToUpdate)) {
-			log.error("Alguno de los valore de la característica a actualizar no es válido.");
+			log.error("Alguno de los valores de la característica a actualizar no es válido.");
 			throw new IllegalArgumentsCustomException(
-					"Alguno de los valore de la característica a actualizar no es válido.");
+					"Alguno de los valores de la característica a actualizar no es válido.");
 		}
 
 		// Comprobar si existe la característica
