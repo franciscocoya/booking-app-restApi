@@ -6,7 +6,6 @@ import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.MathUtils.MATH_CONTEXT;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -81,9 +80,8 @@ public class BookingServiceImpl implements IBookingService {
 
 		// Calcular el total de la reserva (Comisiones y descuentos Incl.)
 
-		BigDecimal newDisccount = bookingToAdd.getDisccount() == null ? BigDecimal.ZERO : bookingToAdd.getDisccount();
-
-		bookingToAdd.setTotal(calculateBookingTotalCost(bookingToAdd.getAmount(), newDisccount, newServiceFee));
+		bookingToAdd.setTotal(
+				calculateBookingTotalCost(bookingToAdd.getAmount(), bookingToAdd.getDisccount(), newServiceFee));
 
 		return bookingRepo.save(bookingToAdd);
 	}
@@ -134,26 +132,21 @@ public class BookingServiceImpl implements IBookingService {
 		// Número de huéspedes
 		originalBooking.setNumOfGuests(bookingToUpdate.getNumOfGuests());
 
-		// Recalcular el coste (Antes de comisiones y descuentos)
-		BigDecimal accomodationPricePerNight = bookingToUpdate.getIdAccomodation().getPricePerNight();
-
 		// BookingAmount = price_per_night * days * guests
-		BigDecimal updatedBookingAmount = calculateBookingAmount(accomodationPricePerNight,
-				bookingToUpdate.getCheckOut(), bookingToUpdate.getCheckIn(), bookingToUpdate.getNumOfGuests());
+		BigDecimal updatedAmount = bookingToUpdate.getAmount();
 
-		originalBooking.setAmount(updatedBookingAmount);
+		originalBooking.setAmount(bookingToUpdate.getAmount());
 
 		// Descuento a aplicar. 0 si no se aplica descuento.
 		BigDecimal updatedDisccount = bookingToUpdate.getDisccount();
 		originalBooking.setDisccount(updatedDisccount);
 
 		// Recalcular SERVICE_FEE y TOTAL.
-		BigDecimal updatedServiceFee = calculateBookingServiceFee(updatedBookingAmount);
+		BigDecimal updatedServiceFee = calculateBookingServiceFee(updatedAmount);
 		originalBooking.setServiceFee(updatedServiceFee);
 
 		// Recalcular el coste total de la reserva.
-		BigDecimal updatedBookingTotal = calculateBookingTotalCost(updatedBookingAmount, updatedDisccount,
-				updatedServiceFee);
+		BigDecimal updatedBookingTotal = calculateBookingTotalCost(updatedAmount, updatedDisccount, updatedServiceFee);
 		originalBooking.setTotal(updatedBookingTotal);
 
 		return bookingRepo.save(originalBooking);
@@ -167,18 +160,19 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param bookingCheckOut
 	 * @param guests
 	 * 
+	 * 
 	 * @return
 	 */
-	private BigDecimal calculateBookingAmount(final BigDecimal pricePerNight, final LocalDateTime bookingCheckIn,
-			final LocalDateTime bookingCheckOut, final Integer guests) {
-		BigDecimal bookingAmount = BigDecimal.ZERO;
-
-		Integer bookingDays = (int) Duration.between(bookingCheckOut, bookingCheckIn).toDays();
-
-		bookingAmount = pricePerNight.multiply(new BigDecimal(bookingDays, MATH_CONTEXT), MATH_CONTEXT);
-
-		return bookingAmount;
-	}
+//	private BigDecimal calculateBookingAmount(final BigDecimal pricePerNight, final LocalDateTime bookingCheckIn,
+//			final LocalDateTime bookingCheckOut, final Integer guests) {
+//		BigDecimal bookingAmount = BigDecimal.ZERO;
+//
+//		Integer bookingDays = (int) Duration.between(bookingCheckOut, bookingCheckIn).toDays();
+//
+//		bookingAmount = pricePerNight.multiply(new BigDecimal(bookingDays, MATH_CONTEXT), MATH_CONTEXT);
+//
+//		return bookingAmount;
+//	}
 
 	/**
 	 * Calcula la comisión de la aplicación en base al precio de la reserva
@@ -218,8 +212,11 @@ public class BookingServiceImpl implements IBookingService {
 	 */
 	private BigDecimal calculateBookingTotalCost(final BigDecimal bookingAmount,
 			final BigDecimal bookingDisccountPercentage, final BigDecimal bookingServiceFee) {
+		
+		BigDecimal newDisccount = bookingDisccountPercentage == null ? BigDecimal.ZERO : bookingDisccountPercentage;
+
 		BigDecimal disccountResult = bookingAmount
-				.multiply(bookingDisccountPercentage.divide(new BigDecimal("100"), MATH_CONTEXT), MATH_CONTEXT);
+				.multiply(newDisccount.divide(new BigDecimal("100"), MATH_CONTEXT), MATH_CONTEXT);
 
 		return bookingAmount.subtract(disccountResult, MATH_CONTEXT).add(bookingServiceFee, MATH_CONTEXT);
 	}
