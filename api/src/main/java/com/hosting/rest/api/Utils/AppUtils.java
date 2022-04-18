@@ -83,6 +83,8 @@ public class AppUtils {
 	 * esté bien formada.
 	 * 
 	 * @param coordinateToValidate
+	 * @param isLatitude           true si se desea validar la latitud y false para
+	 *                             validar la longitud.
 	 * @return
 	 */
 	public static boolean isValidGeographicCoordinate(final BigDecimal coordinateToValidate, final boolean isLatitude) {

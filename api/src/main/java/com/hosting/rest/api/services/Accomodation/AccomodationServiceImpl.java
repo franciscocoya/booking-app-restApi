@@ -22,12 +22,17 @@ import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
+ * 
  * @author Francisco Coya · https://github.com/FranciscoCoya
- * @version v1.0.0
- * @description Implementa los métodos de los servicios de un alojamiento.
+ * @version v1.0.3
+ * @description Implementa las acciones relacionadas a los alojamientos.
+ * 
  **/
 @Service
+@Slf4j
 public class AccomodationServiceImpl implements IAccomodationService {
 
 	@PersistenceContext
@@ -36,6 +41,13 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
 
+	/**
+	 * Registro de un nuevo alojamiento dentro de la aplicación.
+	 * 
+	 * @param accomodationModel
+	 * 
+	 * @return
+	 */
 	@Override
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel) {
 
@@ -43,14 +55,15 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// propietario.
 		if (!isNotNull(accomodationModel) || !isNotNull(accomodationModel.getRegisterNumber())
 				|| !isNotNull(accomodationModel.getIdUserHost())) {
+			log.error("Los datos introducidos para el alojamiento no son válidos o falta algún dato.");
 			throw new IllegalArgumentsCustomException(
-					"Los datos introducidos para el alojamiento no son válidos o falta alguna propiedad.");
+					"Los datos introducidos para el alojamiento no son válidos o falta algún dato.");
 		}
 
-		// Comprobación del número de registro del alojamiento a registrar
-		boolean existsAccomodation = accomodationRepo.existsById(accomodationModel.getRegisterNumber());
-
-		if (existsAccomodation) {
+		// Comprobar si existe el alojamiento
+		if (accomodationRepo.existsById(accomodationModel.getRegisterNumber())) {
+			log.error("Ya se encuentra registrado un alojamiento con número de registro ["
+					+ accomodationModel.getRegisterNumber() + " ].");
 			throw new IllegalArgumentsCustomException(
 					"Ya se encuentra registrado un alojamiento con número de registro ["
 							+ accomodationModel.getRegisterNumber() + " ].");
@@ -59,27 +72,48 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return accomodationRepo.save(accomodationModel);
 	}
 
+	/**
+	 * Listado de todos los alojamientos registrados en la aplicación.
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<AccomodationModel> findAllAccomodations() {
 		return accomodationRepo.findAll();
 	}
 
+	/**
+	 * Obtención del alojamiento con número de registro <code>regNumber</code>.
+	 */
 	@Override
 	public AccomodationModel getAccomodationById(final String regNumber) {
-		return accomodationRepo.findById(regNumber).orElseThrow(() -> new NotFoundCustomException(regNumber));
+
+		if (!isStringNotBlank(regNumber)) {
+			log.error("El número de registro está vacío.");
+			throw new IllegalArgumentsCustomException("El número de registro está vacío.");
+		}
+
+		return accomodationRepo.findById(regNumber).get();
 	}
 
+	/**
+	 * Borrado del alojamiento con número de registro <code>regNumber</code>.
+	 * 
+	 * @param regNumber
+	 * 
+	 * @return
+	 */
 	@Override
 	public String removeAccomodationById(final String regNumber) {
 		if (!isStringNotBlank(regNumber)) {
+			log.error("El número de registro pasado como parámetro está vacío.");
 			throw new IllegalArgumentsCustomException("El número de registro pasado como parámetro está vacío.");
 		}
 
-		boolean existsAccomodation = accomodationRepo.existsById(regNumber);
-
-		if (!existsAccomodation) {
-			throw new NotFoundCustomException(
-					"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
+		// Comprobar si existe el alojamiento
+		if (!accomodationRepo.existsById(regNumber)) {
+			log.error("El alojamiento con número de registro [ " + regNumber + " ] no existe.");
+			throw new NotFoundCustomException("El alojamiento con número de registro [ " + regNumber + " ] no existe.");
 		}
 
 		accomodationRepo.deleteById(regNumber);
@@ -87,16 +121,20 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return "Alojamiento con número de registro [ " + regNumber + " ] eliminado correctamente";
 	}
 
+	/**
+	 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
+	 * 
+	 * @param cityToSearch
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<AccomodationModel> findByCity(final String cityToSearch) {
 		if (!isStringNotBlank(cityToSearch)) {
-			throw new IllegalArgumentsCustomException(
-					"El valor [ " + cityToSearch + " ] está vacío o no es válido.");
+			log.error("El valor [ " + cityToSearch + " ] está vacío o no es válido.");
+			throw new IllegalArgumentsCustomException("El valor [ " + cityToSearch + " ] está vacío o no es válido.");
 		}
 
-		/**
-		 * Listado de los alojamientos de la ciudad <code>cityToSearch</code>.
-		 */
 		String listAccomodationsByCityQuery = "SELECT ac "
 				+ "FROM AccomodationModel ac INNER JOIN ac.idAccomodationLocation al " + "WHERE al.city = :city";
 
@@ -108,25 +146,40 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return accomodations != null ? accomodations.getResultList() : null;
 	}
 
+	/**
+	 * Listado de alojamientos cercanos a unas coordenadas [ <code>lat</code> ,
+	 * <code>lng</code> ]
+	 * 
+	 * Se especifica el radio de búsqueda en el parámetro <code>distance</code>.
+	 * 
+	 * Para realizar el cálculo se utiliza la fórmula de Haversine.
+	 * 
+	 * {@link #ACCOMODATION_LIMIT_RESULTS}
+	 * 
+	 * @param lat
+	 * @param lng
+	 * @param distance
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng, final double distance) {
 
 		if (!isValidGeographicCoordinate(lat, true)) {
+			log.error("La latitud introducida no es válida.");
 			throw new IllegalArgumentsCustomException("La latitud introducida no es válida.");
 		}
 
 		if (!isValidGeographicCoordinate(lng, false)) {
+			log.error("La longitud introducida no es válida.");
 			throw new IllegalArgumentsCustomException("La longitud introducida no es válida.");
 		}
 
 		if (!isDoubleValidAndPositive(distance)) {
+			log.error("La distancia introducida no es válida.");
 			throw new IllegalArgumentsCustomException("La distancia introducida no es válida.");
 		}
 
-		/**
-		 * Listar los alojamientos en un radio de <code>distance</code>
-		 */
-		// + " and acloc.latitude = :latitude and acloc.longitude = :longitude"
 		String findByNearbyLocationQuery = "SELECT am "
 				+ "FROM AccomodationModel am INNER JOIN am.idAccomodationLocation acloc " + "WHERE " + HAVERSINE_FORMULA
 				+ " < :distance" + " ORDER BY " + HAVERSINE_FORMULA + " DESC";
@@ -141,47 +194,73 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return accomodations.setMaxResults(ACCOMODATION_LIMIT_RESULTS).getResultList();
 	}
 
+	/**
+	 * Actualización de los datos del alojamiento con número de registro
+	 * <code>regNumber</code>.
+	 * 
+	 * @param regNumber
+	 * @param accomodationToUpdate
+	 * 
+	 * @return
+	 */
 	@Override
 	@Modifying
 	public AccomodationModel updateAccomodationById(final String regNumber,
 			final AccomodationModel accomodationToUpdate) {
 
 		if (!isStringNotBlank(regNumber)) {
-			throw new NotFoundCustomException(
-					"No se encontró ningún alojamiento con el número de registro [ " + regNumber + " ]");
+			log.error("El número de registro está vacío");
+			throw new IllegalArgumentsCustomException("El número de registro está vacío");
 		}
 
 		// Detalles del alojamiento original
 		AccomodationModel originalAccomodation = getAccomodationById(regNumber);
 
-		if (originalAccomodation != null) {
-			// Número de habitaciones
-			originalAccomodation.setNumOfBedRooms(accomodationToUpdate.getNumOfBedRooms());
+		if (!isNotNull(accomodationToUpdate)) {
+			log.error("Alguno de los datos del alojamiento a actualizar no es válido");
+			throw new IllegalArgumentsCustomException("Alguno de los datos del alojamiento a actualizar no es válido");
+		}
 
-			// Número de baños
-			originalAccomodation.setNumOfBathRooms(accomodationToUpdate.getNumOfBathRooms());
+		// Comprobar si existe el alojamiento a actualizar
+		if (!accomodationRepo.existsById(regNumber)) {
+			log.error("No existe un alojamiento con número de registro " + regNumber);
+			throw new NotFoundCustomException("No existe un alojamiento con número de registro " + regNumber);
+		}
 
-			// Número de camas
-			originalAccomodation.setNumOfBeds(accomodationToUpdate.getNumOfBeds());
+		// Número de habitaciones
+		originalAccomodation.setNumOfBedRooms(accomodationToUpdate.getNumOfBedRooms());
 
-			// Número de invitados
-			originalAccomodation.setNumOfGuests(accomodationToUpdate.getNumOfGuests());
+		// Número de baños
+		originalAccomodation.setNumOfBathRooms(accomodationToUpdate.getNumOfBathRooms());
 
-			// Precio por noche
-			originalAccomodation.setPricePerNight(accomodationToUpdate.getPricePerNight());
+		// Número de camas
+		originalAccomodation.setNumOfBeds(accomodationToUpdate.getNumOfBeds());
 
-			// Superficie de la vivienda
-			originalAccomodation.setArea(accomodationToUpdate.getArea());
+		// Número de invitados
+		originalAccomodation.setNumOfGuests(accomodationToUpdate.getNumOfGuests());
 
-			// Propietario de la vivienda
-			if (accomodationToUpdate.getIdUserHost() != null) {
-				originalAccomodation.setIdUserHost(accomodationToUpdate.getIdUserHost());
-			}
+		// Precio por noche
+		originalAccomodation.setPricePerNight(accomodationToUpdate.getPricePerNight());
+
+		// Superficie de la vivienda
+		originalAccomodation.setArea(accomodationToUpdate.getArea());
+
+		// Propietario de la vivienda
+		if (accomodationToUpdate.getIdUserHost() != null) {
+			originalAccomodation.setIdUserHost(accomodationToUpdate.getIdUserHost());
 		}
 
 		return accomodationRepo.save(originalAccomodation);
 	}
 
+	/**
+	 * Listado de alojamientos filtrando por la categoría
+	 * <code>accomodationCategory</code>.
+	 * 
+	 * @param accomodationCategory
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<AccomodationModel> findByCategory(final String accomodationCategory) {
 
@@ -201,13 +280,24 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return accomodations.getResultList();
 	}
 
+	/**
+	 * Listado de alojamientos filtrando por un rango de precios comprendido entre
+	 * <code>minPrice</code> y <code>maxPrice</code>.
+	 * 
+	 * @param minPrice
+	 * @param maxPrice
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice) {
 		if (!isBigDecimalValid(minPrice)) {
+			log.error("El precio mínimo introducido no es válido.");
 			throw new IllegalArgumentsCustomException("El precio mínimo introducido no es válido.");
 		}
 
 		if (!isBigDecimalValid(maxPrice)) {
+			log.error("El precio máximo introducido no es válido.");
 			throw new IllegalArgumentsCustomException("El precio máximo introducido no es válido.");
 		}
 

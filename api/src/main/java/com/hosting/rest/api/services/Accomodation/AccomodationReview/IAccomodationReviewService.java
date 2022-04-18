@@ -12,7 +12,8 @@ public interface IAccomodationReviewService {
 
 	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId);
 
-	public AccomodationReviewModel udpateAccomodationReview(final AccomodationReviewModel accomodationToUpdate);
+	public AccomodationReviewModel udpateAccomodationReview(final Integer accomodationReviewId,
+			final AccomodationReviewModel accomodationToUpdate);
 
 	public void deleteAccomodationReviewById(final Integer accomodationReviewId);
 
@@ -23,7 +24,5 @@ public interface IAccomodationReviewService {
 	public Double getAccomodationReviewAverageStars(final String regNumber);
 
 	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber);
-
-	public Integer countAccomodationReviewFromAccomodation(final String regNumber);
 
 }

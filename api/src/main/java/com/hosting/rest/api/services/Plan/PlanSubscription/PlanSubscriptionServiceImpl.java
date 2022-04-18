@@ -15,10 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Plan.PlanSubscriptionModel;
 import com.hosting.rest.api.repositories.Plan.PlanSubscription.IPlanSubscriptionRepository;
+import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.2
+ * @apiNote Servicio que gestiona las subscripciones usuario - plan.
+ *
+ */
 @Service
+@Slf4j
 public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 	@PersistenceContext
@@ -27,9 +39,19 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	@Autowired
 	private IPlanSubscriptionRepository planSubscriptionRepo;
 
+	@Autowired
+	private IUserHostRepository userHostRepo;
+
+	/**
+	 * Creación de una subscripción de un usuario a un plan, los datos de la
+	 * suscripción se pasan en <code>planSubscriptionToAdd</code>
+	 * 
+	 * @param planSubscriptionToAdd
+	 */
 	@Override
 	public PlanSubscriptionModel addNewPlanSubscription(final PlanSubscriptionModel planSubscriptionToAdd) {
 		if (!isNotNull(planSubscriptionToAdd)) {
+			log.error("Alguno de los valores de la subscripción del plan no es válido.");
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores de la subscripción del plan no es válido.");
 		}
@@ -38,6 +60,8 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 		// Sólo los usuarios host están suscritos a un plan
 		if (!isUserHost(planSubscriptionUserHostId)) {
+			log.error("El usuario con id [ " + planSubscriptionUserHostId
+					+ " ] no es host. Sólamente los usuarios host pueden estar suscritos a un plan");
 			throw new IllegalArgumentsCustomException("El usuario con id [ " + planSubscriptionUserHostId
 					+ " ] no es host. Sólamente los usuarios host pueden estar suscritos a un plan");
 		}
@@ -45,6 +69,7 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 		// Comprobar que no existe el plan de subscriptción a añadir. Para ello,
 		// un usuario no puede tener asociado más de un plan.
 		if (existsPlanSubscriptionByUserHostId(planSubscriptionUserHostId)) {
+			log.error("El usuario [ " + planSubscriptionUserHostId + " ] ya tiene asociado un plan de subscripción.");
 			throw new IllegalArgumentsCustomException(
 					"El usuario [ " + planSubscriptionUserHostId + " ] ya tiene asociado un plan de subscripción.");
 		}
@@ -85,18 +110,24 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 		return existsSubscription.getSingleResult();
 	}
-	
 
+	/**
+	 * Borrado de una subscripción a un plan para el usuario <code>userHostId</code>
+	 * 
+	 * @param userHostId
+	 */
 	@Transactional
 	@Override
 	public void deletePlanSubscriptionByUserHostId(final Integer userHostId) {
 		if (!isIntegerValidAndPositive(userHostId)) {
+			log.error("El id del usuario host no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario host no es válido.");
 		}
 
 		boolean existsPlanSubscription = getPlanSubscriptionByUserHostId(userHostId) != null;
 
 		if (!existsPlanSubscription) {
+			log.error("La subscripción al plan ya existe.");
 			throw new IllegalArgumentsCustomException("La subscripción al plan ya existe.");
 		}
 
@@ -110,10 +141,22 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 		deletedPlanSubscription.executeUpdate();
 	}
 
+	/**
+	 * Obtención de la subscripción del usuario host con id <code>userHostId</code>.
+	 * 
+	 * @param userHostId
+	 */
 	@Override
 	public PlanSubscriptionModel getPlanSubscriptionByUserHostId(final Integer userHostId) {
 		if (!isIntegerValidAndPositive(userHostId)) {
+			log.error("El id del usuario host no es válido.");
 			throw new IllegalArgumentsCustomException("El id del usuario host no es válido.");
+		}
+
+		// Comprobar que el usuario host existe
+		if (!userHostRepo.existsById(userHostId)) {
+			log.error("No existe un usuario con id " + userHostId);
+			throw new NotFoundCustomException("No existe un usuario con id " + userHostId);
 		}
 
 		String getPlanSubscriptionByUserHostIdQuery = "SELECT psm " + "FROM PlanSubscriptionModel psm "
@@ -127,9 +170,17 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 		return planSubscriptionToReturn.getSingleResult();
 	}
 
+	/**
+	 * Listado de los subscripciones a un determinado plan <code>planId</code>.
+	 * 
+	 * @param planId
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<PlanSubscriptionModel> findAllByPlanId(final Integer planId) {
 		if (!isIntegerValidAndPositive(planId)) {
+			log.error("El id del plan [ " + planId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id del plan [ " + planId + " ] no es válido.");
 		}
 

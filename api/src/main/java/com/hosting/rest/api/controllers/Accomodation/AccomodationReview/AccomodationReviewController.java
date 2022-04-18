@@ -19,9 +19,11 @@ import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationR
 import com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewServiceImpl;
 
 /**
+ * 
  * @author Francisco Coya Abajo
  * @version v1.0.0
  * @apiNote Controlador de valoraciones de un alojamiento.
+ * 
  */
 @RestController
 @RequestMapping("accomodations/reviews")
