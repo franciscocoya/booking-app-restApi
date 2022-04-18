@@ -1,29 +1,37 @@
 package com.hosting.rest.api.services.Booking;
 
+import static com.hosting.rest.api.Utils.MathUtils.MATH_CONTEXT;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.hosting.rest.api.models.Booking.BookingModel;
 
 public interface IBookingService {
 
+	/**
+	 * Comisión por defecto de la aplicación. Se aplica a la cantidad calculada.
+	 */
+	public static final BigDecimal DEFAULT_APP_SERVICE_FEE = new BigDecimal("0.10", MATH_CONTEXT);
+
 	// -- Para el administrador
 
-//	List<BookingModel> listBookingsGroupByMonth();
+	// List<BookingModel> listBookingsGroupByMonth();
 
 	List<BookingModel> findByBookingYear(final String regNumber, final Integer yearToSearch);
 
 	// --
 
-	BookingModel addNewBooking(final BookingModel bookingModelToCreate);
+	public BookingModel addNewBooking(final BookingModel bookingToAdd);
 
-	BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate);
+	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate);
 
-	BookingModel getBookingById(final Integer bookingId);
+	public BookingModel getBookingById(final Integer bookingId);
 
-	void deleteBookingById(final Integer bookingId);
+	public void deleteBookingById(final Integer bookingId);
 
-	int getNumOfBookingsByUserId(final Integer userId);
+	public int getNumOfBookingsByUserId(final Integer userId);
 
-	List<BookingModel> findAllBookingByUser(final Integer userId);
+	public List<BookingModel> findAllBookingByUser(final Integer userId);
 
 }

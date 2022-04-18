@@ -45,7 +45,8 @@ public class AccomodationReviewController {
 		AccomodationReviewModel accomodationReviewToReturn = null;
 
 		try {
-			accomodationReviewToReturn = accomodationReviewService.udpateAccomodationReview(accomodationReviewToUpdate);
+			accomodationReviewToReturn = accomodationReviewService
+					.udpateAccomodationReview(Integer.parseInt(accomodationReviewId), accomodationReviewToUpdate);
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException(

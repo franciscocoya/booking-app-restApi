@@ -74,7 +74,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 * 
 	 * @return
 	 * 
-	 * @throws NumberFormatException Si el id de la valoraciónd del alojamiento no
+	 * @throws NumberFormatException Si el id de la valoración del alojamiento no
 	 *                               es un número.
 	 */
 	@Override
@@ -94,14 +94,18 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 		}
 
 		// Comprobar si existe la valoracion
-		if (accomodationReviewRepo.existsById(accomodationReviewId)) {
+		if (!accomodationReviewRepo.existsById(accomodationReviewId)) {
 			log.error("No existe una valoración de alojamiento con id " + accomodationReviewId);
 			throw new NotFoundCustomException("No existe una valoración de alojamiento con id " + accomodationReviewId);
 		}
 
-		// TODO: Completar
-
-		return null;
+		// Actualizar contenido y estrellas de la valoración
+		AccomodationReviewModel originalAccomodationReview = accomodationReviewRepo.getById(accomodationReviewId);
+		
+		originalAccomodationReview.setContent(accomodationToUpdate.getContent());
+		originalAccomodationReview.setStars(accomodationToUpdate.getStars());
+		
+		return accomodationReviewRepo.save(originalAccomodationReview);
 	}
 
 	/**

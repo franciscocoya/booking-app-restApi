@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
@@ -50,9 +51,11 @@ public class BookingModel {
 	@Column(name = "DISCCOUNT")
 	private BigDecimal disccount;
 
+	@Formula("amount * 0.10")
 	@Column(name = "SERVICE_FEE")
 	private BigDecimal serviceFee;
 
+	@Formula("amount + service_fee - disccount")
 	@Column(name = "TOTAL")
 	private BigDecimal total;
 
@@ -60,7 +63,7 @@ public class BookingModel {
 	@JoinColumn(name = "ID_USER")
 	private UserModel idUser;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ID_ACCOMODATION")
 	private AccomodationModel idAccomodation;
 

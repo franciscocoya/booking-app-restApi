@@ -3,7 +3,11 @@ package com.hosting.rest.api.services.Booking;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.MathUtils.MATH_CONTEXT;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,6 +16,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
@@ -45,6 +50,202 @@ public class BookingServiceImpl implements IBookingService {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	/**
+	 * Creación de una nueva reserva con los datos que contiene el modelo
+	 * <code>bookingToAdd</code>
+	 * 
+	 * @see #calculateBookingServiceFee(BigDecimal)
+	 * @see #calculateBookingTotalCost(BigDecimal, BigDecimal, BigDecimal)
+	 * 
+	 * @param bookingModelToCreate
+	 * 
+	 * @return
+	 */
+	@Override
+	public BookingModel addNewBooking(final BookingModel bookingToAdd) {
+		if (!isNotNull(bookingToAdd)) {
+			log.error("Alguno de los valores de la reserva no es válido.");
+			throw new IllegalArgumentsCustomException("Alguno de los valores de la reserva no es válido.");
+		}
+
+		// Comprobar si existe la reserva
+		if (bookingRepo.existsById(bookingToAdd.getId())) {
+			log.error("La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
+			throw new IllegalArgumentsCustomException("La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
+		}
+
+		// Calcular la comisión
+		BigDecimal newServiceFee = calculateBookingServiceFee(bookingToAdd.getAmount());
+		bookingToAdd.setServiceFee(newServiceFee);
+
+		// Calcular el total de la reserva (Comisiones y descuentos Incl.)
+
+		BigDecimal newDisccount = bookingToAdd.getDisccount() == null ? BigDecimal.ZERO : bookingToAdd.getDisccount();
+
+		bookingToAdd.setTotal(calculateBookingTotalCost(bookingToAdd.getAmount(), newDisccount, newServiceFee));
+
+		return bookingRepo.save(bookingToAdd);
+	}
+
+	/**
+	 * Actualización de los datos de una reserva con id <code>bookingId</code>.
+	 * 
+	 * Al actualizar los datos, es necesario recalcular los importes de SERVICE_FEE
+	 * y TOTAL.
+	 * 
+	 * SERVICE_FEE = AMOUNT * 0.10 TOTAL = AMOUNT + SERVICE_FEE - DISCCOUNT
+	 * 
+	 * @see #calculateBookingAmount(BigDecimal, LocalDateTime, LocalDateTime,
+	 *      Integer)
+	 * 
+	 * @see #calculateBookingServiceFee(BigDecimal, BigDecimal)
+	 * 
+	 * @see #calculateBookingTotalCost(BigDecimal, BigDecimal, BigDecimal)
+	 * 
+	 * @param bookingId
+	 * @param bookingToUpdate
+	 * 
+	 * @return
+	 */
+	@Transactional
+	@Override
+	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate) {
+
+		if (!isIntegerValidAndPositive(bookingId)) {
+			log.error("El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
+			throw new IllegalArgumentsCustomException(
+					"El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
+		}
+
+		if (!isNotNull(bookingToUpdate)) {
+			log.error("Alguno de los datos de la reserva a actualizar no es válido.");
+			throw new IllegalArgumentsCustomException("Alguno de los datos de la reserva a actualizar no es válido.");
+		}
+
+		// Comprobar si existe la reserva
+		if (!bookingRepo.existsById(bookingId)) {
+			log.error("No existe una reserva con el id " + bookingId);
+			throw new NotFoundCustomException("No existe una reserva con el id " + bookingId);
+		}
+
+		BookingModel originalBooking = bookingRepo.getById(bookingId);
+
+		// Número de huéspedes
+		originalBooking.setNumOfGuests(bookingToUpdate.getNumOfGuests());
+
+		// Recalcular el coste (Antes de comisiones y descuentos)
+		BigDecimal accomodationPricePerNight = bookingToUpdate.getIdAccomodation().getPricePerNight();
+
+		// BookingAmount = price_per_night * days * guests
+		BigDecimal updatedBookingAmount = calculateBookingAmount(accomodationPricePerNight,
+				bookingToUpdate.getCheckOut(), bookingToUpdate.getCheckIn(), bookingToUpdate.getNumOfGuests());
+
+		originalBooking.setAmount(updatedBookingAmount);
+
+		// Descuento a aplicar. 0 si no se aplica descuento.
+		BigDecimal updatedDisccount = bookingToUpdate.getDisccount();
+		originalBooking.setDisccount(updatedDisccount);
+
+		// Recalcular SERVICE_FEE y TOTAL.
+		BigDecimal updatedServiceFee = calculateBookingServiceFee(updatedBookingAmount);
+		originalBooking.setServiceFee(updatedServiceFee);
+
+		// Recalcular el coste total de la reserva.
+		BigDecimal updatedBookingTotal = calculateBookingTotalCost(updatedBookingAmount, updatedDisccount,
+				updatedServiceFee);
+		originalBooking.setTotal(updatedBookingTotal);
+
+		return bookingRepo.save(originalBooking);
+	}
+
+	/**
+	 * Calcula el coste de la reserva antes de aplicar descuentos y comisiones.
+	 * 
+	 * @param pricePerNight
+	 * @param bookingCheckIn
+	 * @param bookingCheckOut
+	 * @param guests
+	 * 
+	 * @return
+	 */
+	private BigDecimal calculateBookingAmount(final BigDecimal pricePerNight, final LocalDateTime bookingCheckIn,
+			final LocalDateTime bookingCheckOut, final Integer guests) {
+		BigDecimal bookingAmount = BigDecimal.ZERO;
+
+		Integer bookingDays = (int) Duration.between(bookingCheckOut, bookingCheckIn).toDays();
+
+		bookingAmount = pricePerNight.multiply(new BigDecimal(bookingDays, MATH_CONTEXT), MATH_CONTEXT);
+
+		return bookingAmount;
+	}
+
+	/**
+	 * Calcula la comisión de la aplicación en base al precio de la reserva
+	 * <code>bookingAmount</code>.
+	 * 
+	 * @param bookingAmount
+	 * @param serviceFee
+	 * 
+	 * @return
+	 */
+	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount, final BigDecimal serviceFee) {
+		return bookingAmount.multiply(serviceFee, MATH_CONTEXT);
+	}
+
+	/**
+	 * Calcula el importe de la comisión aplicada. La comisión aplicada es por
+	 * defecto {@link #DEFAULT_APP_SERVICE_FEE}
+	 * 
+	 * @see #calculateBookingServiceFee(BigDecimal, BigDecimal)
+	 * @param bookingAmount
+	 * 
+	 * @return
+	 */
+	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount) {
+		return calculateBookingServiceFee(DEFAULT_APP_SERVICE_FEE, bookingAmount);
+	}
+
+	/**
+	 * Calcula el coste total de la reserva del alojamiento, incluyendo descuentos y
+	 * comisiones.
+	 * 
+	 * @param bookingAmount
+	 * @param bookingDisccount
+	 * @param bookingServiceFee
+	 * 
+	 * @return
+	 */
+	private BigDecimal calculateBookingTotalCost(final BigDecimal bookingAmount,
+			final BigDecimal bookingDisccountPercentage, final BigDecimal bookingServiceFee) {
+		BigDecimal disccountResult = bookingAmount
+				.multiply(bookingDisccountPercentage.divide(new BigDecimal("100"), MATH_CONTEXT), MATH_CONTEXT);
+
+		return bookingAmount.subtract(disccountResult, MATH_CONTEXT).add(bookingServiceFee, MATH_CONTEXT);
+	}
+
+	/**
+	 * Borrado de una reserva con id <code>bookingId</code>.
+	 * 
+	 * @param bookingId
+	 */
+	@Override
+	public void deleteBookingById(final Integer bookingId) {
+
+		if (!isIntegerValidAndPositive(bookingId)) {
+			log.error("El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
+			throw new IllegalArgumentsCustomException(
+					"El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
+		}
+
+		// Comprobar si existe la reserva
+		if (!bookingRepo.existsById(bookingId)) {
+			log.error("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
+			throw new NotFoundCustomException("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
+		}
+
+		bookingRepo.deleteById(bookingId);
+	}
 
 	/**
 	 * Listado de las reservas realizadas durante un año en el alojamiento con id
@@ -83,86 +284,6 @@ public class BookingServiceImpl implements IBookingService {
 		bookings.setParameter("registerNumber", regNumber);
 
 		return bookings.getResultList();
-	}
-
-	/**
-	 * Creación de una nueva reserva con los datos pasados como parámetro en
-	 * <code>bookingModelToCreate</code>.
-	 * 
-	 * @param bookingModelToCreate
-	 * 
-	 * @return
-	 */
-	@Override
-	public BookingModel addNewBooking(final BookingModel bookingModelToCreate) {
-		if (!isNotNull(bookingModelToCreate)) {
-			log.error("Los datos de la reserva a crear no son válidos");
-			throw new IllegalArgumentsCustomException("Los datos de la reserva a crear no son válidos.");
-		}
-
-		// Comprobar si existe una reserva con esos datos
-		if (bookingRepo.existsById(bookingModelToCreate.getId())) {
-			log.error("Ya existe una reserva con el id " + bookingModelToCreate.getId());
-			throw new IllegalArgumentsCustomException(
-					"Ya existe una reserva con el id " + bookingModelToCreate.getId());
-		}
-
-		return bookingRepo.save(bookingModelToCreate);
-	}
-
-	/**
-	 * Actualización de los datos de una reserva con id <code>bookingId</code>.
-	 * 
-	 * @param bookingId
-	 * @param bookingToUpdate
-	 * 
-	 * @return
-	 */
-	@Override
-	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate) {
-
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
-		}
-
-		if (!isNotNull(bookingToUpdate)) {
-			log.error("Alguno de los datos de la reserva a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException("Alguno de los datos de la reserva a actualizar no es válido.");
-		}
-
-		if (!bookingRepo.existsById(bookingId)) {
-			log.error("No existe una reserva con el id " + bookingId);
-			throw new NotFoundCustomException("No existe una reserva con el id " + bookingId);
-		}
-
-		// TODO: Actualizar la reserva
-
-		return null;
-	}
-
-	/**
-	 * Borrado de una reserva con id <code>bookingId</code>.
-	 * 
-	 * @param bookingId
-	 */
-	@Override
-	public void deleteBookingById(final Integer bookingId) {
-
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
-		}
-
-		// Comprobar si existe la reserva
-		if (!bookingRepo.existsById(bookingId)) {
-			log.error("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
-			throw new NotFoundCustomException("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
-		}
-
-		bookingRepo.deleteById(bookingId);
 	}
 
 	/**

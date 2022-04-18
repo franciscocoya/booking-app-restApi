@@ -57,6 +57,12 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los datos introducidos para el servicion del alojamiento no es válido.");
 		}
+		
+		// Comprobar si existe el servicio 
+		if(accomodationServiceRepo.existsById(accomodationService.getId())) {
+			log.error("El servicio del alojamiento ya existe.");
+			throw new IllegalArgumentsCustomException("El servicio del alojamiento ya existe.");
+		}
 
 		return accomodationServiceRepo.save(accomodationService);
 	}
@@ -92,9 +98,12 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 			log.error("El servicio de alojamiento a actualizar no existe.");
 			throw new NotFoundCustomException("El servicio de alojamiento a actualizar no existe.");
 		}
-
-		// TODO: COMPLETAR
-		return null;
+		
+		AccomodationServiceModel originalAccomodationService = accomodationServiceRepo.getById(accomodationServiceId);
+		
+		originalAccomodationService.setDenomination(accomodationService.getDenomination());
+		
+		return accomodationServiceRepo.save(originalAccomodationService);
 	}
 
 	/**

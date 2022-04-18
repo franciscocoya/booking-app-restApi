@@ -52,8 +52,20 @@ public class AccomodationServiceController {
 
 	@PutMapping("{accomodationServiceId}")
 	public AccomodationServiceModel updateAccomodationService(
+			@PathVariable(name = "accomodationServiceId") final String accomodationServiceId,
 			@RequestBody final AccomodationServiceModel accomodationService) {
-		return accomodationServiceService.updateAccomodationService(accomodationService);
+
+		AccomodationServiceModel accomodationServiceUpdated = null;
+
+		try {
+			accomodationServiceUpdated = accomodationServiceService
+					.updateAccomodationService(Integer.parseInt(accomodationServiceId), accomodationService);
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio de alojamiento [ " + accomodationServiceId + " ] no es un número.");
+		}
+		return accomodationServiceUpdated;
 	}
 
 	@GetMapping("{accomodationServiceId}")
@@ -67,7 +79,7 @@ public class AccomodationServiceController {
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException(
-					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es válido.");
+					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es un número.");
 		}
 
 		return accomodationServiceToReturn;
