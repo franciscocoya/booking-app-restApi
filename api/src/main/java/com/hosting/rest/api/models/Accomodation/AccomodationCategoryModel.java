@@ -1,12 +1,16 @@
 package com.hosting.rest.api.models.Accomodation;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table( name = "ACCOMODATION_CATEGORY" )
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table( name = "ACCOMODATION_CATEGORY" )
 public class AccomodationCategoryModel {
 
     @Id

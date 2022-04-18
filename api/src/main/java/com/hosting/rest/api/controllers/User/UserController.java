@@ -2,8 +2,6 @@ package com.hosting.rest.api.controllers.User;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.services.User.UserServiceImpl;
 
@@ -21,38 +20,51 @@ import com.hosting.rest.api.services.User.UserServiceImpl;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl userService;
+	@Autowired
+	private UserServiceImpl userService;
 
-    // TODO: Crear un nuevo usuario
-    @PostMapping(value = "/new")
-    public UserModel addNewUser(@RequestBody UserModel userToCreate) {
-    	return userService.addNewUser(userToCreate);
-    }
+	@PostMapping("new")
+	public UserModel addNewUser(@RequestBody final UserModel userToCreate) {
+		return userService.addNewUser(userToCreate);
+	}
 
-    @DeleteMapping(value = "{userId}")
-    public void deleteUserById(@PathVariable(value="userId") Integer userId) {
-    	userService.deleteUserById(userId);
-    }
-    
-    @PutMapping("{userId}")
-    public UserModel udpateUser(@PathVariable(name = "userId") Integer userId, @Valid @RequestBody UserModel userModelToUpdate) {
-    	return userService.updateUser(userId, userModelToUpdate);
-    }
+	@DeleteMapping("{userId}")
+	public void deleteUserById(@PathVariable(value = "userId") final String userId) {
+		try {
+			userService.deleteUserById(Integer.parseInt(userId));
+			
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
+		}
+	}
 
-    @GetMapping("/all")
-    public List<UserModel> getAllUsers(){
-        return userService.listAllUsers();
-    }
-    
-    @GetMapping("{userId}")
-    public UserModel getUserById(@PathVariable(value="userId") Integer userId) {
-    	return userService.getUserById(userId);
-    }
+	@PutMapping("{userId}")
+	public UserModel udpateUser(@PathVariable(name = "userId") final Integer userId,
+			@RequestBody UserModel userModelToUpdate) {
+		return userService.updateUser(userId, userModelToUpdate);
+	}
 
-    // TODO: Listado de usuarios verificados
+	@GetMapping("all/started")
+	public List<UserModel> getAllStartedUsers() {
+		return userService.findAllStartedUsers();
+	}
 
-    // TODO: Listado de usuarios que son hosts
+	@GetMapping("all")
+	public List<UserModel> getAllUsers() {
+		return userService.findAllUsers();
+	}
 
-    
+	@GetMapping("{userId}")
+	public UserModel getUserById(@PathVariable(value = "userId") final String userId) {
+		UserModel userToReturn = null;
+		
+		try {
+			userToReturn = userService.getUserById(Integer.parseInt(userId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id del usuario ha de ser un valor numérico.");
+		}
+
+		return userToReturn;
+	}
 }

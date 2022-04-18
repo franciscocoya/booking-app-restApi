@@ -6,15 +6,13 @@ import com.hosting.rest.api.models.Accomodation.AccomodationService.Accomodation
 
 public interface IAccomodationServiceService {
 
-	AccomodationServiceModel addNewAccomodationService(AccomodationServiceModel accomodationService);
-	
-//	AccomodationServiceModel getAccomodationServiceById(Integer idAccomodationService);
+	public AccomodationServiceModel addNewAccomodationService(final AccomodationServiceModel accomodationService);
 
-//	void deleteAccomodationServiceById(Integer accomodationId);
-	
-	AccomodationServiceModel updateAccomodationService(AccomodationServiceModel accomodationService);
-	
-	List<AccomodationServiceModel> listAllAccomodationServices();
+	public AccomodationServiceModel getAccomodationServiceById(final Integer accomodationServiceId);
 
-	List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(String regNumber);
+	public void deleteAccomodationServiceById(final Integer accomodationServiceId);
+
+	public AccomodationServiceModel updateAccomodationService(final Integer accomodationServiceId, final AccomodationServiceModel accomodationService);
+
+	public List<AccomodationServiceModel> findAllAccomodationServicesFromAccomodation(final String regNumber);
 }

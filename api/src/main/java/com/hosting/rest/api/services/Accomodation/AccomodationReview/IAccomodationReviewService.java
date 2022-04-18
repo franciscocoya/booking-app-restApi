@@ -2,17 +2,27 @@ package com.hosting.rest.api.services.Accomodation.AccomodationReview;
 
 import java.util.List;
 
-import com.hosting.rest.api.models.Accomodation.AccomodationReviewModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 
 public interface IAccomodationReviewService {
 
-	AccomodationReviewModel addNewAccomodationReview(AccomodationReviewModel accomodationToAdd);
+	public static final int LATEST_ACCOMODATION_REVIEWS_LIMIT = 4;
 
-	AccomodationReviewModel getAccomodationReviewById(Integer accomodationReviewId);
+	public AccomodationReviewModel addNewAccomodationReview(final AccomodationReviewModel accomodationToAdd);
 
-	AccomodationReviewModel udpateAccomodationReview(AccomodationReviewModel accomodationToUpdate);
+	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId);
 
-	void deleteAccomodationReviewById(Integer accomodationReviewId);
+	public AccomodationReviewModel udpateAccomodationReview(final Integer accomodationReviewId,
+			final AccomodationReviewModel accomodationToUpdate);
 
-	List<AccomodationReviewModel> findAllAccomodationReviews(String regNumber);
+	public void deleteAccomodationReviewById(final Integer accomodationReviewId);
+
+	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber);
+
+	public List<AccomodationReviewModel> findByUserId(final Integer userId);
+
+	public Double getAccomodationReviewAverageStars(final String regNumber);
+
+	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber);
+
 }

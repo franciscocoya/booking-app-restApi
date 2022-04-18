@@ -3,6 +3,7 @@ package com.hosting.rest.api.models.PromoCode;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 
@@ -43,11 +45,12 @@ public class PromoCodeModel {
 	@JoinColumn(name = "ID_ACC")
 	private AccomodationModel idAcc;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_USER")
 	private UserHostModel idUser;
 
 	@Column(name = "CREATED_AT")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@CreatedDate
 	private LocalDateTime createdAt;
 }

@@ -1,5 +1,7 @@
 package com.hosting.rest.api.controllers.Accomodation.SavedAccomodation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +23,26 @@ public class SavedAccomodationController {
 	private SavedAccomodationServiceImpl savedAccomodationService;
 	
 	@PostMapping("new")
-	public SavedAccomodationModel addNewSavedAccomodation(@RequestBody SavedAccomodationModel savedAccomodationToCreate) {
+	public SavedAccomodationModel addNewSavedAccomodation(@RequestBody final SavedAccomodationModel savedAccomodationToCreate) {
+		
+		
+		
 		return savedAccomodationService.addNewSavedAccomodation(savedAccomodationToCreate);
 	}
 	
 	@GetMapping("{savedAccomodationId}")
-	public SavedAccomodationModel getSavedAccomodationById(@PathVariable(name = "savedAccomodationId") Integer savedAccomodationId) {
+	public SavedAccomodationModel getSavedAccomodationById(@PathVariable(value = "savedAccomodationId") final Integer savedAccomodationId) {
 		return savedAccomodationService.getSavedAccomodationById(savedAccomodationId);
 	}
 	
 	@DeleteMapping("{savedAccomodationId}")
-	public void deleteSavedAccomodationById(@PathVariable(name = "savedAccomodationId") Integer savedAccomodationId) {
+	public void deleteSavedAccomodationById(@PathVariable(value = "savedAccomodationId") final Integer savedAccomodationId) {
 		savedAccomodationService.deleteSavedAccomodation(savedAccomodationId);
 	}
 	
 	// TODO: Listado de alojamientos guardados por un usuario (ID).
+	@GetMapping("users/{userId}")
+	public List<SavedAccomodationModel> findAllByUserId(@PathVariable(value = "userId") final Integer userId){
+		return savedAccomodationService.findAllSavedAccomodationsByUserId(userId);
+	}
 }

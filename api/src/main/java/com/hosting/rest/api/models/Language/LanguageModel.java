@@ -18,7 +18,7 @@ public class LanguageModel {
     @Column(name = "ID")
     private Integer id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "LANG")
     private Language language;
 

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cada monitorInterval segundos se van a cargar dinámicamente los cambios 
+	en este fichero. Posibles valores para status: "trace", "debug", "info", 
+	"warn", "error", "fatal" -->
+<Configuration monitorInterval="60" status="info">
+
+	<Properties>
+		<!-- PC-2699 (juancarlos.pastor) Se ha modificado la ruta de creación de 
+			los ficheros de log de p6spyLog para que tome la variable de entorno env:userprofile 
+			(Directorio del usuario) como ruta base en lugar de usar una ruta absoluta -->
+		<Property name="logPath">C:/logs/pcibdm</Property>
+		<Property name="backupPath">${logPath}/backup</Property>
+			 
+		<!-- exFilters: Propiedad para realizar el filtrado de paquetes que no queremos mostrar cuando se produzca una excepción.
+		 Se configuran los nombres de los paquetes de los que NO queremos ver sus trazas de excepción separados por comas, 
+		 añadir más a la configuración cuando sea necesario en VipGesSaaS/resources/config/config.properties-->
+		<Property name="exFilters">${bundle:application:exception.filtrosTraza}</Property>
+		
+		<!-- logPatternConsole: Propiedad que almacena el formato de impresión de logs en el Console-Appender -->
+		<Property name="logPatternConsole">%-5level | %d{yyyyMMdd HHmmss.SSS} | %-25.25t | %-40.40c{1.} | %msg %n%xEx{filters(${exFilters})}</Property>
+		
+		<!-- logPatternFile: Propiedad que almacena el formato de impresión de logs en el ErrorFile-Appender y el Rolling-Random-Access-File-Appender -->
+		<Property name="logPatternFile">%-5level | %d{yyyyMMdd HHmmss.SSS} | %-25.25t | %-40.40c{1.} | %msg %n%xEx{filters(${exFilters})}</Property>
+
+		<!-- Patrón con expresión regular para el Console-Appender que permiter 
+			eliminar la impresión del paquete producida por el uso de %xEx y las trazas 
+			que indican la cantidad de lineas suprimidas al aplicar el filtrado Pendiente 
+			de investigar el filtrado mediante la expresión regular %ex y de analisis 
+			de rendimiento del uso de la expresión regular %-5level|%d{yyyyMMdd HHmmss.SSS}|%-22.22t|%-40.40c{1.}| 
+			%msg %n%replace{%replace{%xEx{filters(${exFilters})}}{\~{0,1}\[(.*?)\]}{}}{\.{3}\s([^\s]+)\s([^\s]+)\s([^\s]+)}{} -->
+
+		<!-- Patrón con expresión regular para el ErrorFile-Appender y el Rolling-Random-Access-File-Appender 
+			que permiter eliminar la impresión del paquete producida por el uso de %xEx 
+			y las trazas que indican la cantidad de lineas suprimidas al aplicar el filtrado 
+			Pendiente de investigar el filtrado mediante la expresión regular %ex y de 
+			analisis de rendimiento del uso de la expresión regular %-5level| %d{yyyyMMdd 
+			HHmmss.SSS} |%-10.25t| %-40.40c{2} | %msg %n%replace{%replace{%xEx{filters(${exFilters})}}{\~{0,1}\[(.*?)\]}{}}{\.{3}\s([^\s]+)\s([^\s]+)\s([^\s]+)}{} -->
+	</Properties>
+
+	<!-- https://logging.apache.org/log4j/2.x/manual/appenders.html -->
+	<Appenders>
+		<!-- Appender a consola -->
+		<Console name="Console-Appender" target="SYSTEM_OUT"
+			level="info">
+			<PatternLayout alwaysWriteExceptions="false"
+				pattern="${logPatternConsole}" />
+		</Console>
+
+		<!-- The RollingRandomAccessFileAppender is similar to the standard RollingFileAppender 
+			except it is always buffered (this cannot be switched off) and internally 
+			it uses a ByteBuffer + RandomAccessFile instead of a BufferedOutputStream. 
+			We saw a 20-200% performance improvement compared to RollingFileAppender 
+			with "bufferedIO=true" in our measurements. -->
+		<!-- Generará una carpeta por año y mes $${date:yyyy-MM} dentro de backupPath 
+			en la que incluirá los ficheros comprimidos con gz con un rollover por día 
+			{yyyy-MM-dd} o por minuto {yyyy-MM-dd-HH-mm} o... TimeBasedTriggeringPolicy -->
+		<RollingRandomAccessFile
+			name="Rolling-Random-Access-File-Appender"
+			fileName="${logPath}/PCIBDM.log" 
+			filePattern="${backupPath}/$${date:yyyy-MM}/PCIBDM.%d{yyyy-MM-dd}-%i.log.gz"
+			immediateFlush="false" append="false">
+			<!-- https://logging.apache.org/log4j/2.x/manual/layouts.html If one of 
+				the layouts is configured with a location-related attribute like HTML locationInfo, 
+				or one of the patterns %C or %class, %F or %file, %l or %location, %L or 
+				%line, %M or %method, Log4j will take a snapshot of the stack, and walk the 
+				stack trace to find the location information. This is an expensive operation: 
+				1.3 - 5 times slower for synchronous loggers. Synchronous loggers wait as 
+				long as possible before they take this stack snapshot. If no location is 
+				required, the snapshot will never be taken. -->
+			<!-- ¡OJO! a priori no necesitamos la información de localización por 
+				lo que no la activemos sin necesidad. -->
+			<!-- %-5level nivel ve log con padding a 5 espacios por la derecha. Fecha 
+				con información hasta el milisegundo %d{yyyyMMdd HHmmss.SSS}. %-10.25t nombre 
+				del hilo con padding a 10 espacios por la derecha y como máximo 25. %-40.40c{2} 
+				nombre de la clase más el último nivel del paquete en el que está incluido 
+				con 40 espacios máximo y padding dcha. %msg mensaje del error. %ex excepción. 
+				%n nueva línea -->
+			<PatternLayout alwaysWriteExceptions="false"
+				pattern="${logPatternFile}" />
+
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<!-- Fijamos size como tamaño de fichero antes de pasar al siguiente. 
+					Para pruebas de la configuración bajar a 1KB o menos. En producción 1-5 MB 
+					estará bien -->
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+
+			<!-- Se realizará el rollover sobre el número de ficheros indicados por 
+				"max". En cada rollover borra todos los ficheros cuyo nombre cumpla con la 
+				condición "*/rollingrandomaccessfile*.log.gz" y tengan más de la duración 
+				indicada por "IfLastModified age". Se mantendrán hasta IfAccumulatedFileSize 
+				de datos de logs o los IfAccumulatedFileCount últimos ficheros, lo que se 
+				cumpla antes -->
+			<DefaultRolloverStrategy max="30">
+				<!-- Nested conditions: the inner condition is only evaluated on files 
+					for which the outer conditions are true. -->
+				<Delete basePath="${backupPath}" maxDepth="2">
+					<IfFileName glob="*/rollingrandomaccessfile*.log.gz">
+						<!-- "PT20S" parses as "20 seconds". "PT15M" parses as "15 minutes". 
+							"PT10H" parses as "10 hours". "P2D" parses as "2 days". "P2DT3H4M" parses 
+							as "2 days, 3 hours and 4 minutes" -->
+						<IfLastModified age="P10D">
+							<IfAny>
+								<IfAccumulatedFileSize exceeds="250 MB" />
+								<IfAccumulatedFileCount exceeds="40" />
+							</IfAny>
+						</IfLastModified>
+					</IfFileName>
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<!-- Logs asíncronos y síncronos. Si no queremos que un log sea asíncrono 
+			emplear el tag Logger en vez de AsyncLogger o Root en vez de AsyncRoot -->
+		<!-- Atributo Additivity: https://logging.apache.org/log4j/2.x/manual/configuration.html#Additivity 
+			While additivity can be quite a convenient feature, the trace messages could 
+			appear twice and sometimes this is a behavior considered undesirable. Once 
+			an event reaches a logger with its additivity set to false the event will 
+			not be passed to any of its parent loggers, regardless of their additivity 
+			setting. -->
+		<!-- Vamos a indicar siempre additivity="false" para controlar los logs 
+			de cada "paquete" de forma independiente y evitar la duplicidad de mensajes 
+			en el log principal (root). -->
+		<AsyncLogger name="es.pci" additivity="false"
+			level="debug">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		
+
+		<AsyncLogger name="org.springframework" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+	 	<!-- Log del interceptor de Spring. Permite visualizar las transacciones al bajarlo a trace -->
+		<AsyncLogger
+			name="org.springframework.transaction.interceptor" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		
+		<!-- Trazabilidad de la aplicación para ver invocación de métodos. Mínimo debug -->
+		<AsyncLogger
+			name="es.pci.saas.core.spring.aop.InterceptorTrazas" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		
+		<!-- Permite ver la sentencia HQL en el log en nivel trace 
+		<AsyncLogger name="org.hibernate.engine.query.spi.HQLQueryPlan" additivity="false"
+			level="trace">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		-->
+
+		<AsyncLogger name="com.zaxxer.hikari" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<!-- ¡OJO! este log org.hibernate.stat no debería estar activo en producción -->
+		<AsyncLogger name="org.hibernate" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="org.hibernate.stat" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="org.hibernate.SQL" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<!-- Hibernate writes the values bound to the JDBC parameters and extracted 
+			from the JDBC results to this log category. This category should be used 
+			together with org.hibernate.SQL to also log the SQL statements. Si empleamos 
+			otro nivel más como BasicBinder podemos acotar los mensajes por ejemplo para 
+			ver sólo los parámetros de la consulta pero no los campos -->
+		<AsyncLogger
+			name="org.hibernate.type.descriptor.sql.BasicBinder"
+			additivity="false" level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="es.pci.exportacion" additivity="false"
+			level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<!-- Hibernate logs the state at flush time of max. 20 entities to this 
+			log category -->
+		<AsyncLogger name="org.hibernate.pretty"
+			additivity="false" level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener"
+					 additivity="false" level="info">
+			<AppenderRef ref="Console-Appender" />
+		</AsyncLogger>
+
+		<!-- Configuramos el log para el p6spy que nos captura todas las consultas 
+			enviadas a la BBDD. OJO no activarlo en producción Este appender configurarlo 
+			con el nivel que se necesite, pero desactivar este log lo correcto es ir 
+			al db.properties y no emplear p6spy -->
+		<AsyncLogger name="p6spy" additivity="false" level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+
+		<AsyncRoot level="info">
+			<AppenderRef ref="Console-Appender" />
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncRoot>
+	</Loggers>
+</Configuration>

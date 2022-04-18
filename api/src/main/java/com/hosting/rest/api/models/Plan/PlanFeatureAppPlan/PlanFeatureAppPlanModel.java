@@ -1,14 +1,17 @@
 package com.hosting.rest.api.models.Plan.PlanFeatureAppPlan;
 
-import com.hosting.rest.api.models.Plan.PlanModel;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PLAN_FEATURE_APP_PLAN")
 public class PlanFeatureAppPlanModel {
 

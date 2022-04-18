@@ -1,5 +1,8 @@
 package com.hosting.rest.api.controllers.Accomodation.AccomodationService;
 
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,48 +13,117 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
+import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationServiceModel;
-import com.hosting.rest.api.services.Accomodation.AccomodationService.IAccomodationServiceServiceImpl;
+import com.hosting.rest.api.services.Accomodation.AccomodationAccService.AccomodationAccServiceServiceImpl;
+import com.hosting.rest.api.services.Accomodation.AccomodationService.AccomodationServiceServiceImpl;
 
 @RestController
 @RequestMapping("/accomodations/services")
 public class AccomodationServiceController {
 
 	@Autowired
-	private IAccomodationServiceServiceImpl accomodationServiceService;
-	
+	private AccomodationServiceServiceImpl accomodationServiceService;
+
+	@Autowired
+	private AccomodationAccServiceServiceImpl accomodationAccServiceService;
+
 	@PostMapping("new")
-	public AccomodationServiceModel addNewAccomodationService(@RequestBody final AccomodationServiceModel accomodationServiceModel) {
+	public AccomodationServiceModel addNewAccomodationService(
+			@RequestBody final AccomodationServiceModel accomodationServiceModel) {
 		return accomodationServiceService.addNewAccomodationService(accomodationServiceModel);
 	}
-	
-	@GetMapping("{accomodationServiceId}")
-	public AccomodationServiceModel getAccomodationServiceById(@PathVariable(name = "accomodationServiceId") final Integer accomodationServiceId) {
-//		return accomodationServiceService.getAccomodationServiceById(accomodationServiceId);
-		return null;
+
+	@DeleteMapping
+	public void deleteAccomodationServiceById(@RequestParam("service") final String accomodationServiceId) {
+
+		try {
+			accomodationServiceService.deleteAccomodationServiceById(Integer.parseInt(accomodationServiceId));
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio de alojamiento [ " + accomodationServiceId + " ] no es válido.");
+		}
 	}
-	
-	@DeleteMapping("{accomodationServiceId}")
-	public void deleteAccomodationServiceById(final Integer accomodationServiceId) {
-//		accomodationServiceService.deleteAccomodationServiceById(accomodationServiceId);
-	}
-	
+
 	@PutMapping("{accomodationServiceId}")
-	public AccomodationServiceModel updateAccomodationService(@RequestBody final AccomodationServiceModel accomodationService) {
-		return accomodationServiceService.updateAccomodationService(accomodationService);
+	public AccomodationServiceModel updateAccomodationService(
+			@PathVariable(name = "accomodationServiceId") final String accomodationServiceId,
+			@RequestBody final AccomodationServiceModel accomodationService) {
+
+		AccomodationServiceModel accomodationServiceUpdated = null;
+
+		try {
+			accomodationServiceUpdated = accomodationServiceService
+					.updateAccomodationService(Integer.parseInt(accomodationServiceId), accomodationService);
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio de alojamiento [ " + accomodationServiceId + " ] no es un número.");
+		}
+		return accomodationServiceUpdated;
 	}
-	
-	@GetMapping("all")
-	public List<AccomodationServiceModel> listAllAccomodationServices() {
-		return accomodationServiceService.listAllAccomodationServices();
+
+	@GetMapping("{accomodationServiceId}")
+	public AccomodationServiceModel getAccomodationServiceById(
+			@PathVariable(name = "accomodationServiceId") final String accomodationServiceId) {
+		AccomodationServiceModel accomodationServiceToReturn = null;
+
+		try {
+			accomodationServiceToReturn = accomodationServiceService
+					.getAccomodationServiceById(Integer.parseInt(accomodationServiceId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del servicio del alojamiento [ " + accomodationServiceId + " ] no es un número.");
+		}
+
+		return accomodationServiceToReturn;
 	}
-	
+
+	/**
+	 * Añade un nuevo servicio a un alojamiento.
+	 * 
+	 * @param regNumber
+	 * @param accomodationServiceToAdd
+	 * 
+	 * @return
+	 */
+	@PostMapping("{regNumber}/new")
+	public AccomodationAccServiceModel addNewServiceToAccomodation(
+			@PathVariable(name = "regNumber") final String regNumber,
+			@RequestBody final AccomodationServiceModel accomodationServiceToAdd) {
+
+		if (!isStringNotBlank(regNumber)) {
+			throw new IllegalArgumentsCustomException(
+					"El número de registro de alojamiento está vacío o no es válido.");
+		}
+
+		if (!isNotNull(accomodationServiceToAdd)) {
+			throw new IllegalArgumentsCustomException(
+					"Alguno de los valores del servicio del alojamiento añadir no es válido.");
+		}
+
+		// Comprobar que el servicio a añadir al alojamiento existe.
+		boolean existsAccomodationService = accomodationServiceService
+				.getAccomodationServiceById(accomodationServiceToAdd.getId()) != null;
+
+		if (!existsAccomodationService) {
+			throw new NotFoundCustomException("El servicio a añadir al alojamiento no existe.");
+		}
+
+		return accomodationAccServiceService.addNewAccomodationServiceToAccomodation(regNumber,
+				accomodationServiceToAdd);
+	}
+
 	@GetMapping("{regNumber}/all")
-	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(@PathVariable(name = "regNumber") final String regNumber) {
-		return accomodationServiceService.listAllAccomodationServicesFromAccomodation(regNumber);
+	public List<AccomodationServiceModel> listAllAccomodationServicesFromAccomodation(
+			@PathVariable(name = "regNumber") final String regNumber) {
+		return accomodationServiceService.findAllAccomodationServicesFromAccomodation(regNumber);
 	}
-	
-	
+
 }

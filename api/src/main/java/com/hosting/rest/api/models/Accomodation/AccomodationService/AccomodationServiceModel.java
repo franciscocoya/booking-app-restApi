@@ -14,17 +14,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ACCOMODATION_SERVICE")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "ACCOMODATION_SERVICE")
 public class AccomodationServiceModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "DENOMINATION")
     private String denomination;

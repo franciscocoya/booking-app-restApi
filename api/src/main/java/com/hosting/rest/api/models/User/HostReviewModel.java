@@ -37,11 +37,11 @@ public class HostReviewModel {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_USER_A")
-	private UserHostModel idUserA;
+	private UserHostModel idUserA; // Usuario que recibe la valoracion
 
 	@ManyToOne
 	@JoinColumn(name = "ID_USER_B")
-	private UserModel idUserB; // Usuario que recibe la valoracion
+	private UserModel idUserB; 
 
 	@Column(name = "CREATED_AT")
 	@CreatedDate

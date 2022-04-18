@@ -2,7 +2,6 @@ package com.hosting.rest.api.services.User;
 
 import java.util.List;
 
-import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
 
 /**
@@ -12,19 +11,15 @@ import com.hosting.rest.api.models.User.UserModel;
  **/
 public interface IUserService {
 
-	UserModel addNewUser(UserModel userToAdd);
+	public UserModel addNewUser(final UserModel userToAdd);
 
-	UserModel updateUser(Integer userId, UserModel userToUpdate);
+	public UserModel updateUser(final Integer userId, final UserModel userToUpdate);
 
-	void deleteUserById(Integer userId);
+	public void deleteUserById(final Integer userId);
 
-	List<UserModel> listAllUsers();
+	public List<UserModel> findAllStartedUsers();
 
-	UserModel getUserById(Integer userId);
+	public UserModel getUserById(final Integer userId);
 
-	List<UserHostModel> listHostUsers();
-
-	// TODO: Comprobar que un usuario es un host.
-	boolean isUserHostByUserId(Integer userId);
-
+	public List<UserModel> findAllUsers();
 }
