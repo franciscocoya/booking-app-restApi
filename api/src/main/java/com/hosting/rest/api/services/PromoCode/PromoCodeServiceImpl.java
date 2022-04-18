@@ -1,5 +1,11 @@
 package com.hosting.rest.api.services.PromoCode;
 
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,10 +14,6 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
@@ -165,5 +167,41 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 		promoCodes.setParameter("regNum", accomodationRegNumber);
 
 		return promoCodes.getResultList();
+	}
+
+	/**
+	 * Actualiza los datos de un código promocional con id <code>promoCodeId</code>
+	 * con el contenido de <code>promoCodeToUpdate</code>.
+	 * 
+	 * @param promoCodeId
+	 * @param promoCodeToUpdate
+	 * 
+	 * @return
+	 */
+	@Override
+	public PromoCodeModel updatePromoCode(final String promoCodeId, final BigDecimal newPromoCodeAmountPercentage) {
+
+		if (!isStringNotBlank(promoCodeId)) {
+			log.error("El id del código promocional está vacío o no es válido.");
+			throw new IllegalArgumentsCustomException("El id del código promocional está vacío o no es válido.");
+		}
+
+		if (!isBigDecimalValid(newPromoCodeAmountPercentage, true)) {
+			log.error("El porcentaje de descuento introducido no es válido.");
+			throw new IllegalArgumentsCustomException("El porcentaje de descuento introducido no es válido.");
+		}
+
+		PromoCodeModel originalPromoCode = promoCodeRepo.findById(promoCodeId).get();
+
+		// Comprobar si existe el código promocional
+		if (!promoCodeRepo.existsById(promoCodeId)) {
+			log.error("El código promocional con id [ " + promoCodeId + " ] no existe");
+			throw new NotFoundCustomException("El código promocional con id [ " + promoCodeId + " ] no existe");
+		}
+
+		// Actualizar el porcentaje de descuento del código promocional.
+		originalPromoCode.setAmountPercentange(newPromoCodeAmountPercentage);
+
+		return promoCodeRepo.save(originalPromoCode);
 	}
 }

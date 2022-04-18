@@ -1,15 +1,19 @@
 package com.hosting.rest.api.controllers.PromoCode;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.PromoCode.PromoCodeModel;
 import com.hosting.rest.api.services.PromoCode.PromoCodeServiceImpl;
 
@@ -18,38 +22,54 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 @RequestMapping(value = "/codes")
 public class PromoCodeController {
-	
+
 	@Autowired
 	private PromoCodeServiceImpl promoCodeService;
-	
+
 	// TODO: Crear codigo promocional.
 	@PostMapping("new")
 	public PromoCodeModel addNewPromoCode(@RequestBody final PromoCodeModel promoCodeModel) {
 		return promoCodeService.addNewPromoCode(promoCodeModel);
 	}
-	
+
 	@DeleteMapping("{promoId}")
 	public void deletePromoCode(@PathVariable(name = "promoId") final String serialNumber) {
 		promoCodeService.removePromoCodeById(serialNumber);
 	}
-	
+
+	@PatchMapping("{promoId}")
+	public PromoCodeModel updatePromoCode(@PathVariable(name = "promoId") final String promoCodeId,
+			@RequestParam(value = "percentage") final String newPromoCodeAmountPercentage) {
+		PromoCodeModel updatedPromoCodeToReturn = null;
+
+		try {
+			updatedPromoCodeToReturn = promoCodeService.updatePromoCode(promoCodeId, new BigDecimal(newPromoCodeAmountPercentage));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id del código promocional no es un número.");
+		}
+
+		return updatedPromoCodeToReturn;
+	}
+
 	@GetMapping("{promoId}")
 	public PromoCodeModel getPromoCodeById(@PathVariable(name = "promoId") final String promoCodeId) {
 		return promoCodeService.getPromoCodeById(promoCodeId);
 	}
-	
+
 	@GetMapping("all")
-	public List<PromoCodeModel> listAllPromoCodes(){
+	public List<PromoCodeModel> listAllPromoCodes() {
 		return promoCodeService.findAllPromoCodes();
 	}
-	
+
 	@GetMapping("{userId}/all")
-	public List<PromoCodeModel> findAllPromoCodesFromUser(@PathVariable(name = "userId") final Integer userId){
+	public List<PromoCodeModel> findAllPromoCodesFromUser(@PathVariable(name = "userId") final Integer userId) {
 		return promoCodeService.findByUser(userId);
 	}
-	
+
 	@GetMapping("accomodations/{regNumber}/all")
-	public List<PromoCodeModel> findAllPromoCodesFromAccomodation(@PathVariable(name = "regNumber") final String accomodationRegisterNumber){
+	public List<PromoCodeModel> findAllPromoCodesFromAccomodation(
+			@PathVariable(name = "regNumber") final String accomodationRegisterNumber) {
 		return promoCodeService.findByAccomodation(accomodationRegisterNumber);
 	}
 }
