@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @PrimaryKeyJoinColumn(name = "ID_PAYMENT")
-@Table( name = "PAYMENT_CREDIT_CARD" )
 @DiscriminatorValue("C")
+@Table( name = "PAYMENT_CREDIT_CARD" )
 public class PaymentCreditCardModel extends PaymentModel{
 
     @Column(name = "CARD_NUMBER")

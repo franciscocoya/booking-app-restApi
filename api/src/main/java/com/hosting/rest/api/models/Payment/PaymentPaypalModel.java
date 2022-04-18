@@ -16,8 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@PrimaryKeyJoinColumn(name = "ID_PAYMENT")
 @DiscriminatorValue("P")
+@PrimaryKeyJoinColumn(name = "ID_PAYMENT")
 @Table( name = "PAYMENT_PAYPAL" )
 public class PaymentPaypalModel extends PaymentModel{
 

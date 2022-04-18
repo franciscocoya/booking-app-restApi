@@ -2,12 +2,14 @@ package com.hosting.rest.api.controllers.User;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,12 +28,14 @@ public class UserHostController {
 
 	@PostMapping("{userId}/upgrade")
 	public UserHostModel upgradeExistingUserToUserHost(@PathVariable(value = "userId") final String userId,
-			@RequestParam(name = "dni") final String userHostDni, @RequestParam(name = "direction") final String useHostDirection) {
+			@RequestParam(name = "dni") final String userHostDni,
+			@RequestParam(name = "direction") final String useHostDirection) {
 
 		UserHostModel userHostAdded = null;
 
 		try {
-			userHostAdded = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostDni, useHostDirection);
+			userHostAdded = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostDni,
+					useHostDirection);
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] a añadir no es un número.");
@@ -51,16 +55,20 @@ public class UserHostController {
 		}
 	}
 
-	@PutMapping("{userId}")
-	public void updateUserHost(@PathVariable(value = "userId") final String userId,
-			@RequestBody final UserHostModel userHostToUpdate) {
+	@PatchMapping("{userId}")
+	public UserHostModel updateUserHost(@PathVariable(value = "userId") final String userId,
+			@Valid @RequestBody final UserHostModel userHostToUpdate) {
+		UserHostModel updatedUserHost = null;
+		
 		try {
-			userHostService.updateUserHostById(Integer.parseInt(userId), userHostToUpdate);
+			updatedUserHost = userHostService.updateUserHostById(Integer.parseInt(userId), userHostToUpdate);
 
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException(
 					"El id de usuario [ " + userId + " ] a actualizar no es un número.");
 		}
+		
+		return updatedUserHost;
 	}
 
 	@GetMapping("all")

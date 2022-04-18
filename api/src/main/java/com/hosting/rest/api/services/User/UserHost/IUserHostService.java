@@ -8,7 +8,7 @@ public interface IUserHostService {
 
 	public UserHostModel upgradeUserToUserHost(final Integer userId, final String userHostDni, final String userHostDirection);
 
-	public void updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate);
+	public UserHostModel updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate);
 
 	public void downgradeUserHostToUser(final Integer userId);
 	

@@ -102,7 +102,7 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * @param userHostToUpdate
 	 */
 	@Override
-	public void updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate) {
+	public UserHostModel updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate) {
 
 		if (!isIntegerValidAndPositive(userId)) {
 			log.error("El id del usuario [ " + userId + " ] no es válido.");
@@ -117,12 +117,33 @@ public class IUserHostServiceImpl implements IUserHostService {
 		// Comprobar que existe un usuario con el id pasado como parámetro.
 		if (!userRepo.existsById(userId)) {
 			log.error("No existe un usuario con id " + userId + " en la aplicación.");
-			throw new IllegalArgumentsCustomException("No existe un usuario con id " + userId + " en la aplicación.");
+			throw new NotFoundCustomException("No existe un usuario con id " + userId + " en la aplicación.");
 		}
 
-		// TODO: Actualizar
+		UserHostModel originalUserHost = userHostRepo.findById(userId).get();
 
-		// userHostRepo.save();
+		// Biografía
+		originalUserHost
+				.setBio(userHostToUpdate.getBio() == null ? originalUserHost.getBio() : userHostToUpdate.getBio());
+
+		// Dni
+		originalUserHost
+				.setDni(userHostToUpdate.getDni() == null ? originalUserHost.getDni() : userHostToUpdate.getDni());
+
+		// Dirección
+		originalUserHost.setDirection(userHostToUpdate.getDirection() == null ? originalUserHost.getDirection()
+				: userHostToUpdate.getDirection());
+
+		// Email verificado
+		originalUserHost.setEmailVerified(userHostToUpdate.isEmailVerified());
+
+		// DNI verificado
+		originalUserHost.setDniVerified(userHostToUpdate.isDniVerified());
+
+		// Teléfono verificado
+		originalUserHost.setPhoneVerified(userHostToUpdate.isPhoneVerified());
+
+		return userHostRepo.save(originalUserHost);
 	}
 
 	/**

@@ -1,21 +1,24 @@
 package com.hosting.rest.api.controllers.Payment;
 
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/payments")
@@ -33,19 +36,37 @@ public class PaymentController {
 		return paymentService.addNewPayment(paymentModel);
 	}
 
-	@PutMapping("{paymentId}")
-	public PaymentModel updatePaymentModel(@PathVariable(value = "paymentId") final Integer paymentId,
-			@RequestBody final PaymentModel paymentModel) {
-		if (paymentModel == null) {
+	@PatchMapping("{paymentId}")
+	public PaymentModel updatePaymentModel(@PathVariable(value = "paymentId") final String paymentId,
+			@Valid @RequestBody final PaymentModel paymentModelToUpdate) {
+		if (!isNotNull(paymentModelToUpdate)) {
 			throw new IllegalArgumentsCustomException("Los datos para el método de pago a actualizar no son válidos.");
 		}
 
-		return paymentService.updatePaymentById(paymentId, paymentModel);
+		PaymentModel udpatedPayment = null;
+
+		try {
+			udpatedPayment = paymentService.updatePaymentById(Integer.parseInt(paymentId), paymentModelToUpdate);
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id del método de pago introducido no es un número.");
+		}
+
+		return udpatedPayment;
+
 	}
 
 	@DeleteMapping("{paymentId}")
-	public void removePaymentMethod(@PathVariable(value = "paymentId") final Integer paymentId) {
-		paymentService.removePaymentById(paymentId);
+	public void removePaymentMethod(@PathVariable(value = "paymentId") final String paymentId) {
+
+		try {
+			paymentService.removePaymentById(Integer.parseInt(paymentId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException(
+					"El id del método de pago [ " + paymentId + " ] no es un número.");
+		}
+
 	}
 
 	@GetMapping("all")
@@ -54,7 +75,16 @@ public class PaymentController {
 	}
 
 	@GetMapping("{bookingId}")
-	public PaymentModel getPaymentMethodFromBooking(@PathVariable(value = "bookingId") final Integer bookingId) {
-		return paymentService.findByBookingId(bookingId);
+	public PaymentModel getPaymentMethodFromBooking(@PathVariable(value = "bookingId") final String bookingId) {
+		PaymentModel paymentToReturn = null;
+
+		try {
+			paymentToReturn = paymentService.findByBookingId(Integer.parseInt(bookingId));
+
+		} catch (NumberFormatException nfe) {
+			throw new IllegalArgumentsCustomException("El id de la reserva [ " + bookingId + " ] no es un número.");
+		}
+
+		return paymentToReturn;
 	}
 }

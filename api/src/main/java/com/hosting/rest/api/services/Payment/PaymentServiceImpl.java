@@ -1,5 +1,8 @@
 package com.hosting.rest.api.services.Payment;
 
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,12 +11,11 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
+import com.hosting.rest.api.models.Payment.PaymentCreditCardModel;
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.models.Payment.PaymentPaypalModel;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
@@ -70,8 +72,9 @@ public class PaymentServiceImpl implements IPaymentService {
 	 * 
 	 * @throws NumberFormatException Si el id del método de pago no es un número.
 	 */
+	@Transactional
 	@Override
-	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentModel)
+	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentModelToUpdate)
 			throws NumberFormatException {
 
 		if (!isIntegerValidAndPositive(paymentId)) {
@@ -80,21 +83,25 @@ public class PaymentServiceImpl implements IPaymentService {
 		}
 
 		// Comprobar que existe el método de pago a actualizar.
-		if (!paymentRepo.existsById(paymentModel.getIdPayment())) {
+		if (!paymentRepo.existsById(paymentModelToUpdate.getIdPayment())) {
+			log.error("El método de pago a actualizar no existe.");
 			throw new NotFoundCustomException("El método de pago a actualizar no existe.");
 		}
-
-		PaymentModel originalPayment = paymentRepo.findById(paymentId).get();
+		
+		PaymentModel updatedPayment = paymentRepo.findById(paymentId).get();
 
 		// Si el método de pago es Paypal - Actualizar email de la cuenta
-		if (originalPayment instanceof PaymentPaypalModel) {
-//			((PaymentPaypalModel) originalPayment).setAccountEmail(paymentModel.get);
+		if (paymentModelToUpdate instanceof PaymentPaypalModel) {
+			
+			((PaymentPaypalModel) updatedPayment).setAccountEmail(((PaymentPaypalModel) paymentModelToUpdate).getAccountEmail());
+
+			// Si el método de pago es tarjeta de crédito - Actualizar el número de tarjeta
+		} else if (paymentModelToUpdate instanceof PaymentCreditCardModel) {
+			
+			((PaymentCreditCardModel) updatedPayment).setCardNumber(((PaymentCreditCardModel) paymentModelToUpdate).getCardNumber());
 		}
-
-		// Si el método de pago es tarjeta de crédito - Actualizar el número de tarjeta
-
-		// TODO: COMPLETAR
-		return null;
+		
+		return updatedPayment;
 	}
 
 	/**
