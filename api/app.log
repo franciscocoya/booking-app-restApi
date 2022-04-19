@@ -6542,3 +6542,39 @@ java.sql.SQLSyntaxErrorException: Unknown column 'accomodati0_.id_user_owner' in
 2022-04-19 19:12:16,362 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-04-19 19:12:16,364 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
 2022-04-19 19:12:16,375 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-04-19 19:36:57,837 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.1 on Francisco-Coya with PID 18168 (D:\PROYECTO DAW\rest_api\booking-app-restApi\api\target\classes started by KIKO in D:\PROYECTO DAW\rest_api\booking-app-restApi\api)
+2022-04-19 19:36:57,838 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-19 19:36:57,876 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-19 19:36:57,876 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-19 19:36:58,464 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-19 19:36:58,558 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 86 ms. Found 18 JPA repository interfaces.
+2022-04-19 19:36:59,155 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-19 19:36:59,162 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-19 19:36:59,162 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-19 19:36:59,242 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-19 19:36:59,242 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1365 ms
+2022-04-19 19:36:59,358 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-19 19:36:59,398 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-04-19 19:36:59,521 INFO org.hibernate.annotations.common.Version [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-19 19:36:59,601 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-19 19:36:59,602 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-19 19:36:59,602 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2022-04-19 19:36:59,834 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2022-04-19 19:36:59,847 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-19 19:37:00,172 INFO org.hibernate.tuple.PojoInstantiator [restartedMain] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-19 19:37:00,172 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-19 19:37:00,172 WARN org.hibernate.mapping.RootClass [restartedMain] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-19 19:37:00,575 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-19 19:37:00,582 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 19:37:00,664 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-19 19:37:01,290 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-19 19:37:01,849 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-19 19:37:01,883 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-19 19:37:01,891 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 4.357 seconds (JVM running for 5.044)
+2022-04-19 19:41:05,974 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [http-nio-8085-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-19 19:41:05,974 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-04-19 19:41:05,975 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Completed initialization in 1 ms
+2022-04-19 19:41:09,316 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(6)-127.0.0.1] Application shutdown requested.
+2022-04-19 19:41:09,351 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(6)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 19:41:09,353 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-1 - Shutdown initiated...
+2022-04-19 19:41:09,356 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-1 - Shutdown completed.
