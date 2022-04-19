@@ -1,15 +1,10 @@
 package com.hosting.rest.api.controllers.Payment;
 
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,26 +29,6 @@ public class PaymentController {
 		}
 
 		return paymentService.addNewPayment(paymentModel);
-	}
-
-	@PatchMapping("{paymentId}")
-	public PaymentModel updatePaymentModel(@PathVariable(value = "paymentId") final String paymentId,
-			@Valid @RequestBody final PaymentModel paymentModelToUpdate) {
-		if (!isNotNull(paymentModelToUpdate)) {
-			throw new IllegalArgumentsCustomException("Los datos para el método de pago a actualizar no son válidos.");
-		}
-
-		PaymentModel udpatedPayment = null;
-
-		try {
-			udpatedPayment = paymentService.updatePaymentById(Integer.parseInt(paymentId), paymentModelToUpdate);
-
-		} catch (NumberFormatException nfe) {
-			throw new IllegalArgumentsCustomException("El id del método de pago introducido no es un número.");
-		}
-
-		return udpatedPayment;
-
 	}
 
 	@DeleteMapping("{paymentId}")

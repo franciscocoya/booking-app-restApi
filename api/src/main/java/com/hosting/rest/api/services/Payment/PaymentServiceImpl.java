@@ -11,13 +11,10 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
-import com.hosting.rest.api.models.Payment.PaymentCreditCardModel;
 import com.hosting.rest.api.models.Payment.PaymentModel;
-import com.hosting.rest.api.models.Payment.PaymentPaypalModel;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 import com.hosting.rest.api.repositories.Payment.IPaymentRepository;
 
@@ -60,48 +57,6 @@ public class PaymentServiceImpl implements IPaymentService {
 		}
 
 		return paymentRepo.save(paymentModel);
-	}
-
-	/**
-	 * Actualización de los datos de un método de pago con id <code>paymentId</code>
-	 * 
-	 * @param paymentId
-	 * @param paymentModel
-	 * 
-	 * @return
-	 * 
-	 * @throws NumberFormatException Si el id del método de pago no es un número.
-	 */
-	@Transactional
-	@Override
-	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentModelToUpdate)
-			throws NumberFormatException {
-
-		if (!isIntegerValidAndPositive(paymentId)) {
-			log.error("El id del método de pago a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException("El id del método de pago a actualizar no es válido.");
-		}
-
-		// Comprobar que existe el método de pago a actualizar.
-		if (!paymentRepo.existsById(paymentModelToUpdate.getIdPayment())) {
-			log.error("El método de pago a actualizar no existe.");
-			throw new NotFoundCustomException("El método de pago a actualizar no existe.");
-		}
-		
-		PaymentModel updatedPayment = paymentRepo.findById(paymentId).get();
-
-		// Si el método de pago es Paypal - Actualizar email de la cuenta
-		if (paymentModelToUpdate instanceof PaymentPaypalModel) {
-			
-			((PaymentPaypalModel) updatedPayment).setAccountEmail(((PaymentPaypalModel) paymentModelToUpdate).getAccountEmail());
-
-			// Si el método de pago es tarjeta de crédito - Actualizar el número de tarjeta
-		} else if (paymentModelToUpdate instanceof PaymentCreditCardModel) {
-			
-			((PaymentCreditCardModel) updatedPayment).setCardNumber(((PaymentCreditCardModel) paymentModelToUpdate).getCardNumber());
-		}
-		
-		return updatedPayment;
 	}
 
 	/**

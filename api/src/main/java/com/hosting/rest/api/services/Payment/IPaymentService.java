@@ -8,7 +8,7 @@ public interface IPaymentService {
 
 	public PaymentModel addNewPayment(final PaymentModel paymentModel);
 
-	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentModel);
+//	public PaymentModel updatePaymentById(final Integer paymentId, final PaymentModel paymentContentToUpdate);
 
 	public void removePaymentById(final Integer paymentId);
 
