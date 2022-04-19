@@ -6514,3 +6514,7 @@ java.sql.SQLSyntaxErrorException: Unknown column 'accomodati0_.id_user_owner' in
 2022-04-19 19:01:55,180 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [http-nio-8085-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-04-19 19:01:55,181 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-04-19 19:01:55,181 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Completed initialization in 0 ms
+2022-04-19 19:03:56,908 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(6)-127.0.0.1] Application shutdown requested.
+2022-04-19 19:03:56,944 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(6)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 19:03:56,945 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-2 - Shutdown initiated...
+2022-04-19 19:03:56,947 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-2 - Shutdown completed.
