@@ -3,6 +3,7 @@ package com.hosting.rest.api.services.User;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
@@ -29,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -153,5 +159,13 @@ public class UserServiceImpl implements IUserService {
 		TypedQuery<UserModel> allUsers = em.createQuery(findAllHostUsersQuery, UserModel.class);
 
 		return allUsers.getResultList();
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+		 UserModel user = userRepo.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
+		 
+	       GrantedAuthority authority = new SimpleGrantedAuthority("manager");
+	       return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPass(), Arrays.asList(authority));
 	}
 }

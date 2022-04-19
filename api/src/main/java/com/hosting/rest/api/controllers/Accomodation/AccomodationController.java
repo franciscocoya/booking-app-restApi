@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +24,7 @@ import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
  * @apiNote Controlador de alojamientos.
  */
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/accomodations")
 public class AccomodationController {
 
@@ -34,7 +36,7 @@ public class AccomodationController {
 		return accomodationService.addNewAccomodation(accomodationModel);
 	}
 
-	@GetMapping(value = "all")
+	@GetMapping("all")
 	public List<AccomodationModel> getAllAccomodations() {
 		return accomodationService.findAllAccomodations();
 	}

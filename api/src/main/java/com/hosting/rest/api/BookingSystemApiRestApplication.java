@@ -9,4 +9,9 @@ public class BookingSystemApiRestApplication {
 		SpringApplication.run(BookingSystemApiRestApplication.class, args);
 	}
 
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
+
 }
