@@ -6518,3 +6518,27 @@ java.sql.SQLSyntaxErrorException: Unknown column 'accomodati0_.id_user_owner' in
 2022-04-19 19:03:56,944 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(6)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-04-19 19:03:56,945 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-2 - Shutdown initiated...
 2022-04-19 19:03:56,947 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(6)-127.0.0.1] HikariPool-2 - Shutdown completed.
+2022-04-19 19:12:08,164 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Starting BookingSystemApiRestApplicationTests using Java 17.0.1 on Francisco-Coya with PID 11592 (started by KIKO in D:\PROYECTO DAW\rest_api\booking-app-restApi\api)
+2022-04-19 19:12:08,165 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] No active profile set, falling back to 1 default profile: "default"
+2022-04-19 19:12:09,611 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-19 19:12:09,774 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 147 ms. Found 18 JPA repository interfaces.
+2022-04-19 19:12:10,512 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-19 19:12:10,594 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-04-19 19:12:10,829 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-19 19:12:11,080 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-19 19:12:11,083 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-19 19:12:11,083 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-04-19 19:12:11,605 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-04-19 19:12:11,635 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-19 19:12:12,233 INFO org.hibernate.tuple.PojoInstantiator [main] HHH000182: No default (no-argument) constructor for class: com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId (class must be instantiated by Interceptor)
+2022-04-19 19:12:12,233 WARN org.hibernate.mapping.RootClass [main] HHH000038: Composite-id class does not override equals(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-19 19:12:12,233 WARN org.hibernate.mapping.RootClass [main] HHH000039: Composite-id class does not override hashCode(): com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId
+2022-04-19 19:12:12,964 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-19 19:12:12,977 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 19:12:13,210 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-19 19:12:14,440 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
+2022-04-19 19:12:16,052 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Started BookingSystemApiRestApplicationTests in 8.27 seconds (JVM running for 9.737)
+2022-04-19 19:12:16,074 INFO org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor [main] Autowired annotation is not supported on static fields: private static com.hosting.rest.api.controllers.User.UserController com.hosting.rest.api.BookingSystemApiRestApplicationTests.userController
+2022-04-19 19:12:16,362 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 19:12:16,364 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-04-19 19:12:16,375 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
