@@ -15098,3 +15098,7 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 2022-04-19 16:30:03,721 INFO org.apache.catalina.core.ContainerBase.[Tomcat-1].[localhost].[/api] [http-nio-8085-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-04-19 16:30:03,721 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-04-19 16:30:03,724 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-1] Completed initialization in 3 ms
+2022-04-19 17:48:09,072 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(93)-127.0.0.1] Application shutdown requested.
+2022-04-19 17:48:09,098 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(93)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-19 17:48:09,099 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(93)-127.0.0.1] HikariPool-15 - Shutdown initiated...
+2022-04-19 17:48:09,102 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(93)-127.0.0.1] HikariPool-15 - Shutdown completed.
