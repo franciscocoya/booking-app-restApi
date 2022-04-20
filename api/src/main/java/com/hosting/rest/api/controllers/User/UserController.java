@@ -3,6 +3,7 @@ package com.hosting.rest.api.controllers.User;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,7 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 
+	@PreAuthorize("hasRole('manager')")
 	@GetMapping("{userId}")
 	public UserModel getUserById(@PathVariable(value = "userId") final String userId) {
 		UserModel userToReturn = null;

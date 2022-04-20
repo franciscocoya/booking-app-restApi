@@ -4,7 +4,6 @@ import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,8 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
+import com.hosting.rest.api.mapper.UserDetailsMapper;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 
@@ -52,9 +50,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
 		}
 
-		boolean existsUser = userRepo.existsById(userToAdd.getId());
-
-		if (existsUser) {
+		// Comprobar si existe el usuario
+		if (userRepo.existsById(userToAdd.getId())) {
 			log.error("Ya existe un usuario en la aplicación.");
 			throw new IllegalArgumentsCustomException("Ya existe un usuario en la aplicación.");
 		}
@@ -162,6 +159,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		return allUsers.getResultList();
 	}
 
+	/**
+	 * Comprueba que existe un usuario con el email <code>emailToSearch</code> y devuelve sus credenciales de acceso.
+	 * 
+	 * @see #build 
+	 * 
+	 * @param emailToSearch
+	 * 
+	 * @return
+	 * 
+	 */
 	@Override
 	public UserDetails loadUserByUsername(final String emailToSearch) throws UsernameNotFoundException {
 
@@ -170,11 +177,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			throw new IllegalArgumentsCustomException("El email de usuario a buscar está vacío.");
 		}
 
+		// Obtener el usuario con el email
 		UserModel user = userRepo.findByEmail(emailToSearch).orElseThrow(
 				() -> new NotFoundCustomException("El usuario con email " + emailToSearch + " a cargar no existe."));
-
-		GrantedAuthority authority = new SimpleGrantedAuthority("manager");
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPass(),
-				Arrays.asList(authority));
+		
+		return UserDetailsMapper.build(user);
 	}
 }

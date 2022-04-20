@@ -1,10 +1,10 @@
 package com.hosting.rest.api.services.Accomodation;
 
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 import static com.hosting.rest.api.Utils.AppUtils.isDoubleValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
-import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 
 import java.math.BigDecimal;
 import java.util.List;
