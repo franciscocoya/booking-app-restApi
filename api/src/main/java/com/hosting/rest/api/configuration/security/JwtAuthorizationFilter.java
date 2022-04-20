@@ -53,7 +53,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 		String authorizationHeader = httpServletRequest.getHeader(HEADER_AUTHORIZATION_KEY);
 
 		// Verificar que el token está bien formado.
-		if (StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith(TOKEN_BEARER_PREFIX)) {
+		if (!StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith(TOKEN_BEARER_PREFIX)) {
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 			return;
 		}

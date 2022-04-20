@@ -51,6 +51,7 @@ public class UserController {
 		return userService.findAllStartedUsers();
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public List<UserModel> getAllUsers() {
 		return userService.findAllUsers();

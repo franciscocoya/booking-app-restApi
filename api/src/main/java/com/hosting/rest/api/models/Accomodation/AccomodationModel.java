@@ -1,6 +1,7 @@
 package com.hosting.rest.api.models.Accomodation;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -22,14 +23,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//@JsonIgnoreProperties({"idUserHost"})
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ACCOMODATION")
-public class AccomodationModel {
+public class AccomodationModel implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "REG_NUM")
     private String registerNumber;
 

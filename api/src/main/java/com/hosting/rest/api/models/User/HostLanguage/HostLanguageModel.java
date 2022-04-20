@@ -1,5 +1,7 @@
 package com.hosting.rest.api.models.User.HostLanguage;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,8 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "HOST_LANGUAGE")
-public class HostLanguageModel {
+public class HostLanguageModel implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@EmbeddedId
 	private HostLanguageLanguageId idHostLanguage;
 	

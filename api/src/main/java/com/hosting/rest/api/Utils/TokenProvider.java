@@ -12,13 +12,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.hosting.rest.api.Utils.Constants.*;
 
+@Slf4j
 public class TokenProvider {
 
 	/**
@@ -32,7 +38,7 @@ public class TokenProvider {
 
 		final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
-		
+
 		return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities)
 				.signWith(SignatureAlgorithm.HS256, SIGNING_KEY).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setIssuer(ISSUER_TOKEN)
@@ -74,4 +80,36 @@ public class TokenProvider {
 
 		return claimsJws.getBody().getSubject();
 	}
+
+	/**
+	 * Valida el token JWT <code>authToken</code> pasado como parámetro.
+	 * 
+	 * @param authToken
+	 * 
+	 * @return
+	 */
+	public boolean validateJwtToken(final String authToken) {
+		try {
+			Jwts.parser().setSigningKey(authToken).parseClaimsJws(authToken);
+			return true;
+
+		} catch (SignatureException e) {
+			log.error("Invalid JWT signature: {}", e.getMessage());
+
+		} catch (MalformedJwtException e) {
+			log.error("Invalid JWT token: {}", e.getMessage());
+
+		} catch (ExpiredJwtException e) {
+			log.error("JWT token is expired: {}", e.getMessage());
+
+		} catch (UnsupportedJwtException e) {
+			log.error("JWT token is unsupported: {}", e.getMessage());
+
+		} catch (IllegalArgumentException e) {
+			log.error("JWT claims string is empty: {}", e.getMessage());
+		}
+
+		return false;
+	}
+
 }
