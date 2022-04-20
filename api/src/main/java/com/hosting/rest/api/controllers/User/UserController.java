@@ -3,6 +3,7 @@ package com.hosting.rest.api.controllers.User;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class UserController {
 	public void deleteUserById(@PathVariable(value = "userId") final String userId) {
 		try {
 			userService.deleteUserById(Integer.parseInt(userId));
-			
+
 		} catch (NumberFormatException nfe) {
 			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
 		}
@@ -57,7 +58,7 @@ public class UserController {
 	@GetMapping("{userId}")
 	public UserModel getUserById(@PathVariable(value = "userId") final String userId) {
 		UserModel userToReturn = null;
-		
+
 		try {
 			userToReturn = userService.getUserById(Integer.parseInt(userId));
 
@@ -66,5 +67,10 @@ public class UserController {
 		}
 
 		return userToReturn;
+	}
+
+	@GetMapping("load/{userEmail}")
+	public UserDetails getUserByEmail(@PathVariable(name = "userEmail") final String emailToSearch) {
+		return userService.loadUserByUsername(emailToSearch);
 	}
 }

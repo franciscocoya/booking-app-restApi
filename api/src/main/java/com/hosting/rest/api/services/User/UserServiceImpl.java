@@ -2,6 +2,7 @@ package com.hosting.rest.api.services.User;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 
 import java.util.Arrays;
 import java.util.List;
@@ -162,10 +163,18 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		 UserModel user = userRepo.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
-		 
-	       GrantedAuthority authority = new SimpleGrantedAuthority("manager");
-	       return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPass(), Arrays.asList(authority));
+	public UserDetails loadUserByUsername(final String emailToSearch) throws UsernameNotFoundException {
+
+		if (!isStringNotBlank(emailToSearch)) {
+			log.error("El email de usuario a buscar está vacío.");
+			throw new IllegalArgumentsCustomException("El email de usuario a buscar está vacío.");
+		}
+
+		UserModel user = userRepo.findByEmail(emailToSearch).orElseThrow(
+				() -> new NotFoundCustomException("El usuario con email " + emailToSearch + " a cargar no existe."));
+
+		GrantedAuthority authority = new SimpleGrantedAuthority("manager");
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPass(),
+				Arrays.asList(authority));
 	}
 }

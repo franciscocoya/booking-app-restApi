@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Auth.AuthenticationRequest;
 import com.hosting.rest.api.models.Auth.AuthenticationResponse;
 import com.hosting.rest.api.services.User.UserServiceImpl;
@@ -22,6 +23,7 @@ public class AuthController {
 
 	@Autowired
 	private UserServiceImpl userService;
+	
 	private JwtService jwtService;
 
 	@PostMapping("/login")
@@ -31,8 +33,9 @@ public class AuthController {
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUsername(), authenticationRequest.getPassword());
 			authenticationManager.authenticate(authentication);
+			
 		} catch (BadCredentialsException e) {
-			throw new Exception("Invalid username or password", e);
+			throw new IllegalArgumentsCustomException("Nombre de usuario o contraseña no válidos", e);
 		}
 		
 		UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
