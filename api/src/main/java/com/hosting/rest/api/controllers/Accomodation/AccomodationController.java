@@ -1,5 +1,8 @@
 package com.hosting.rest.api.controllers.Accomodation;
 
+import static com.hosting.rest.api.Utils.PaginationConstants.DEFAULT_PAGE_NUMBER;
+import static com.hosting.rest.api.Utils.PaginationConstants.DEFAULT_PAGE_SIZE;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,8 +26,6 @@ import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static com.hosting.rest.api.Utils.PaginationConstants.*;
-
 /**
  * @author Francisco Coya Abajo
  * @version v1.0.1
@@ -39,6 +40,7 @@ public class AccomodationController {
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
 	public AccomodationModel addNewAccomodation(@RequestBody final AccomodationModel accomodationModel) {
 		return accomodationService.addNewAccomodation(accomodationModel);
@@ -48,7 +50,7 @@ public class AccomodationController {
 	@GetMapping("all")
 	public Page<AccomodationModel> getAllAccomodationPaging(
 			@RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) final String pageNumber,
-			@RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) String size) {
+			@RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) final String size) {
 		Page<AccomodationModel> accomodations = null;
 
 		try {
@@ -106,6 +108,7 @@ public class AccomodationController {
 		return accomodations;
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,
@@ -114,23 +117,27 @@ public class AccomodationController {
 		return accomodationService.findByNearby(latitude, longitude, distance);
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("category/{categoryName}")
 	public List<AccomodationModel> findByCategory(@PathVariable(value = "categoryName") final String categoryToFind) {
 		return accomodationService.findByCategory(categoryToFind);
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("price")
 	public List<AccomodationModel> findByPriceRange(@RequestParam(name = "minPrice") final BigDecimal minPrice,
 			@RequestParam(name = "maxPrice") final BigDecimal maxPrice) {
 		return accomodationService.findByPriceRange(minPrice, maxPrice);
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PatchMapping("{regNumber}")
 	public AccomodationModel updateAccomodationById(@PathVariable(value = "regNumber") final String regNumber,
 			@RequestBody final AccomodationModel accomodationToUpdate) {
 		return accomodationService.updateAccomodationById(regNumber, accomodationToUpdate);
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{regNumber}")
 	public void removeAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		accomodationService.removeAccomodationById(regNumber);

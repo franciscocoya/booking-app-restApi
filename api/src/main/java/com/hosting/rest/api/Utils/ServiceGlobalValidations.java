@@ -18,7 +18,7 @@ public class ServiceGlobalValidations {
 	 * @param pageSizeToValidate
 	 */
 	public static void checkPageSize(final Integer pageSizeToValidate) throws NumberFormatException {
-		validateParam(pageSizeToValidate < 1, "El tamaño de página [ " + pageSizeToValidate + " ] no es válido.");
+		validateParam(pageSizeToValidate > 0, "El tamaño de página [ " + pageSizeToValidate + " ] no es válido.");
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class ServiceGlobalValidations {
 	 * @param pageNumberToValidate
 	 */
 	public static void checkPageNumber(final Integer pageNumberToValidate) throws NumberFormatException {
-		validateParam(pageNumberToValidate < 0, "El número de página [ " + pageNumberToValidate + " ] no es válido.");
+		validateParam(pageNumberToValidate > -1, "El número de página [ " + pageNumberToValidate + " ] no es válido.");
 	}
 
 }
