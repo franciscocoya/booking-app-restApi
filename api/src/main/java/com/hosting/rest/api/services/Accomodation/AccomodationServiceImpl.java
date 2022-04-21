@@ -9,6 +9,7 @@ import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageNumber;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageSize;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -30,9 +31,9 @@ import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 
 /**
  * 
- * @author Francisco Coya · https://github.com/FranciscoCoya
+ * @author Francisco Coya
  * @version v1.0.3
- * @description Implementa las acciones relacionadas a los alojamientos.
+ * @description Servicio que implementa las acciones relacionadas a los alojamientos.
  * 
  **/
 @Service
@@ -118,7 +119,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		validateParam(isStringNotBlank(regNumber), "El número de registro pasado como parámetro está vacío.");
 
 		// Comprobar que existe el alojamiento.
-		validateParam(!accomodationRepo.existsById(regNumber),
+		validateParamNotFound(!accomodationRepo.existsById(regNumber),
 				"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
 
 		accomodationRepo.deleteById(regNumber);
@@ -222,7 +223,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		validateParam(isNotNull(accomodationToUpdate), "Alguno de los datos del alojamiento a actualizar no es válido");
 
 		// Comprobar si existe el alojamiento a actualizar
-		validateParam(accomodationRepo.existsById(regNumber),
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
 				"No existe un alojamiento con número de registro " + regNumber);
 
 		// Número de habitaciones
