@@ -21,7 +21,7 @@ import com.hosting.rest.api.repositories.Payment.IPaymentRepository;
 /**
  * 
  * @author Francisco Coya Abajo
- * @version v1.0.1
+ * @version v1.0.3
  * @apiNote Controlador para gestionar las acciones de los métodos de pago de la
  *          aplicación.
  * 

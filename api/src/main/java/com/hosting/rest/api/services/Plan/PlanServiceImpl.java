@@ -3,6 +3,8 @@ package com.hosting.rest.api.services.Plan;
 import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,22 +17,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Plan.PlanModel;
 import com.hosting.rest.api.repositories.Plan.IPlanRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.1
+ * @version v1.0.3
  * @apiNote Servicio que gestiona los planes de subscripción.
  *
  */
-@Slf4j
 @Service
 public class PlanServiceImpl implements IPlanService {
 
@@ -52,18 +49,11 @@ public class PlanServiceImpl implements IPlanService {
 	 */
 	@Override
 	public PlanModel addNewPlan(final PlanModel planToAdd) {
-		if (!isNotNull(planToAdd)) {
-			log.error("Los datos del plan a añadir no existen o están incompletos.");
-			throw new IllegalArgumentsCustomException("Los datos del plan a añadir no existen o están incompletos.");
-		}
+		// Validar plan pasado como parámetro
+		validateParam(isNotNull(planToAdd), "Los datos del plan a añadir no existen o están incompletos.");
 
-		if (planRepo.existsById(planToAdd.getIdPlan())) {
-			log.error("El plan a añadir ya existe.");
-			throw new IllegalArgumentsCustomException("El plan a añadir ya existe.");
-		}
-
-		// TODO: Error java.lang.IllegalArgumentException: The given id must not be
-		// null!
+		// Comprobar si existe el plan
+		validateParamNotFound(!planRepo.existsById(planToAdd.getIdPlan()), "El plan a añadir ya existe.");
 
 		return planRepo.save(planToAdd);
 	}
@@ -74,22 +64,20 @@ public class PlanServiceImpl implements IPlanService {
 	 * @param planId
 	 * @param newPrice
 	 * 
+	 * @throws NumberFormatException Si el id del plan no es un número.
+	 * 
 	 */
 	@Transactional
 	@Override
 	public void udpatePlan(final Integer planId, final BigDecimal newPrice) throws NumberFormatException {
+		// Validar el id del plan.
+		validateParam(isIntegerValidAndPositive(planId), "El id del plan " + planId + " no es válido.");
 
-		if (!isIntegerValidAndPositive(planId)) {
-			throw new IllegalArgumentsCustomException("El id del plan " + planId + " no es válido.");
-		}
+		// Validar el precio
+		validateParam(isBigDecimalValid(newPrice), "El precio del plan introducido no es válido.");
 
-		if (!isBigDecimalValid(newPrice)) {
-			throw new IllegalArgumentsCustomException("El precio del plan introducido no es válido.");
-		}
-
-		if (!planRepo.existsById(planId)) {
-			throw new NotFoundCustomException("No existe un plan con id [ " + planId + " ].");
-		}
+		// Comprobar si existe el plan
+		validateParamNotFound(planRepo.existsById(planId), "No existe un plan con id [ " + planId + " ].");
 
 		String updatePlanModelQuery = "UPDATE PlanModel pm SET pm.price = :planPrice WHERE pm.idPlan = :planId";
 
@@ -101,18 +89,16 @@ public class PlanServiceImpl implements IPlanService {
 	 * Borrado de un plan con el id <code>planId</code> pasado como parámetro.
 	 * 
 	 * @param planId
+	 * 
+	 * @throws NumberFormatException Si el id del plan no es válido.
 	 */
 	@Override
 	public void deletePlanById(final Integer planId) throws NumberFormatException {
+		// Validar el id del plan
+		validateParam(isIntegerValidAndPositive(planId), "El id el plan [ " + planId + " ] a eliminar no es válido.");
 
-		if (!isIntegerValidAndPositive(planId)) {
-			throw new IllegalArgumentsCustomException("El id el plan [ " + planId + " ] a eliminar no es válido.");
-		}
-
-		if (!planRepo.existsById(planId)) {
-			log.error("El plan con id " + planId + " no es válido.");
-			throw new NotFoundCustomException("El plan con id " + planId + " no es válido.");
-		}
+		// Comprobar si existe el plans
+		validateParamNotFound(planRepo.existsById(planId), "El plan con id " + planId + " no es válido.");
 
 		planRepo.deleteById(planId);
 	}
@@ -126,18 +112,18 @@ public class PlanServiceImpl implements IPlanService {
 	}
 
 	/**
-	 * Obtención de un plan por su id.
+	 * Obtención de un plan por con id <code>planId</code>.
 	 * 
 	 * @param planId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del plan no es un número.
 	 */
 	@Override
-	public PlanModel getPlanById(final Integer planId) throws NumberFormatException, IllegalArgumentException {
-		if (!isIntegerValidAndPositive(planId)) {
-			log.error("El id el plan [ " + planId + " ] a obtener no es válido.");
-			throw new IllegalArgumentsCustomException("El id el plan [ " + planId + " ] a obtener no es válido.");
-		}
+	public PlanModel getPlanById(final Integer planId) throws NumberFormatException {
+		// Validar el id del plan
+		validateParam(isIntegerValidAndPositive(planId), "El id el plan [ " + planId + " ] a obtener no es válido.");
 
 		return planRepo.findById(planId).get();
 	}
@@ -151,17 +137,13 @@ public class PlanServiceImpl implements IPlanService {
 	 * @return
 	 */
 	@Override
-	public PlanModel findByUserId(final Integer userId) throws IllegalArgumentException, NumberFormatException {
+	public PlanModel findByUserId(final Integer userId) throws NumberFormatException {
+		// Validar el id de usuario
+		validateParam(isIntegerValidAndPositive(userId),
+				"El id del usuario [ " + userId + " ] a obtener no es válido.");
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id del usuario [ " + userId + " ] a obtener no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] a obtener no es válido.");
-		}
-
-		if (!userRepo.existsById(userId)) {
-			log.error("El usuario con id " + userId + " no es existe.");
-			throw new NotFoundCustomException("El usuario con id " + userId + " no es existe.");
-		}
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId), "El usuario con id " + userId + " no es existe.");
 
 		String findCurrentUserPlanQuery = "SELECT pm "
 				+ "FROM PlanSubscriptionModel psm INNER JOIN psm.planSubscriptionUserHostId s, PlanModel pm "
