@@ -19,6 +19,13 @@ import com.hosting.rest.api.services.Accomodation.AccomodationRule.AccomodationR
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.3
+ * @apiNote Controlador de una norma de alojamiento.
+ *
+ */
 @RestController
 @RequestMapping("/accomodations/rules")
 @Slf4j

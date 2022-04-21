@@ -57,6 +57,9 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 		validateParam(isNotNull(accomodationReviewToAdd),
 				"Los datos introducidos para la creación de la valoración no son válidos.");
 
+		validateParamNotFound(!accomodationReviewRepo.existsById(accomodationReviewToAdd.getId()),
+				"Ya existe una valoración con esos datos.");
+
 		return accomodationReviewRepo.save(accomodationReviewToAdd);
 	}
 

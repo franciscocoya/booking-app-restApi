@@ -62,7 +62,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 				"Los datos introducidos para el alojamiento no son válidos o falta algún dato.");
 
 		// Comprobar si existe el alojamiento
-		validateParam(accomodationRepo.existsById(accomodationModel.getRegisterNumber()),
+		validateParam(!accomodationRepo.existsById(accomodationModel.getRegisterNumber()),
 				"Ya se encuentra registrado un alojamiento con número de registro ["
 						+ accomodationModel.getRegisterNumber() + " ].");
 

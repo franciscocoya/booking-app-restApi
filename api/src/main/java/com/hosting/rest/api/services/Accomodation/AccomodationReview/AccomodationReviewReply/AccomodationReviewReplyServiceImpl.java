@@ -48,7 +48,7 @@ public class AccomodationReviewReplyServiceImpl implements IAccomodationReviewRe
 
 		// Comprobar si existe la respuesta a la valoración del alojamiento
 		validateParamNotFound(
-				accomodationReviewReplyRepo.existsById(accomodationReviewReplyToAdd.getIdAccomodationReviewReply()),
+				!accomodationReviewReplyRepo.existsById(accomodationReviewReplyToAdd.getIdAccomodationReviewReply()),
 				"La respuesta a la valoración del alojamiento ya existe");
 
 		return accomodationReviewReplyRepo.save(accomodationReviewReplyToAdd);

@@ -24,7 +24,7 @@ import com.hosting.rest.api.repositories.Accomodation.AccomodationRule.IAccomoda
 /**
  * 
  * @author Francisco Coya · https://github.com/FranciscoCoya
- * @version v1.0.2
+ * @version v1.0.3
  * @description Implementa las acciones relacionadas con las reglas de un
  *              alojamiento.
  * 
@@ -56,7 +56,7 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 				"Alguno de los valores de la norma del alojamiento a añadir no es válido.");
 
 		// Comprobar si existe la norma.
-		validateParamNotFound(accomodationRuleRepo.existsById(accomodationRuleToAdd.getId()),
+		validateParamNotFound(!accomodationRuleRepo.existsById(accomodationRuleToAdd.getId()),
 				"La norma del alojamiento " + accomodationRuleToAdd.getId() + " ya existe.");
 
 		return accomodationRuleRepo.save(accomodationRuleToAdd);
