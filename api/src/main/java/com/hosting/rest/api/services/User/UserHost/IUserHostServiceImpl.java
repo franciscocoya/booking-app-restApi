@@ -1,8 +1,10 @@
 package com.hosting.rest.api.services.User.UserHost;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
-import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -14,24 +16,19 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.2
+ * @version v1.0.3
  * @apiNote Servicio que gestiona las acciones de un usuario host.
  *
  */
 @Service
-@Slf4j
 public class IUserHostServiceImpl implements IUserHostService {
 
 	@PersistenceContext
@@ -50,31 +47,26 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * @param userId
 	 * @param userHostDni
 	 * @param userHostDirection
+	 * 
+	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Transactional
 	@Override
 	public UserHostModel upgradeUserToUserHost(final Integer userId, final String userHostDni,
 			final String userHostDirection) {
+		// Validar id del usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id del usuario [ " + userId + " ] a añadir no es válido.");
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id del usuario [ " + userId + " ] a añadir no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] a añadir no es válido.");
-		}
+		// Validar DNI del usuario host
+		validateParam(isStringNotBlank(userHostDni), "El DNI introducido para el host no es válido.");
 
-		if (!isStringNotBlank(userHostDni)) {
-			log.error("El DNI introducido para el host no es válido.");
-			throw new IllegalArgumentsCustomException("El DNI introducido para el host no es válido.");
-		}
+		// Validar direccion del usuario host
+		validateParam(isStringNotBlank(userHostDirection), "La dirección introducida para el host no es válido.");
 
-		if (!isStringNotBlank(userHostDirection)) {
-			log.error("La dirección introducida para el host no es válido.");
-			throw new IllegalArgumentsCustomException("La dirección introducida para el host no es válido.");
-		}
-
-		if (!userRepo.existsById(userId)) {
-			log.error("El usuario a actualizar a host no existe.");
-			throw new NotFoundCustomException("El usuario a actualizar a host no existe.");
-		}
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId), "El usuario a actualizar a host no existe.");
 
 		UserModel oldUser = userRepo.findById(userId).get();
 
@@ -100,25 +92,23 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * 
 	 * @param userId
 	 * @param userHostToUpdate
+	 * 
+	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public UserHostModel updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate) {
+	public UserHostModel updateUserHostById(final Integer userId, final UserHostModel userHostToUpdate)
+			throws NumberFormatException {
+		// Validar el id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id del usuario [ " + userId + " ] no es válido.");
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id del usuario [ " + userId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] no es válido.");
-		}
-
-		if (!isNotNull(userHostToUpdate)) {
-			log.error("Alguno de los valores del usuario host a crear no es válido.");
-			throw new IllegalArgumentsCustomException("Alguno de los valores del usuario host a crear no es válido.");
-		}
+		// Validar el usuario pasado como parametro
+		validateParam(isNotNull(userHostToUpdate), "Alguno de los valores del usuario host a crear no es válido.");
 
 		// Comprobar que existe un usuario con el id pasado como parámetro.
-		if (!userRepo.existsById(userId)) {
-			log.error("No existe un usuario con id " + userId + " en la aplicación.");
-			throw new NotFoundCustomException("No existe un usuario con id " + userId + " en la aplicación.");
-		}
+		validateParamNotFound(userRepo.existsById(userId),
+				"No existe un usuario con id " + userId + " en la aplicación.");
 
 		UserHostModel originalUserHost = userHostRepo.findById(userId).get();
 
@@ -150,23 +140,18 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * Actualización de un usuario host a usuario starter (Un downgrade).
 	 * 
 	 * @param userId
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Transactional
 	@Override
-	public void downgradeUserHostToUser(final Integer userId) {
-
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id del usuario host [ " + userId + " ] a eliminar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id del usuario host [ " + userId + " ] a eliminar no es válido.");
-		}
+	public void downgradeUserHostToUser(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId),
+				"El id del usuario host [ " + userId + " ] a eliminar no es válido.");
 
 		// Comprobar que el usuario sea host
-
-		if (!isUserAHost(userId)) {
-			log.warn("El usuario con id [ " + userId + " ] no es usuario host.");
-			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no es usuario host.");
-		}
+		validateParamNotFound(isUserAHost(userId), "El usuario con id [ " + userId + " ] no es usuario host.");
 
 		UserHostModel userToDelete = userHostRepo.findById(userId).get();
 		int newUserId = (int) userRepo.count();
@@ -192,9 +177,15 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * Comprueba si el usuario con id <code>userId</code> es usuario host.
 	 * 
 	 * @param userId
+	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.s
 	 */
-	private Boolean isUserAHost(final Integer userId) {
+	private Boolean isUserAHost(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id del usuario no es válido.");
+
 		String getUserByIdQuery = "SELECT COUNT(um) > 0 " + "FROM UserModel um "
 				+ "WHERE TYPE(um) IN (UserHostModel) AND um.id = :userId";
 
@@ -207,6 +198,8 @@ public class IUserHostServiceImpl implements IUserHostService {
 
 	/**
 	 * Listado de todos los usuarios host de la aplicación.
+	 * 
+	 * @return
 	 */
 	@Override
 	public List<UserHostModel> findAll() {
