@@ -2,6 +2,8 @@ package com.hosting.rest.api.services.User.UserReview;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -13,23 +15,18 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.User.HostReviewModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserReview.IUserReviewRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.0
+ * @version v1.0.3
  * @apiNote Servicio que gestiona las valoraciones de un usuario de la
  *          aplicación.
  *
  */
-@Slf4j
 @Service
 public class UserReviewServiceImpl implements IUserReviewService {
 
@@ -51,17 +48,12 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	 */
 	@Override
 	public HostReviewModel addNewUserReview(final HostReviewModel newUserReview) {
-		if (!isNotNull(newUserReview)) {
-			log.error("Los datos introducidos para el nuevo usuario no son válidos.");
-			throw new IllegalArgumentsCustomException("Los datos introducidos para el nuevo usuario no son válidos.");
-		}
+		// Validar valoracion pasada como parametro
+		validateParam(isNotNull(newUserReview), "Los datos introducidos para el nuevo usuario no son válidos.");
 
-		boolean existsUserReview = userReviewRepo.findById(newUserReview.getId()).get() != null;
-
-		if (existsUserReview) {
-			log.error("Ya existe una valoración para el usuario.");
-			throw new IllegalArgumentsCustomException("Ya existe una valoración para el usuario.");
-		}
+		// Comprobar si existe la valoracion
+		validateParamNotFound(!userReviewRepo.existsById(newUserReview.getId()),
+				"Ya existe una valoración para el usuario.");
 
 		return userReviewRepo.save(newUserReview);
 	}
@@ -73,26 +65,24 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	 * @param userReviewToUpdate
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Transactional
 	@Override
-	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate) {
-
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id del usuario [ " + userId + " ] introducido no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario [ " + userId + " ] introducido no es válido.");
-		}
+	public HostReviewModel updateUserReview(final Integer userId, final HostReviewModel userReviewToUpdate)
+			throws NumberFormatException {
+		// Validar id del usuario
+		validateParam(isIntegerValidAndPositive(userId),
+				"El id del usuario [ " + userId + " ] introducido no es válido.");
 
 		HostReviewModel originalHostReview = userReviewRepo.findById(userId).get();
 
-		if (!isNotNull(originalHostReview)) {
-			log.error("La valoración a actualizar los datos no existe.");
-			throw new NotFoundCustomException("La valoración a actualizar los datos no existe.");
-		}
+		// Validar valoracion original
+		validateParam(isNotNull(originalHostReview), "La valoración a actualizar los datos no existe.");
 
-		if (!userRepo.existsById(userId)) {
-			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
-		}
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId), "El usuario con id [ " + userId + " ] no existe.");
 
 		// Contenido de la review
 		originalHostReview.setContent(userReviewToUpdate.getContent());
@@ -108,18 +98,17 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	 * 
 	 * @param userId
 	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
+	 * 
 	 */
 	@Override
-	public void deleteUserReview(final Integer userId) {
-		// TODO: Comprobar id valido
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario [ " + userId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
+	public void deleteUserReview(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario.
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 
-		if (!userRepo.existsById(userId)) {
-			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] a borrar su valoración no existe.");
-		}
+		// Comprobar si existe el usuario.
+		validateParamNotFound(userRepo.existsById(userId),
+				"El usuario con id [ " + userId + " ] a borrar su valoración no existe.");
 
 		userReviewRepo.deleteById(userId);
 	}
@@ -130,14 +119,17 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	 * @param userId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public List<HostReviewModel> findByUserId(final Integer userId) {
+	public List<HostReviewModel> findByUserId(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario [ " + userId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId),
+				"El usuario con id [ " + userId + " ] a borrar su valoración no existe.");
 
 		String findByUserIdQuery = "SELECT hr " + " FROM HostReviewModel hr " + " INNER JOIN hr.idUserA hu "
 				+ " WHERE hu.id = :userId";
