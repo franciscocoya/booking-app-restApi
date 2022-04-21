@@ -3,6 +3,8 @@ package com.hosting.rest.api.services.Accomodation.AccomodationReview;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -13,14 +15,10 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationReview.IAccomodationReviewRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -31,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
  * 
  **/
 @Service
-@Slf4j
 public class AccomodationReviewServiceImpl implements IAccomodationReviewService {
 
 	@PersistenceContext
@@ -56,11 +53,9 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public AccomodationReviewModel addNewAccomodationReview(final AccomodationReviewModel accomodationReviewToAdd) {
 
-		if (!isNotNull(accomodationReviewToAdd)) {
-			log.error("Los datos introducidos para la creación de la valoración no son válidos.");
-			throw new IllegalArgumentsCustomException(
-					"Los datos introducidos para la creación de la valoración no son válidos.");
-		}
+		// Validar valoracion alojamiento pasada como parámetro
+		validateParam(isNotNull(accomodationReviewToAdd),
+				"Los datos introducidos para la creación de la valoración no son válidos.");
 
 		return accomodationReviewRepo.save(accomodationReviewToAdd);
 	}
@@ -74,37 +69,31 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 * 
 	 * @return
 	 * 
-	 * @throws NumberFormatException Si el id de la valoración del alojamiento no
-	 *                               es un número.
+	 * @throws NumberFormatException Si el id de la valoración del alojamiento no es
+	 *                               un número.
 	 */
 	@Override
 	public AccomodationReviewModel udpateAccomodationReview(final Integer accomodationReviewId,
 			final AccomodationReviewModel accomodationToUpdate) throws NumberFormatException {
 
-		if (!isIntegerValidAndPositive(accomodationReviewId)) {
-			log.error("El id de la valoración " + accomodationReviewId + " no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de la valoración " + accomodationReviewId + " no es válido.");
-		}
+		// Validar id de valoracion
+		validateParam(isIntegerValidAndPositive(accomodationReviewId),
+				"El id de la valoración " + accomodationReviewId + " no es válido.");
 
-		if (!isNotNull(accomodationToUpdate)) {
-			log.error("Alguno de los datos introducidos para la valoración del alojamiento no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los datos introducidos para la valoración del alojamiento no es válido.");
-		}
+		// Validar valoracion alojamiento pasada como parametro
+		validateParam(isNotNull(accomodationToUpdate),
+				"Alguno de los datos introducidos para la valoración del alojamiento no es válido.");
 
 		// Comprobar si existe la valoracion
-		if (!accomodationReviewRepo.existsById(accomodationReviewId)) {
-			log.error("No existe una valoración de alojamiento con id " + accomodationReviewId);
-			throw new NotFoundCustomException("No existe una valoración de alojamiento con id " + accomodationReviewId);
-		}
+		validateParamNotFound(accomodationReviewRepo.existsById(accomodationReviewId),
+				"No existe una valoración de alojamiento con id " + accomodationReviewId);
 
 		// Actualizar contenido y estrellas de la valoración
 		AccomodationReviewModel originalAccomodationReview = accomodationReviewRepo.getById(accomodationReviewId);
-		
+
 		originalAccomodationReview.setContent(accomodationToUpdate.getContent());
 		originalAccomodationReview.setStars(accomodationToUpdate.getStars());
-		
+
 		return accomodationReviewRepo.save(originalAccomodationReview);
 	}
 
@@ -119,16 +108,13 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 */
 	@Override
 	public void deleteAccomodationReviewById(final Integer accomodationReviewId) throws NumberFormatException {
-		if (!isIntegerValidAndPositive(accomodationReviewId)) {
-			log.error("El número de registro [ " + accomodationReviewId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
-		}
+		// Validar id de la valoración del alojamiento
+		validateParam(isIntegerValidAndPositive(accomodationReviewId),
+				"El número de registro [ " + accomodationReviewId + " ] no es válido.");
 
-		if (!accomodationReviewRepo.existsById(accomodationReviewId)) {
-			log.error("No existe la valoración de alojamiento con id " + accomodationReviewId);
-			throw new NotFoundCustomException("No existe la valoración de alojamiento con id " + accomodationReviewId);
-		}
+		// Comprobar si existe la valoracion del alojamiento
+		validateParamNotFound(accomodationReviewRepo.existsById(accomodationReviewId),
+				"No existe la valoración de alojamiento con id " + accomodationReviewId);
 
 		accomodationReviewRepo.deleteById(accomodationReviewId);
 	}
@@ -143,16 +129,13 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 */
 	@Override
 	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber) {
-		if (!isStringNotBlank(regNumber)) {
-			log.error("El número de registro [ " + regNumber + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
-		}
+
+		// Validar número de registro del alojamiento
+		validateParam(isStringNotBlank(regNumber), "El número de registro [ " + regNumber + " ] no es válido.");
 
 		// Comprobar si existe el alojamiento
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe el alojamiento con número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe el alojamiento con número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe el alojamiento con número de registro " + regNumber);
 
 		String findByAccomodationIdQuery = "SELECT ar "
 				+ "FROM AccomodationReviewModel ar INNER JOIN ar.idAccomodation ac "
@@ -173,14 +156,17 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 * @param accomodationReviewId
 	 * 
 	 * @return
+	 * 
+	 * @throw NumberFormatException Si el id de la valoracion del alojamiento no es
+	 *        un número.
 	 */
 	@Override
-	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId) {
-		if (!isIntegerValidAndPositive(accomodationReviewId)) {
-			log.error("El número de registro [ " + accomodationReviewId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El número de registro [ " + accomodationReviewId + " ] no es válido.");
-		}
+	public AccomodationReviewModel findAccomodationById(final Integer accomodationReviewId)
+			throws NumberFormatException {
+
+		// Validar id de la valoracion
+		validateParam(isIntegerValidAndPositive(accomodationReviewId),
+				"El número de registro [ " + accomodationReviewId + " ] no es válido.");
 
 		return accomodationReviewRepo.findById(accomodationReviewId).get();
 	}
@@ -198,15 +184,11 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	@Override
 	public List<AccomodationReviewModel> findByUserId(final Integer userId) throws NumberFormatException {
 
-		if (!isIntegerValidAndPositive(userId)) {
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
+		// Validar id del usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 
 		// Comprobar si existe el usuario
-		if (!userRepo.existsById(userId)) {
-			log.error("No existe un usuario con id " + userId);
-			throw new NotFoundCustomException("No existe un usuario con id " + userId);
-		}
+		validateParamNotFound(userRepo.existsById(userId), "No existe un usuario con id " + userId);
 
 		String findAccomodationByUserIdQuery = "SELECT arm "
 				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idUser u " + "WHERE u.id = :userId";
@@ -229,15 +211,12 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 */
 	@Override
 	public Double getAccomodationReviewAverageStars(final String regNumber) {
-		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
-		}
+		// Validar número de registro de alojamiento.
+		validateParam(isStringNotBlank(regNumber), "El número de registro [ " + regNumber + " ] no es válido.");
 
 		// Comprobar si existe el alojamiento
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe el alojamiento con número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe el alojamiento con número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe el alojamiento con número de registro " + regNumber);
 
 		String getAccomodationReviewAverageStars = "SELECT AVG(arm.stars) "
 				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idAccomodation ac "
@@ -262,15 +241,13 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 */
 	@Override
 	public List<AccomodationReviewModel> findLatestAccomodationReviews(final String regNumber) {
-		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalArgumentsCustomException("El número de registro [ " + regNumber + " ] no es válido.");
-		}
+
+		// Validar número de registro de alojamiento
+		validateParam(isStringNotBlank(regNumber), "El número de registro [ " + regNumber + " ] no es válido.");
 
 		// Comprobar si existe el alojamiento
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe el alojamiento con número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe el alojamiento con número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe el alojamiento con número de registro " + regNumber);
 
 		String findLasAccomodationReviewsQuery = "SELECT arm "
 				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idAccomodation ac " + "WHERE ac.id = :regNumber "
