@@ -8,8 +8,7 @@ import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageNumber;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageSize;
-import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
-import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.*;
 
 import java.math.BigDecimal;
 import java.util.List;

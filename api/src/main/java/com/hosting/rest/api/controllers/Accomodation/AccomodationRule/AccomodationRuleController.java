@@ -3,6 +3,7 @@ package com.hosting.rest.api.controllers.Accomodation.AccomodationRule;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,18 +17,24 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationRuleModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationRule.AccomodationRuleServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/accomodations/rules")
+@Slf4j
 public class AccomodationRuleController {
 
 	@Autowired
 	private AccomodationRuleServiceImpl accomodationRuleService;
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
-	public AccomodationRuleModel addNewAccomodationRule(@RequestBody final AccomodationRuleModel accomodationRuleToAdd) {
+	public AccomodationRuleModel addNewAccomodationRule(
+			@RequestBody final AccomodationRuleModel accomodationRuleToAdd) {
 		return accomodationRuleService.addNewAccomodationRule(accomodationRuleToAdd);
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PutMapping("{accomodationRuleId}")
 	public void updateAccomodationRule(@PathVariable(value = "accomodationRuleId") final String accomodationRuleId,
 			@RequestBody final AccomodationRuleModel accomodationRuleToUpdate) {
@@ -37,12 +44,14 @@ public class AccomodationRuleController {
 					accomodationRuleToUpdate);
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 		}
 
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{accomodationRuleId}")
 	public void deleteAccomodationRuleById(
 			@PathVariable(value = "accomodationRuleId") final String accomodationRuleId) {
@@ -50,11 +59,13 @@ public class AccomodationRuleController {
 			accomodationRuleService.deleteAccomodationRule(Integer.parseInt(accomodationRuleId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 		}
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{accomodationRuleId}")
 	public AccomodationRuleModel findById(@PathVariable(value = "accomodationRuleId") final String accomodationRuleId) {
 		AccomodationRuleModel accomodationRuleToReturn = null;
@@ -63,6 +74,7 @@ public class AccomodationRuleController {
 			accomodationRuleToReturn = accomodationRuleService.findById(Integer.parseInt(accomodationRuleId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es un número.");
 		}
@@ -70,6 +82,7 @@ public class AccomodationRuleController {
 		return accomodationRuleToReturn;
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{accomodationRegNumber}/all")
 	public List<AccomodationRuleModel> findByAccomodationRegNumber(
 			@PathVariable(value = "accomodationRegNumber") String regNumber) {
