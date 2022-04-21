@@ -23,7 +23,7 @@ import com.hosting.rest.api.repositories.Plan.PlanFeature.IPlanFeatureRepository
 /**
  * 
  * @author Francisco Coya Abajo
- * @version v1.0.1
+ * @version v1.0.3
  * @apiNote Controlador para gestionar las acciones de las carácterísticas de un
  *          plan de subscripción.
  * 

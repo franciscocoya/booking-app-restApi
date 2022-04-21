@@ -2,6 +2,8 @@ package com.hosting.rest.api.services.Plan.PlanSubscription;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -14,23 +16,18 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Plan.PlanSubscriptionModel;
 import com.hosting.rest.api.repositories.Plan.PlanSubscription.IPlanSubscriptionRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.2
+ * @version v1.0.3
  * @apiNote Servicio que gestiona las subscripciones usuario - plan.
  *
  */
 @Service
-@Slf4j
 public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 
 	@PersistenceContext
@@ -50,29 +47,19 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 */
 	@Override
 	public PlanSubscriptionModel addNewPlanSubscription(final PlanSubscriptionModel planSubscriptionToAdd) {
-		if (!isNotNull(planSubscriptionToAdd)) {
-			log.error("Alguno de los valores de la subscripción del plan no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la subscripción del plan no es válido.");
-		}
+		// Validar subscripción pasada como parámetro.
+		validateParam(isNotNull(planSubscriptionToAdd),
+				"Alguno de los valores de la subscripción del plan no es válido.");
 
 		Integer planSubscriptionUserHostId = planSubscriptionToAdd.getPlanSubscriptionUserHostId().getIdUserHost();
 
 		// Sólo los usuarios host están suscritos a un plan
-		if (!isUserHost(planSubscriptionUserHostId)) {
-			log.error("El usuario con id [ " + planSubscriptionUserHostId
-					+ " ] no es host. Sólamente los usuarios host pueden estar suscritos a un plan");
-			throw new IllegalArgumentsCustomException("El usuario con id [ " + planSubscriptionUserHostId
-					+ " ] no es host. Sólamente los usuarios host pueden estar suscritos a un plan");
-		}
+		validateParam(isUserHost(planSubscriptionUserHostId), "El usuario con id [ " + planSubscriptionUserHostId);
 
 		// Comprobar que no existe el plan de subscriptción a añadir. Para ello,
 		// un usuario no puede tener asociado más de un plan.
-		if (existsPlanSubscriptionByUserHostId(planSubscriptionUserHostId)) {
-			log.error("El usuario [ " + planSubscriptionUserHostId + " ] ya tiene asociado un plan de subscripción.");
-			throw new IllegalArgumentsCustomException(
-					"El usuario [ " + planSubscriptionUserHostId + " ] ya tiene asociado un plan de subscripción.");
-		}
+		validateParamNotFound(!existsPlanSubscriptionByUserHostId(planSubscriptionUserHostId),
+				"El usuario [ " + planSubscriptionUserHostId + " ] ya tiene asociado un plan de subscripción.");
 
 		return planSubscriptionRepo.save(planSubscriptionToAdd);
 	}
@@ -81,9 +68,16 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 * Comprueba que un usuario con id <code>userHostId</code> es un usuario host.
 	 * 
 	 * @param userHostId
+	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del usuario host no es un número.
 	 */
-	private boolean isUserHost(final Integer userHostId) {
+	private boolean isUserHost(final Integer userHostId) throws NumberFormatException {
+
+		validateParam(isIntegerValidAndPositive(userHostId),
+				"El id del usuario host [ " + userHostId + " ] no es válido.");
+
 		String isUserHostQuery = "SELECT COUNT(uhm) > 0 FROM UserHostModel uhm WHERE uhm.id = :userHostId";
 
 		TypedQuery<Boolean> isUserHostResult = em.createQuery(isUserHostQuery, Boolean.class);
@@ -99,8 +93,10 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 * 
 	 * @param userHostId
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del usuario host no es un número.
 	 */
-	private boolean existsPlanSubscriptionByUserHostId(final Integer userHostId) {
+	private boolean existsPlanSubscriptionByUserHostId(final Integer userHostId) throws NumberFormatException {
 		String existsPlanSubscriptionByUserHostIdQuery = "SELECT COUNT(psm) > 0 " + "FROM PlanSubscriptionModel psm "
 				+ "WHERE psm.planSubscriptionUserHostId.idUserHost = :userHostId";
 
@@ -115,21 +111,17 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 * Borrado de una subscripción a un plan para el usuario <code>userHostId</code>
 	 * 
 	 * @param userHostId
+	 * 
+	 * @throws NumberFormatException Si el id del usuario host no es un número.
 	 */
 	@Transactional
 	@Override
-	public void deletePlanSubscriptionByUserHostId(final Integer userHostId) {
-		if (!isIntegerValidAndPositive(userHostId)) {
-			log.error("El id del usuario host no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario host no es válido.");
-		}
+	public void deletePlanSubscriptionByUserHostId(final Integer userHostId) throws NumberFormatException {
+		// Validar is del usuario host
+		validateParam(isIntegerValidAndPositive(userHostId), "El id del usuario host no es válido.");
 
-		boolean existsPlanSubscription = getPlanSubscriptionByUserHostId(userHostId) != null;
-
-		if (!existsPlanSubscription) {
-			log.error("La subscripción al plan ya existe.");
-			throw new IllegalArgumentsCustomException("La subscripción al plan ya existe.");
-		}
+		// Comprobar si existe la subscripción pasada como parámetro.
+		validateParamNotFound(existsPlanSubscriptionByUserHostId(userHostId), "La subscripción al plan ya existe.");
 
 		String deletePlanSubscriptionByUserHostIdQuery = "DELETE FROM PlanSubscriptionModel psm "
 				+ "WHERE psm.planSubscriptionUserHostId.idUserHost = :userHostId";
@@ -145,19 +137,19 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 * Obtención de la subscripción del usuario host con id <code>userHostId</code>.
 	 * 
 	 * @param userHostId
+	 * 
+	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del usuario host no es un número.
 	 */
 	@Override
-	public PlanSubscriptionModel getPlanSubscriptionByUserHostId(final Integer userHostId) {
-		if (!isIntegerValidAndPositive(userHostId)) {
-			log.error("El id del usuario host no es válido.");
-			throw new IllegalArgumentsCustomException("El id del usuario host no es válido.");
-		}
+	public PlanSubscriptionModel getPlanSubscriptionByUserHostId(final Integer userHostId)
+			throws NumberFormatException {
+		// Validar el id del usuario host
+		validateParam(isIntegerValidAndPositive(userHostId), "El id del usuario host no es válido.");
 
 		// Comprobar que el usuario host existe
-		if (!userHostRepo.existsById(userHostId)) {
-			log.error("No existe un usuario con id " + userHostId);
-			throw new NotFoundCustomException("No existe un usuario con id " + userHostId);
-		}
+		validateParamNotFound(userHostRepo.existsById(userHostId), "No existe un usuario con id " + userHostId);
 
 		String getPlanSubscriptionByUserHostIdQuery = "SELECT psm " + "FROM PlanSubscriptionModel psm "
 				+ "WHERE psm.planSubscriptionUserHostId.idUserHost = :userHostId";
@@ -178,11 +170,9 @@ public class PlanSubscriptionServiceImpl implements IPlanSubscriptionService {
 	 * @return
 	 */
 	@Override
-	public List<PlanSubscriptionModel> findAllByPlanId(final Integer planId) {
-		if (!isIntegerValidAndPositive(planId)) {
-			log.error("El id del plan [ " + planId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id del plan [ " + planId + " ] no es válido.");
-		}
+	public List<PlanSubscriptionModel> findAllByPlanId(final Integer planId) throws NumberFormatException{
+		// Validar id del plan
+		validateParam(isIntegerValidAndPositive(planId), "El id del plan [ " + planId + " ] no es válido.");
 
 		String getPlanSubscriptionByUserHostIdQuery = "SELECT psm " + "FROM PlanSubscriptionModel psm "
 				+ "WHERE psm.planSubscriptionUserHostId.idPlan = :idPlan";
