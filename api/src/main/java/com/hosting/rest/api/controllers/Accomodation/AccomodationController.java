@@ -62,6 +62,8 @@ public class AccomodationController {
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores parámetros pasados para listar los alojamientos no es un número. ", nfe);
 		}
+		
+		accomodations.getContent().get(0).getIdUserHost().getId();
 
 		return accomodations;
 	}

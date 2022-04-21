@@ -3,6 +3,7 @@ package com.hosting.rest.api.controllers.Payment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,13 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.3
+ * @apiNote Controlador de los pagos realizados en la aplicación.
+ *
+ */
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
@@ -22,6 +30,7 @@ public class PaymentController {
 	@Autowired
 	private PaymentServiceImpl paymentService;
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
 	public PaymentModel addNewPaymentMethod(@RequestBody final PaymentModel paymentModel) {
 		if (paymentModel == null) {
@@ -31,6 +40,7 @@ public class PaymentController {
 		return paymentService.addNewPayment(paymentModel);
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{paymentId}")
 	public void removePaymentMethod(@PathVariable(value = "paymentId") final String paymentId) {
 
@@ -41,14 +51,15 @@ public class PaymentController {
 			throw new IllegalArgumentsCustomException(
 					"El id del método de pago [ " + paymentId + " ] no es un número.");
 		}
-
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public List<PaymentModel> listAllPaymentMethods() {
 		return paymentService.findAllPayments();
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{bookingId}")
 	public PaymentModel getPaymentMethodFromBooking(@PathVariable(value = "bookingId") final String bookingId) {
 		PaymentModel paymentToReturn = null;

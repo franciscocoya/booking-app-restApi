@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -61,7 +60,7 @@ public class AccomodationModel implements Serializable {
 	@JoinColumn(name = "ID_ACC_LOCATION")
 	private AccomodationLocationModel idAccomodationLocation;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USER_OWNER")
 	private UserHostModel idUserHost;
 
