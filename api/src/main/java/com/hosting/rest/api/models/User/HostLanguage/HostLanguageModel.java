@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "HOST_LANGUAGE")
 public class HostLanguageModel implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3056418649779554220L;
+
 	@EmbeddedId
 	private HostLanguageLanguageId idHostLanguage;
 	

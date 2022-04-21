@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "APP_USER")
 public class UserModel implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9181598620645816069L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

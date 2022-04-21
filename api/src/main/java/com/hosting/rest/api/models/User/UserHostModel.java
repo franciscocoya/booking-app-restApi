@@ -1,7 +1,5 @@
 package com.hosting.rest.api.models.User;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -21,9 +19,9 @@ import lombok.Setter;
 @Table(name = "USER_HOST")
 @PrimaryKeyJoinColumn(name = "ID")
 @DiscriminatorValue("H")
-public class UserHostModel extends UserModel implements Serializable {
+public class UserHostModel extends UserModel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4779973744142659808L;
 
 	@Column(name = "DNI")
 	private String dni;

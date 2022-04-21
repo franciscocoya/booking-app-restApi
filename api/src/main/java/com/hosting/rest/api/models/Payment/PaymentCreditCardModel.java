@@ -25,6 +25,8 @@ import lombok.Setter;
 @Table( name = "PAYMENT_CREDIT_CARD" )
 public class PaymentCreditCardModel extends PaymentModel{
 
-    @Column(name = "CARD_NUMBER")
+    private static final long serialVersionUID = 7871116682295048777L;
+    
+	@Column(name = "CARD_NUMBER")
     private String cardNumber;
 }

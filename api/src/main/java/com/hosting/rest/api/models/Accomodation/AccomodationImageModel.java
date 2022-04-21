@@ -1,6 +1,8 @@
 package com.hosting.rest.api.models.Accomodation;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,10 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "ACCOMODATION_IMAGE")
-public class AccomodationImageModel {
+public class AccomodationImageModel implements Serializable{
+	
+	private static final long serialVersionUID = -1011564744279482111L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

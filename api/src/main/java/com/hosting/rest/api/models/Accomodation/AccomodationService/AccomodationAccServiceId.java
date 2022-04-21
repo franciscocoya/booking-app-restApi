@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AccomodationAccServiceId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4427770164602317764L;
 
 	@Column(name = "ID_ACC")
 	private String idAccomodation;

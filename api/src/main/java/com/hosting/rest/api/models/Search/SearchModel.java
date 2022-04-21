@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Search;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -20,7 +21,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "APP_SEARCH")
-public class SearchModel {
+public class SearchModel implements Serializable {
+
+	private static final long serialVersionUID = -7117461569077481959L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

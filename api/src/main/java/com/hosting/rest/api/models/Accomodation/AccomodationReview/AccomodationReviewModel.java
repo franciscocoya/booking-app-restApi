@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationReview;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -25,9 +26,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ACCOMODATION_REVIEW")
-public class AccomodationReviewModel {
+public class AccomodationReviewModel implements Serializable{
 
-    @Id
+    private static final long serialVersionUID = -9205381497279015883L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;

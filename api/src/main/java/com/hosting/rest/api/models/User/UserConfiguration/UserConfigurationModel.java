@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "USER_CONFIGURATION")
 public class UserConfigurationModel implements Serializable{
-
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 3521673215555991129L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")

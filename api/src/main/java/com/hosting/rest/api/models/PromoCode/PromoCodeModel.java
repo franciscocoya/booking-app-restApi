@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.PromoCode;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -26,7 +27,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "PROMO_CODE")
-public class PromoCodeModel {
+public class PromoCodeModel implements Serializable{
+
+	private static final long serialVersionUID = 5155189233228575480L;
 
 	@Id
 	@Column(name = "SERIAL_NUM")

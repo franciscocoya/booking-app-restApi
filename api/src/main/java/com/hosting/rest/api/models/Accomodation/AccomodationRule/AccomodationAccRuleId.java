@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 @Embeddable
 public class AccomodationAccRuleId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -18659259070359999L;
 
 	@Column(name = "ID_ACC")
 	private String idAccomodation;

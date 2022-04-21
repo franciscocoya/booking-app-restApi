@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "USER_REVIEW")
 public class HostReviewModel implements Serializable{
-
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = -7194919013981489779L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
