@@ -2,6 +2,8 @@ package com.hosting.rest.api.services.Accomodation.SavedAccomodation;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -12,13 +14,9 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.SavedAccomodation.SavedAccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.SavedAccomodation.ISavedAccomodationRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -29,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @Service
-@Slf4j
 public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 
 	@PersistenceContext
@@ -50,10 +47,12 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	 */
 	@Override
 	public SavedAccomodationModel addNewSavedAccomodation(final SavedAccomodationModel accomodationToSave) {
-		if (!isNotNull(accomodationToSave)) {
-			log.error("Alguno de los valores del alojamiento a guardar no es válido.");
-			throw new IllegalArgumentsCustomException("Alguno de los valores del alojamiento a guardar no es válido.");
-		}
+		// Validar alojamiento guardado pasado como parametro
+		validateParam(isNotNull(accomodationToSave), "Alguno de los valores del alojamiento a guardar no es válido.");
+
+		// Comprobar si existe
+		validateParamNotFound(!savedAccomodationRepo.existsById(accomodationToSave.getId()),
+				"Ya existe un alojamiento guardado con esos datos.");
 
 		return savedAccomodationRepo.save(accomodationToSave);
 	}
@@ -64,14 +63,16 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	 * @param savedAccomodationId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si es id del alojamiento guardado no es un
+	 *                               número.
 	 */
 	@Override
-	public SavedAccomodationModel getSavedAccomodationById(final Integer savedAccomodationId) {
+	public SavedAccomodationModel getSavedAccomodationById(final Integer savedAccomodationId)
+			throws NumberFormatException {
 
-		if (!isIntegerValidAndPositive(savedAccomodationId)) {
-			log.error("El id del alojamiento guardado no es válido.");
-			throw new IllegalArgumentsCustomException("El id del alojamiento guardado no es válido.");
-		}
+		// Validar id del alojamiento guardado
+		validateParam(isIntegerValidAndPositive(savedAccomodationId), "El id del alojamiento guardado no es válido.");
 
 		return savedAccomodationRepo.findById(savedAccomodationId).get();
 	}
@@ -86,17 +87,13 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	 */
 	@Override
 	public void deleteSavedAccomodation(final Integer savedAccomodationId) throws NumberFormatException {
+		// Validar id del alojamiento guardado.
+		validateParam(isIntegerValidAndPositive(savedAccomodationId),
+				"El id del alojamiento guardado [ " + savedAccomodationId + " ] no es válido.");
 
-		if (!isIntegerValidAndPositive(savedAccomodationId)) {
-			log.error("El id del alojamiento guardado no es válido.");
-			throw new IllegalArgumentsCustomException("El id del alojamiento guardado no es válido.");
-		}
-
-		// Comprobar si existe el alojamiento guardado.
-		if (!savedAccomodationRepo.existsById(savedAccomodationId)) {
-			log.error("No existe un alojamiento guardado con id " + savedAccomodationId);
-			throw new NotFoundCustomException("No existe un alojamiento guardado con id " + savedAccomodationId);
-		}
+		// Comprobar si existe el alojamiento guardado
+		validateParamNotFound(savedAccomodationRepo.existsById(savedAccomodationId),
+				"No existe un alojamiento guardado con id " + savedAccomodationId);
 
 		savedAccomodationRepo.deleteById(savedAccomodationId);
 	}
@@ -115,16 +112,11 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	public List<SavedAccomodationModel> findAllSavedAccomodationsByUserId(final Integer userId)
 			throws NumberFormatException {
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario " + userId + " no es válido.");
-			throw new IllegalArgumentsCustomException("El id de usuario " + userId + " no es válido.");
-		}
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario " + userId + " no es válido.");
 
 		// Comprobar si existe el usuario
-		if (!userRepo.existsById(userId)) {
-			log.error("No existe un usuario con id " + userId);
-			throw new NotFoundCustomException("No existe un usuario con id " + userId);
-		}
+		validateParamNotFound(userRepo.existsById(userId), "No existe un usuario con id " + userId);
 
 		String findAllSavedAccomodationsByUserIdQuery = "SELECT sam "
 				+ "FROM SavedAccomodationModel sam INNER JOIN sam.idUser u " + "WHERE u.id = :userId";
