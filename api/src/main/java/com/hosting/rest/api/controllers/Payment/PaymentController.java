@@ -16,6 +16,8 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author Francisco Coya
@@ -25,6 +27,7 @@ import com.hosting.rest.api.services.Payment.PaymentServiceImpl;
  */
 @RestController
 @RequestMapping("/payments")
+@Slf4j
 public class PaymentController {
 
 	@Autowired
@@ -34,6 +37,7 @@ public class PaymentController {
 	@PostMapping("new")
 	public PaymentModel addNewPaymentMethod(@RequestBody final PaymentModel paymentModel) {
 		if (paymentModel == null) {
+			log.error("Los datos para el método de pago a crear no son válidos.");
 			throw new IllegalArgumentsCustomException("Los datos para el método de pago a crear no son válidos.");
 		}
 
@@ -48,6 +52,7 @@ public class PaymentController {
 			paymentService.removePaymentById(Integer.parseInt(paymentId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id del método de pago [ " + paymentId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException(
 					"El id del método de pago [ " + paymentId + " ] no es un número.");
 		}
@@ -68,6 +73,7 @@ public class PaymentController {
 			paymentToReturn = paymentService.findByBookingId(Integer.parseInt(bookingId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la reserva [ " + bookingId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException("El id de la reserva [ " + bookingId + " ] no es un número.");
 		}
 
