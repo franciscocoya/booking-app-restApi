@@ -4,11 +4,18 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
 @Embeddable
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class AccomodationAccRuleId implements Serializable {
 
 	private static final long serialVersionUID = -18659259070359999L;
@@ -16,6 +23,7 @@ public class AccomodationAccRuleId implements Serializable {
 	@Column(name = "ID_ACC")
 	private String idAccomodation;
 
-	@Column(name = "ID_ACC_RULE")
-	private Integer idAccomodationRule;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_ACC_RULE")
+	private AccomodationRuleModel idAccomodationRule;
 }

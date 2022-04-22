@@ -3,6 +3,7 @@ package com.hosting.rest.api.models.Accomodation;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +11,16 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationAccImageModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
+import com.hosting.rest.api.models.PromoCode.PromoCodeAccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 
 import lombok.AllArgsConstructor;
@@ -59,6 +65,18 @@ public class AccomodationModel implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "ID_ACC_LOCATION")
 	private AccomodationLocationModel idAccomodationLocation;
+
+	@OneToMany(mappedBy = "accomodationAccImageId.idAccomodation", fetch = FetchType.EAGER)
+	private Set<AccomodationAccImageModel> accomodationImages;
+
+	@OneToMany(mappedBy = "accomodationAccRuleId.idAccomodation", fetch = FetchType.EAGER)
+	private Set<AccomodationAccRuleModel> accomodationRules;
+
+	@OneToMany(mappedBy = "accomodationAccServiceId.idAccomodation", fetch = FetchType.EAGER)
+	private Set<AccomodationAccServiceModel> accomodationServices;
+
+	@OneToMany(mappedBy = "promoCodeAccomodationId.idAccomodation", fetch = FetchType.EAGER)
+	private Set<PromoCodeAccomodationModel> promoCodes;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USER_OWNER")

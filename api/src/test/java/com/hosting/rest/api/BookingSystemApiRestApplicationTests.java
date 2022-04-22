@@ -1,22 +1,10 @@
 package com.hosting.rest.api;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.hosting.rest.api.controllers.User.UserController;
-import com.hosting.rest.api.models.User.UserModel;
 
 @SpringBootTest
 class BookingSystemApiRestApplicationTests {
-	
-	private static final int DEFAULT_SERVER_PORT = 8085;
-	private static final String DEFAULT_URI_HEAD = "http://localhost:" + DEFAULT_SERVER_PORT + "/api/";
-	
-	@Autowired
-	private static UserController userController;
 
 	@Test
 	void testAddNewUser() {

@@ -1,5 +1,4 @@
-package com.hosting.rest.api.models.Accomodation;
-
+package com.hosting.rest.api.models.Accomodation.AccomodationImage;
 
 import java.io.Serializable;
 
@@ -12,25 +11,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name = "ACCOMODATION_IMAGE")
-public class AccomodationImageModel implements Serializable{
-	
+public class AccomodationImageModel implements Serializable {
+
 	private static final long serialVersionUID = -1011564744279482111L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+	@Column(name = "ID")
+	private int id;
 
-    @Column(name = "IMG_URL")
-    private String imageUrl;
+	@Column(name = "IMG_URL")
+	private String imageUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "REG_NUM")
-    private AccomodationModel accomodation;
-    
 }

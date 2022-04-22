@@ -8,6 +8,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+/**
+ * 
+ * @author Francisco Coya
+ * @version v1.0.1
+ *
+ */
 @Entity
 @Data
 @AllArgsConstructor
