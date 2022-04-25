@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorizationRequest implements Serializable{
+public class LoginRequest implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -3949612675729465017L;
+
 	@JsonProperty("email")
 	private String username;
 	

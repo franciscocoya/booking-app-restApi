@@ -19,9 +19,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
-import com.hosting.rest.api.mapper.UserDetailsMapper;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
+import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
 
 /**
  * 
@@ -160,6 +160,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		UserModel user = userRepo.findByEmail(emailToSearch).orElseThrow(
 				() -> new NotFoundCustomException("El usuario con email " + emailToSearch + " a cargar no existe."));
 
-		return UserDetailsMapper.build(user);
+		return UserDetailsImpl.build(user);
 	}
 }

@@ -1,5 +1,11 @@
 package com.hosting.rest.api.configuration.security;
 
+import static com.hosting.rest.api.Utils.Constants.API_LOGOUT_URL;
+import static com.hosting.rest.api.Utils.Constants.GRANTED_AUTH_PATH;
+import static com.hosting.rest.api.Utils.Constants.CORS_ALLOWED_ORIGINS_PATH;
+
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +19,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.hosting.rest.api.services.User.UserServiceImpl;
-
-import static com.hosting.rest.api.Utils.Constants.GRANTED_AUTH_PATH;
 
 @Configuration
 @EnableWebSecurity
@@ -25,32 +34,68 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserServiceImpl userService;
+	
+	@Autowired
+	private AuthEntryPoint authEntryPoint;
 
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService);
 	}
 
-	@Bean
-	public JwtAuthorizationFilter jwtAuthorizationFilterBean() {
-		return new JwtAuthorizationFilter();
-	}
-
 	@Override
 	protected void configure(final HttpSecurity httpSecurity) throws Exception {
-		
-		// Autorizar sólamente las rutas de auth (signin, signup, ...)
-		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
-				.csrf().disable().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
-				.anyRequest().authenticated();
 
-		// Filtros para usuarios autenticados
-		httpSecurity
-				.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()),
-						UsernamePasswordAuthenticationFilter.class)
-				.addFilterBefore(jwtAuthorizationFilterBean(), UsernamePasswordAuthenticationFilter.class)
-				.logout(logout -> logout.logoutUrl("/api/auth/logout").deleteCookies("JSESSIONID")
-						.invalidateHttpSession(true));
+		// Autorizar sólamente las rutas de auth (signin, signup, ...)
+
+		// and().csrf()
+//		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
+//				.csrf().disable().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
+//				.antMatchers("/accomodations/all").permitAll().anyRequest().authenticated();
+		
+		httpSecurity.cors().and().csrf().disable()
+	      .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
+	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+	      .authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
+	      .antMatchers("/accomodations/all").permitAll()
+	      .anyRequest().authenticated();
+
+		// Configuración de CORS
+		httpSecurity.addFilterBefore(new CorsFilter(corsConfigurationSource(CORS_ALLOWED_ORIGINS_PATH)),
+				AbstractPreAuthenticatedProcessingFilter.class);
+
+		// Filtro autenticación
+		httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		// Configuración logout
+		httpSecurity.logout(
+				logout -> logout.logoutUrl(API_LOGOUT_URL).deleteCookies("JSESSIONID").invalidateHttpSession(true));
+
+	}
+
+	/**
+	 * Configuración de CORS para la api.
+	 * 
+	 * @param corsOrigin
+	 * @return
+	 */
+	private CorsConfigurationSource corsConfigurationSource(final String corsOrigin) {
+		CorsConfiguration configuration = new CorsConfiguration();
+
+		configuration.setAllowedOrigins(Arrays.asList(corsOrigin));
+
+		configuration.applyPermitDefaultValues();
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+		source.registerCorsConfiguration("/**", configuration);
+
+		return source;
+	}
+
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
 	}
 
 	@Bean

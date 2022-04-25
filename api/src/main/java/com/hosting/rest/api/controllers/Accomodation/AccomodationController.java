@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * @apiNote Controlador de alojamientos.
  */
 @RestController
-@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = {"*"})
 @RequestMapping("/accomodations")
 @Slf4j
 public class AccomodationController {

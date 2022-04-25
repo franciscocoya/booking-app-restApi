@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends JpaRepository<UserModel, Integer> {
 
-	public Optional<UserModel> findByEmail(final String username);
+	public Optional<UserModel> findByEmail(final String email);
 }
