@@ -90,7 +90,7 @@ public class JwtUtils {
 	 * 
 	 * @return
 	 */
-	public static boolean validateJwtToken(final String authToken) {
+	public boolean validateJwtToken(final String authToken) {
 		try {
 			Jwts.parser().setSigningKey(SIGNING_KEY).parseClaimsJws(authToken);
 			return true;

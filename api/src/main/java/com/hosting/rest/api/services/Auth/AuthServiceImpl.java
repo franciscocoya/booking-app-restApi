@@ -94,7 +94,7 @@ public class AuthServiceImpl implements AuthService {
 		UserModel user = userRepo.findByEmail(emailToResetPassword).get();
 
 		// Comprobar si existe un usuario con el email
-		if (!isNotNull(user)) {
+		if (!userRepo.existsByEmail(emailToResetPassword)) {
 			return ResponseEntity.badRequest().body("No existe ningún usuario con el email " + emailToResetPassword);
 		}
 

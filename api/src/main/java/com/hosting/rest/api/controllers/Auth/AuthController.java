@@ -43,6 +43,9 @@ public class AuthController {
 
 	@Autowired
 	private AuthServiceImpl authService;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 
 	@PostMapping("signin")
 	public ResponseEntity<?> signIn(@Valid @RequestBody final LoginRequest loginRequest) {
@@ -72,14 +75,14 @@ public class AuthController {
 	}
 
 	@PostMapping("password/reset")
-	public ResponseEntity<?> resetPassword(@Valid @RequestParam final String emailToFind) {
+	public ResponseEntity<?> resetPassword(@RequestParam(name="email") final String emailToFind) {
 		return authService.resetPassword(emailToFind);
 	}
 	
 	@PostMapping("user/changePassword")
 	public ResponseEntity<?> changePassword(@RequestParam("token") final String resetToken){
 		// TODO:
-		JwtUtils.validateJwtToken(resetToken);
+		jwtUtils.validateJwtToken(resetToken);
 		return null;
 	}
 }
