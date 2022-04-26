@@ -65,4 +65,12 @@ public class UserModel implements Serializable {
 	@Column(name = "CREATED_AT")
 	@CreatedDate
 	private LocalDateTime createdAt;
+	
+	
+	public UserModel(final String name, final String surname, final String email, final String password) {
+		setName(name);
+		setSurname(surname);
+		setEmail(email);
+		setPass(password);
+	}
 }

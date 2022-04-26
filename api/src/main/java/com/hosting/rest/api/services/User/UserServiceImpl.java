@@ -40,17 +40,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Autowired
 	private IUserRepository userRepo;
 
-	@Override
-	public UserModel addNewUser(final UserModel userToAdd) {
-		// Validar el usuario pasado como parámetro
-		validateParam(isNotNull(userToAdd), "Alguna propiedad del usuario a crear falta o no es válida.");
-
-		// Comprobar si existe el usuario
-		validateParamNotFound(!userRepo.existsById(userToAdd.getId()), "Ya existe un usuario en la aplicación.");
-
-		return userRepo.save(userToAdd);
-	}
-
 	/**
 	 * @param userId
 	 * 
