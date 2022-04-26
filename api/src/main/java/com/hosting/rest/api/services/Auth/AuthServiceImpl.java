@@ -4,12 +4,21 @@ import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.models.Auth.ResetPasswordPayload;
+import com.hosting.rest.api.configuration.security.JwtUtils;
+import com.hosting.rest.api.models.Auth.ResetPasswordResponsePayload;
 import com.hosting.rest.api.models.Auth.SignUpRequest;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
@@ -29,6 +38,18 @@ public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private JavaMailSender emailSender;
+
+	@Value("${booking.api.contextPath}")
+	private String contextPath;
+
+	@Value("${booking.api.supportEmail}")
+	private String supportEmail;
 
 	/**
 	 * Crear un nuevo usuario con nombre, apellidos, email y contraseña.
@@ -64,36 +85,74 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public ResponseEntity<?> resetPassword(final Integer userId, final ResetPasswordPayload passwordPayload) {
+	public ResponseEntity<?> resetPassword(final String emailToResetPassword) {
 		// Validar nueva contraseña
-		if (!isStringNotBlank(passwordPayload.getOldPassword())) {
-			return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
+		if (!isStringNotBlank(emailToResetPassword)) {
+			return ResponseEntity.badRequest().body("Por favor, introduce el email.");
 		}
 
-		// Comprobar si existe el usuario
-		if (!userRepo.existsById(userId)) {
-			return ResponseEntity.badRequest().body("El usuario no existe.");
+		UserModel user = userRepo.findByEmail(emailToResetPassword).get();
+
+		// Comprobar si existe un usuario con el email
+		if (!isNotNull(user)) {
+			return ResponseEntity.badRequest().body("No existe ningún usuario con el email " + emailToResetPassword);
 		}
-		
-		UserModel userToUpdate = userRepo.findById(userId).get();
-		
-		String newPasswordEncoded = passwordEncoder.encode(passwordPayload.getNewPassword());
-		
-		// Comprobar si la contraseña actual es correcta
-		if (!passwordEncoder.matches(passwordPayload.getOldPassword(), userToUpdate.getPass())) {
-			return ResponseEntity.badRequest().body("La contraseña actual no es válida." + "\n" + passwordPayload.getOldPassword() + "\n" + userToUpdate.getPass());
-		}
-		
-		// Comprobar que las contraseñas coinciden
-		if (!passwordEncoder.matches(passwordPayload.getNewPasswordRepeated(), newPasswordEncoded)) {
-			return ResponseEntity.badRequest().body("La contraseñas no coinciden.");
-		}	
 
-		// Actualizar contraseña
-		userToUpdate.setPass(newPasswordEncoded);
+		// Credenciales del usuario
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPass()));
 
-		userRepo.save(userToUpdate);
+		// Generación del token
+		String resetToken = JwtUtils.generateToken(authentication);
 
-		return ResponseEntity.ok("Contraseña actualizada correctamente");
+		// Fecha de expiración del token
+		Date tokenExpiresAt = new Date(System.currentTimeMillis() + ResetPasswordResponsePayload.EXPIRATION_TIME);
+
+		// Enviar correo de recuperación al usuario.
+		emailSender.send(constructResetTokenEmail(resetToken, user, tokenExpiresAt));
+
+		return ResponseEntity.ok(new ResetPasswordResponsePayload(resetToken, tokenExpiresAt));
+	}
+
+	/**
+	 * Crea el enlace de recuperación de la contraseña.
+	 * 
+	 * @param locale
+	 * @param token
+	 * @param expiryDate
+	 * 
+	 * @return
+	 */
+	private SimpleMailMessage constructResetTokenEmail(final String token, final UserModel userTo,
+			final Date expiryDate) {
+
+		String url = contextPath + CHANGE_PASSWORD_URI + token;
+
+		String message = "Hola " + userTo.getName()
+				+ "\n\nHas solicitado un cambio de contraseña. A continuación, te enviamos un link de recuperación.\n\n";
+
+		return constructEmail("[LeonCamp support - No reply] Reset Password", message + " \r\n" + url,
+				userTo.getEmail());
+	}
+
+	/**
+	 * Crea un mensaje de correo electrónico a partir de los datos pasados como
+	 * parámetro.
+	 * 
+	 * @param subject
+	 * @param body
+	 * @param emailTo
+	 * 
+	 * @return
+	 */
+	private SimpleMailMessage constructEmail(final String subject, final String body, final String emailTo) {
+		SimpleMailMessage email = new SimpleMailMessage();
+
+		email.setSubject(subject);
+		email.setText(body);
+		email.setTo(emailTo);
+		email.setFrom(supportEmail);
+
+		return email;
 	}
 }
