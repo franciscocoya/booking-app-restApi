@@ -39,21 +39,6 @@ public class JwtUtils {
 	 * @return
 	 */
 	public static String generateToken(final Authentication authentication) {
-//		final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-//				.collect(Collectors.joining(","));
-//
-//		return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities)
-//				.signWith(SignatureAlgorithm.HS512, SIGNING_KEY).setIssuedAt(new Date(System.currentTimeMillis()))
-//				.setIssuer(ISSUER_TOKEN)
-//				.setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000)).compact();
-
-//		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-//
-//		return Jwts.builder().setSubject((userPrincipal.getUsername()))
-//				.setIssuedAt(new Date())
-//				.setExpiration(new Date((new Date()).getTime() + ACCESS_TOKEN_VALIDITY_SECONDS))
-//				.signWith(SignatureAlgorithm.HS256, SIGNING_KEY).compact();
-
 		final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
 
@@ -105,7 +90,7 @@ public class JwtUtils {
 	 * 
 	 * @return
 	 */
-	public boolean validateJwtToken(final String authToken) {
+	public static boolean validateJwtToken(final String authToken) {
 		try {
 			Jwts.parser().setSigningKey(SIGNING_KEY).parseClaimsJws(authToken);
 			return true;

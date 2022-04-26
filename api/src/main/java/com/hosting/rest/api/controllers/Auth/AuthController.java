@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.configuration.security.JwtUtils;
 import com.hosting.rest.api.models.Auth.JwtResponse;
 import com.hosting.rest.api.models.Auth.LoginRequest;
+import com.hosting.rest.api.models.Auth.SignUpRequest;
+import com.hosting.rest.api.services.Auth.AuthServiceImpl;
 import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
 
 /**
@@ -38,6 +41,9 @@ public class AuthController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	private AuthServiceImpl authService;
+
 	@PostMapping("signin")
 	public ResponseEntity<?> signIn(@Valid @RequestBody final LoginRequest loginRequest) {
 
@@ -53,12 +59,27 @@ public class AuthController {
 		String jwtToken = JwtUtils.generateToken(authentication);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		
+
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwtToken, userDetails.getId(), userDetails.getUsername(), roles));
+	}
 
-//		return ResponseEntity.ok(new JwtResponse(jwtToken));
+	@PostMapping("signup")
+	public ResponseEntity<?> signUp(@Valid @RequestBody final SignUpRequest signUpPayload) {
+		return authService.addNewUser(signUpPayload);
+	}
+
+	@PostMapping("password/reset")
+	public ResponseEntity<?> resetPassword(@Valid @RequestParam final String emailToFind) {
+		return authService.resetPassword(emailToFind);
+	}
+	
+	@PostMapping("user/changePassword")
+	public ResponseEntity<?> changePassword(@RequestParam("token") final String resetToken){
+		// TODO:
+		JwtUtils.validateJwtToken(resetToken);
+		return null;
 	}
 }

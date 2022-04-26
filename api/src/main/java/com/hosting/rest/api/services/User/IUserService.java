@@ -11,8 +11,6 @@ import com.hosting.rest.api.models.User.UserModel;
  **/
 public interface IUserService {
 
-	public UserModel addNewUser(final UserModel userToAdd);
-
 	public UserModel updateUser(final Integer userId, final UserModel userToUpdate);
 
 	public void deleteUserById(final Integer userId);
