@@ -8,7 +8,8 @@ import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.AppUtils.isValidGeographicCoordinate;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageNumber;
 import static com.hosting.rest.api.Utils.ServiceGlobalValidations.checkPageSize;
-import static com.hosting.rest.api.Utils.ServiceParamValidator.*;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
+import com.hosting.rest.api.repositories.User.IUserRepository;
 
 /**
  * 
@@ -43,6 +45,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
+	
+	@Autowired
+	private IUserRepository userRepo;
 
 	/**
 	 * Registro de un nuevo alojamiento dentro de la aplicación.
@@ -327,6 +332,28 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		accomodations.setMaxResults(maxNumberOfAccomodations);
 
 		return accomodations.getResultList();
+	}
+
+	/**
+	 * Listado de todos los alojamientos del usuario <code>userId</code>.
+	 * 
+	 * @param userId
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<AccomodationModel> findByUserId(final Integer userId) {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
+		
+		// Comprobar si el usuario existe
+		validateParam(userRepo.existsById(userId), "No existe ningún usuario con el id " + userId);
+		
+		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery("SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
+		
+		accomodationsByUserId.setParameter("userId", userId);
+		
+		return accomodationsByUserId.getResultList();
 	}
 
 }

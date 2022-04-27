@@ -144,5 +144,21 @@ public class AccomodationController {
 	public void removeAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		accomodationService.removeAccomodationById(regNumber);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("/user/{userId}")
+	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId){
+		List<AccomodationModel> accomodations = null;
+		
+		try {
+			accomodations = accomodationService.findByUserId(Integer.parseInt(userId));
+			
+		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario no es un número.");
+			throw new IllegalArgumentsCustomException("El id de usuario no es un número.");
+		}
+		
+		return accomodations;
+	}
 
 }

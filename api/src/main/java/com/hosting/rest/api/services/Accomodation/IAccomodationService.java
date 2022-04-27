@@ -49,4 +49,6 @@ public interface IAccomodationService {
 	public List<AccomodationModel> findByCategory(final String accomodationCategory);
 
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice);
+	
+	public List<AccomodationModel> findByUserId(final Integer userId);
 }
