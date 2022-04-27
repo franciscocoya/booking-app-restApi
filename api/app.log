@@ -17032,3 +17032,95 @@ java.lang.IllegalArgumentException: Parameter value [4] did not match expected t
 2022-04-27 17:39:37,314 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
 2022-04-27 17:39:37,319 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.934 seconds (JVM running for 34764.328)
 2022-04-27 17:39:37,320 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-27 17:39:41,106 INFO org.apache.catalina.core.ContainerBase.[Tomcat-6].[localhost].[/api] [http-nio-8085-exec-3] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-27 17:39:41,107 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-3] Initializing Servlet 'dispatcherServlet'
+2022-04-27 17:39:41,108 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-3] Completed initialization in 1 ms
+2022-04-27 17:41:27,314 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-157] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-27 17:41:27,315 INFO com.zaxxer.hikari.HikariDataSource [Thread-157] HikariPool-36 - Shutdown initiated...
+2022-04-27 17:41:27,320 INFO com.zaxxer.hikari.HikariDataSource [Thread-157] HikariPool-36 - Shutdown completed.
+2022-04-27 17:41:30,465 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 9960 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-27 17:41:30,466 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-27 17:41:30,756 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-27 17:41:30,882 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 126 ms. Found 18 JPA repository interfaces.
+2022-04-27 17:41:31,052 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-27 17:41:31,052 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-27 17:41:31,052 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-27 17:41:31,083 INFO org.apache.catalina.core.ContainerBase.[Tomcat-7].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-27 17:41:31,083 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 615 ms
+2022-04-27 17:41:31,148 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-27 17:41:31,208 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-27 17:41:31,217 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-37 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-27 17:41:31,217 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-37 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-27 17:41:31,217 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-37 - Starting...
+2022-04-27 17:41:31,221 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-37 - Start completed.
+2022-04-27 17:41:31,221 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-27 17:41:31,458 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-27 17:41:31,458 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-27 17:41:33,230 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-27 17:41:33,368 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-27 17:41:33,404 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-27 17:41:33,416 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.984 seconds (JVM running for 34880.427)
+2022-04-27 17:41:33,418 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-27 17:41:36,881 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-161] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-27 17:41:36,881 INFO com.zaxxer.hikari.HikariDataSource [Thread-161] HikariPool-37 - Shutdown initiated...
+2022-04-27 17:41:36,883 INFO com.zaxxer.hikari.HikariDataSource [Thread-161] HikariPool-37 - Shutdown completed.
+2022-04-27 17:41:37,024 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 9960 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-04-27 17:41:37,024 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-04-27 17:41:37,402 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-27 17:41:37,550 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 147 ms. Found 18 JPA repository interfaces.
+2022-04-27 17:41:37,905 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8085 (http)
+2022-04-27 17:41:37,907 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-04-27 17:41:37,907 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-27 17:41:37,960 INFO org.apache.catalina.core.ContainerBase.[Tomcat-7].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-04-27 17:41:37,960 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 934 ms
+2022-04-27 17:41:38,092 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-27 17:41:38,176 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-27 17:41:38,190 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-38 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-04-27 17:41:38,190 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-38 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-04-27 17:41:38,190 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-38 - Starting...
+2022-04-27 17:41:38,195 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-38 - Start completed.
+2022-04-27 17:41:38,195 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-04-27 17:41:38,500 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-27 17:41:38,501 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-27 17:41:39,748 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-04-27 17:41:39,841 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-04-27 17:41:39,866 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8085 (http) with context path '/api'
+2022-04-27 17:41:39,869 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.876 seconds (JVM running for 34886.881)
+2022-04-27 17:41:39,871 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-04-27 17:41:43,889 INFO org.apache.catalina.core.ContainerBase.[Tomcat-7].[localhost].[/api] [http-nio-8085-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-27 17:41:43,911 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-04-27 17:41:43,912 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8085-exec-2] Completed initialization in 1 ms
+2022-04-27 17:41:46,467 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8085-exec-3] No existe ningún usuario host con el id 2
+2022-04-27 17:41:46,469 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-3] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: No existe ningún usuario host con el id 2]
+2022-04-27 17:47:20,824 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-8] El id de usuario no es un número.
+2022-04-27 17:47:20,826 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-8] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:47:25,518 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-10] El id de usuario no es un número.
+2022-04-27 17:47:25,519 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-10] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:47:53,358 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-3] El id de usuario no es un número.
+2022-04-27 17:47:53,359 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-3] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:47:59,084 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-7] El id de usuario no es un número.
+2022-04-27 17:47:59,086 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-7] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:15,189 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-10] El id de usuario no es un número.
+2022-04-27 17:48:15,190 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-10] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:19,254 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-2] El id de usuario no es un número.
+2022-04-27 17:48:19,260 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-2] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:26,819 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-5] El id de usuario no es un número.
+2022-04-27 17:48:26,820 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-5] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:27,894 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-7] El id de usuario no es un número.
+2022-04-27 17:48:27,895 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-7] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:32,592 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-9] El id de usuario no es un número.
+2022-04-27 17:48:32,593 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-9] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:34,189 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-2] El id de usuario no es un número.
+2022-04-27 17:48:34,190 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-2] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:48:37,380 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-4] El id de usuario no es un número.
+2022-04-27 17:48:37,381 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-4] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:49:04,208 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-7] El id de usuario no es un número.
+2022-04-27 17:49:04,209 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-7] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:49:23,055 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-10] El id de usuario no es un número.
+2022-04-27 17:49:23,057 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-10] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:49:34,591 ERROR com.hosting.rest.api.controllers.Accomodation.AccomodationController [http-nio-8085-exec-3] El id de usuario no es un número.
+2022-04-27 17:49:34,592 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8085-exec-3] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id de usuario no es un número.]
+2022-04-27 17:51:36,263 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(596)-127.0.0.1] Application shutdown requested.
+2022-04-27 17:51:36,290 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(596)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-27 17:51:36,291 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(596)-127.0.0.1] HikariPool-38 - Shutdown initiated...
+2022-04-27 17:51:36,293 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(596)-127.0.0.1] HikariPool-38 - Shutdown completed.

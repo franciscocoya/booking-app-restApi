@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
-import com.hosting.rest.api.repositories.User.IUserRepository;
+import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	private IAccomodationRepository accomodationRepo;
 	
 	@Autowired
-	private IUserRepository userRepo;
+	private IUserHostRepository userRepo;
 
 	/**
 	 * Registro de un nuevo alojamiento dentro de la aplicación.
@@ -347,7 +347,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 		
 		// Comprobar si el usuario existe
-		validateParam(userRepo.existsById(userId), "No existe ningún usuario con el id " + userId);
+		validateParam(userRepo.existsById(userId), "No existe ningún usuario host con el id " + userId);
 		
 		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery("SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
 		
