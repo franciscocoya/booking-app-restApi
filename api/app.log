@@ -1194,3 +1194,71 @@ java.sql.SQLException: Access denied for user 'b2d05ed770ac98'@'ip-10-0-122-115.
 2022-05-01 10:18:20,036 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(2)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-01 10:18:20,038 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(2)-127.0.0.1] HikariPool-1 - Shutdown initiated...
 2022-05-01 10:18:20,043 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(2)-127.0.0.1] HikariPool-1 - Shutdown completed.
+2022-05-01 10:28:17,900 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Starting BookingSystemApiRestApplicationTests using Java 17.0.1 on Francisco-Coya with PID 15772 (started by KIKO in D:\PROYECTO DAW\rest_api\booking-app-restApi\api)
+2022-05-01 10:28:17,902 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] No active profile set, falling back to 1 default profile: "default"
+2022-05-01 10:28:19,114 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-01 10:28:19,292 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 160 ms. Found 18 JPA repository interfaces.
+2022-05-01 10:28:20,036 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-01 10:28:20,104 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-05-01 10:28:20,307 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-05-01 10:28:20,558 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-01 10:28:20,560 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-01 10:28:20,560 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-05-01 10:28:21,536 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-05-01 10:28:21,553 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-01 10:28:22,598 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-01 10:28:22,605 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-01 10:28:22,846 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-01 10:28:24,276 INFO org.springframework.security.web.access.channel.ChannelProcessingFilter [main] Validated configuration attributes
+2022-05-01 10:28:25,421 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
+2022-05-01 10:28:26,018 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Started BookingSystemApiRestApplicationTests in 8.456 seconds (JVM running for 9.483)
+2022-05-01 10:28:26,281 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-01 10:28:26,283 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-05-01 10:28:26,292 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-05-01 10:28:38,261 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.1 on Francisco-Coya with PID 22180 (D:\PROYECTO DAW\rest_api\booking-app-restApi\api\target\classes started by KIKO in D:\PROYECTO DAW\rest_api\booking-app-restApi\api)
+2022-05-01 10:28:38,263 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-05-01 10:28:38,301 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-01 10:28:38,301 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-01 10:28:38,943 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-01 10:28:39,042 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 91 ms. Found 18 JPA repository interfaces.
+2022-05-01 10:28:39,543 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2022-05-01 10:28:39,550 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-05-01 10:28:39,551 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-05-01 10:28:39,621 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-05-01 10:28:39,621 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1319 ms
+2022-05-01 10:28:39,732 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-01 10:28:39,813 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-01 10:28:39,851 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-05-01 10:28:39,974 INFO org.hibernate.annotations.common.Version [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-05-01 10:28:40,058 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-01 10:28:40,059 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-01 10:28:40,059 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2022-05-01 10:28:40,884 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2022-05-01 10:28:40,896 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-01 10:28:41,653 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-01 10:28:41,662 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-01 10:28:42,545 INFO org.springframework.security.web.access.channel.ChannelProcessingFilter [restartedMain] Validated configuration attributes
+2022-05-01 10:28:42,938 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-05-01 10:28:43,175 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-05-01 10:28:43,220 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-05-01 10:28:43,228 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 5.264 seconds (JVM running for 5.957)
+2022-05-01 10:29:29,144 INFO org.apache.coyote.http11.Http11Processor [http-nio-8080-exec-1] Error parsing HTTP request header
+ Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
+java.lang.IllegalArgumentException: Invalid character found in method name [0x160x030x010x000xf70x010x000x000xf30x030x03-C0xa10xd10xb8(0xb20xf10xd30xf30xea0x020x13d0x940x810xd40x120x1d^=0xa70x1a0xc3RG0xfcKf0x8d0x880xa1 ]. HTTP method names must be tokens
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:419)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:271)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:889)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1735)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-05-01 10:29:32,703 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [http-nio-8080-exec-4] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-01 10:29:32,704 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-4] Initializing Servlet 'dispatcherServlet'
+2022-05-01 10:29:32,705 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-4] Completed initialization in 1 ms
+2022-05-01 10:29:41,369 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(3)-127.0.0.1] Application shutdown requested.
+2022-05-01 10:29:41,394 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(3)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-01 10:29:41,397 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(3)-127.0.0.1] HikariPool-1 - Shutdown initiated...
+2022-05-01 10:29:41,401 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(3)-127.0.0.1] HikariPool-1 - Shutdown completed.

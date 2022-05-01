@@ -53,10 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.csrf().disable().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
 //				.antMatchers("/accomodations/all").permitAll().anyRequest().authenticated();
 		
-		httpSecurity.cors().and().csrf().disable()
-	      .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
-	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-	      .authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
+		httpSecurity.requiresChannel()
+	      .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+	      .requiresSecure().and().cors().and().csrf().disable()
+	      .exceptionHandling()
+	      .authenticationEntryPoint(authEntryPoint).and()
+	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	      .and().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
 	      .antMatchers("/accomodations/all", "/accomodations/reviews/**").permitAll()
 	      .anyRequest().authenticated();
 
