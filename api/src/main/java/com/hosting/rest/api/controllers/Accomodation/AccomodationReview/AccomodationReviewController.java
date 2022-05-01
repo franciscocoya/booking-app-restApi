@@ -102,7 +102,7 @@ public class AccomodationReviewController {
 		return userReviews;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}/stars")
 	public Double getAccomodationReviewStarsAverage(@PathVariable(value = "registerNumber") final String regNumber) {
 		return accomodationReviewService.getAccomodationReviewAverageStars(regNumber);

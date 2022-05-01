@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
 	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	      .authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
-	      .antMatchers("/accomodations/all").permitAll()
+	      .antMatchers("/accomodations/all", "/accomodations/reviews/**").permitAll()
 	      .anyRequest().authenticated();
 
 		// Configuración de CORS

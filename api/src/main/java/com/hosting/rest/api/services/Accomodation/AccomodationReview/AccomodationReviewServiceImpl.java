@@ -229,7 +229,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 
 		starsAverage.setParameter("regNumber", regNumber);
 
-		return Double.valueOf(starsAverage.getSingleResult());
+		return starsAverage.getSingleResult();
 	}
 
 	/**

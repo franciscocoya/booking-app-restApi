@@ -46,7 +46,7 @@ public class AccomodationController {
 		return accomodationService.addNewAccomodation(accomodationModel);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	//@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public Page<AccomodationModel> getAllAccomodationPaging(
 			@RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) final String pageNumber,
