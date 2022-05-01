@@ -13,7 +13,7 @@
 	<name>Booking system API Rest</name>
 	<description>API rest for management bookings app</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
