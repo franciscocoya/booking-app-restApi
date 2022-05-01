@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Plan;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -20,7 +21,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "APP_PLAN")
-public class PlanModel {
+public class PlanModel implements Serializable{
+
+	private static final long serialVersionUID = -944756623330853898L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

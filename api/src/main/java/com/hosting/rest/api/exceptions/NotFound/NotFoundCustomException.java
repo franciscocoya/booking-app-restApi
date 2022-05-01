@@ -13,7 +13,11 @@ public class NotFoundCustomException extends RuntimeException {
 		super();
 	}
 
-	public NotFoundCustomException(String message) {
+	public NotFoundCustomException(final String message) {
 		super(message);
+	}
+
+	public NotFoundCustomException(final String message, final Exception exception) {
+		super(message, exception);
 	}
 }

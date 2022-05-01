@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewReply;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -24,7 +25,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ACCOMODATION_REVIEW_REPLY")
-public class AccomodationReviewReplyModel {
+public class AccomodationReviewReplyModel implements Serializable{
+
+	private static final long serialVersionUID = 1330395931189086339L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

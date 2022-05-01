@@ -2,6 +2,9 @@ package com.hosting.rest.api.services.User;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -10,26 +13,26 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
-
-import lombok.extern.slf4j.Slf4j;
+import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
 
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.0
+ * @version v1.0.3
  * @apiNote Servicio que gestiona todas las acciones de un usuario de la
  *          aplicación.
  *
  */
-@Slf4j
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -37,35 +40,18 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepository userRepo;
 
-	@Override
-	public UserModel addNewUser(final UserModel userToAdd) {
-
-		if (!isNotNull(userToAdd)) {
-			log.error("Alguna propiedad del usuario a crear falta o no es válida.");
-			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
-		}
-
-		boolean existsUser = userRepo.existsById(userToAdd.getId());
-
-		if (existsUser) {
-			log.error("Ya existe un usuario en la aplicación.");
-			throw new IllegalArgumentsCustomException("Ya existe un usuario en la aplicación.");
-		}
-
-		return userRepo.save(userToAdd);
-	}
-
 	/**
 	 * @param userId
 	 * 
 	 * @return Devuelve un usuario a partir del id pasado como parámetro.
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public UserModel getUserById(final Integer userId) {
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario [ " + userId + " ] no es válido o está vacío.");
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido o está vacío.");
-		}
+	public UserModel getUserById(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId),
+				"El id de usuario [ " + userId + " ] no es válido o está vacío.");
 
 		return userRepo.findById(userId)
 				.orElseThrow(() -> new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe."));
@@ -81,25 +67,14 @@ public class UserServiceImpl implements IUserService {
 	 */
 	@Override
 	public UserModel updateUser(final Integer userId, final UserModel userToUpdate) {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario [ " + userId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
-
-		if (!isNotNull(userToUpdate)) {
-			log.error("Alguna propiedad del usuario a actualizar falta o no es válida.");
-			throw new IllegalArgumentsCustomException(
-					"Alguna propiedad del usuario a actualizar falta o no es válida.");
-		}
-
-		boolean existsUser = userRepo.findById(userToUpdate.getId()).get() != null;
+		// Validar usuario a actualizar
+		validateParam(isNotNull(userToUpdate), "Alguna propiedad del usuario a actualizar falta o no es válida.");
 
 		// Comprobar que el usuario existe para poder actualizar sus datos.
-		if (!existsUser) {
-			log.error("El usuario con id [ " + userId + " ] no existe.");
-			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
-		}
+		validateParamNotFound(userRepo.existsById(userId), "El usuario con id [ " + userId + " ] no existe.");
 
 		UserModel originalUser = userRepo.findById(userId).get();
 
@@ -116,20 +91,16 @@ public class UserServiceImpl implements IUserService {
 	 * Elimina un usuario dado su id.
 	 * 
 	 * @param userId
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public void deleteUserById(final Integer userId) {
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("Alguna propiedad del usuario a crear falta o no es válida.");
-			throw new IllegalArgumentsCustomException("Alguna propiedad del usuario a crear falta o no es válida.");
-		}
+	public void deleteUserById(final Integer userId) throws NumberFormatException {
+		// Validar el id del usuario
+		validateParam(isIntegerValidAndPositive(userId), "Alguna propiedad del usuario a crear falta o no es válida.");
 
-		boolean existsUser = userRepo.findById(userId).get() != null;
-
-		if (!existsUser) {
-			log.error("No existe un usuario con id [ " + userId + " ]");
-			throw new NotFoundCustomException("No existe un usuario con id [ " + userId + " ]");
-		}
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId), "No existe un usuario con id [ " + userId + " ]");
 
 		userRepo.deleteById(userId);
 	}
@@ -153,5 +124,31 @@ public class UserServiceImpl implements IUserService {
 		TypedQuery<UserModel> allUsers = em.createQuery(findAllHostUsersQuery, UserModel.class);
 
 		return allUsers.getResultList();
+	}
+
+	/**
+	 * Comprueba que existe un usuario con el email <code>emailToSearch</code> y
+	 * devuelve sus credenciales de acceso.
+	 * 
+	 * @see #build
+	 * 
+	 * @param emailToSearch
+	 * 
+	 * @return
+	 * 
+	 * @throws UsernameNotFoundException Si no se encuentra el usuario con el email
+	 *                                   pasado como parámetro.
+	 * 
+	 */
+	@Override
+	public UserDetails loadUserByUsername(final String emailToSearch) throws UsernameNotFoundException {
+		// Validar email
+		validateParam(isStringNotBlank(emailToSearch), "El email de usuario a buscar está vacío.");
+
+		// Obtener el usuario con el email
+		UserModel user = userRepo.findByEmail(emailToSearch).orElseThrow(
+				() -> new NotFoundCustomException("El usuario con email " + emailToSearch + " a cargar no existe."));
+
+		return UserDetailsImpl.build(user);
 	}
 }

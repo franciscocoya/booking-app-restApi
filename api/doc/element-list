@@ -18,12 +18,20 @@ com.hosting.rest.api.controllers.User.UserConfiguration
 com.hosting.rest.api.controllers.User.UserReview
 com.hosting.rest.api.exceptions.IllegalArguments
 com.hosting.rest.api.exceptions.NotFound
+<<<<<<< HEAD
+=======
+com.hosting.rest.api.mapper
+>>>>>>> refactor-validation-param-function
 com.hosting.rest.api.models.Accomodation
 com.hosting.rest.api.models.Accomodation.AccomodationReview
 com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewReply
 com.hosting.rest.api.models.Accomodation.AccomodationRule
 com.hosting.rest.api.models.Accomodation.AccomodationService
 com.hosting.rest.api.models.Accomodation.SavedAccomodation
+<<<<<<< HEAD
+=======
+com.hosting.rest.api.models.Auth
+>>>>>>> refactor-validation-param-function
 com.hosting.rest.api.models.Booking
 com.hosting.rest.api.models.Currency
 com.hosting.rest.api.models.Language

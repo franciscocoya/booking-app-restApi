@@ -21,5 +21,9 @@ public class IllegalArgumentsCustomException extends RuntimeException {
 	public IllegalArgumentsCustomException(final String message, final String param) {
 		super(message + " [ " + param + " ] no es válido.");
 	}
+	
+	public IllegalArgumentsCustomException(final String message, final Exception exception) {
+		super(message, exception);
+	}
 
 }

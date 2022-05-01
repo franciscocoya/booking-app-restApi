@@ -1,11 +1,12 @@
 package com.hosting.rest.api.models.PromoCode;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,20 +14,20 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Table(name = "PROMO_CODE")
-public class PromoCodeModel {
+public class PromoCodeModel implements Serializable{
+
+	private static final long serialVersionUID = 5155189233228575480L;
 
 	@Id
 	@Column(name = "SERIAL_NUM")
@@ -41,16 +42,11 @@ public class PromoCodeModel {
 	@Column(name = "DATE_END")
 	private LocalDateTime dateEnd;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_ACC")
-	private AccomodationModel idAcc;
-
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_USER")
 	private UserHostModel idUser;
 
 	@Column(name = "CREATED_AT")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@CreatedDate
 	private LocalDateTime createdAt;
 }

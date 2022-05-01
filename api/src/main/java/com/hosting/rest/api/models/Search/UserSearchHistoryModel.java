@@ -1,5 +1,7 @@
 package com.hosting.rest.api.models.Search;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "USER_SEARCH_HISTORY")
-public class UserSearchHistoryModel {
+public class UserSearchHistoryModel implements Serializable{
+
+	private static final long serialVersionUID = -6836166690142036766L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

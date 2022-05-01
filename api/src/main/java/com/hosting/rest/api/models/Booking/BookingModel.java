@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Booking;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -29,7 +30,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "BOOKING")
-public class BookingModel {
+public class BookingModel implements Serializable{
+
+	private static final long serialVersionUID = -5582102291546732206L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

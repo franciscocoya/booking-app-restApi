@@ -6,11 +6,11 @@ import com.hosting.rest.api.models.Accomodation.SavedAccomodation.SavedAccomodat
 
 public interface ISavedAccomodationService {
 
-	SavedAccomodationModel addNewSavedAccomodation(final SavedAccomodationModel accomodationToSave);
+	public SavedAccomodationModel addNewSavedAccomodation(final SavedAccomodationModel accomodationToSave);
 	
-	SavedAccomodationModel getSavedAccomodationById(final Integer savedAccomodationId);
+	public SavedAccomodationModel getSavedAccomodationById(final Integer savedAccomodationId);
 	
-	void deleteSavedAccomodation(final Integer savedAccomodationId);
+	public void deleteSavedAccomodation(final Integer savedAccomodationId);
 	
-	List<SavedAccomodationModel> findAllSavedAccomodationsByUserId(final Integer userId);
+	public List<SavedAccomodationModel> findAllSavedAccomodationsByUserId(final Integer userId);
 }

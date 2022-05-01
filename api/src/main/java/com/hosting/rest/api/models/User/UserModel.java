@@ -1,9 +1,11 @@
 package com.hosting.rest.api.models.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +30,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "APP_USER")
-public class UserModel {
+public class UserModel implements Serializable {
+
+	private static final long serialVersionUID = -9181598620645816069L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +58,19 @@ public class UserModel {
 	@Column(name = "PROFILE_IMG")
 	private String profileImage;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_APP_CONFIGURATION")
 	private UserConfigurationModel idUserConfiguration;
 
 	@Column(name = "CREATED_AT")
 	@CreatedDate
 	private LocalDateTime createdAt;
+	
+	
+	public UserModel(final String name, final String surname, final String email, final String password) {
+		setName(name);
+		setSurname(surname);
+		setEmail(email);
+		setPass(password);
+	}
 }

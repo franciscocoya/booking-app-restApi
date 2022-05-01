@@ -83,7 +83,7 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 		// Clave compuesta por el número de registro del alojamiento y el id del
 		// servicio a añadir al alojamiento.
 		AccomodationAccServiceId newAccomodationServiceId = new AccomodationAccServiceId(regNumber,
-				accomodationServiceToAdd.getId());
+				accomodationServiceToAdd);
 
 		return accomodationAccServiceRepo.save(new AccomodationAccServiceModel(newAccomodationServiceId));
 	}

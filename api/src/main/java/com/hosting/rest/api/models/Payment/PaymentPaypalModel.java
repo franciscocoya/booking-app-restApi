@@ -25,6 +25,8 @@ import lombok.Setter;
 @Table( name = "PAYMENT_PAYPAL" )
 public class PaymentPaypalModel extends PaymentModel{
 
-    @Column(name = "ACCOUNT_EMAIL")
+    private static final long serialVersionUID = 6553559064683143104L;
+    
+	@Column(name = "ACCOUNT_EMAIL")
     private String accountEmail;
 }

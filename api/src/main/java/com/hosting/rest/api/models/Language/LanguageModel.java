@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,9 +13,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table( name = "APP_LANGUAGE" )
-public class LanguageModel {
+public class LanguageModel implements Serializable{
 
-    @Id
+    private static final long serialVersionUID = 386718704217054232L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;

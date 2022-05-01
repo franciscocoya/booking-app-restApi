@@ -1,9 +1,12 @@
 package com.hosting.rest.api.services.Booking;
 
+import static com.hosting.rest.api.Utils.AppUtils.isBigDecimalValid;
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.MathUtils.MATH_CONTEXT;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,14 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Booking.BookingModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -35,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @Service
-@Slf4j
 public class BookingServiceImpl implements IBookingService {
 
 	@Autowired
@@ -63,16 +61,12 @@ public class BookingServiceImpl implements IBookingService {
 	 */
 	@Override
 	public BookingModel addNewBooking(final BookingModel bookingToAdd) {
-		if (!isNotNull(bookingToAdd)) {
-			log.error("Alguno de los valores de la reserva no es válido.");
-			throw new IllegalArgumentsCustomException("Alguno de los valores de la reserva no es válido.");
-		}
+		// Validar reserva pasada como parametro
+		validateParam(isNotNull(bookingToAdd), "Alguno de los valores de la reserva no es válido.");
 
 		// Comprobar si existe la reserva
-		if (bookingRepo.existsById(bookingToAdd.getId())) {
-			log.error("La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
-			throw new IllegalArgumentsCustomException("La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
-		}
+		validateParamNotFound(!bookingRepo.existsById(bookingToAdd.getId()),
+				"La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
 
 		// Calcular la comisión
 		BigDecimal newServiceFee = calculateBookingServiceFee(bookingToAdd.getAmount());
@@ -105,27 +99,22 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param bookingToUpdate
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de la reserva no es un número.
 	 */
 	@Transactional
 	@Override
-	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate) {
+	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate)
+			throws NumberFormatException {
+		// Validar id de la reserva
+		validateParam(isIntegerValidAndPositive(bookingId),
+				"El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
 
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de reserva [ " + bookingId + " ] a actualizar no es válido.");
-		}
-
-		if (!isNotNull(bookingToUpdate)) {
-			log.error("Alguno de los datos de la reserva a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException("Alguno de los datos de la reserva a actualizar no es válido.");
-		}
+		// Validar reserva pasada como parametro.
+		validateParam(isNotNull(bookingToUpdate), "Alguno de los datos de la reserva a actualizar no es válido.");
 
 		// Comprobar si existe la reserva
-		if (!bookingRepo.existsById(bookingId)) {
-			log.error("No existe una reserva con el id " + bookingId);
-			throw new NotFoundCustomException("No existe una reserva con el id " + bookingId);
-		}
+		validateParamNotFound(bookingRepo.existsById(bookingId), "No existe una reserva con el id " + bookingId);
 
 		BookingModel originalBooking = bookingRepo.getById(bookingId);
 
@@ -135,44 +124,37 @@ public class BookingServiceImpl implements IBookingService {
 		// BookingAmount = price_per_night * days * guests
 		BigDecimal updatedAmount = bookingToUpdate.getAmount();
 
+		// Validar el coste updateAmount obtenido
+		validateParam(isBigDecimalValid(updatedAmount, true), "Es coste de reserva (Sin comisiones) no es válido.");
+
 		originalBooking.setAmount(bookingToUpdate.getAmount());
 
 		// Descuento a aplicar. 0 si no se aplica descuento.
 		BigDecimal updatedDisccount = bookingToUpdate.getDisccount();
+
+		// Validar el descuento obtenido
+		validateParam(isBigDecimalValid(updatedDisccount, true), "Es descuento obtenido no es válido.");
+
 		originalBooking.setDisccount(updatedDisccount);
 
 		// Recalcular SERVICE_FEE y TOTAL.
 		BigDecimal updatedServiceFee = calculateBookingServiceFee(updatedAmount);
+
+		// Validar la comisión resultante
+		validateParam(isBigDecimalValid(updatedServiceFee, true), "La comisión obtenido no es válida.");
+
 		originalBooking.setServiceFee(updatedServiceFee);
 
 		// Recalcular el coste total de la reserva.
 		BigDecimal updatedBookingTotal = calculateBookingTotalCost(updatedAmount, updatedDisccount, updatedServiceFee);
+
+		// Validar es coste total calculado
+		validateParam(isBigDecimalValid(updatedBookingTotal, true), "El coste total resultante no es válido.");
+
 		originalBooking.setTotal(updatedBookingTotal);
 
 		return bookingRepo.save(originalBooking);
 	}
-
-	/**
-	 * Calcula el coste de la reserva antes de aplicar descuentos y comisiones.
-	 * 
-	 * @param pricePerNight
-	 * @param bookingCheckIn
-	 * @param bookingCheckOut
-	 * @param guests
-	 * 
-	 * 
-	 * @return
-	 */
-//	private BigDecimal calculateBookingAmount(final BigDecimal pricePerNight, final LocalDateTime bookingCheckIn,
-//			final LocalDateTime bookingCheckOut, final Integer guests) {
-//		BigDecimal bookingAmount = BigDecimal.ZERO;
-//
-//		Integer bookingDays = (int) Duration.between(bookingCheckOut, bookingCheckIn).toDays();
-//
-//		bookingAmount = pricePerNight.multiply(new BigDecimal(bookingDays, MATH_CONTEXT), MATH_CONTEXT);
-//
-//		return bookingAmount;
-//	}
 
 	/**
 	 * Calcula la comisión de la aplicación en base al precio de la reserva
@@ -182,8 +164,12 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param serviceFee
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si <code>bookingAmount</code> no es un número o
+	 *                               si <code>serviceFee</code> no es un número
 	 */
-	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount, final BigDecimal serviceFee) {
+	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount, final BigDecimal serviceFee)
+			throws NumberFormatException {
 		return bookingAmount.multiply(serviceFee, MATH_CONTEXT);
 	}
 
@@ -195,8 +181,10 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param bookingAmount
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si <code>bookingAmount</code> no es un número.
 	 */
-	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount) {
+	private BigDecimal calculateBookingServiceFee(final BigDecimal bookingAmount) throws NumberFormatException {
 		return calculateBookingServiceFee(DEFAULT_APP_SERVICE_FEE, bookingAmount);
 	}
 
@@ -209,14 +197,20 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param bookingServiceFee
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatExceptionSi <code>bookingAmount</code> no es un número o
+	 *                                 <code>bookingDisccountPercentage</code> no es
+	 *                                 un número o <code>bookingServiceFee</code> no
+	 *                                 es un número
 	 */
 	private BigDecimal calculateBookingTotalCost(final BigDecimal bookingAmount,
-			final BigDecimal bookingDisccountPercentage, final BigDecimal bookingServiceFee) {
-		
+			final BigDecimal bookingDisccountPercentage, final BigDecimal bookingServiceFee)
+			throws NumberFormatException {
+
 		BigDecimal newDisccount = bookingDisccountPercentage == null ? BigDecimal.ZERO : bookingDisccountPercentage;
 
-		BigDecimal disccountResult = bookingAmount
-				.multiply(newDisccount.divide(new BigDecimal("100"), MATH_CONTEXT), MATH_CONTEXT);
+		BigDecimal disccountResult = bookingAmount.multiply(newDisccount.divide(new BigDecimal("100"), MATH_CONTEXT),
+				MATH_CONTEXT);
 
 		return bookingAmount.subtract(disccountResult, MATH_CONTEXT).add(bookingServiceFee, MATH_CONTEXT);
 	}
@@ -225,21 +219,19 @@ public class BookingServiceImpl implements IBookingService {
 	 * Borrado de una reserva con id <code>bookingId</code>.
 	 * 
 	 * @param bookingId
+	 * 
+	 * @throws NumberFormatException Si <code>bookingId</code> no es un número.
 	 */
 	@Override
-	public void deleteBookingById(final Integer bookingId) {
+	public void deleteBookingById(final Integer bookingId) throws NumberFormatException {
 
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
-		}
+		// Validar id de reserva
+		validateParam(isIntegerValidAndPositive(bookingId),
+				"El id de reserva [ " + bookingId + " ] a eliminar no es válido.");
 
 		// Comprobar si existe la reserva
-		if (!bookingRepo.existsById(bookingId)) {
-			log.error("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
-			throw new NotFoundCustomException("La reserva con id [ " + bookingId + " ] a eliminar no existe.");
-		}
+		validateParamNotFound(bookingRepo.existsById(bookingId),
+				"La reserva con id [ " + bookingId + " ] a eliminar no existe.");
 
 		bookingRepo.deleteById(bookingId);
 	}
@@ -252,25 +244,21 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param yearToSearch
 	 * 
 	 * @return
+	 * @throws NumberFormatException Si <code>yearToSearch</code> no es un número.
 	 */
 	@Override
-	public List<BookingModel> findByBookingYear(final String regNumber, final Integer yearToSearch) {
+	public List<BookingModel> findByBookingYear(final String regNumber, final Integer yearToSearch)
+			throws NumberFormatException {
+		// Validar número de registro de alojamiento
+		validateParam(isStringNotBlank(regNumber), "El id de alojamiento está vacío.");
 
-		if (!isStringNotBlank(regNumber)) {
-			log.error("El id de alojamiento está vacío.");
-			throw new IllegalArgumentsCustomException("El id de alojamiento está vacío.");
-		}
-
-		if (!isIntegerValidAndPositive(yearToSearch)) {
-			log.error("El año introducido no es válido.");
-			throw new IllegalArgumentsCustomException("El año introducido no es válido.");
-		}
+		// Validar año a buscar
+		validateParam(isIntegerValidAndPositive(yearToSearch),
+				"El año [ " + yearToSearch + " ] introducido no es válido.");
 
 		// Comprobar si existe el alojamiento
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe un alojamiento con el número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe un alojamiento con el número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe un alojamiento con el número de registro " + regNumber);
 
 		String listBookingFromYearQuery = "SELECT bm " + "FROM BookingModel bm INNER JOIN bm.idAccomodation ac "
 				+ "WHERE YEAR(bm.createdAt) = :year AND ac.registerNumber = :registerNumber";
@@ -290,20 +278,16 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param userId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public List<BookingModel> findAllBookingByUser(final Integer userId) {
-
-		if (!isIntegerValidAndPositive(userId)) {
-			log.error("El id de usuario [ " + userId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
-		}
+	public List<BookingModel> findAllBookingByUser(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
 
 		// Comprobar si existe el usuario
-		if (!userRepo.existsById(userId)) {
-			log.error("No existe un usuario con id " + userId);
-			throw new NotFoundCustomException("No existe un usuario con id " + userId);
-		}
+		validateParamNotFound(userRepo.existsById(userId), "No existe un usuario con id " + userId);
 
 		String findAllBookingsOfUserQuery = "SELECT bm " + "FROM BookingModel bm INNER JOIN bm.idUser host "
 				+ "WHERE host.id = :userId";
@@ -321,13 +305,13 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param bookingId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si <code>bookingId</code> no es un número.
 	 */
 	@Override
-	public BookingModel getBookingById(final Integer bookingId) {
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de reserva [ " + bookingId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException("El id de reserva [ " + bookingId + " ] no es válido.");
-		}
+	public BookingModel getBookingById(final Integer bookingId) throws NumberFormatException {
+		// Validar Id de reserva
+		validateParam(isIntegerValidAndPositive(bookingId), "El id de reserva [ " + bookingId + " ] no es válido.");
 
 		return bookingRepo.findById(bookingId).get();
 	}
@@ -338,9 +322,14 @@ public class BookingServiceImpl implements IBookingService {
 	 * @param userId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
 	@Override
-	public int getNumOfBookingsByUserId(final Integer userId) {
+	public int getNumOfBookingsByUserId(final Integer userId) throws NumberFormatException {
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es un número.");
+		
 		return findAllBookingByUser(userId).size();
 	}
 }

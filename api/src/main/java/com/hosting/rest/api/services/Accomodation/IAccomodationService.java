@@ -3,6 +3,8 @@ package com.hosting.rest.api.services.Accomodation;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 
 /**
@@ -28,7 +30,9 @@ public interface IAccomodationService {
 
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel);
 
-	public List<AccomodationModel> findAllAccomodations();
+	public Page<AccomodationModel> findAllAccomodations(final Integer pageNumber, final Integer size);
+	
+	public List<AccomodationModel> findNAccomodations(final Integer maxNumberOfAccomodations);
 
 	public AccomodationModel getAccomodationById(final String regNumber);
 
@@ -37,7 +41,7 @@ public interface IAccomodationService {
 
 	public String removeAccomodationById(final String regNumber);
 
-	public List<AccomodationModel> findByCity(final String cityToSearch);
+	public Page<AccomodationModel> findByCity(final String cityToSearch, final Integer pageNumber, final Integer size);
 
 	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng,
 			final double distanceRadius);
@@ -45,4 +49,6 @@ public interface IAccomodationService {
 	public List<AccomodationModel> findByCategory(final String accomodationCategory);
 
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice);
+	
+	public List<AccomodationModel> findByUserId(final Integer userId);
 }

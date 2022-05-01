@@ -1081,7 +1081,10 @@ java.sql.SQLException: Access denied for user 'b2d05ed770ac98'@'ip-10-0-122-115.
 2022-05-01 10:03:13,413 WARN com.zaxxer.hikari.pool.PoolBase [http-nio-8080-exec-1] HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@38c7f30b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
 2022-05-01 10:03:13,414 WARN com.zaxxer.hikari.pool.PoolBase [http-nio-8080-exec-1] HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@336cc51 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
 2022-05-01 10:03:13,415 WARN com.zaxxer.hikari.pool.PoolBase [http-nio-8080-exec-1] HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@65652ab2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+<<<<<<< HEAD
 2022-05-01 10:08:26,402 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(11)-127.0.0.1] Application shutdown requested.
 2022-05-01 10:08:26,440 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(11)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-01 10:08:26,444 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(11)-127.0.0.1] HikariPool-1 - Shutdown initiated...
 2022-05-01 10:08:26,451 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(11)-127.0.0.1] HikariPool-1 - Shutdown completed.
+=======
+>>>>>>> refactor-validation-param-function

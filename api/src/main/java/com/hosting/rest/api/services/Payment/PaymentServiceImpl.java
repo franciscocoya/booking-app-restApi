@@ -2,6 +2,8 @@ package com.hosting.rest.api.services.Payment;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -12,24 +14,19 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Payment.PaymentModel;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 import com.hosting.rest.api.repositories.Payment.IPaymentRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya Abajo
- * @version v1.0.1
+ * @version v1.0.3
  * @apiNote Controlador para gestionar las acciones de los métodos de pago de la
  *          aplicación.
  * 
  */
 @Service
-@Slf4j
 public class PaymentServiceImpl implements IPaymentService {
 
 	@PersistenceContext
@@ -49,14 +46,15 @@ public class PaymentServiceImpl implements IPaymentService {
 	 * @return
 	 */
 	@Override
-	public PaymentModel addNewPayment(final PaymentModel paymentModel) {
-		if (!isNotNull(paymentModel)) {
-			log.error("Alguno de los valores introducido para el método de pago no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores introducido para el método de pago no es válido.");
-		}
+	public PaymentModel addNewPayment(final PaymentModel paymentToAdd) {
+		// Validar método de pago
+		validateParam(isNotNull(paymentToAdd),
+				"Alguno de los valores introducido para el método de pago no es válido.");
 
-		return paymentRepo.save(paymentModel);
+		// Comprobar si existe el método de pago
+		validateParamNotFound(!paymentRepo.existsById(paymentToAdd.getIdPayment()), "El método de pago ya existe.");
+
+		return paymentRepo.save(paymentToAdd);
 	}
 
 	/**
@@ -68,17 +66,12 @@ public class PaymentServiceImpl implements IPaymentService {
 	 */
 	@Override
 	public void removePaymentById(final Integer paymentId) throws NumberFormatException {
-		boolean existsPayment = paymentRepo.existsById(paymentId);
 
-		if (!isIntegerValidAndPositive(paymentId)) {
-			log.error("El id del método de pago a eliminar no es válido.");
-			throw new IllegalArgumentsCustomException("El id del método de pago a eliminar no es válido.");
-		}
+		// Validar id del método de pago
+		validateParam(isIntegerValidAndPositive(paymentId), "El id del método de pago a eliminar no es válido.");
 
-		if (!existsPayment) {
-			log.error("El método de pago a eliminar no existe.");
-			throw new NotFoundCustomException("El método de pago a eliminar no existe.");
-		}
+		// Comprobar si existe
+		validateParamNotFound(paymentRepo.existsById(paymentId), "El método de pago a eliminar no existe.");
 
 		paymentRepo.deleteById(paymentId);
 	}
@@ -101,24 +94,18 @@ public class PaymentServiceImpl implements IPaymentService {
 	 * 
 	 * @return
 	 * 
-	 * @throws NumberFormatException
+	 * @throws NumberFormatException Si el id de reserva no es un número.
 	 */
 	@Override
 	public PaymentModel findByBookingId(final Integer bookingId) throws NumberFormatException {
+		// Validar id de la reserva
+		validateParam(isIntegerValidAndPositive(bookingId), "El id de la reserva a buscar no es válido.");
 
-		if (!isIntegerValidAndPositive(bookingId)) {
-			log.error("El id de la reserva a buscar no es válido.");
-			throw new IllegalArgumentsCustomException("El id de la reserva a buscar no es válido.");
-		}
+		// Comprobar que existe la reserva
+		validateParamNotFound(bookingRepo.existsById(bookingId), "No existe una reserva con id " + bookingId);
 
 		String findByBookingIdQuery = "SELECT pm " + "FROM BookingModel bm INNER JOIN bm.idPayment pm "
 				+ "WHERE bm.id = :bookingId";
-
-		// Comprobar que existe la reserva
-		if (!bookingRepo.existsById(bookingId)) {
-			log.error("No existe una reserva con id " + bookingId);
-			throw new NotFoundCustomException("No existe una reserva con id " + bookingId);
-		}
 
 		TypedQuery<PaymentModel> payment = em.createQuery(findByBookingIdQuery, PaymentModel.class);
 

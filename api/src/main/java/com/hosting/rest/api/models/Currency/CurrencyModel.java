@@ -1,5 +1,7 @@
 package com.hosting.rest.api.models.Currency;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "APP_CURRENCY")
-public class CurrencyModel {
+public class CurrencyModel implements Serializable{
+
+	private static final long serialVersionUID = 7209376522058803717L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.hosting.rest.api.models.Accomodation.SavedAccomodation;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -26,9 +27,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Table(name = "SAVED_ACCOMODATION")
-public class SavedAccomodationModel {
+public class SavedAccomodationModel implements Serializable{
 
-    @Id
+    private static final long serialVersionUID = 5232197990106259537L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;

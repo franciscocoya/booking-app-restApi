@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,9 +13,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "PLAN_FEATURE")
-public class PlanFeatureModel {
+public class PlanFeatureModel implements Serializable {
 
-    @Id
+    private static final long serialVersionUID = -5510683410703805897L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer idPlanFeature;

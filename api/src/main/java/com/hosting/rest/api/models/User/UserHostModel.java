@@ -21,6 +21,8 @@ import lombok.Setter;
 @DiscriminatorValue("H")
 public class UserHostModel extends UserModel {
 
+	private static final long serialVersionUID = 4779973744142659808L;
+
 	@Column(name = "DNI")
 	private String dni;
 

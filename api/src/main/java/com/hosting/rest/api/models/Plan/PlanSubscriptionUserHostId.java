@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class PlanSubscriptionUserHostId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6623706348395439803L;
 
 	@Column(name = "ID_PLAN")
     private Integer idPlan;

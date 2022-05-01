@@ -39,7 +39,7 @@ public class AppUtils {
 	 * @param idToCheck
 	 * @return
 	 */
-	public static boolean isStringNotBlank(final String idToCheck) {
+	public static Boolean isStringNotBlank(final String idToCheck) {
 		return !idToCheck.isBlank() && idToCheck.length() > 0 && isNotNull(idToCheck);
 	}
 

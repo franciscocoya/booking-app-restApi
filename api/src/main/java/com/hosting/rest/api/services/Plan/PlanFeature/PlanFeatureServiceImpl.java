@@ -2,6 +2,8 @@ package com.hosting.rest.api.services.Plan.PlanFeature;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.List;
 
@@ -14,23 +16,19 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Plan.PlanFeatureAppPlan.PlanFeatureModel;
+import com.hosting.rest.api.repositories.Plan.IPlanRepository;
 import com.hosting.rest.api.repositories.Plan.PlanFeature.IPlanFeatureRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
  * @author Francisco Coya Abajo
- * @version v1.0.1
+ * @version v1.0.3
  * @apiNote Controlador para gestionar las acciones de las carácterísticas de un
  *          plan de subscripción.
  * 
  */
 @Service
-@Slf4j
 public class PlanFeatureServiceImpl implements IPlanFeatureService {
 
 	@PersistenceContext
@@ -38,6 +36,9 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 
 	@Autowired
 	private IPlanFeatureRepository planFeatureRepo;
+
+	@Autowired
+	private IPlanRepository planRepo;
 
 	/**
 	 * Añade una característica a un plan con los datos pasados en
@@ -49,15 +50,12 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 	 */
 	@Override
 	public PlanFeatureModel addNewPlanFeature(final PlanFeatureModel planFeatureToAdd) {
-		if (!isNotNull(planFeatureToAdd)) {
-			log.error("La característica para el plan a añadir no es válida.");
-			throw new IllegalArgumentsCustomException("La característica para el plan a añadir no es válida.");
-		}
+		// Validar característica del plan pasada como parametro
+		validateParam(isNotNull(planFeatureToAdd), "La característica para el plan a añadir no es válida.");
 
-		if (planFeatureRepo.existsById(planFeatureToAdd.getIdPlanFeature())) {
-			log.error("Ya existe una característica.");
-			throw new IllegalArgumentsCustomException("Ya existe una característica.");
-		}
+		// Comprobar si existe la característica
+		validateParamNotFound(!planFeatureRepo.existsById(planFeatureToAdd.getIdPlanFeature()),
+				"Ya existe una característica.");
 
 		return planFeatureRepo.save(planFeatureToAdd);
 	}
@@ -67,21 +65,21 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 	 * pasado como parámetro.
 	 * 
 	 * @param planFeatureId
+	 * 
+	 * @throws NumberFormatException Si el id de la característica del plan no es un
+	 *                               número.
 	 */
 	@Override
-	public void deleteById(final Integer planFeatureId) {
-		if (!isIntegerValidAndPositive(planFeatureId)) {
-			log.error("El id [ " + planFeatureId + " ] a eliminar no es válido.");
-			throw new IllegalArgumentsCustomException("El id [ " + planFeatureId + " ] a eliminar no es válido.");
-		}
+	public void deleteById(final Integer planFeatureId) throws NumberFormatException {
+		// Validar id de la caracteristica del plan
+		validateParam(isIntegerValidAndPositive(planFeatureId),
+				"El id [ " + planFeatureId + " ] a eliminar no es válido.");
 
-		if (!planFeatureRepo.existsById(planFeatureId)) {
-			log.error("La característica con id " + planFeatureId + " a eliminar no existe");
-			throw new NotFoundCustomException("La característica con id " + planFeatureId + " a eliminar no existe");
-		}
+		// Comprobar si existe la característica
+		validateParamNotFound(planFeatureRepo.existsById(planFeatureId),
+				"La característica con id " + planFeatureId + " a eliminar no existe");
 
 		planFeatureRepo.deleteById(planFeatureId);
-
 	}
 
 	/**
@@ -92,24 +90,18 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 	 */
 	@Transactional
 	@Override
-	public void updatePlanFeature(final Integer planFeatureId, final PlanFeatureModel planFeatureToUpdate) {
-		if (!isIntegerValidAndPositive(planFeatureId)) {
-			log.error("El id [ " + planFeatureId + " ] de la característica a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id [ " + planFeatureId + " ] de la característica a actualizar no es válido.");
-		}
+	public void updatePlanFeature(final Integer planFeatureId, final PlanFeatureModel planFeatureToUpdate)
+			throws NumberFormatException {
+		// Validar id de la caraterística
+		validateParam(isIntegerValidAndPositive(planFeatureId),
+				"El id [ " + planFeatureId + " ] de la característica a actualizar no es válido.");
 
-		if (!isNotNull(planFeatureToUpdate)) {
-			log.error("Alguno de los valores de la característica a actualizar no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la característica a actualizar no es válido.");
-		}
+		// Validar caracterísitca del plan pasada como parametro.
+		validateParam(isNotNull(planFeatureToUpdate),
+				"Alguno de los valores de la característica a actualizar no es válido.");
 
 		// Comprobar si existe la característica
-		if (!planFeatureRepo.existsById(planFeatureId)) {
-			log.error("La característica a actualizar no existe.");
-			throw new NotFoundCustomException("La característica a actualizar no existe.");
-		}
+		validateParamNotFound(planFeatureRepo.existsById(planFeatureId), "La característica a actualizar no existe.");
 
 		String updatePlanFeatureQuery = "UPDATE PlanFeatureModel pfm "
 				+ "SET pfm.planFeatureDetail = :planFeatureDetail " + "WHERE pfm.idPlanFeature = :planFeatureId";
@@ -128,15 +120,17 @@ public class PlanFeatureServiceImpl implements IPlanFeatureService {
 	 * @param planId
 	 * 
 	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del plan no es un número.
 	 */
 	@Override
-	public List<PlanFeatureModel> findAllByPlanId(final Integer planId) {
+	public List<PlanFeatureModel> findAllByPlanId(final Integer planId) throws NumberFormatException {
+		// Validar id del plan
+		validateParam(isIntegerValidAndPositive(planId),
+				"El id [ " + planId + " ] del plan a listar sus características no es válido.");
 
-		if (!isIntegerValidAndPositive(planId)) {
-			log.error("El id [ " + planId + " ] del plan a listar sus características no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id [ " + planId + " ] del plan a listar sus características no es válido.");
-		}
+		// Comprobar si existe el plan
+		validateParamNotFound(planRepo.existsById(planId), "No existe un plan con id " + planId);
 
 		String findAllFeaturesPlanByPlanQuery = "SELECT pfm "
 				+ "FROM PlanFeatureAppPlanModel pfappm, PlanFeatureModel pfm "

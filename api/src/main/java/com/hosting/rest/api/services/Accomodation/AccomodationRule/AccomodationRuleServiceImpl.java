@@ -1,5 +1,11 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationRule;
 
+import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
+import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,28 +17,19 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
-import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
-
-import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
-import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationRuleModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationRule.IAccomodationRuleRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 
  * @author Francisco Coya · https://github.com/FranciscoCoya
- * @version v1.0.2
+ * @version v1.0.3
  * @description Implementa las acciones relacionadas con las reglas de un
  *              alojamiento.
  * 
  **/
 @Service
-@Slf4j
 public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 
 	@PersistenceContext
@@ -53,18 +50,14 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	 */
 	@Override
 	public AccomodationRuleModel addNewAccomodationRule(final AccomodationRuleModel accomodationRuleToAdd) {
-		if (!isNotNull(accomodationRuleToAdd)) {
-			log.error("Alguno de los valores de la norma del alojamiento a añadir no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la norma del alojamiento a añadir no es válido.");
-		}
+
+		// Validar norma pasada como parametro
+		validateParam(isNotNull(accomodationRuleToAdd),
+				"Alguno de los valores de la norma del alojamiento a añadir no es válido.");
 
 		// Comprobar si existe la norma.
-		if (accomodationRuleRepo.existsById(accomodationRuleToAdd.getId())) {
-			log.error("La norma del alojamiento " + accomodationRuleToAdd.getId() + " ya existe.");
-			throw new IllegalArgumentsCustomException(
-					"La norma del alojamiento " + accomodationRuleToAdd.getId() + " ya existe.");
-		}
+		validateParamNotFound(!accomodationRuleRepo.existsById(accomodationRuleToAdd.getId()),
+				"La norma del alojamiento " + accomodationRuleToAdd.getId() + " ya existe.");
 
 		return accomodationRuleRepo.save(accomodationRuleToAdd);
 	}
@@ -82,24 +75,17 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	@Override
 	public void updateAccomodationRule(final Integer accomodationRuleId,
 			final AccomodationRuleModel accomodationRuleToAdd) throws NumberFormatException {
+// Validar id de la norma
+		validateParam(isIntegerValidAndPositive(accomodationRuleId),
+				"El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
 
-		if (!isIntegerValidAndPositive(accomodationRuleId)) {
-			log.error("El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"El id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
-		}
-
-		if (!isNotNull(accomodationRuleToAdd)) {
-			log.error("Alguno de los valores de la norma del alojamiento a actualizar no es válida.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores de la norma del alojamiento a actualizar no es válida.");
-		}
+		// Validar norma a actualizar
+		validateParam(isNotNull(accomodationRuleToAdd),
+				"Alguno de los valores de la norma del alojamiento a actualizar no es válida.");
 
 		// Comprobar si la norma del alojamiento existe
-		if (!accomodationRuleRepo.existsById(accomodationRuleId)) {
-			log.error("La norma del alojamiento a actualizar no existe.");
-			throw new NotFoundCustomException("La norma del alojamiento a actualizar no existe.");
-		}
+		validateParamNotFound(accomodationRuleRepo.existsById(accomodationRuleId),
+				"La norma del alojamiento a actualizar no existe.");
 
 		String updateAccomodationRuleQuery = "UPDATE AccomodationRuleModel arm " + "SET arm.rule = :accomodationRule "
 				+ "WHERE arm.id = :accomodationRuleId";
@@ -124,10 +110,9 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	 */
 	@Override
 	public AccomodationRuleModel findById(final Integer accomodationRuleId) throws NumberFormatException {
-		if (!isIntegerValidAndPositive(accomodationRuleId)) {
-			throw new IllegalArgumentsCustomException(
-					"EL id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
-		}
+		// Id de la norma del alojamiento
+		validateParam(isIntegerValidAndPositive(accomodationRuleId),
+				"EL id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
 
 		return accomodationRuleRepo.findById(accomodationRuleId).get();
 	}
@@ -141,17 +126,14 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	 *                               número.
 	 */
 	@Override
-	public void deleteAccomodationRule(final Integer accomodationRuleId) {
-		if (!isIntegerValidAndPositive(accomodationRuleId)) {
-			throw new IllegalArgumentsCustomException(
-					"EL id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
-		}
+	public void deleteAccomodationRule(final Integer accomodationRuleId) throws NumberFormatException {
+		// Valdiar id de la norma de alojamiento
+		validateParam(isIntegerValidAndPositive(accomodationRuleId),
+				"EL id de la norma del alojamiento [ " + accomodationRuleId + " ] no es válido.");
 
 		// Comprobar si la norma del alojamiento existe
-		if (!accomodationRuleRepo.existsById(accomodationRuleId)) {
-			log.error("La norma del alojamiento a eliminar no existe.");
-			throw new NotFoundCustomException("La norma del alojamiento a eliminar no existe.");
-		}
+		validateParamNotFound(accomodationRuleRepo.existsById(accomodationRuleId),
+				"La norma del alojamiento a eliminar no existe.");
 
 		accomodationRuleRepo.deleteById(accomodationRuleId);
 
@@ -167,16 +149,13 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	 */
 	@Override
 	public List<AccomodationRuleModel> findByAccomodationRegNumber(final String regNumber) {
-		if (!isStringNotBlank(regNumber)) {
-			throw new IllegalArgumentsCustomException(
-					"El número de registro [ " + regNumber + " ] está vacío o no es válido.");
-		}
+		// Validar el número de registro de alojamiento
+		validateParam(isStringNotBlank(regNumber),
+				"El número de registro [ " + regNumber + " ] está vacío o no es válido.");
 
 		// Comprobar si existe el alojamiento.
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe un alojamiento con número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe un alojamiento con número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe un alojamiento con número de registro " + regNumber);
 
 		String listAllAccomodationRulesQuery = "SELECT arm "
 				+ "FROM AccomodationAccRuleModel aacrm, AccomodationRuleModel arm "

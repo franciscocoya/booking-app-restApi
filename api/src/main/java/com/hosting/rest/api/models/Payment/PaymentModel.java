@@ -1,5 +1,6 @@
 package com.hosting.rest.api.models.Payment;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -23,7 +24,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "PAYMENT")
-public class PaymentModel {
+public class PaymentModel implements Serializable{
+
+	private static final long serialVersionUID = 8006984459012648590L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

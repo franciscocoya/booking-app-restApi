@@ -1,5 +1,7 @@
 package com.hosting.rest.api.models.Plan.PlanFeatureAppPlan;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,8 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PLAN_FEATURE_APP_PLAN")
-public class PlanFeatureAppPlanModel {
+public class PlanFeatureAppPlanModel implements Serializable{
 
-    @EmbeddedId
+    private static final long serialVersionUID = -7237864221975856964L;
+    
+	@EmbeddedId
     private PlanFeatureAppPlanId planFeatureAppPlanId;
 }

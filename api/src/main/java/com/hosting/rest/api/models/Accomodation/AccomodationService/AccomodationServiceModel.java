@@ -1,5 +1,7 @@
 package com.hosting.rest.api.models.Accomodation.AccomodationService;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ACCOMODATION_SERVICE")
-public class AccomodationServiceModel {
+public class AccomodationServiceModel implements Serializable{
 
-    @Id
+    private static final long serialVersionUID = -6436863553135631714L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;

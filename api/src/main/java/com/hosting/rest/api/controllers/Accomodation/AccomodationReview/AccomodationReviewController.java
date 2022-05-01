@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,8 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.models.Accomodation.AccomodationReview.AccomodationReviewModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationReview.AccomodationReviewServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author Francisco Coya Abajo
@@ -26,18 +30,22 @@ import com.hosting.rest.api.services.Accomodation.AccomodationReview.Accomodatio
  * 
  */
 @RestController
+@CrossOrigin(origins = {"*"})
 @RequestMapping("accomodations/reviews")
+@Slf4j
 public class AccomodationReviewController {
 
 	@Autowired
 	private AccomodationReviewServiceImpl accomodationReviewService;
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
 	public AccomodationReviewModel addNewAccomodationReview(
 			@RequestBody final AccomodationReviewModel accomodationReviewToAdd) {
 		return accomodationReviewService.addNewAccomodationReview(accomodationReviewToAdd);
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PutMapping("{accomodationReviewId}")
 	public AccomodationReviewModel updateAccomodationReview(
 			@PathVariable(value = "accomodationReviewId") final String accomodationReviewId,
@@ -49,6 +57,7 @@ public class AccomodationReviewController {
 					.udpateAccomodationReview(Integer.parseInt(accomodationReviewId), accomodationReviewToUpdate);
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
 		}
@@ -56,23 +65,27 @@ public class AccomodationReviewController {
 		return accomodationReviewToReturn;
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{accomodationReviewId}")
 	public void deleteAccomodationReviewById(final String accomodationReviewId) {
 		try {
 			accomodationReviewService.deleteAccomodationReviewById(Integer.parseInt(accomodationReviewId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
 			throw new IllegalArgumentsCustomException(
 					"El id de la valoración del alojamiento [ " + accomodationReviewId + " ] no es válida.");
 		}
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}")
 	public List<AccomodationReviewModel> listAccomodationReviewsByAccomodationId(
 			@PathVariable(value = "registerNumber") final String regNumber) {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/u/{userId}")
 	public List<AccomodationReviewModel> findAllAccomodationReviewsByUserId(
 			@PathVariable(value = "userId") final String userId) {
@@ -82,17 +95,20 @@ public class AccomodationReviewController {
 			userReviews = accomodationReviewService.findByUserId(Integer.parseInt(userId));
 
 		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario [ " + userId + " ] introducido no es un valor numérico.");
 			throw new IllegalArgumentsCustomException(
 					"El id de usuario [ " + userId + " ] introducido no es un valor numérico.");
 		}
 		return userReviews;
 	}
 
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}/stars")
 	public Double getAccomodationReviewStarsAverage(@PathVariable(value = "registerNumber") final String regNumber) {
 		return accomodationReviewService.getAccomodationReviewAverageStars(regNumber);
 	}
 
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}/latest")
 	public List<AccomodationReviewModel> findLastAccomodationReviews(
 			@PathVariable(value = "registerNumber") final String regNumber) {
