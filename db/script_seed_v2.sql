@@ -219,7 +219,8 @@ INSERT INTO ACCOMODATION_CATEGORY(ID, ACC_CAT) VALUES(7, 'Estudio');
 -- SUPERFICIE: 75 METROS CUADRADOS
 -- PRECIO: 35€ / NOCHE
 INSERT INTO ACCOMODATION_LOCATION(ID, LAT, LNG, DIRECTION, CITY, ZIP) VALUES(1, 42.59855643669309, -5.576348640183169, 'Av. de Roma, 3', 'León', 24001);
-INSERT INTO ACCOMODATION(REG_NUM, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0001234A', 3, 1, 2, 35, 4, 75, 1, 1, 1);
+INSERT INTO ACCOMODATION(REG_NUM, DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0001234A', 'El moderno apartamento cuenta con una habitación independiente con cama de matrimonio y tv. El salón tiene un sofá cama doble, tv y un agradable calefactor eléctrico led. Cocina totalmente equipada y utensilios básicos para cocinar. Baño amplio con ducha. Calefacción y wifi incluidos.
+cuenta con un dormitorio con cama doble y televisor. La sala de estar cuenta con un sofá cama para 2 personas, televisor y un cómodo calentador eléctrico led. Cocina totalmente equipada. El baño tiene una ducha. Sistema de calefacción y WiFi incluido.', 3, 1, 2, 35, 4, 75, 1, 1, 1);
 
 -- RULES
 INSERT INTO ACCOMODATION_ACC_RULE(ID_ACC, ID_ACC_RULE) VALUES('0001234A', 1);
@@ -266,8 +267,8 @@ INSERT INTO ACCOMODATION_ACC_IMAGE(ID_ACC_IMAGE, ID_ACC) VALUES(5, '0001234A');
 -- SUPERFICIE: 40 METROS CUADRADOS
 -- PRECIO: 89.99€ / NOCHE
 INSERT INTO ACCOMODATION_LOCATION(ID, LAT, LNG, DIRECTION, CITY, ZIP) VALUES(2, 42.59719114135686, -5.574461714926381, 'Av. de Ordoño, 19', 'León', 24001);
-INSERT INTO ACCOMODATION(REG_NUM, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, 
-PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0005678B', 2, 1, 1, 35, 2, 89.99, 2, 2, 3);
+INSERT INTO ACCOMODATION(REG_NUM, DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, 
+PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0005678B', 'Estudio en el centro de León, a 200m de la Catedral y los monumentos más emblemáticos de la ciudad. El alojamiento ofrece todos las facilidades para que disfrutes de unos días inolvidables en León.', 2, 1, 1, 35, 2, 89.99, 2, 2, 3);
 
 -- RULES
 INSERT INTO ACCOMODATION_ACC_RULE(ID_ACC, ID_ACC_RULE) VALUES('0005678B', 1);

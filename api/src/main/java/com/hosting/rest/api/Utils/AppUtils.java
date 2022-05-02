@@ -40,7 +40,7 @@ public class AppUtils {
 	 * @return
 	 */
 	public static Boolean isStringNotBlank(final String idToCheck) {
-		return !idToCheck.isBlank() && idToCheck.length() > 0 && isNotNull(idToCheck);
+		return !idToCheck.equals("") && idToCheck.length() > 0 && isNotNull(idToCheck);
 	}
 
 	/**

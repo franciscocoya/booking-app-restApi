@@ -230,6 +230,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		validateParamNotFound(accomodationRepo.existsById(regNumber),
 				"No existe un alojamiento con número de registro " + regNumber);
 
+		// Descripción
+		originalAccomodation.setDescription(accomodationToUpdate.getDescription());
+		
 		// Número de habitaciones
 		originalAccomodation.setNumOfBedRooms(accomodationToUpdate.getNumOfBedRooms());
 

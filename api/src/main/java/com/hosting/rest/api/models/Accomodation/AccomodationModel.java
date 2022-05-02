@@ -39,6 +39,9 @@ public class AccomodationModel implements Serializable {
 	@Id
 	@Column(name = "REG_NUM")
 	private String registerNumber;
+	
+	@Column(name = "DESCRIPTION")
+	private String description;
 
 	@Column(name = "BEDS")
 	private Integer numOfBeds;

@@ -65,7 +65,7 @@ public class AccomodationReviewController {
 		return accomodationReviewToReturn;
 	}
 
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{accomodationReviewId}")
 	public void deleteAccomodationReviewById(final String accomodationReviewId) {
 		try {
@@ -78,7 +78,7 @@ public class AccomodationReviewController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}")
 	public List<AccomodationReviewModel> listAccomodationReviewsByAccomodationId(
 			@PathVariable(value = "registerNumber") final String regNumber) {
@@ -108,7 +108,7 @@ public class AccomodationReviewController {
 		return accomodationReviewService.getAccomodationReviewAverageStars(regNumber);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{registerNumber}/latest")
 	public List<AccomodationReviewModel> findLastAccomodationReviews(
 			@PathVariable(value = "registerNumber") final String regNumber) {
