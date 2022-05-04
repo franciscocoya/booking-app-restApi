@@ -64,7 +64,7 @@ public class UserReviewController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{userId}")
 	public List<HostReviewModel> findUserReviewsOfHostUser(@PathVariable(value = "userId") final String userId) {
 		List<HostReviewModel> hosts = null;
