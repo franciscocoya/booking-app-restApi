@@ -81,7 +81,7 @@ INSERT INTO USER_CONFIGURATION(ID, ID_APP_LANGUAGE, ID_CURRENCY) VALUES(2, 2, 10
 -- LANGUAGES: SPANISH AND ENGLISH
 -- VERIFIED: NO
 -- PLAN: NUM.1
--- PASS: password1 en bcrypt
+-- PASS: password1 --> $2a$04$GJ85Ihcglhbqac2zc3z3A.C3v55FMmN8.qGQ8FlNBCuyLtQ5/TyMO
 INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(1, 'Samuel', 'Cooper', 'samuel.cooper@gmail.com', '773893743 ', '$2a$04$GJ85Ihcglhbqac2zc3z3A.C3v55FMmN8.qGQ8FlNBCuyLtQ5/TyMO', 1);
 INSERT INTO USER_HOST(ID, DNI, BIO, DIRECTION) VALUES(1, '15412808W', '¡Me encanta viajar! Por ello, ofrezco no sólo un hogar en Granada a la gente que viene de fuera, sino que me encantará aconsejarles sobre los sitios más bonitos para pasear, mis bares o restaurantes favoritos, las vistas más bonitas de la ciudad,...', 'C/ Canónigo Valiño, 28');
 INSERT INTO HOST_LANGUAGE(ID_HOST, ID_LANG, IS_NATIVE) VALUES(1, 1, TRUE); # SPANISH
@@ -93,14 +93,14 @@ INSERT INTO PLAN_SUBSCRIPTION(ID_PLAN, ID_USER) VALUES(1, 1);
 -- SURNAME: Moreno
 -- EMAIL: dana.moreno@gmail.com
 -- PHONE: +34 680 745 322
--- PASS: hello --> 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(2, 'Dana', 'Moreno', 'dana.moreno@gmail.com', '680745322', '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824', 1);
+-- PASS: hello --> $2a$12$QUek6cYr28DOEyiCElA95e0z6DzygeYL7ouf70.AA541Wh4LJPyfu
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(2, 'Dana', 'Moreno', 'dana.moreno@gmail.com', '680745322', '$2a$12$QUek6cYr28DOEyiCElA95e0z6DzygeYL7ouf70.AA541Wh4LJPyfu', 1);
 
 -- NAME: Ardalion
 -- SURNAME: Meza Ocampo
 -- EMAIL: ardalion.mezao@gmail.com
 -- PHONE: +34 720 671 778
--- PASS: ardalion --> 42013f8cda89656ebfa5be38fa95a18dc09c404e73c1446454d5edd0c7ed3fe8
+-- PASS: ardalion --> $2a$12$jIDE.Hvw7itNBQwv6zxCWebjpEqoalGvN3jTfvTnXplpCjh4Xw/v2
 
 -- >> HOST
 
@@ -108,7 +108,7 @@ INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATIO
 -- LANGUAGES: SPANISH
 
 -- PLAN: NUM.4
-INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(3, 'Ardalion', 'Meza Ocampo', 'ardalion.mezao@gmail.com', '720671778', '42013f8cda89656ebfa5be38fa95a18dc09c404e73c1446454d5edd0c7ed3fe8', 2);
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(3, 'Ardalion', 'Meza Ocampo', 'ardalion.mezao@gmail.com', '720671778', '$2a$12$jIDE.Hvw7itNBQwv6zxCWebjpEqoalGvN3jTfvTnXplpCjh4Xw/v2', 2);
 INSERT INTO USER_HOST(ID, DNI, BIO, DIRECTION) VALUES(3, '14055845Q', 'Vivo en León con mi familia en una zona muy tranquila y muy cerca del centro de la ciudad (10min).', 'Avda/ Mariano Andrés, 120');
 INSERT INTO HOST_LANGUAGE(ID_HOST, ID_LANG, IS_NATIVE) VALUES(3, 1, TRUE); # SPANISH
 
@@ -118,7 +118,7 @@ INSERT INTO PLAN_SUBSCRIPTION(ID_PLAN, ID_USER) VALUES(4, 3);
 -- SURNAME: Soto Pérez
 -- EMAIL: marta.sotop@gmail.com
 -- PHONE: +34 664 889 909
--- PASS: tY1uU#%79hMv --> 5621fb2d8e35bcd5df5585d98d2e9de837b8ecb71cfdf6a01e6f184f29f0323b
+-- PASS: tY1uU#%79hMv --> $2a$12$hkP/e2Y2VqkTwq3Dg0sQDOCo950lxE/zMap5Joq5YdBxDNCxX4zYu
 
 -- >> HOST
 
@@ -127,7 +127,7 @@ INSERT INTO PLAN_SUBSCRIPTION(ID_PLAN, ID_USER) VALUES(4, 3);
 -- VERIFIED: YES
 
 -- PLAN: NUM.3
-INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(4, 'Marta', 'Soto Pérez', 'marta.sotop@gmail.com', '664889909', '5621fb2d8e35bcd5df5585d98d2e9de837b8ecb71cfdf6a01e6f184f29f0323b', 1);
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(4, 'Marta', 'Soto Pérez', 'marta.sotop@gmail.com', '664889909', '$2a$12$hkP/e2Y2VqkTwq3Dg0sQDOCo950lxE/zMap5Joq5YdBxDNCxX4zYu', 1);
 INSERT INTO USER_HOST(ID, DNI, DIRECTION) VALUES(4, '10081139D', 'Avda/ de Europa 2');
 INSERT INTO HOST_LANGUAGE(ID_HOST, ID_LANG, IS_NATIVE) VALUES(4, 1, TRUE); # SPANISH
 INSERT INTO HOST_LANGUAGE(ID_HOST, ID_LANG) VALUES(4, 3); # ITALIAN
@@ -138,15 +138,19 @@ INSERT INTO PLAN_SUBSCRIPTION(ID_PLAN, ID_USER) VALUES(3, 4);
 -- SURNAME: Rodríguez Fernández
 -- EMAIL: antonio.rodfer@gmail.com
 -- PHONE: +34 757 791 565
--- PASS: Antonio1234* --> d3f6e1a3bb43cab47d8d63c472e11dd09ce2d82056e84183eba128468f1bf9eb
-INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(5, 'Antonio', 'Rodríguez Fernández', 'antonio.rodfer@gmail.com', '757791565', 'd3f6e1a3bb43cab47d8d63c472e11dd09ce2d82056e84183eba128468f1bf9eb', 1);
+-- PASS: Antonio1234* --> $2a$12$v3JFeMwVSLtQg3WsbNVIHe67ecIPqpdra.YK5dQiAVThXxIH8M55C
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(5, 'Antonio', 'Rodríguez Fernández', 'antonio.rodfer@gmail.com', '757791565', '$2a$12$v3JFeMwVSLtQg3WsbNVIHe67ecIPqpdra.YK5dQiAVThXxIH8M55C', 1);
 
 -- NAME: Marina 
 -- SURNAME: Riojas Sarabia
 -- EMAIL: marina22.rodsar@gmail.com
 -- PHONE: +34 648 773 354
--- PASS: RioMi22230*$ --> 302e141c154d80548630ad6aab3eaa49d88d401543cdc67373515e1597b16d0c
-INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(6, 'Marina', 'Riojas Sarabia', 'marina22.rodsar@gmail.com', '648773354', '302e141c154d80548630ad6aab3eaa49d88d401543cdc67373515e1597b16d0c', 2);
+-- PASS: RioMi22230*$ --> $2a$12$SrqfKU60SsBhPRIucQiKAOmNzTwWJeYXOrbuM2HMB0aOfd15pSC32
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(6, 'Marina', 'Riojas Sarabia', 'marina22.rodsar@gmail.com', '648773354', '$2a$12$SrqfKU60SsBhPRIucQiKAOmNzTwWJeYXOrbuM2HMB0aOfd15pSC32', 2);
+
+-- USUARIO ADMIN
+-- PASS: Cqc3MHB#aJbo!lr# --> $2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u
+INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS) VALUES(7, 'administrator', 'administrator', 'admin@leoncamp.es', '000000000', '$2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u');
 
 -- -------------
 -- ACCOMODATIONS SERVICES
@@ -219,8 +223,9 @@ INSERT INTO ACCOMODATION_CATEGORY(ID, ACC_CAT) VALUES(7, 'Estudio');
 -- SUPERFICIE: 75 METROS CUADRADOS
 -- PRECIO: 35€ / NOCHE
 INSERT INTO ACCOMODATION_LOCATION(ID, LAT, LNG, DIRECTION, CITY, ZIP) VALUES(1, 42.59855643669309, -5.576348640183169, 'Av. de Roma, 3', 'León', 24001);
-INSERT INTO ACCOMODATION(REG_NUM, DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0001234A', 'El moderno apartamento cuenta con una habitación independiente con cama de matrimonio y tv. El salón tiene un sofá cama doble, tv y un agradable calefactor eléctrico led. Cocina totalmente equipada y utensilios básicos para cocinar. Baño amplio con ducha. Calefacción y wifi incluidos.
-cuenta con un dormitorio con cama doble y televisor. La sala de estar cuenta con un sofá cama para 2 personas, televisor y un cómodo calentador eléctrico led. Cocina totalmente equipada. El baño tiene una ducha. Sistema de calefacción y WiFi incluido.', 3, 1, 2, 35, 4, 75, 1, 1, 1);
+INSERT INTO ACCOMODATION(REG_NUM, ACC_DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0001234A', 'El moderno apartamento cuenta con una habitación independiente con cama de matrimonio y tv. El salón tiene un sofá cama doble, tv y un agradable calefactor eléctrico led. Cocina totalmente equipada y utensilios básicos para cocinar. Baño amplio con ducha. Calefacción y wifi incluidos.
+cuenta con un dormitorio con cama doble y televisor. La sala de estar cuenta con un sofá cama para 2 personas, televisor y un cómodo calentador eléctrico led. Cocina totalmente equipada. El baño tiene una ducha. Sistema de calefacción y WiFi incluido.'
+, 3, 1, 2, 35, 4, 75, 1, 1, 1);
 
 -- RULES
 INSERT INTO ACCOMODATION_ACC_RULE(ID_ACC, ID_ACC_RULE) VALUES('0001234A', 1);
@@ -267,8 +272,9 @@ INSERT INTO ACCOMODATION_ACC_IMAGE(ID_ACC_IMAGE, ID_ACC) VALUES(5, '0001234A');
 -- SUPERFICIE: 40 METROS CUADRADOS
 -- PRECIO: 89.99€ / NOCHE
 INSERT INTO ACCOMODATION_LOCATION(ID, LAT, LNG, DIRECTION, CITY, ZIP) VALUES(2, 42.59719114135686, -5.574461714926381, 'Av. de Ordoño, 19', 'León', 24001);
-INSERT INTO ACCOMODATION(REG_NUM, DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, 
-PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0005678B', 'Estudio en el centro de León, a 200m de la Catedral y los monumentos más emblemáticos de la ciudad. El alojamiento ofrece todos las facilidades para que disfrutes de unos días inolvidables en León.', 2, 1, 1, 35, 2, 89.99, 2, 2, 3);
+INSERT INTO ACCOMODATION(REG_NUM, ACC_DESCRIPTION, BEDS, NUM_BATHROOMS, NUM_BEDROOMS, 
+PRICE_PER_NIGHT, GUESTS, AREA, ID_ACC_CATEGORY, ID_ACC_LOCATION, ID_USER_OWNER) VALUES('0005678B', 'Estudio en el centro de León, a 200m de la Catedral y los monumentos más emblemáticos de la ciudad. El alojamiento ofrece todos las facilidades para que disfrutes de unos días inolvidables en León.', 
+2, 1, 1, 35, 2, 89.99, 2, 2, 3);
 
 -- RULES
 INSERT INTO ACCOMODATION_ACC_RULE(ID_ACC, ID_ACC_RULE) VALUES('0005678B', 1);

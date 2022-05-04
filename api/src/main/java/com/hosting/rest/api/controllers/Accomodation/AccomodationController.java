@@ -68,7 +68,7 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all/limit")
 	public List<AccomodationModel> findAllAccomodations(@RequestParam(value = "max") final String maxResults) {
 		List<AccomodationModel> accomodations = null;
@@ -83,13 +83,13 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{regNumber}")
 	public AccomodationModel getAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		return accomodationService.getAccomodationById(regNumber.trim());
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("cities/{city}")
 	public Page<AccomodationModel> getAccomodationsByCity(@PathVariable(value = "city") final String city,
 			@RequestParam(value = "page") final String pageNumber, @RequestParam(value = "size") String size) {
@@ -110,7 +110,7 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,
@@ -119,13 +119,13 @@ public class AccomodationController {
 		return accomodationService.findByNearby(latitude, longitude, distance);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("category/{categoryName}")
 	public List<AccomodationModel> findByCategory(@PathVariable(value = "categoryName") final String categoryToFind) {
 		return accomodationService.findByCategory(categoryToFind);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("price")
 	public List<AccomodationModel> findByPriceRange(@RequestParam(name = "minPrice") final BigDecimal minPrice,
 			@RequestParam(name = "maxPrice") final BigDecimal maxPrice) {
@@ -145,7 +145,7 @@ public class AccomodationController {
 		accomodationService.removeAccomodationById(regNumber);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/user/{userId}")
 	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId){
 		List<AccomodationModel> accomodations = null;

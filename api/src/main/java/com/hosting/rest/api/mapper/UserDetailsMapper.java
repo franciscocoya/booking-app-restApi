@@ -1,11 +1,13 @@
 package com.hosting.rest.api.mapper;
 
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
-import static com.hosting.rest.api.controllers.User.UserRole.*;
+import static com.hosting.rest.api.controllers.User.UserRole.ROLE_ADMIN_USER;
+import static com.hosting.rest.api.controllers.User.UserRole.ROLE_BASE_USER;
+import static com.hosting.rest.api.controllers.User.UserRole.ROLE_HOST_USER;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,6 +22,15 @@ import com.hosting.rest.api.models.User.UserModel;
  *
  */
 public class UserDetailsMapper {
+
+	@Value("${booking.app.admin.id}")
+	private static String adminId;
+	
+	@Value("${booking.app.admin.name}")
+	private static String adminName;
+	
+	@Value("${booking.app.admin.email}")
+	private static String adminEmail;
 
 	/**
 	 * 
@@ -41,12 +52,23 @@ public class UserDetailsMapper {
 	 *         usuario <code>user</code>.
 	 */
 	public static List<SimpleGrantedAuthority> getAuthorities(final UserModel user) {
-		String userRoles = ROLE_ADMIN_USER.toString();
-
-		if (isNotNull(user)) {
-			userRoles = user instanceof UserHostModel ? ROLE_HOST_USER.toString() : ROLE_BASE_USER.toString();
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		
+		// Usuario admin
+		if (user.getName().equals(adminName) && user.getEmail().equals(adminEmail)
+				&& user.getId() == Integer.parseInt(adminId)) {
+			authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN_USER.toString()));
+		} else {
+			
+			if(user instanceof UserModel) {
+				authorities.add(new SimpleGrantedAuthority(ROLE_BASE_USER.toString()));
+			}
+			
+			if(user instanceof UserHostModel) {
+				authorities.add(new SimpleGrantedAuthority(ROLE_HOST_USER.toString()));
+			}
 		}
 
-		return Arrays.asList(new SimpleGrantedAuthority(userRoles));
+		return authorities;
 	}
 }

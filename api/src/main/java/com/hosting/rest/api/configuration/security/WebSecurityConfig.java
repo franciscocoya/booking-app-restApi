@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,15 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(final HttpSecurity httpSecurity) throws Exception {
-
-		// Autorizar sólamente las rutas de auth (signin, signup, ...)
-
-		// and().csrf()
-//		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
-//				.csrf().disable().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
-//				.antMatchers("/accomodations/all").permitAll().anyRequest().authenticated();
-		
+	protected void configure(final HttpSecurity httpSecurity) throws Exception {	
 		httpSecurity.requiresChannel()
 	      .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
 	      .requiresSecure().and().cors().and().csrf().disable()
@@ -60,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .authenticationEntryPoint(authEntryPoint).and()
 	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	      .and().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
-	      .antMatchers("/accomodations/all", "/accomodations/reviews/**").permitAll()
+	      .antMatchers(HttpMethod.GET, "/accomodations/**", "/users/**").permitAll()
 	      .anyRequest().authenticated();
 
 		// Configuración de CORS

@@ -47,7 +47,7 @@ public class AccomodationReviewReplyController {
 		return accomodationReviewReplyService.addNewAccomodationReviewReply(accomodationReviewReplyToAdd);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_HOST_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_HOST_USER')")
 	@GetMapping("r/{accomodationReviewId}")
 	public AccomodationReviewReplyModel findByAccomodationReviewId(
 			@PathVariable(name = "accomodationReviewId") final String accomodationReviewId) {

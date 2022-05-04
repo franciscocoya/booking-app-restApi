@@ -40,7 +40,7 @@ public class AccomodationModel implements Serializable {
 	@Column(name = "REG_NUM")
 	private String registerNumber;
 	
-	@Column(name = "DESCRIPTION")
+	@Column(name = "ACC_DESCRIPTION")
 	private String description;
 
 	@Column(name = "BEDS")

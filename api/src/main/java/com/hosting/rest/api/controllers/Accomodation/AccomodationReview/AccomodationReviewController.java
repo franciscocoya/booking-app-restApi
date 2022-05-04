@@ -85,7 +85,7 @@ public class AccomodationReviewController {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/u/{userId}")
 	public List<AccomodationReviewModel> findAllAccomodationReviewsByUserId(
 			@PathVariable(value = "userId") final String userId) {

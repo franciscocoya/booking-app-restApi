@@ -1,11 +1,10 @@
 package com.hosting.rest.api.services.UserDetails;
 
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.controllers.User.UserRole.ROLE_ADMIN_USER;
 import static com.hosting.rest.api.controllers.User.UserRole.ROLE_BASE_USER;
 import static com.hosting.rest.api.controllers.User.UserRole.ROLE_HOST_USER;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -37,26 +36,35 @@ public class UserDetailsImpl implements UserDetails {
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+
 	}
 
 	public static UserDetailsImpl build(final UserModel user) {
+
 		List<GrantedAuthority> authorities = getAuthoritiesList(user);
 
-		    return new UserDetailsImpl(
-		        user.getId(), 
-		        user.getEmail(),
-		        user.getPass(), 
-		        authorities);
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPass(), authorities);
 	}
 
 	public static List<GrantedAuthority> getAuthoritiesList(final UserModel user) {
-		String userRoles = ROLE_ADMIN_USER.toString();
+		List<GrantedAuthority> authorities = new ArrayList<>();
 
-		if (isNotNull(user)) {
-			userRoles = user instanceof UserHostModel ? ROLE_HOST_USER.toString() : ROLE_BASE_USER.toString();
+		// Usuario admin
+		if (user.getName().equals("administrator") && user.getEmail().equals("admin@leoncamp.es")
+				&& user.getId() == 7) {
+			authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN_USER.toString()));
+		} else {
+
+			if (user instanceof UserModel) {
+				authorities.add(new SimpleGrantedAuthority(ROLE_BASE_USER.toString()));
+			}
+
+			if (user instanceof UserHostModel) {
+				authorities.add(new SimpleGrantedAuthority(ROLE_HOST_USER.toString()));
+			}
 		}
 
-		return Arrays.asList(new SimpleGrantedAuthority(userRoles));
+		return authorities;
 	}
 
 	public Integer getId() {

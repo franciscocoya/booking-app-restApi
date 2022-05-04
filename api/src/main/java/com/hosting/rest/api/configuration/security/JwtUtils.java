@@ -50,30 +50,7 @@ public class JwtUtils {
 				.setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
 				.compact();
 	}
-
-	/**
-	 * Obtiene el token de autenticación
-	 * 
-	 * @param token
-	 * @param userDetails
-	 * @return
-	 */
-//	public static UsernamePasswordAuthenticationToken getAuthentication(final String token,
-//			final UserDetails userDetails) {
-//
-//		final JwtParser jwtParser = Jwts.parser().setSigningKey(SIGNING_KEY);
-//
-//		final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
-//
-//		final Claims claims = claimsJws.getBody();
-//
-//		final Collection<SimpleGrantedAuthority> authorities = Arrays
-//				.stream(claims.get(AUTHORITIES_KEY).toString().split(",")).map(SimpleGrantedAuthority::new)
-//				.collect(Collectors.toList());
-//
-//		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
-//	}
-
+	
 	/**
 	 * 
 	 * @param token
