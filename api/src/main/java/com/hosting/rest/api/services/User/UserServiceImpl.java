@@ -81,7 +81,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		// Datos del usuario
 		originalUser.setName(userToUpdate.getName());
 		originalUser.setSurname(userToUpdate.getSurname());
-		originalUser.setSurname(userToUpdate.getSurname());
+		originalUser.setPhone(userToUpdate.getPhone());
 		originalUser.setEmail(userToUpdate.getEmail());
 
 		return originalUser != null ? userRepo.save(originalUser) : null;
