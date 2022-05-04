@@ -145,7 +145,7 @@ public class AccomodationController {
 		accomodationService.removeAccomodationById(regNumber);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/user/{userId}")
 	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId){
 		List<AccomodationModel> accomodations = null;
