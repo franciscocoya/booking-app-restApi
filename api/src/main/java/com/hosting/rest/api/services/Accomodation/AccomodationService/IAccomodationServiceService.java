@@ -15,4 +15,6 @@ public interface IAccomodationServiceService {
 	public AccomodationServiceModel updateAccomodationService(final Integer accomodationServiceId, final AccomodationServiceModel accomodationService);
 
 	public List<AccomodationServiceModel> findAllAccomodationServicesFromAccomodation(final String regNumber);
+	
+	public List<AccomodationServiceModel> findAllAvailableAccomodations();
 }

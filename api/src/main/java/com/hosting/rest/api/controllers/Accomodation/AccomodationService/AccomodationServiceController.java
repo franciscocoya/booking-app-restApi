@@ -112,5 +112,11 @@ public class AccomodationServiceController {
 			@PathVariable(name = "regNumber") final String regNumber) {
 		return accomodationServiceService.findAllAccomodationServicesFromAccomodation(regNumber);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("all")
+	public List<AccomodationServiceModel> listAllAvailableAccomodations(){
+		return accomodationServiceService.findAllAvailableAccomodations();
+	}
 
 }

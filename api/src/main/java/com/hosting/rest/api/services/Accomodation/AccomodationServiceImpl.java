@@ -17,6 +17,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
@@ -34,7 +36,8 @@ import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
  * 
  * @author Francisco Coya
  * @version v1.0.3
- * @description Servicio que implementa las acciones relacionadas a los alojamientos.
+ * @description Servicio que implementa las acciones relacionadas a los
+ *              alojamientos.
  * 
  **/
 @Service
@@ -45,7 +48,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
-	
+
 	@Autowired
 	private IUserHostRepository userRepo;
 
@@ -232,7 +235,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		// Descripción
 		originalAccomodation.setDescription(accomodationToUpdate.getDescription());
-		
+
 		// Número de habitaciones
 		originalAccomodation.setNumOfBedRooms(accomodationToUpdate.getNumOfBedRooms());
 
@@ -348,15 +351,86 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	public List<AccomodationModel> findByUserId(final Integer userId) {
 		// Validar id de usuario
 		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
-		
+
 		// Comprobar si el usuario existe
 		validateParam(userRepo.existsById(userId), "No existe ningún usuario host con el id " + userId);
-		
-		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery("SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
-		
+
+		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery(
+				"SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
+
 		accomodationsByUserId.setParameter("userId", userId);
-		
+
 		return accomodationsByUserId.getResultList();
+	}
+
+	@Transactional
+	@Override
+	public void removeAccomodationImage(final String regNumber, final Integer imageId) {
+		// Validar número de registro
+		validateParam(isStringNotBlank(regNumber), "El número de registro introducido está vacío");
+
+		// Comprobar que existe el alojamiento
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
+
+		// Validar id de la imagen
+		validateParam(isIntegerValidAndPositive(imageId), "El id de la imagen a borrar no es válido.");
+
+//		AccomodationModel originalAccomodation = accomodationRepo.getById(regNumber);
+//
+//		if (originalAccomodation.getAccomodationImages().isEmpty()) {
+//			log.error("El alojamiento [ " + regNumber + " ] no tiene imágenes.");
+//			throw new NotFoundCustomException("El alojamiento [ " + regNumber + " ] no tiene imágenes.");
+//		}
+//
+//		AccomodationAccImageModel imgToRemove = originalAccomodation.getAccomodationImages().parallelStream()
+//				.filter(img -> img.getAccomodationAccImageId().getIdAccomodationImage().getId() == imageId).findFirst()
+//				.get();
+//
+//		originalAccomodation.getAccomodationImages().remove(imgToRemove);
+
+		em.createQuery(
+				"DELETE FROM AccomodationAccImageModel accim WHERE accim.accomodationAccImageId.idAccomodationImage.id = :imgId")
+				.setParameter("imgId", imageId).executeUpdate();
+
+		em.createQuery("DELETE FROM AccomodationImageModel aim WHERE aim.id = :imgId").setParameter("imgId", imageId)
+				.executeUpdate();
+
+//		accomodationRepo.save(originalAccomodation);
+
+	}
+
+	@Transactional
+	@Override
+	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber, final AccomodationImageModel imageToAdd) {
+		
+		// Validar número de registro
+		validateParam(isStringNotBlank(regNumber), "El número de registro introducido está vacío");
+
+		// Comprobar que existe el alojamiento
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
+
+		// Validar la imagen
+		validateParam(isNotNull(imageToAdd), "La imagen a añadir está vacía.");
+
+
+
+		// Crear la imagen
+		em.createNativeQuery("INSERT INTO ACCOMODATION_IMAGE(IMG_URL) VALUES(:imgUrl)")
+				.setParameter("imgUrl", imageToAdd.getImageUrl()).executeUpdate();
+		
+		// Obtener el id de la última imagen
+		TypedQuery<AccomodationImageModel> lastImage = em.createQuery(
+				"SELECT aim FROM AccomodationImageModel aim ORDER BY aim.id DESC", AccomodationImageModel.class);
+
+		Integer lastImageId = lastImage.setMaxResults(1).getSingleResult().getId();
+
+		// Añadir la imagen al alojamiento indicado
+		em.createNativeQuery("INSERT INTO ACCOMODATION_ACC_IMAGE(ID_ACC, ID_ACC_IMAGE) VALUES(:regNumber, :imgId)")
+				.setParameter("regNumber", regNumber).setParameter("imgId", lastImageId).executeUpdate();
+
+		return accomodationRepo.findById(regNumber).get();
 	}
 
 }

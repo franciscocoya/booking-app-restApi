@@ -6,6 +6,8 @@ import static com.hosting.rest.api.Utils.PaginationConstants.DEFAULT_PAGE_SIZE;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -159,6 +162,25 @@ public class AccomodationController {
 		}
 		
 		return accomodations;
+	}
+	
+	@DeleteMapping("/{regNumber}/images/{imageId}")
+	public void deleteAccomodationImage(@PathVariable(name = "regNumber") final String regNumber, @PathVariable(name = "imageId") final String imageId) {
+		try {
+			accomodationService.removeAccomodationImage(regNumber, Integer.parseInt(imageId));
+			
+		} catch (NumberFormatException e) {
+			log.error("El id de la imagen a borrar [ " + imageId + " ] no es un número.");
+			throw new IllegalArgumentsCustomException("El id de la imagen a borrar no es un número");
+		}
+	}
+	
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PostMapping("/{regNumber}/images/new")
+	public AccomodationModel addNewImageToAccomodation(@PathVariable(name = "regNumber") final String regNumber,
+			@Valid @RequestBody final AccomodationImageModel imgToAdd){
+		
+		return accomodationService.addNewImageToExistingAccomodation(regNumber, imgToAdd);
 	}
 
 }

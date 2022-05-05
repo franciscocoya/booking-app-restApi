@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
@@ -40,6 +41,10 @@ public interface IAccomodationService {
 			final AccomodationModel accomodationToUpdate);
 
 	public String removeAccomodationById(final String regNumber);
+	
+	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber, final AccomodationImageModel imageToAdd);
+	
+	public void removeAccomodationImage(final String regNumber, final Integer imageId);
 
 	public Page<AccomodationModel> findByCity(final String cityToSearch, final Integer pageNumber, final Integer size);
 

@@ -165,4 +165,12 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 
 		return accomodationServiceRepo.findById(accomodationServiceId).get();
 	}
+
+	/**
+	 * Listado de todos los servicios disponibles en la aplicación.
+	 */
+	@Override
+	public List<AccomodationServiceModel> findAllAvailableAccomodations() {
+		return accomodationServiceRepo.findAll();
+	}
 }
