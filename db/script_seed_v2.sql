@@ -374,7 +374,7 @@ INSERT INTO SAVED_ACCOMODATION(ID, ID_USER, ID_ACC) VALUES(1, 1, '0001234A');
 
 -- EXCEPTION: HOST USER CANNOT RATE HIS/HER ACCOMODATIONS
 
-INSERT INTO ACCOMODATION_REVIEW(CONTENT, STARS, ID_USER, ID_ACC) VALUES('El alojamiento está como en las fotos, hemos pasado unos días increíbles', 4, 2, '0001234A');
+INSERT INTO ACCOMODATION_REVIEW(ID, CONTENT, STARS, ID_USER, ID_ACC) VALUES(1, 'El alojamiento está como en las fotos, hemos pasado unos días increíbles', 4, 2, '0001234A');
 
 
 -- -----------
