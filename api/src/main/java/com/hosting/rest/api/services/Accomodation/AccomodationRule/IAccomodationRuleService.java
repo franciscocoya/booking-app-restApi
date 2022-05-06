@@ -16,4 +16,6 @@ public interface IAccomodationRuleService {
 	public void deleteAccomodationRule(final Integer accomodationRuleId);
 
 	public List<AccomodationRuleModel> findByAccomodationRegNumber(final String regNumber);
+	
+	public List<AccomodationRuleModel> findAllRules();
 }

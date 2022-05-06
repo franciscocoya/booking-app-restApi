@@ -97,5 +97,11 @@ public class AccomodationRuleController {
 			@PathVariable(value = "accomodationRegNumber") String regNumber) {
 		return accomodationRuleService.findByAccomodationRegNumber(regNumber);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("all")
+	public List<AccomodationRuleModel> listAllAvailableAccomodationRules(){
+		return accomodationRuleService.findAllRules();
+	}
 
 }

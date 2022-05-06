@@ -170,4 +170,9 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 		return listAccomodationRules.getResultList();
 	}
 
+	@Override
+	public List<AccomodationRuleModel> findAllRules() {
+		return accomodationRuleRepo.findAll();
+	}
+
 }
