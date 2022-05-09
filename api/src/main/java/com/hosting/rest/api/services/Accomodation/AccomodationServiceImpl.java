@@ -402,8 +402,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 	@Transactional
 	@Override
-	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber, final AccomodationImageModel imageToAdd) {
-		
+	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber,
+			final AccomodationImageModel imageToAdd) {
+
 		// Validar número de registro
 		validateParam(isStringNotBlank(regNumber), "El número de registro introducido está vacío");
 
@@ -414,12 +415,10 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// Validar la imagen
 		validateParam(isNotNull(imageToAdd), "La imagen a añadir está vacía.");
 
-
-
 		// Crear la imagen
 		em.createNativeQuery("INSERT INTO ACCOMODATION_IMAGE(IMG_URL) VALUES(:imgUrl)")
 				.setParameter("imgUrl", imageToAdd.getImageUrl()).executeUpdate();
-		
+
 		// Obtener el id de la última imagen
 		TypedQuery<AccomodationImageModel> lastImage = em.createQuery(
 				"SELECT aim FROM AccomodationImageModel aim ORDER BY aim.id DESC", AccomodationImageModel.class);

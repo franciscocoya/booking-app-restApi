@@ -24,7 +24,7 @@ import com.hosting.rest.api.services.Accomodation.AccomodationService.Accomodati
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/accomodations/services")
 @Slf4j
 public class AccomodationServiceController {
@@ -48,7 +48,7 @@ public class AccomodationServiceController {
 
 		try {
 			accomodationServiceService.deleteAccomodationServiceById(Integer.parseInt(accomodationServiceId));
-			
+
 		} catch (NumberFormatException nfe) {
 			log.error("El id del servicio de alojamiento [ " + accomodationServiceId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException(
@@ -95,15 +95,21 @@ public class AccomodationServiceController {
 		return accomodationServiceToReturn;
 	}
 
-
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccServiceModel addNewServiceToAccomodation(
-			@PathVariable(name = "regNumber") final String regNumber,
-			@RequestBody final AccomodationServiceModel accomodationServiceToAdd) {
+			@PathVariable(name = "regNumber") final String regNumber, @RequestBody final String serviceId) {
+		AccomodationAccServiceModel accomodationServiceToReturn = null;
+		try {
+			accomodationServiceToReturn = accomodationAccServiceService
+					.addNewAccomodationServiceToAccomodation(regNumber, Integer.parseInt(serviceId));
 
-		return accomodationAccServiceService.addNewAccomodationServiceToAccomodation(regNumber,
-				accomodationServiceToAdd);
+		} catch (NumberFormatException nfe) {
+			log.error("El id del servicio no es un número.");
+			throw new IllegalArgumentsCustomException("El id del servicio no es un número.");
+		}
+
+		return accomodationServiceToReturn;
 	}
 
 	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
@@ -112,10 +118,10 @@ public class AccomodationServiceController {
 			@PathVariable(name = "regNumber") final String regNumber) {
 		return accomodationServiceService.findAllAccomodationServicesFromAccomodation(regNumber);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
-	public List<AccomodationServiceModel> listAllAvailableAccomodations(){
+	public List<AccomodationServiceModel> listAllAvailableAccomodations() {
 		return accomodationServiceService.findAllAvailableAccomodations();
 	}
 

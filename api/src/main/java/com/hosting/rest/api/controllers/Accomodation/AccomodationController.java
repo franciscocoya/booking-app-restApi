@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
+import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
+import com.hosting.rest.api.services.Accomodation.AccomodationAccService.AccomodationAccServiceServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,13 +37,16 @@ import lombok.extern.slf4j.Slf4j;
  * @apiNote Controlador de alojamientos.
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/accomodations")
 @Slf4j
 public class AccomodationController {
 
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
+	
+	@Autowired
+	private AccomodationAccServiceServiceImpl accomodationAccServiceService;
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
@@ -49,7 +54,8 @@ public class AccomodationController {
 		return accomodationService.addNewAccomodation(accomodationModel);
 	}
 
-	//@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	// @PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or
+	// hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public Page<AccomodationModel> getAllAccomodationPaging(
 			@RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) final String pageNumber,
@@ -65,7 +71,7 @@ public class AccomodationController {
 			throw new IllegalArgumentsCustomException(
 					"Alguno de los valores parámetros pasados para listar los alojamientos no es un número. ", nfe);
 		}
-		
+
 		accomodations.getContent().get(0).getIdUserHost().getId();
 
 		return accomodations;
@@ -147,40 +153,59 @@ public class AccomodationController {
 	public void removeAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		accomodationService.removeAccomodationById(regNumber);
 	}
-	
+
 //	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/user/{userId}")
-	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId){
+	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId) {
 		List<AccomodationModel> accomodations = null;
-		
+
 		try {
 			accomodations = accomodationService.findByUserId(Integer.parseInt(userId));
-			
+
 		} catch (NumberFormatException nfe) {
 			log.error("El id de usuario no es un número.");
 			throw new IllegalArgumentsCustomException("El id de usuario no es un número.");
 		}
-		
+
 		return accomodations;
 	}
-	
+
 	@DeleteMapping("/{regNumber}/images/{imageId}")
-	public void deleteAccomodationImage(@PathVariable(name = "regNumber") final String regNumber, @PathVariable(name = "imageId") final String imageId) {
+	public void deleteAccomodationImage(@PathVariable(name = "regNumber") final String regNumber,
+			@PathVariable(name = "imageId") final String imageId) {
 		try {
 			accomodationService.removeAccomodationImage(regNumber, Integer.parseInt(imageId));
-			
+
 		} catch (NumberFormatException e) {
 			log.error("El id de la imagen a borrar [ " + imageId + " ] no es un número.");
 			throw new IllegalArgumentsCustomException("El id de la imagen a borrar no es un número");
 		}
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("/{regNumber}/images/new")
 	public AccomodationModel addNewImageToAccomodation(@PathVariable(name = "regNumber") final String regNumber,
-			@Valid @RequestBody final AccomodationImageModel imgToAdd){
-		
+			@Valid @RequestBody final AccomodationImageModel imgToAdd) {
+
 		return accomodationService.addNewImageToExistingAccomodation(regNumber, imgToAdd);
+	}
+
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PostMapping("/{regNumber}/services/new")
+	public AccomodationAccServiceModel addNewServiceToExistingAccomodation(
+			@PathVariable(name = "regNumber") final String regNumber,
+			@RequestParam(name = "service") final String serviceId) {
+		AccomodationAccServiceModel accomodationToReturn = null;
+
+		try {
+			accomodationToReturn = accomodationAccServiceService.addNewAccomodationServiceToAccomodation(regNumber,
+					Integer.parseInt(serviceId));
+
+		} catch (NumberFormatException nfe) {
+			log.error("El id del servicio a añadir al alojamiento no es un número.");
+		}
+
+		return accomodationToReturn;
 	}
 
 }

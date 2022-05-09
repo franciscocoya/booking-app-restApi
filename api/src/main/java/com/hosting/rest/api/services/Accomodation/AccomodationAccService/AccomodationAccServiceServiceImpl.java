@@ -1,8 +1,9 @@
 package com.hosting.rest.api.services.Accomodation.AccomodationAccService;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -61,29 +62,27 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 	@Override
 	@Transactional
 	public AccomodationAccServiceModel addNewAccomodationServiceToAccomodation(final String regNumber,
-			final AccomodationServiceModel accomodationServiceToAdd) {
+			final Integer serviceId) {
+		// Validar número de registro del alojamiento
+		validateParam(isStringNotBlank(regNumber), "El número de registro de alojamiento está vacío");
 
-		if (!isNotNull(accomodationServiceToAdd)) {
-			log.error("Alguno de los valores introducidos para el servicio del alojamiento no es válido.");
-			throw new IllegalArgumentsCustomException(
-					"Alguno de los valores introducidos para el servicio del alojamiento no es válido.");
-		}
+		// Validar id del servicio
+		validateParam(isIntegerValidAndPositive(serviceId), "El id del servicio a añadir no es válido.");
 
-		if (!isStringNotBlank(regNumber)) {
-			log.error("El número de registro de alojamiento está vacío");
-			throw new IllegalArgumentsCustomException("El número de registro de alojamiento está vacío");
-		}
+		// Comprobar si existe el servicio
+		validateParamNotFound(accomodationServiceRepo.existsById(serviceId),
+				"El servicio a añadir al alojamiento no existe.");
 
 		// Comprobar si existe el alojamiento
-		if (!accomodationRepo.existsById(regNumber)) {
-			log.error("No existe el alojamiento con número de registro " + regNumber);
-			throw new NotFoundCustomException("No existe el alojamiento con número de registro " + regNumber);
-		}
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe el alojamiento con número de registro " + regNumber);
+		
+		AccomodationServiceModel serviceToAdd = accomodationServiceRepo.getById(serviceId);
 
 		// Clave compuesta por el número de registro del alojamiento y el id del
 		// servicio a añadir al alojamiento.
 		AccomodationAccServiceId newAccomodationServiceId = new AccomodationAccServiceId(regNumber,
-				accomodationServiceToAdd);
+				serviceToAdd);
 
 		return accomodationAccServiceRepo.save(new AccomodationAccServiceModel(newAccomodationServiceId));
 	}

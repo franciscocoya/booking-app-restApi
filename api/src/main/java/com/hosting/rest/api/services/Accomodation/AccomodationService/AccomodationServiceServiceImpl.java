@@ -107,7 +107,7 @@ public class AccomodationServiceServiceImpl implements IAccomodationServiceServi
 		validateParam(isStringNotBlank(regNumber), "El número de registro [ " + regNumber + " ] no es válido.");
 
 		// Comprobar si existe el alojamiento
-		validateParamNotFound(!accomodationRepo.existsById(regNumber),
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
 				"No existe un alojamiento con número de registro " + regNumber);
 
 		String findAllAccomodationServicesByRegisterNumberQuery = "SELECT asm "
