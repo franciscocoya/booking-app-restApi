@@ -98,7 +98,7 @@ public class AccomodationServiceController {
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccServiceModel addNewServiceToAccomodation(
-			@PathVariable(name = "regNumber") final String regNumber, @RequestBody final String serviceId) {
+			@PathVariable(name = "regNumber") final String regNumber, @RequestParam(name="service") final String serviceId) {
 		AccomodationAccServiceModel accomodationServiceToReturn = null;
 		try {
 			accomodationServiceToReturn = accomodationAccServiceService
@@ -110,6 +110,20 @@ public class AccomodationServiceController {
 		}
 
 		return accomodationServiceToReturn;
+	}
+
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@DeleteMapping("{regNumber}/delete")
+	public void deleteServiceFromExistingAccomodation(@PathVariable(name = "regNumber") final String regNumber,
+			@RequestParam(name = "service") final String accomodationServiceId) {
+		try {
+			accomodationAccServiceService.deleteServiceFromAccomodation(Integer.parseInt(accomodationServiceId),
+					regNumber);
+
+		} catch (NumberFormatException nfe) {
+			log.error("El id del servicio no es un número.");
+			throw new IllegalArgumentsCustomException("El id del servicio no es un número.");
+		}
 	}
 
 	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")

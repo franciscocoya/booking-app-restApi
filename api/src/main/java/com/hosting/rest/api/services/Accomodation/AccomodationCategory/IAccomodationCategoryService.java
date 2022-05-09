@@ -8,6 +8,10 @@ public interface IAccomodationCategoryService {
 
 	public AccomodationCategoryModel addNewAccomodationCategory(final AccomodationCategoryModel accomodationToAdd);
 	
+	public AccomodationCategoryModel updateAccomodationCategory(final Integer accomodationCategoryId, final AccomodationCategoryModel accomodationCategoryToUpdate);
+	
+	public void updateAccomodationCategoryOfAccomodation(final String regNumber, final AccomodationCategoryModel accomodationToUpdate);
+	
 	public void deleteAccomodationCategoryById(final Integer accomodationCategoryId);
 	
 	public List<AccomodationCategoryModel> findAllAccomodationCategories();

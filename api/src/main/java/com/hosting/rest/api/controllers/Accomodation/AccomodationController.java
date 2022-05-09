@@ -23,11 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.models.Accomodation.AccomodationCategoryModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
-import com.hosting.rest.api.models.Accomodation.AccomodationService.AccomodationAccServiceModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
 import com.hosting.rest.api.services.Accomodation.AccomodationAccService.AccomodationAccServiceServiceImpl;
+import com.hosting.rest.api.services.Accomodation.AccomodationCategory.AccomodationCategoryServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +47,7 @@ public class AccomodationController {
 	private AccomodationServiceImpl accomodationService;
 	
 	@Autowired
-	private AccomodationAccServiceServiceImpl accomodationAccServiceService;
+	private AccomodationCategoryServiceImpl accomodationCategoryService;
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
@@ -54,8 +55,6 @@ public class AccomodationController {
 		return accomodationService.addNewAccomodation(accomodationModel);
 	}
 
-	// @PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or
-	// hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public Page<AccomodationModel> getAllAccomodationPaging(
 			@RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) final String pageNumber,
@@ -77,7 +76,6 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all/limit")
 	public List<AccomodationModel> findAllAccomodations(@RequestParam(value = "max") final String maxResults) {
 		List<AccomodationModel> accomodations = null;
@@ -92,13 +90,11 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{regNumber}")
 	public AccomodationModel getAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		return accomodationService.getAccomodationById(regNumber.trim());
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("cities/{city}")
 	public Page<AccomodationModel> getAccomodationsByCity(@PathVariable(value = "city") final String city,
 			@RequestParam(value = "page") final String pageNumber, @RequestParam(value = "size") String size) {
@@ -119,7 +115,6 @@ public class AccomodationController {
 		return accomodations;
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,
@@ -128,13 +123,11 @@ public class AccomodationController {
 		return accomodationService.findByNearby(latitude, longitude, distance);
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("category/{categoryName}")
 	public List<AccomodationModel> findByCategory(@PathVariable(value = "categoryName") final String categoryToFind) {
 		return accomodationService.findByCategory(categoryToFind);
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("price")
 	public List<AccomodationModel> findByPriceRange(@RequestParam(name = "minPrice") final BigDecimal minPrice,
 			@RequestParam(name = "maxPrice") final BigDecimal maxPrice) {
@@ -149,12 +142,18 @@ public class AccomodationController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PatchMapping("{regNumber}/category/edit")
+	public void updateAccomodationCategoryByRegNumber(@PathVariable(name = "regNumber") final String regNumber,
+			@Valid @RequestBody final AccomodationCategoryModel accomodationCategoryToUpdate) {
+		accomodationCategoryService.updateAccomodationCategoryOfAccomodation(regNumber, accomodationCategoryToUpdate);
+	}
+
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{regNumber}")
 	public void removeAccomodationById(@PathVariable(value = "regNumber") final String regNumber) {
 		accomodationService.removeAccomodationById(regNumber);
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("/user/{userId}")
 	public List<AccomodationModel> findByUserId(@PathVariable(name = "userId") final String userId) {
 		List<AccomodationModel> accomodations = null;
@@ -188,24 +187,6 @@ public class AccomodationController {
 			@Valid @RequestBody final AccomodationImageModel imgToAdd) {
 
 		return accomodationService.addNewImageToExistingAccomodation(regNumber, imgToAdd);
-	}
-
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
-	@PostMapping("/{regNumber}/services/new")
-	public AccomodationAccServiceModel addNewServiceToExistingAccomodation(
-			@PathVariable(name = "regNumber") final String regNumber,
-			@RequestParam(name = "service") final String serviceId) {
-		AccomodationAccServiceModel accomodationToReturn = null;
-
-		try {
-			accomodationToReturn = accomodationAccServiceService.addNewAccomodationServiceToAccomodation(regNumber,
-					Integer.parseInt(serviceId));
-
-		} catch (NumberFormatException nfe) {
-			log.error("El id del servicio a añadir al alojamiento no es un número.");
-		}
-
-		return accomodationToReturn;
 	}
 
 }

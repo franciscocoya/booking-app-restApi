@@ -376,28 +376,12 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// Validar id de la imagen
 		validateParam(isIntegerValidAndPositive(imageId), "El id de la imagen a borrar no es válido.");
 
-//		AccomodationModel originalAccomodation = accomodationRepo.getById(regNumber);
-//
-//		if (originalAccomodation.getAccomodationImages().isEmpty()) {
-//			log.error("El alojamiento [ " + regNumber + " ] no tiene imágenes.");
-//			throw new NotFoundCustomException("El alojamiento [ " + regNumber + " ] no tiene imágenes.");
-//		}
-//
-//		AccomodationAccImageModel imgToRemove = originalAccomodation.getAccomodationImages().parallelStream()
-//				.filter(img -> img.getAccomodationAccImageId().getIdAccomodationImage().getId() == imageId).findFirst()
-//				.get();
-//
-//		originalAccomodation.getAccomodationImages().remove(imgToRemove);
-
 		em.createQuery(
 				"DELETE FROM AccomodationAccImageModel accim WHERE accim.accomodationAccImageId.idAccomodationImage.id = :imgId")
 				.setParameter("imgId", imageId).executeUpdate();
 
 		em.createQuery("DELETE FROM AccomodationImageModel aim WHERE aim.id = :imgId").setParameter("imgId", imageId)
 				.executeUpdate();
-
-//		accomodationRepo.save(originalAccomodation);
-
 	}
 
 	@Transactional

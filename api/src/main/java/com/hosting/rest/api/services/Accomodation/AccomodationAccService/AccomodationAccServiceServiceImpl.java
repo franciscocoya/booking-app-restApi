@@ -55,7 +55,7 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 	 * ofrecidos por el alojamiento con número de registro <code>regNumber</code>.
 	 * 
 	 * @param regNumber
-	 * @param accomodationServiceToAdd
+	 * @param serviceId
 	 * 
 	 * @return
 	 */
@@ -100,7 +100,8 @@ public class AccomodationAccServiceServiceImpl implements IAccomodationAccServic
 	 *                               número.
 	 */
 	@Override
-	public void deleteServiceFromAccomodation(final Integer accomodationServiceId, final String accomodationRegNumber)
+	public void deleteServiceFromAccomodation(final Integer accomodationServiceId, 
+			final String accomodationRegNumber)
 			throws NumberFormatException {
 
 		checkAccomodationAndServiceExists(accomodationServiceId, accomodationRegNumber);
