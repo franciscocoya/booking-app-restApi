@@ -181,6 +181,7 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 		return accomodationRuleRepo.findAll();
 	}
 
+	@Transactional
 	@Override
 	public AccomodationAccRuleModel addNewAccomodationRuleToExistingAccomodation(final Integer accomodationRuleId,
 			final String regNumber) {
@@ -216,6 +217,7 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 	 * @param regNumber
 	 * 
 	 */
+	@Transactional
 	@Override
 	public void deleteAccomodationRuleFromAccomodation(final Integer accomodationRuleId, final String regNumber) {
 		String deleteAccRuleByRegNumberAndAccRuleId = "DELETE FROM AccomodationAccRuleModel accrm "

@@ -93,23 +93,18 @@ public class AccomodationRuleController {
 		return accomodationRuleToReturn;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{accomodationRegNumber}/all")
 	public List<AccomodationRuleModel> findByAccomodationRegNumber(
 			@PathVariable(value = "accomodationRegNumber") String regNumber) {
 		return accomodationRuleService.findByAccomodationRegNumber(regNumber);
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
 	public List<AccomodationRuleModel> listAllAvailableAccomodationRules() {
 		return accomodationRuleService.findAllRules();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccRuleModel addRuleToAccomodation(@PathVariable(name = "regNumber") final String regNumber,
 			@RequestParam(name = "rule") final String accomodationRuleId) {
@@ -127,9 +122,10 @@ public class AccomodationRuleController {
 		return accomodationAccRuleToReturn;
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("{regNumber}/{accomodationRuleId}")
 	public void deleteAccomodationRuleFromAccomodation(@PathVariable(name = "regNumber") final String regNumber,
-			@PathVariable(name = "rule") final String accomodationRuleId) {
+			@PathVariable(name = "accomodationRuleId") final String accomodationRuleId) {
 		try {
 			accomodationRuleService.deleteAccomodationRuleFromAccomodation(Integer.parseInt(accomodationRuleId),
 					regNumber);
