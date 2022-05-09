@@ -98,7 +98,7 @@ public class AccomodationServiceController {
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{regNumber}/new")
 	public AccomodationAccServiceModel addNewServiceToAccomodation(
-			@PathVariable(name = "regNumber") final String regNumber, @RequestParam(name="service") final String serviceId) {
+			@PathVariable(name = "regNumber") final String regNumber, @RequestParam(name = "service") final String serviceId) {
 		AccomodationAccServiceModel accomodationServiceToReturn = null;
 		try {
 			accomodationServiceToReturn = accomodationAccServiceService

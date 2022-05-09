@@ -27,7 +27,6 @@ import com.hosting.rest.api.models.Accomodation.AccomodationCategoryModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
-import com.hosting.rest.api.services.Accomodation.AccomodationAccService.AccomodationAccServiceServiceImpl;
 import com.hosting.rest.api.services.Accomodation.AccomodationCategory.AccomodationCategoryServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -169,6 +168,7 @@ public class AccomodationController {
 		return accomodations;
 	}
 
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@DeleteMapping("/{regNumber}/images/{imageId}")
 	public void deleteAccomodationImage(@PathVariable(name = "regNumber") final String regNumber,
 			@PathVariable(name = "imageId") final String imageId) {

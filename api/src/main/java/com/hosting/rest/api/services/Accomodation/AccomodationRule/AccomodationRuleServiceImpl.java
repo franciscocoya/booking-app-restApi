@@ -17,14 +17,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleId;
+import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationRuleModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
+import com.hosting.rest.api.repositories.Accomodation.AccomodationRule.IAccomodationAccRuleRepository;
 import com.hosting.rest.api.repositories.Accomodation.AccomodationRule.IAccomodationRuleRepository;
 
 /**
  * 
  * @author Francisco Coya · https://github.com/FranciscoCoya
- * @version v1.0.3
+ * @version v1.0.4
  * @description Implementa las acciones relacionadas con las reglas de un
  *              alojamiento.
  * 
@@ -40,6 +43,9 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 
 	@Autowired
 	private IAccomodationRepository accomodationRepo;
+
+	@Autowired
+	private IAccomodationAccRuleRepository accomodationAccRuleRepo;
 
 	/**
 	 * Añade un nueva norma para los alojamientos.
@@ -175,4 +181,48 @@ public class AccomodationRuleServiceImpl implements IAccomodationRuleService {
 		return accomodationRuleRepo.findAll();
 	}
 
+	@Override
+	public AccomodationAccRuleModel addNewAccomodationRuleToExistingAccomodation(final Integer accomodationRuleId,
+			final String regNumber) {
+		// Validar id de la norma de aloajiento
+		validateParam(isIntegerValidAndPositive(accomodationRuleId),
+				"El id de la norma del alojamiento a añadir no es válida.");
+
+		// Comprobar si existe la norma
+		validateParamNotFound(accomodationRuleRepo.existsById(accomodationRuleId),
+				"No existe una norma con el id " + accomodationRuleId);
+
+		// Validar número de registro del alojamiento
+		validateParam(isStringNotBlank(regNumber), "El número de registro de alojamiento está vacío o no es válido.");
+
+		// Comprobar si existe el alojamiento
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe un alojamiento con número de registro " + regNumber);
+
+		// Obtener la norma con id pasado como parámetro
+		AccomodationRuleModel accomodationRuleToAdd = accomodationRuleRepo.findById(accomodationRuleId).get();
+
+		// Añadir la norma al alojamiento
+		AccomodationAccRuleId accomodationAccRuleToAdd = new AccomodationAccRuleId(regNumber, accomodationRuleToAdd);
+
+		return accomodationAccRuleRepo.save(new AccomodationAccRuleModel(accomodationAccRuleToAdd));
+	}
+
+	/**
+	 * Elimina la norma con id <code>accomdoationRuleId</code> del alojamiento con
+	 * id <code>regNumber</code>.
+	 * 
+	 * @param accomodationRuleId
+	 * @param regNumber
+	 * 
+	 */
+	@Override
+	public void deleteAccomodationRuleFromAccomodation(final Integer accomodationRuleId, final String regNumber) {
+		String deleteAccRuleByRegNumberAndAccRuleId = "DELETE FROM AccomodationAccRuleModel accrm "
+				+ "WHERE accrm.accomodationAccRuleId.idAccomodation = :regNumber "
+				+ "AND accrm.accomodationAccRuleId.idAccomodationRule.id = :accRuleId ";
+
+		em.createQuery(deleteAccRuleByRegNumberAndAccRuleId).setParameter("regNumber", regNumber)
+				.setParameter("accRuleId", accomodationRuleId).executeUpdate();
+	}
 }

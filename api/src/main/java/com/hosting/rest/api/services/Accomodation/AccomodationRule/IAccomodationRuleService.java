@@ -2,6 +2,7 @@ package com.hosting.rest.api.services.Accomodation.AccomodationRule;
 
 import java.util.List;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationRuleModel;
 
 public interface IAccomodationRuleService {
@@ -18,4 +19,8 @@ public interface IAccomodationRuleService {
 	public List<AccomodationRuleModel> findByAccomodationRegNumber(final String regNumber);
 	
 	public List<AccomodationRuleModel> findAllRules();
+	
+	public AccomodationAccRuleModel addNewAccomodationRuleToExistingAccomodation(final Integer accomodationRuleId, final String regNumber);
+	
+	public void deleteAccomodationRuleFromAccomodation(final Integer accomodationRuleId, final String regNumber);
 }

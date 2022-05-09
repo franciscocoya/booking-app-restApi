@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationAccRuleModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationRule.AccomodationRuleModel;
 import com.hosting.rest.api.services.Accomodation.AccomodationRule.AccomodationRuleServiceImpl;
 
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/accomodations/rules")
 @Slf4j
 public class AccomodationRuleController {
@@ -97,11 +99,44 @@ public class AccomodationRuleController {
 			@PathVariable(value = "accomodationRegNumber") String regNumber) {
 		return accomodationRuleService.findByAccomodationRegNumber(regNumber);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("all")
-	public List<AccomodationRuleModel> listAllAvailableAccomodationRules(){
+	public List<AccomodationRuleModel> listAllAvailableAccomodationRules() {
 		return accomodationRuleService.findAllRules();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@PostMapping("{regNumber}/new")
+	public AccomodationAccRuleModel addRuleToAccomodation(@PathVariable(name = "regNumber") final String regNumber,
+			@RequestParam(name = "rule") final String accomodationRuleId) {
+		AccomodationAccRuleModel accomodationAccRuleToReturn = null;
+
+		try {
+			accomodationAccRuleToReturn = accomodationRuleService
+					.addNewAccomodationRuleToExistingAccomodation(Integer.parseInt(accomodationRuleId), regNumber);
+
+		} catch (NumberFormatException nfe) {
+			log.error("El id de la norma no es un número");
+			throw new IllegalArgumentsCustomException("El id de la norma no es un número");
+		}
+
+		return accomodationAccRuleToReturn;
+	}
+
+	@DeleteMapping("{regNumber}/{accomodationRuleId}")
+	public void deleteAccomodationRuleFromAccomodation(@PathVariable(name = "regNumber") final String regNumber,
+			@PathVariable(name = "rule") final String accomodationRuleId) {
+		try {
+			accomodationRuleService.deleteAccomodationRuleFromAccomodation(Integer.parseInt(accomodationRuleId),
+					regNumber);
+		} catch (NumberFormatException nfe) {
+			log.error("El id de la norma no es un número");
+			throw new IllegalArgumentsCustomException("El id de la norma no es un número");
+		}
 	}
 
 }
