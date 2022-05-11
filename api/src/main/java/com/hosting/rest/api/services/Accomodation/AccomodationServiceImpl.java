@@ -65,8 +65,8 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// Si el alojamiento es null o no se pasa el número de registro o el
 		// propietario.
 		validateParam(
-				!isNotNull(accomodationModel) || !isNotNull(accomodationModel.getRegisterNumber())
-						|| !isNotNull(accomodationModel.getIdUserHost()),
+				isNotNull(accomodationModel) || isNotNull(accomodationModel.getRegisterNumber())
+						|| isNotNull(accomodationModel.getIdUserHost()),
 				"Los datos introducidos para el alojamiento no son válidos o falta algún dato.");
 
 		// Comprobar si existe el alojamiento

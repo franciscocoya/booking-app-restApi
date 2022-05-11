@@ -33,8 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Francisco Coya Abajo
- * @version v1.0.1
- * @apiNote Controlador de alojamientos.
+ * @version v1.0.0
+ * @apiNote Controlador de ubicaciones de alojamientos.
  */
 @RestController
 @CrossOrigin(origins = { "*" })
