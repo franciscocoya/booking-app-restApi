@@ -3,7 +3,9 @@ package com.hosting.rest.api.services.Booking;
 import static com.hosting.rest.api.Utils.MathUtils.MATH_CONTEXT;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import com.hosting.rest.api.models.Booking.BookingModel;
 
@@ -33,5 +35,7 @@ public interface IBookingService {
 	public int getNumOfBookingsByUserId(final Integer userId);
 
 	public List<BookingModel> findAllBookingByUser(final Integer userId);
+
+	public Set<List<LocalDateTime>> checkAccomodationAvailability(final String regNumber);
 
 }

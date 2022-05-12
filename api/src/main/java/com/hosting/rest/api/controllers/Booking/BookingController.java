@@ -1,6 +1,8 @@
 package com.hosting.rest.api.controllers.Booking;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -30,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/bookings")
 @Slf4j
 public class BookingController {
@@ -122,7 +124,13 @@ public class BookingController {
 			log.error("El id de usuario [ " + userId + " ] no es válido.");
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] no es válido.");
 		}
-		
+
 		return numOfBookings;
+	}
+
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("{regNumber}/dates")
+	public Set<List<LocalDateTime>> checkBookingDateIsAvailable(@PathVariable(name = "regNumber") final String regNumber) {
+		return bookingService.checkAccomodationAvailability(regNumber);
 	}
 }

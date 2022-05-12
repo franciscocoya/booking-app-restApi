@@ -10,7 +10,10 @@ import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotF
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -329,7 +332,46 @@ public class BookingServiceImpl implements IBookingService {
 	public int getNumOfBookingsByUserId(final Integer userId) throws NumberFormatException {
 		// Validar id de usuario
 		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es un número.");
-		
+
 		return findAllBookingByUser(userId).size();
+	}
+
+	/**
+	 * Listado de las fechas de reserva del alojamiento con el número de registro
+	 * pasado como parámetro.
+	 * 
+	 * @return .
+	 */
+	@Override
+	public Set<List<LocalDateTime>> checkAccomodationAvailability(final String regNumber) {
+
+		Set<List<LocalDateTime>> bookingDates = new HashSet<List<LocalDateTime>>();
+
+		// Validar número de registro del alojamiento
+		validateParam(isStringNotBlank(regNumber), "El número de registro del alojamiento no es válido.");
+
+		// Comprobar si existe el alojamiento
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe un alojamiento con número de registro " + regNumber);
+
+		String listAllAvaibleBookingDatesByRegNumberQuery = "SELECT bm " + "FROM BookingModel bm "
+				+ "WHERE bm.idAccomodation.registerNumber = :regNumber ";
+
+		TypedQuery<BookingModel> listAvailableBookingDates = em.createQuery(listAllAvaibleBookingDatesByRegNumberQuery,
+				BookingModel.class);
+
+		listAvailableBookingDates.setParameter("regNumber", regNumber);
+
+		List<BookingModel> accomodationBookings = listAvailableBookingDates.getResultList();
+
+		for (BookingModel bm : accomodationBookings) {
+			List<LocalDateTime> dates = new ArrayList<LocalDateTime>();
+			dates.add(bm.getCheckIn());
+			dates.add(bm.getCheckOut());
+
+			bookingDates.add(dates);
+		}
+
+		return bookingDates;
 	}
 }
