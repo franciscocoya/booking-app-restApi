@@ -61,6 +61,9 @@ public class BookingModel implements Serializable{
 	@Formula("amount + service_fee - disccount")
 	@Column(name = "TOTAL")
 	private BigDecimal total;
+	
+	@Column(name = "BOOKING_STATUS")
+	private BookingStatus bookingStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_USER")

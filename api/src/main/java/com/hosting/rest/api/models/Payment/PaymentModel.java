@@ -32,6 +32,9 @@ public class PaymentModel implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Integer idPayment;
+	
+	@Column(name = "PAYMENT_STATUS")
+	private PaymentStatus paymentStatus;
 
 	@Column(name = "CREATED_AT")
 	@CreatedDate
