@@ -12591,3 +12591,10 @@ Caused by: java.lang.ClassNotFoundException: com.hosting.rest.api.models.Auth.Si
 2022-05-12 16:36:43,314 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path '/api'
 2022-05-12 16:36:43,320 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.444 seconds (JVM running for 6269.296)
 2022-05-12 16:36:43,322 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-05-12 16:42:50,652 INFO org.apache.catalina.core.ContainerBase.[Tomcat-8].[localhost].[/api] [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-12 16:42:50,652 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-05-12 16:42:50,654 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-1] Completed initialization in 2 ms
+2022-05-12 17:56:12,636 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(188)-127.0.0.1] Application shutdown requested.
+2022-05-12 17:56:12,675 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(188)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-12 17:56:12,676 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(188)-127.0.0.1] HikariPool-131 - Shutdown initiated...
+2022-05-12 17:56:12,679 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(188)-127.0.0.1] HikariPool-131 - Shutdown completed.
