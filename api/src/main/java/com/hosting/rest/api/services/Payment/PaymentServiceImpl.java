@@ -1,7 +1,6 @@
 package com.hosting.rest.api.services.Payment;
 
 import static com.hosting.rest.api.Utils.AppUtils.isIntegerValidAndPositive;
-import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
@@ -46,15 +45,8 @@ public class PaymentServiceImpl implements IPaymentService {
 	 * @return
 	 */
 	@Override
-	public PaymentModel addNewPayment(final PaymentModel paymentToAdd) {
-		// Validar método de pago
-		validateParam(isNotNull(paymentToAdd),
-				"Alguno de los valores introducido para el método de pago no es válido.");
-
-		// Comprobar si existe el método de pago
-		validateParamNotFound(!paymentRepo.existsById(paymentToAdd.getIdPayment()), "El método de pago ya existe.");
-
-		return paymentRepo.save(paymentToAdd);
+	public PaymentModel addNewPayment() {
+		return paymentRepo.save(new PaymentModel(getLastPaymentId() + 1, null, null));
 	}
 
 	/**
@@ -112,6 +104,11 @@ public class PaymentServiceImpl implements IPaymentService {
 		payment.setParameter("bookingId", bookingId);
 
 		return payment.getSingleResult();
+	}
+
+	@Override
+	public Integer getLastPaymentId() {
+		return paymentRepo.findAll().size();
 	}
 
 }

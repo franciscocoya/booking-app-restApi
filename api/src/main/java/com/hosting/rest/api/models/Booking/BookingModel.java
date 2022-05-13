@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,6 +64,7 @@ public class BookingModel implements Serializable{
 	@Column(name = "TOTAL")
 	private BigDecimal total;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "BOOKING_STATUS")
 	private BookingStatus bookingStatus;
 

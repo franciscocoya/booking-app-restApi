@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/payments")
 @Slf4j
 public class PaymentController {
@@ -37,13 +36,8 @@ public class PaymentController {
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
-	public PaymentModel addNewPaymentMethod(@RequestBody final PaymentModel paymentModel) {
-		if (paymentModel == null) {
-			log.error("Los datos para el método de pago a crear no son válidos.");
-			throw new IllegalArgumentsCustomException("Los datos para el método de pago a crear no son válidos.");
-		}
-
-		return paymentService.addNewPayment(paymentModel);
+	public PaymentModel addNewPaymentMethod() {
+		return paymentService.addNewPayment();
 	}
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")

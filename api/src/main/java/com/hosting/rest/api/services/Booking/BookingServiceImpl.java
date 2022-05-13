@@ -71,6 +71,9 @@ public class BookingServiceImpl implements IBookingService {
 		validateParamNotFound(!bookingRepo.existsById(bookingToAdd.getId()),
 				"La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
 
+		// TODO: checkBookingDates(bookingToAdd);
+		
+		
 		// Calcular la comisión
 		BigDecimal newServiceFee = calculateBookingServiceFee(bookingToAdd.getAmount());
 		bookingToAdd.setServiceFee(newServiceFee);
@@ -81,6 +84,37 @@ public class BookingServiceImpl implements IBookingService {
 				calculateBookingTotalCost(bookingToAdd.getAmount(), bookingToAdd.getDisccount(), newServiceFee));
 
 		return bookingRepo.save(bookingToAdd);
+	}
+
+	/**
+	 * Comprueba que las fechas de una reserva pasada como parámetro estén
+	 * disponibles.
+	 * 
+	 * @param bookingToCheck
+	 * @return
+	 */
+	private boolean checkBookingDates(final BookingModel bookingToCheck) {
+		Set<List<LocalDateTime>> reservedDates = checkAccomodationAvailability(
+				bookingToCheck.getIdAccomodation().getRegisterNumber());
+
+		LocalDateTime checkIn = bookingToCheck.getCheckIn();
+		LocalDateTime checkOut = bookingToCheck.getCheckOut();
+
+		for (List<LocalDateTime> date : reservedDates) {
+			LocalDateTime checkInReserved = date.get(0);
+			LocalDateTime checkOutReserved = date.get(1);
+
+			boolean isCheckInValid = (checkIn.isEqual(checkInReserved) || checkIn.isEqual(checkOutReserved))
+					|| (checkIn.isBefore(checkOutReserved) && checkIn.isAfter(checkOutReserved));
+
+			boolean isCheckOutValid = (checkOut.isEqual(checkInReserved) || checkOut.isEqual(checkOutReserved))
+					|| (checkOut.isBefore(checkOutReserved) && checkOut.isAfter(checkOutReserved));
+
+			if (!(isCheckInValid && isCheckOutValid)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
