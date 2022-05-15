@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Formula;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
@@ -32,7 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "BOOKING")
-public class BookingModel implements Serializable{
+public class BookingModel implements Serializable {
 
 	private static final long serialVersionUID = -5582102291546732206L;
 
@@ -56,14 +55,14 @@ public class BookingModel implements Serializable{
 	@Column(name = "DISCCOUNT")
 	private BigDecimal disccount;
 
-	@Formula("amount * 0.10")
+//	@Formula("amount * 0.10")
 	@Column(name = "SERVICE_FEE")
 	private BigDecimal serviceFee;
 
-	@Formula("amount + service_fee - disccount")
+//	@Formula("amount + service_fee - disccount")
 	@Column(name = "TOTAL")
 	private BigDecimal total;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BOOKING_STATUS")
 	private BookingStatus bookingStatus;
