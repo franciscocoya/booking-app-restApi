@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hosting.rest.api.models.Booking.BookingModel;
+import com.hosting.rest.api.models.Booking.BookingStatus;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
@@ -68,22 +69,25 @@ public class BookingServiceImpl implements IBookingService {
 		validateParam(isNotNull(bookingToAdd), "Alguno de los valores de la reserva no es válido.");
 
 		// Comprobar si existe la reserva
-		validateParamNotFound(!bookingRepo.existsById(bookingToAdd.getId()),
-				"La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
+//		validateParamNotFound(!bookingRepo.existsById(bookingToAdd.getId()),
+//				"La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
 
 		// TODO: checkBookingDates(bookingToAdd);
-		
-		
+
 		// Calcular la comisión
 		BigDecimal newServiceFee = calculateBookingServiceFee(bookingToAdd.getAmount());
-		bookingToAdd.setServiceFee(newServiceFee);
+		// bookingToAdd.setServiceFee(newServiceFee);
 
 		// Calcular el total de la reserva (Comisiones y descuentos Incl.)
+		BigDecimal total = calculateBookingTotalCost(bookingToAdd.getAmount(), bookingToAdd.getDisccount(),
+				newServiceFee);
 
-		bookingToAdd.setTotal(
-				calculateBookingTotalCost(bookingToAdd.getAmount(), bookingToAdd.getDisccount(), newServiceFee));
+		BookingModel newBooking = new BookingModel(null, bookingToAdd.getCheckIn(), bookingToAdd.getCheckOut(),
+				bookingToAdd.getNumOfGuests(), bookingToAdd.getAmount(), bookingToAdd.getDisccount(), newServiceFee,
+				total, BookingStatus.PENDIENTE, bookingToAdd.getIdUser(), bookingToAdd.getIdAccomodation(),
+				bookingToAdd.getIdPayment(), LocalDateTime.now());
 
-		return bookingRepo.save(bookingToAdd);
+		return bookingRepo.save(newBooking);
 	}
 
 	/**
@@ -389,7 +393,10 @@ public class BookingServiceImpl implements IBookingService {
 				"No existe un alojamiento con número de registro " + regNumber);
 
 		String listAllAvaibleBookingDatesByRegNumberQuery = "SELECT bm " + "FROM BookingModel bm "
-				+ "WHERE bm.idAccomodation.registerNumber = :regNumber ";
+				+ "WHERE bm.idAccomodation.registerNumber = :regNumber "
+				+ "AND bm.bookingStatus = '" + BookingStatus.CONFIRMADA + "' "
+				+ "OR bm.bookingStatus = '" + BookingStatus.PENDIENTE + "' "
+				+ "OR bm.bookingStatus = '" + BookingStatus.COMPLETADA + "'";
 
 		TypedQuery<BookingModel> listAvailableBookingDates = em.createQuery(listAllAvaibleBookingDatesByRegNumberQuery,
 				BookingModel.class);

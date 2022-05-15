@@ -11,8 +11,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -150,5 +152,32 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 				() -> new NotFoundCustomException("El usuario con email " + emailToSearch + " a cargar no existe."));
 
 		return UserDetailsImpl.build(user);
+	}
+
+	/**
+	 * Actualización de la imagen de perfil del usuario con id <code>userId</code>.
+	 * 
+	 * @param userId
+	 * @param imgUrl
+	 * 
+	 * 
+	 */
+	@Override
+	@Transactional
+	public void updateProfileImage(final Integer userId, final String imgUrl) 
+	throws NumberFormatException{
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario no es válido.");
+		
+		// Comprobar si existe el usuario
+		validateParamNotFound(userRepo.existsById(userId), "No existe el usuario con id " + userId);
+		
+		// Validar imagen
+		validateParam(isStringNotBlank(imgUrl), "La imagen seleccionada no es válida.");
+		
+		em.createQuery("UPDATE UserModel um SET um.profileImage = :newImg WHERE um.id = :userId")
+		.setParameter("newImg", imgUrl)
+		.setParameter("userId", userId)
+		.executeUpdate();
 	}
 }

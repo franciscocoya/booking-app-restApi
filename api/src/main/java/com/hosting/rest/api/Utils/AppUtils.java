@@ -117,4 +117,33 @@ public class AppUtils {
 	public static boolean isDateValid(final LocalDateTime dateToCheck) {
 		return isNotNull(dateToCheck);
 	}
+	
+	/**
+	 * Validador de números de tarjeta de crédito basado en el algoritmo de Luhn.
+	 * 
+	 * @see https://www.geeksforgeeks.org/luhn-algorithm/
+	 * @param cardNumber
+	 * 
+	 * @return
+	 */
+	public static boolean checkCreditCardLuhnAlgorithm(final String cardNumber) {
+		int nDigits = cardNumber.length();
+		 
+	    int nSum = 0;
+	    boolean isSecond = false;
+	    for (int i = nDigits - 1; i >= 0; i--)
+	    {
+	 
+	        int d = cardNumber.charAt(i) - '0';
+	 
+	        if (isSecond == true)
+	            d = d * 2;
+	 
+	        nSum += d / 10;
+	        nSum += d % 10;
+	 
+	        isSecond = !isSecond;
+	    }
+	    return (nSum % 10 == 0);
+	}
 }

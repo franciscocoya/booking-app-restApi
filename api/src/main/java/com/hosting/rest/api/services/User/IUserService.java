@@ -6,7 +6,7 @@ import com.hosting.rest.api.models.User.UserModel;
 
 /**
  * @author Francisco Coya · https://github.com/FranciscoCoya
- * @version v1.0.0
+ * @version v1.0.1
  * @description
  **/
 public interface IUserService {
@@ -20,4 +20,6 @@ public interface IUserService {
 	public UserModel getUserById(final Integer userId);
 
 	public List<UserModel> findAllUsers();
+	
+	public void updateProfileImage(final Integer userId, final String imgUrl);
 }

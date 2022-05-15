@@ -8,5 +8,5 @@ package com.hosting.rest.api.models.Booking;
  *
  */
 public enum BookingStatus {
-	CONFIRMADA, PENDIENTE, CANCELADA
+	CONFIRMADA, PENDIENTE, CANCELADA, COMPLETADA
 }

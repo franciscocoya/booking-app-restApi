@@ -10,6 +10,7 @@ import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
+import static com.hosting.rest.api.Utils.AppUtils.checkCreditCardLuhnAlgorithm;
 
 @Service
 public class PaymentCreditCardServiceImpl implements IPaymentCreditCardService {
@@ -35,7 +36,12 @@ public class PaymentCreditCardServiceImpl implements IPaymentCreditCardService {
 		validateParamNotFound(!paymentCreditCardRepo.existsById(paymentCreditCardToAdd.getIdPayment()),
 				"Ya existe el método de pago a añadir.");
 
+		// Validar número mínimo dígitos
+		validateParam(paymentCreditCardToAdd.getCardNumber().length() >= CREDIT_CARD_NUMBER_MIN_DIGITS, "El número de la tarjeta de crédito tiene que tener como mínimo " + CREDIT_CARD_NUMBER_MIN_DIGITS + " dígitos");
+		
+		// Validar número tarjeta
+		validateParam(checkCreditCardLuhnAlgorithm(paymentCreditCardToAdd.getCardNumber()), "El número de tarjeta no es válido.");
+		
 		return paymentCreditCardRepo.save(paymentCreditCardToAdd);
 	}
-
 }

@@ -16,14 +16,14 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
-import com.hosting.rest.api.models.User.UserHostModel;
+import com.hosting.rest.api.models.User.UserModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 @Table(name = "SAVED_ACCOMODATION")
@@ -38,7 +38,7 @@ public class SavedAccomodationModel implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
-    private UserHostModel idUser;
+    private UserModel idUser;
 
     @ManyToOne
     @JoinColumn(name = "ID_ACC")
@@ -47,4 +47,9 @@ public class SavedAccomodationModel implements Serializable{
     @Column(name = "CREATED_AT")
     @CreatedDate
     private LocalDateTime createdAt;
+    
+    public SavedAccomodationModel(UserModel idUser, AccomodationModel idAccomodation) {
+    	this.idUser = idUser;
+    	this.idAccomodation = idAccomodation;
+    }
 }
