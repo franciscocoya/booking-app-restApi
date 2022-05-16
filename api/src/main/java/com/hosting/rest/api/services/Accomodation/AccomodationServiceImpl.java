@@ -108,7 +108,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		// Validar número de registro del alojamiento.
 		validateParam(isStringNotBlank(regNumber), "El número de registro está vacío.");
 
-		return accomodationRepo.findById(regNumber).get();
+		return accomodationRepo.findById(regNumber).orElse(null);
 	}
 
 	/**
