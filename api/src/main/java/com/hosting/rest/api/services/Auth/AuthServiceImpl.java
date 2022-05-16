@@ -63,6 +63,21 @@ public class AuthServiceImpl implements AuthService {
 	public ResponseEntity<?> addNewUser(final SignUpRequest signUpPayload) {
 		// Validar el usuario pasado como parámetro
 		validateParam(isNotNull(signUpPayload), "Alguna propiedad del usuario a crear falta o no es válida.");
+		
+		// Validar nombre
+		validateParam(isStringNotBlank(signUpPayload.getName()), "El nombre es obligatorio");
+		
+		// Validar apellidos
+		validateParam(isStringNotBlank(signUpPayload.getSurname()), "Los apellidos son obligatorios");
+		
+		// Validar correo electrónico
+		validateParam(isStringNotBlank(signUpPayload.getEmail()), "El correo electrónico es obligatorio");
+		
+		// Validar contraseña
+		validateParam(isStringNotBlank(signUpPayload.getPassword()), "La contraseña es obligatoria");
+		
+		// Validar contraseña repetida
+		validateParam(isStringNotBlank(signUpPayload.getRepeatedPassword()), "Repite la contraseña");
 
 		// Comprobar que coinciden las contraseñas
 		if (!signUpPayload.getPassword().equals(signUpPayload.getRepeatedPassword())) {

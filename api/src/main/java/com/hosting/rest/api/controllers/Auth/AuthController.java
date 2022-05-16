@@ -34,7 +34,7 @@ import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
  *
  */
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RequestMapping("/auth")
 public class AuthController {
 

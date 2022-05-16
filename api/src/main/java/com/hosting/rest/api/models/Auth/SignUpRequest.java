@@ -16,19 +16,20 @@ public class SignUpRequest implements Serializable {
 
 	private static final long serialVersionUID = -4880495450171944598L;
 
-	@NotBlank
+	@NotBlank(message = "El nombre es obligatorio")
 	private String name;
 
-	@NotBlank
+	@NotBlank(message = "Los apellidos son obligatorios")
 	private String surname;
 
-	@Email
+	@Email(message = "El correo electrónico no es válido")
+	@NotBlank(message = "El correo electrónico es obligatorio")
 	private String email;
 
-	@NotBlank
+	@NotBlank(message = "La contraseña es obligatoria")
 	private String password;
 
-	@NotBlank
+	@NotBlank(message = "Es obligatorio que repetir la contraseña")
 	private String repeatedPassword;
 
 }
