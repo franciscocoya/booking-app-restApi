@@ -19,7 +19,9 @@ public interface IAccomodationReviewService {
 
 	public List<AccomodationReviewModel> findAllAccomodationReviews(final String regNumber);
 
-	public List<AccomodationReviewModel> findByUserId(final Integer userId);
+	public List<AccomodationReviewModel> findAllSendAccomodationReviewsByUserId(final Integer userId); // Valoraciones escritas
+	
+	public List<AccomodationReviewModel> findAllReceivedAccomodationReviewsByUserId(final Integer userId); // Valoraciones recibidas
 
 	public Double getAccomodationReviewAverageStars(final String regNumber);
 

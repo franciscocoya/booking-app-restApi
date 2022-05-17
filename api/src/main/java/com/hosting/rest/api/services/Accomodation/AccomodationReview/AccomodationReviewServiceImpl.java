@@ -185,7 +185,7 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 	 * @throws NumberFormatException Si el id del usuario no es un número.
 	 */
 	@Override
-	public List<AccomodationReviewModel> findByUserId(final Integer userId) throws NumberFormatException {
+	public List<AccomodationReviewModel> findAllSendAccomodationReviewsByUserId(final Integer userId) throws NumberFormatException {
 
 		// Validar id del usuario
 		validateParam(isIntegerValidAndPositive(userId), "El id de usuario [ " + userId + " ] no es válido.");
@@ -202,6 +202,36 @@ public class AccomodationReviewServiceImpl implements IAccomodationReviewService
 		accomodationReviews.setParameter("userId", userId);
 
 		return accomodationReviews.getResultList();
+	}
+	
+	/**
+	 * Listado de todas las valoraciones que ha recibido de los alojamientos.
+	 * 
+	 * @param userId
+	 * 
+	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id del usuario no es un número.
+	 */
+	@Override
+	public List<AccomodationReviewModel> findAllReceivedAccomodationReviewsByUserId(final Integer userId) throws NumberFormatException{
+	
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id del usuario no es válido.");
+		
+		// Comprobar si el usuario existe
+		validateParamNotFound(userRepo.existsById(userId), "EL usuario a listar sus valoraciones no existe.");
+		
+		String accomodationReviewsByUserQuery = "SELECT arm "
+				+ "FROM AccomodationReviewModel arm INNER JOIN arm.idUser um "
+				+ "INNER JOIN arm.idAccomodation am "
+				+ "WHERE am.idUserHost.id = :userId";
+		
+		TypedQuery<AccomodationReviewModel> accomodationReviewsByUser = em.createQuery(accomodationReviewsByUserQuery, AccomodationReviewModel.class);
+		
+		accomodationReviewsByUser.setParameter("userId", userId);
+		
+		return accomodationReviewsByUser.getResultList();
 	}
 
 	/**

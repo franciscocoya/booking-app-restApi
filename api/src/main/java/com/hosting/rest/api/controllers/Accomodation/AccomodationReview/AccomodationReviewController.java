@@ -85,15 +85,30 @@ public class AccomodationReviewController {
 		return accomodationReviewService.findAllAccomodationReviews(regNumber);
 	}
 
-//	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
-	@GetMapping("/u/{userId}")
-	public List<AccomodationReviewModel> findAllAccomodationReviewsByUserId(
+
+	@GetMapping("/u/{userId}/send")
+	public List<AccomodationReviewModel> findAllSendAccomodationReviewsByUserId(
 			@PathVariable(value = "userId") final String userId) {
 		List<AccomodationReviewModel> userReviews = null;
 
 		try {
-			userReviews = accomodationReviewService.findByUserId(Integer.parseInt(userId));
+			userReviews = accomodationReviewService.findAllSendAccomodationReviewsByUserId(Integer.parseInt(userId));
 
+		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario [ " + userId + " ] introducido no es un valor numérico.");
+			throw new IllegalArgumentsCustomException(
+					"El id de usuario [ " + userId + " ] introducido no es un valor numérico.");
+		}
+		return userReviews;
+	}
+	@GetMapping("/u/{userId}/received")
+	public List<AccomodationReviewModel> findAllReceivedAccomodationReviewsByUserId(
+			@PathVariable(value = "userId") final String userId) {
+		List<AccomodationReviewModel> userReviews = null;
+		
+		try {
+			userReviews = accomodationReviewService.findAllReceivedAccomodationReviewsByUserId(Integer.parseInt(userId));
+			
 		} catch (NumberFormatException nfe) {
 			log.error("El id de usuario [ " + userId + " ] introducido no es un valor numérico.");
 			throw new IllegalArgumentsCustomException(
