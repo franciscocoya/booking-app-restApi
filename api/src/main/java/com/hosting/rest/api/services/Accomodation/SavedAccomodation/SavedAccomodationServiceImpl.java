@@ -9,6 +9,7 @@ import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotF
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -82,7 +83,7 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 		// Validar id del alojamiento guardado
 		validateParam(isIntegerValidAndPositive(savedAccomodationId), "El id del alojamiento guardado no es válido.");
 
-		return savedAccomodationRepo.findById(savedAccomodationId).get();
+		return savedAccomodationRepo.findById(savedAccomodationId).orElse(null);
 	}
 
 	/**
@@ -171,23 +172,31 @@ public class SavedAccomodationServiceImpl implements ISavedAccomodationService {
 	@Override
 	public SavedAccomodationModel getSavedAccomodationByRegNumberAndUserId(final String regNumber,
 			final Integer userId) {
-		
+
 		checkRegNumberAndUserId(regNumber, userId);
 
-		String getSavedAccomodationQuery = "SELECT sam "
-				+ "FROM SavedAccomodationModel sam "
-				+ "WHERE sam.idAccomodation.registerNumber = :regNumber "
-				+ "AND sam.idUser.id = :idUser";
-		
-		TypedQuery<SavedAccomodationModel> savedAccomodationToReturn = em.createQuery(getSavedAccomodationQuery, SavedAccomodationModel.class)
-				.setParameter("regNumber", regNumber)
-				.setParameter("idUser", userId);
-		
-		return savedAccomodationToReturn.getSingleResult();
+		String getSavedAccomodationQuery = "SELECT sam " + "FROM SavedAccomodationModel sam "
+				+ "WHERE sam.idAccomodation.registerNumber = :regNumber " + "AND sam.idUser.id = :idUser";
+
+		TypedQuery<SavedAccomodationModel> savedAccomodationToReturn = em
+				.createQuery(getSavedAccomodationQuery, SavedAccomodationModel.class)
+				.setParameter("regNumber", regNumber).setParameter("idUser", userId);
+
+		SavedAccomodationModel savedAccomodationResult = null;
+
+		try {
+			savedAccomodationResult = savedAccomodationToReturn.getSingleResult();
+
+		} catch (NoResultException nre) {
+			savedAccomodationResult = null;
+		}
+
+		return savedAccomodationResult;
 	}
 
 	/**
-	 * Método auxiliar que valida el número de registro e id de usuario pasados como parámetro.ç
+	 * Método auxiliar que valida el número de registro e id de usuario pasados como
+	 * parámetro.ç
 	 * 
 	 * @param regNumber
 	 * @param userId

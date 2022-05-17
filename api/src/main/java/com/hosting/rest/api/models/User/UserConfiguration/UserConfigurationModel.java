@@ -39,4 +39,9 @@ public class UserConfigurationModel implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "ID_CURRENCY")
 	private CurrencyModel idCurrency;
+	
+	public UserConfigurationModel(LanguageModel idLanguage, CurrencyModel idCurrency) {
+		this.idLanguage = idLanguage;
+		this.idCurrency = idCurrency;
+	}
 }

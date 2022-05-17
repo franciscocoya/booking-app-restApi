@@ -33,6 +33,8 @@ public interface IAccomodationService {
 
 	public Page<AccomodationModel> findAllAccomodations(final Integer pageNumber, final Integer size);
 	
+	public List<String> findAllAccomodationCities();
+	
 	public List<AccomodationModel> findNAccomodations(final Integer maxNumberOfAccomodations);
 
 	public AccomodationModel getAccomodationById(final String regNumber);

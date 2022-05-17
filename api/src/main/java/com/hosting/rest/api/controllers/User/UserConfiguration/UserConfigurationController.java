@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
+import com.hosting.rest.api.models.Currency.CurrencyModel;
+import com.hosting.rest.api.models.Language.LanguageModel;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.services.User.UserConfiguration.UserConfigurationServiceImpl;
 
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/config")
 public class UserConfigurationController {
 
@@ -31,6 +33,12 @@ public class UserConfigurationController {
 	public UserConfigurationModel addNewUserConfiguration(
 			@Valid @RequestBody final UserConfigurationModel userConfigurationToAdd) {
 		return userConfigurationService.addNewUserConfiguration(userConfigurationToAdd);
+	}
+
+	@PostMapping("{userId}/{userConfigId}/new")
+	public UserConfigurationModel addExistingConfigurationToUser(@PathVariable(value = "userId") final String userId,
+			@PathVariable(value = "userConfigId") final String userConfigId) {
+		return null;
 	}
 
 	@PutMapping("{userId}")
@@ -78,5 +86,15 @@ public class UserConfigurationController {
 	@GetMapping("all")
 	public List<UserConfigurationModel> findAll() {
 		return userConfigurationService.findAll();
+	}
+
+	@GetMapping("currencies/all")
+	public List<CurrencyModel> findAllCurrencies() {
+		return userConfigurationService.findAllCurrencies();
+	}
+
+	@GetMapping("languages/all")
+	public List<LanguageModel> findAllLanguages() {
+		return userConfigurationService.findAllLanguages();
 	}
 }

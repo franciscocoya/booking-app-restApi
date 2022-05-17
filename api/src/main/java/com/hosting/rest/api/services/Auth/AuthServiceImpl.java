@@ -3,8 +3,13 @@ package com.hosting.rest.api.services.Auth;
 import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import static com.hosting.rest.api.Utils.AppUtils.isStringNotBlank;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
+import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +23,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hosting.rest.api.configuration.security.JwtUtils;
+import com.hosting.rest.api.models.Auth.ResetPasswordPayload;
 import com.hosting.rest.api.models.Auth.ResetPasswordResponsePayload;
 import com.hosting.rest.api.models.Auth.SignUpRequest;
 import com.hosting.rest.api.models.User.UserModel;
+import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.repositories.User.IUserRepository;
+import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurationRepository;
 
 /**
  * 
@@ -33,11 +41,17 @@ import com.hosting.rest.api.repositories.User.IUserRepository;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+	@PersistenceContext
+	private EntityManager em;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private IUserConfigurationRepository userConfigRepo;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -63,19 +77,19 @@ public class AuthServiceImpl implements AuthService {
 	public ResponseEntity<?> addNewUser(final SignUpRequest signUpPayload) {
 		// Validar el usuario pasado como parámetro
 		validateParam(isNotNull(signUpPayload), "Alguna propiedad del usuario a crear falta o no es válida.");
-		
+
 		// Validar nombre
 		validateParam(isStringNotBlank(signUpPayload.getName()), "El nombre es obligatorio");
-		
+
 		// Validar apellidos
 		validateParam(isStringNotBlank(signUpPayload.getSurname()), "Los apellidos son obligatorios");
-		
+
 		// Validar correo electrónico
 		validateParam(isStringNotBlank(signUpPayload.getEmail()), "El correo electrónico es obligatorio");
-		
+
 		// Validar contraseña
 		validateParam(isStringNotBlank(signUpPayload.getPassword()), "La contraseña es obligatoria");
-		
+
 		// Validar contraseña repetida
 		validateParam(isStringNotBlank(signUpPayload.getRepeatedPassword()), "Repite la contraseña");
 
@@ -89,9 +103,11 @@ public class AuthServiceImpl implements AuthService {
 			return ResponseEntity.badRequest().body("Ya existe un usuario con el email " + signUpPayload.getEmail());
 		}
 
+		UserConfigurationModel defaultUserConfig = userConfigRepo.getById(1);
+
 		// Datos del nuevo usuario
 		UserModel newUser = new UserModel(signUpPayload.getName(), signUpPayload.getSurname(), signUpPayload.getEmail(),
-				passwordEncoder.encode(signUpPayload.getPassword()));
+				defaultUserConfig, passwordEncoder.encode(signUpPayload.getPassword()));
 
 		// Crear el usuario
 		userRepo.save(newUser);
@@ -169,5 +185,43 @@ public class AuthServiceImpl implements AuthService {
 		email.setFrom(supportEmail);
 
 		return email;
+	}
+
+	/**
+	 * Resetea la contraseña del usuario con id <code>userId</code> con la nueva
+	 * contraseña.
+	 * 
+	 * Se comprueba que el usuario tenga la contraseña indicada en el payload y que
+	 * además la nueva contraseña y su repetición coincidan.
+	 * 
+	 */
+	@Override
+	@Transactional
+	public void resetPasswordLoggedUser(final Integer userId, final ResetPasswordPayload resetPasswordPayload) {
+
+		// Comprobar que la contraseña actual es válida
+		String userPass = userRepo.getById(userId).getPass().trim();
+
+		// Validar contraseña actual
+		validateParam(isStringNotBlank(resetPasswordPayload.getOldPassword().trim().replace(" ", "")), "La contraseña actual es obligatoria");
+		
+		// Validar nueva
+		validateParam(isStringNotBlank(resetPasswordPayload.getNewPassword().trim().replace(" ", "")), "La nueva contraseña es obligatoria");
+		
+		// Validar contraseña actual
+		validateParam(isStringNotBlank(resetPasswordPayload.getNewPasswordRepeated().replace(" ", "")), "Es obligatorio repetir la nueva contraseña");
+		
+		
+		
+		validateParamNotFound(passwordEncoder.matches(resetPasswordPayload.getOldPassword().trim(), userPass),
+				"La contraseña actual es incorrecta");
+
+		// Comprobar que la nueva contraseña y la repetida coinciden
+		validateParam(resetPasswordPayload.getNewPassword().equals(resetPasswordPayload.getNewPasswordRepeated()),
+				"Las contraseñas no coinciden");
+
+		em.createQuery("UPDATE UserModel um " + "SET um.pass = :newPass " + "WHERE um.id = :userId")
+				.setParameter("newPass", passwordEncoder.encode(resetPasswordPayload.getNewPassword()))
+				.setParameter("userId", userId).executeUpdate();
 	}
 }

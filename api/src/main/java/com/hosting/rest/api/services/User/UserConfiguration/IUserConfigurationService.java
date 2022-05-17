@@ -20,4 +20,8 @@ public interface IUserConfigurationService {
 	public void deleteUserConfiguration(final Integer userConfigurationId);
 	
 	public List<UserConfigurationModel> findAll();
+	
+	public List<CurrencyModel> findAllCurrencies();
+	
+	public List<LanguageModel> findAllLanguages();
 }

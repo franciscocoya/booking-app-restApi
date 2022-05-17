@@ -153,7 +153,8 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		checkPageSize(size);
 
 		String listAccomodationsByCityQuery = "SELECT ac "
-				+ "FROM AccomodationModel ac INNER JOIN ac.idAccomodationLocation al " + "WHERE al.city = :city";
+				+ "FROM AccomodationModel ac INNER JOIN ac.idAccomodationLocation al " + "WHERE LOWER(al.city) "
+						+ "LIKE LOWER(:city)";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
 				AccomodationModel.class);
@@ -414,6 +415,19 @@ public class AccomodationServiceImpl implements IAccomodationService {
 				.setParameter("regNumber", regNumber).setParameter("imgId", lastImageId).executeUpdate();
 
 		return accomodationRepo.findById(regNumber).get();
+	}
+
+	/**
+	 * Listado de todas las ciudades donde se han publicado alojamientos en la app.
+	 */
+	@Override
+	public List<String> findAllAccomodationCities() {		
+		String getAccomodationCitiesQuery = "SELECT DISTINCT al.city "
+				+ "FROM AccomodationModel am INNER JOIN am.idAccomodationLocation al";
+		
+		TypedQuery<String> citiesToReturn = em.createQuery(getAccomodationCitiesQuery, String.class);
+		
+		return citiesToReturn.getResultList();
 	}
 
 }

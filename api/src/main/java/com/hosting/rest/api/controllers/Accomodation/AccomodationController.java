@@ -114,6 +114,11 @@ public class AccomodationController {
 		return accomodations;
 	}
 
+	@GetMapping("cities/all")
+	public List<String> findAllAccomodationCities(){
+		return accomodationService.findAllAccomodationCities();
+	}
+	
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,

@@ -6,6 +6,7 @@ import static com.hosting.rest.api.Utils.AppUtils.isNotNull;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -17,7 +18,10 @@ import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomEx
 import com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException;
 import com.hosting.rest.api.models.Currency.CurrencyModel;
 import com.hosting.rest.api.models.Language.LanguageModel;
+import com.hosting.rest.api.models.User.UserModel;
 import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
+import com.hosting.rest.api.repositories.Currency.IAppCurrencyRepository;
+import com.hosting.rest.api.repositories.Language.IAppLanguageRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserConfiguration.IUserConfigurationRepository;
 
@@ -43,6 +47,12 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private IAppCurrencyRepository currencyRepo;
+
+	@Autowired
+	private IAppLanguageRepository languageRepo;
 
 	/**
 	 * Añade una nueva configuración de usuario.
@@ -109,19 +119,33 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 			log.error("El usuario con id [ " + userId + " ] no existe.");
 			throw new NotFoundCustomException("El usuario con id [ " + userId + " ] no existe.");
 		}
+		
+		
+					UserModel userToUpdateConfig = userRepo.getById(userId);
 
 		// Comprobar si existe una configuación para el usuario
 		UserConfigurationModel originalUserConfiguration = findByUserId(userId);
-
-		if (originalUserConfiguration == null) {
-			log.error("La configuración del usuario a actualizar no existe.");
-			throw new NotFoundCustomException("La configuración del usuario a actualizar no existe.");
+		
+		// Si existe la configuración, crear una nueva y asignársela al usuario
+		if(userConfigurationRepo.existsById(originalUserConfiguration.getIdUserConfiguration())) {
+			UserConfigurationModel newConfig = userConfigurationRepo.save(new UserConfigurationModel(newLanguage, newCurrency));
+			// Actualizar configuración en el usuario
+			
+			userToUpdateConfig.setIdUserConfiguration(newConfig);
+			userRepo.save(userToUpdateConfig);
+			
+			return newConfig;
 		}
 
 		originalUserConfiguration.setIdCurrency(newCurrency);
 		originalUserConfiguration.setIdLanguage(newLanguage);
 
-		return userConfigurationRepo.saveAndFlush(originalUserConfiguration);
+		UserConfigurationModel userConfigurationUpdated = userConfigurationRepo.save(originalUserConfiguration);
+		
+		// Actualizar configuración realizada en el usuario.
+		userToUpdateConfig.setIdUserConfiguration(userConfigurationUpdated);
+		
+		return userConfigurationUpdated;
 	}
 
 	/**
@@ -148,6 +172,8 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	@Override
 	public UserConfigurationModel findByUserId(final Integer userId) {
 
+		UserConfigurationModel configToReturn = null;
+
 		// Comprobar que el id de usuario es válido.
 		if (!isIntegerValidAndPositive(userId)) {
 			log.error("El id del usuario [ " + userId + " ] no es válido.");
@@ -169,7 +195,14 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 
 		userConfig.setParameter("userId", userId);
 
-		return userConfig.getSingleResult();
+		try {
+			configToReturn = userConfig.getSingleResult();
+
+		} catch (NoResultException e) {
+			configToReturn = null;
+		}
+
+		return configToReturn;
 	}
 
 	/**
@@ -195,6 +228,16 @@ public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	@Override
 	public List<UserConfigurationModel> findAll() {
 		return userConfigurationRepo.findAll();
+	}
+
+	@Override
+	public List<CurrencyModel> findAllCurrencies() {
+		return currencyRepo.findAll();
+	}
+
+	@Override
+	public List<LanguageModel> findAllLanguages() {
+		return languageRepo.findAll();
 	}
 
 }

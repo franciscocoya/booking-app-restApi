@@ -7,23 +7,30 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.configuration.security.JwtUtils;
+import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Auth.JwtResponse;
 import com.hosting.rest.api.models.Auth.LoginRequest;
+import com.hosting.rest.api.models.Auth.ResetPasswordPayload;
 import com.hosting.rest.api.models.Auth.SignUpRequest;
 import com.hosting.rest.api.services.Auth.AuthServiceImpl;
 import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -36,6 +43,7 @@ import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
 	@Autowired
@@ -43,7 +51,7 @@ public class AuthController {
 
 	@Autowired
 	private AuthServiceImpl authService;
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
 
@@ -75,12 +83,27 @@ public class AuthController {
 	}
 
 	@PostMapping("password/reset")
-	public ResponseEntity<?> resetPassword(@RequestParam(name="email") final String emailToFind) {
+	public ResponseEntity<?> resetPassword(@RequestParam(name = "email") final String emailToFind) {
 		return authService.resetPassword(emailToFind);
 	}
-	
+
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PutMapping("{userId}/password/reset")
+	public void resetPasswordLoggedUser(@PathVariable(name = "userId") final String userId,
+			@Valid @RequestBody final ResetPasswordPayload resetPasswordPayload) {
+
+		try {
+			authService.resetPasswordLoggedUser(Integer.parseInt(userId), resetPasswordPayload);
+
+		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario no es un número.");
+			throw new IllegalArgumentsCustomException("El id de usuario no es un número.");
+		}
+
+	}
+
 	@PostMapping("user/changePassword")
-	public ResponseEntity<?> changePassword(@RequestParam("token") final String resetToken){
+	public ResponseEntity<?> changePassword(@RequestParam("token") final String resetToken) {
 		// TODO:
 		jwtUtils.validateJwtToken(resetToken);
 		return null;

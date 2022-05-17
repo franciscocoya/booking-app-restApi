@@ -73,4 +73,9 @@ public class UserModel implements Serializable {
 		setEmail(email);
 		setPass(password);
 	}
+	
+	public UserModel(final String name, final String surname, final String email, final UserConfigurationModel userConfig, final String password) {
+		this(name, surname, email, password);
+		this.idUserConfiguration = userConfig;
+	}
 }
