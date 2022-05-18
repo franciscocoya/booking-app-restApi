@@ -68,11 +68,7 @@ public class BookingServiceImpl implements IBookingService {
 		// Validar reserva pasada como parametro
 		validateParam(isNotNull(bookingToAdd), "Alguno de los valores de la reserva no es válido.");
 
-		// Comprobar si existe la reserva
-//		validateParamNotFound(!bookingRepo.existsById(bookingToAdd.getId()),
-//				"La reserva con id [ " + bookingToAdd.getId() + " ] ya existe.");
-
-		// TODO: checkBookingDates(bookingToAdd);
+		// checkBookingDates(bookingToAdd);
 
 		// Calcular la comisión
 		BigDecimal newServiceFee = calculateBookingServiceFee(bookingToAdd.getAmount());
@@ -95,31 +91,32 @@ public class BookingServiceImpl implements IBookingService {
 	 * disponibles.
 	 * 
 	 * @param bookingToCheck
+	 * @deprecated
 	 * @return
 	 */
-	private boolean checkBookingDates(final BookingModel bookingToCheck) {
-		Set<List<LocalDateTime>> reservedDates = checkAccomodationAvailability(
-				bookingToCheck.getIdAccomodation().getRegisterNumber());
-
-		LocalDateTime checkIn = bookingToCheck.getCheckIn();
-		LocalDateTime checkOut = bookingToCheck.getCheckOut();
-
-		for (List<LocalDateTime> date : reservedDates) {
-			LocalDateTime checkInReserved = date.get(0);
-			LocalDateTime checkOutReserved = date.get(1);
-
-			boolean isCheckInValid = (checkIn.isEqual(checkInReserved) || checkIn.isEqual(checkOutReserved))
-					|| (checkIn.isBefore(checkOutReserved) && checkIn.isAfter(checkOutReserved));
-
-			boolean isCheckOutValid = (checkOut.isEqual(checkInReserved) || checkOut.isEqual(checkOutReserved))
-					|| (checkOut.isBefore(checkOutReserved) && checkOut.isAfter(checkOutReserved));
-
-			if (!(isCheckInValid && isCheckOutValid)) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean checkBookingDates(final BookingModel bookingToCheck) {
+//		Set<List<LocalDateTime>> reservedDates = checkAccomodationAvailability(
+//				bookingToCheck.getIdAccomodation().getRegisterNumber());
+//
+//		LocalDateTime checkIn = bookingToCheck.getCheckIn();
+//		LocalDateTime checkOut = bookingToCheck.getCheckOut();
+//
+//		for (List<LocalDateTime> date : reservedDates) {
+//			LocalDateTime checkInReserved = date.get(0);
+//			LocalDateTime checkOutReserved = date.get(1);
+//
+//			boolean isCheckInValid = (checkIn.isEqual(checkInReserved) || checkIn.isEqual(checkOutReserved))
+//					|| (checkIn.isBefore(checkOutReserved) && checkIn.isAfter(checkOutReserved));
+//
+//			boolean isCheckOutValid = (checkOut.isEqual(checkInReserved) || checkOut.isEqual(checkOutReserved))
+//					|| (checkOut.isBefore(checkOutReserved) && checkOut.isAfter(checkOutReserved));
+//
+//			if (!(isCheckInValid && isCheckOutValid)) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	/**
 	 * Actualización de los datos de una reserva con id <code>bookingId</code>.

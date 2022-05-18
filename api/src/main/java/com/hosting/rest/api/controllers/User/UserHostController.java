@@ -39,7 +39,7 @@ public class UserHostController {
 	@Autowired
 	private IUserHostServiceImpl userHostService;
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{userId}/upgrade")
 	public UserHostModel upgradeExistingUserToUserHost(@PathVariable(value = "userId") final String userId,
 			@RequestParam(name = "dni") final String userHostDni,

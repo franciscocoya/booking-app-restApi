@@ -3,7 +3,6 @@ package com.hosting.rest.api.models.Auth;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

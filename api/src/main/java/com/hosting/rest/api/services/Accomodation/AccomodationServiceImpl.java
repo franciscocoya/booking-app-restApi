@@ -126,7 +126,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		validateParam(isStringNotBlank(regNumber), "El número de registro pasado como parámetro está vacío.");
 
 		// Comprobar que existe el alojamiento.
-		validateParamNotFound(!accomodationRepo.existsById(regNumber),
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
 				"El alojamiento con número de registro [ " + regNumber + " ] no existe.");
 
 		accomodationRepo.deleteById(regNumber);
@@ -359,6 +359,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery(
 				"SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
 
+		
 		accomodationsByUserId.setParameter("userId", userId);
 
 		return accomodationsByUserId.getResultList();

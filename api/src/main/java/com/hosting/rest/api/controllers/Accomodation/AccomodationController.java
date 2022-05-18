@@ -44,7 +44,7 @@ public class AccomodationController {
 
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
-	
+
 	@Autowired
 	private AccomodationCategoryServiceImpl accomodationCategoryService;
 
@@ -115,10 +115,10 @@ public class AccomodationController {
 	}
 
 	@GetMapping("cities/all")
-	public List<String> findAllAccomodationCities(){
+	public List<String> findAllAccomodationCities() {
 		return accomodationService.findAllAccomodationCities();
 	}
-	
+
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,
 			@RequestParam(name = "lng") final BigDecimal longitude,
@@ -163,7 +163,9 @@ public class AccomodationController {
 		List<AccomodationModel> accomodations = null;
 
 		try {
-			accomodations = accomodationService.findByUserId(Integer.parseInt(userId));
+			if (userId != null) {
+				accomodations = accomodationService.findByUserId(Integer.parseInt(userId));
+			}
 
 		} catch (NumberFormatException nfe) {
 			log.error("El id de usuario no es un número.");

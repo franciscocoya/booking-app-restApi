@@ -16,15 +16,18 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
+import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
+import com.hosting.rest.api.services.Accomodation.AccomodationServiceImpl;
 
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.3
+ * @version v1.0.4
  * @apiNote Servicio que gestiona las acciones de un usuario host.
  *
  */
@@ -39,6 +42,12 @@ public class IUserHostServiceImpl implements IUserHostService {
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private IAccomodationRepository accomodationRepo;
+
+	@Autowired
+	private AccomodationServiceImpl accomodationService;
 
 	/**
 	 * Actualización de los datos de un usuario "starter" a usuario host dado su id
@@ -79,6 +88,8 @@ public class IUserHostServiceImpl implements IUserHostService {
 		newUserHost.setPhone(oldUser.getPhone());
 		newUserHost.setPass(oldUser.getPass());
 		newUserHost.setProfileImage(oldUser.getProfileImage());
+
+		// Atributos usuario host.
 		newUserHost.setDni(userHostDni);
 		newUserHost.setDirection(userHostDirection);
 
@@ -153,24 +164,21 @@ public class IUserHostServiceImpl implements IUserHostService {
 		// Comprobar que el usuario sea host
 		validateParamNotFound(isUserAHost(userId), "El usuario con id [ " + userId + " ] no es usuario host.");
 
-		UserHostModel userToDelete = userHostRepo.findById(userId).get();
-		int newUserId = (int) userRepo.count();
-
-		// Copiar los datos del usuario host que son comunes al usuario.
-		UserModel newUser = new UserModel(newUserId + 1, userToDelete.getName(), userToDelete.getSurname(),
-				userToDelete.getEmail(), userToDelete.getPhone(), userToDelete.getPass(),
-				userToDelete.getProfileImage(), userToDelete.getIdUserConfiguration(), userToDelete.getCreatedAt());
-
-		userRepo.save(newUser);
+		// Eliminar alojamientos del usuario
+		List<AccomodationModel> userAccomodations = accomodationService.findByUserId(userId);
+		
+		for(AccomodationModel acc : userAccomodations) {
+			accomodationRepo.delete(acc);
+		}
 
 		// Eliminar el usuario host
 		userHostRepo.deleteById(userId);
 
-		String updateNewUserIdQuery = "UPDATE UserModel um SET um.id = :newUserId WHERE um.id = :oldUserId";
+//		String updateNewUserIdQuery = "UPDATE UserModel um SET um.id = :newUserId WHERE um.id = :oldUserId";
 
 		// Actualizar el id que tenía anteriormente el usuario
-		em.createQuery(updateNewUserIdQuery).setParameter("oldUserId", newUserId + 1).setParameter("newUserId", userId)
-				.executeUpdate();
+//		em.createQuery(updateNewUserIdQuery).setParameter("oldUserId", newUserId + 1).setParameter("newUserId", userId)
+//				.executeUpdate();
 	}
 
 	/**

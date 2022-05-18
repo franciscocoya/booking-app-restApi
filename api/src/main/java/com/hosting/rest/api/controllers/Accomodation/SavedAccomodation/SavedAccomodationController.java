@@ -54,7 +54,7 @@ public class SavedAccomodationController {
 		return savedAccomodationToReturn;
 	}
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	//@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{savedAccomodationId}")
 	public SavedAccomodationModel getSavedAccomodationById(
 			@PathVariable(value = "savedAccomodationId") final String savedAccomodationId) {
@@ -72,7 +72,6 @@ public class SavedAccomodationController {
 		return savedAccomodationToReturn;
 	}
 	
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{regNumber}/{idUser}")
 	public SavedAccomodationModel getSavedAccomodationByRegNumberAndUserId(
 			@PathVariable(name = "regNumber") final String regNumber,

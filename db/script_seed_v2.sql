@@ -149,6 +149,7 @@ INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATIO
 INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(6, 'Marina', 'Riojas Sarabia', 'marina22.rodsar@gmail.com', '648773354', '$2a$12$SrqfKU60SsBhPRIucQiKAOmNzTwWJeYXOrbuM2HMB0aOfd15pSC32', 2);
 
 -- USUARIO ADMIN
+-- EMAIL: admin@leoncamp.es
 -- PASS: Cqc3MHB#aJbo!lr# --> $2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u
 INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS) VALUES(7, 'administrator', 'administrator', 'admin@leoncamp.es', '000000000', '$2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u');
 

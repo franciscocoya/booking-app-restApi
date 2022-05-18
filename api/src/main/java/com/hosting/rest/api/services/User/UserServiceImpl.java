@@ -27,7 +27,7 @@ import com.hosting.rest.api.services.UserDetails.UserDetailsImpl;
 /**
  * 
  * @author Francisco Coya
- * @version v1.0.3
+ * @version v1.0.4
  * @apiNote Servicio que gestiona todas las acciones de un usuario de la
  *          aplicación.
  *
