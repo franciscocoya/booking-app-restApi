@@ -149,7 +149,6 @@ INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATIO
 INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS, ID_APP_CONFIGURATION) VALUES(6, 'Marina', 'Riojas Sarabia', 'marina22.rodsar@gmail.com', '648773354', '$2a$12$SrqfKU60SsBhPRIucQiKAOmNzTwWJeYXOrbuM2HMB0aOfd15pSC32', 2);
 
 -- USUARIO ADMIN
--- EMAIL: admin@leoncamp.es
 -- PASS: Cqc3MHB#aJbo!lr# --> $2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u
 INSERT INTO APP_USER(ID, UNAME, SURNAME, EMAIL, PHONE, PASS) VALUES(7, 'administrator', 'administrator', 'admin@leoncamp.es', '000000000', '$2a$12$sOsCaNg4.OEwsF515ESzeeXoYASgruL8rMznrZi7hVx6OkjWegR2u');
 
@@ -380,6 +379,8 @@ INSERT INTO SAVED_ACCOMODATION(ID, ID_USER, ID_ACC) VALUES(1, 1, '0001234A');
 -- EXCEPTION: HOST USER CANNOT RATE HIS/HER ACCOMODATIONS
 
 INSERT INTO ACCOMODATION_REVIEW(ID, CONTENT, STARS, ID_USER, ID_ACC) VALUES(1, 'El alojamiento está como en las fotos, hemos pasado unos días increíbles', 4, 2, '0001234A');
+INSERT INTO ACCOMODATION_REVIEW(CONTENT, STARS, ID_USER, ID_ACC) VALUES('Una estancia muy tranquila para disfrutar de unos días de vacaciones con todo detalle', 5, 1, '0005678B');
+INSERT INTO ACCOMODATION_REVIEW(CONTENT, STARS, ID_USER, ID_ACC) VALUES('Samuel cuida los pequeños detalles y nos recibió con un aperitivo, repetiremos !!', 5, 4, '0001234A');
 
 
 -- -----------
