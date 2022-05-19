@@ -90,10 +90,11 @@ public class IUserHostServiceImpl implements IUserHostService {
 		newUserHost.setProfileImage(oldUser.getProfileImage());
 
 		// Atributos usuario host.
-		newUserHost.setDni(userHostDni);
-		newUserHost.setDirection(userHostDirection);
+		((UserHostModel) newUserHost).setDni(userHostDni);
+		((UserHostModel) newUserHost).setDirection(userHostDirection);
+		
 
-		userRepo.deleteById(userId);
+		userRepo.deleteById(userId);	
 
 		return userHostRepo.save(newUserHost);
 	}

@@ -3,6 +3,9 @@ package com.hosting.rest.api.models.User;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -22,7 +25,7 @@ import lombok.Setter;
 public class UserHostModel extends UserModel {
 
 	private static final long serialVersionUID = 4779973744142659808L;
-
+	
 	@Column(name = "DNI")
 	private String dni;
 
@@ -43,4 +46,5 @@ public class UserHostModel extends UserModel {
 
 	@Column(name = "DIRECTION")
 	private String direction;
+
 }
