@@ -211,8 +211,6 @@ public class AuthServiceImpl implements AuthService {
 		// Validar contraseña actual
 		validateParam(isStringNotBlank(resetPasswordPayload.getNewPasswordRepeated().replace(" ", "")), "Es obligatorio repetir la nueva contraseña");
 		
-		
-		
 		validateParamNotFound(passwordEncoder.matches(resetPasswordPayload.getOldPassword().trim(), userPass),
 				"La contraseña actual es incorrecta");
 

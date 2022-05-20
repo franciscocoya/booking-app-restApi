@@ -18,3 +18,332 @@
 2022-05-20 06:57:54,048 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-20 06:57:54,057 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
 2022-05-20 06:57:54,090 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-05-20 08:12:54,652 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Starting BookingSystemApiRestApplicationTests using Java 17.0.2 on S-PTDES1 with PID 15500 (started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-05-20 08:12:54,660 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] No active profile set, falling back to 1 default profile: "default"
+2022-05-20 08:12:56,819 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-20 08:12:57,324 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 486 ms. Found 25 JPA repository interfaces.
+2022-05-20 08:12:58,765 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-20 08:12:58,901 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-05-20 08:12:59,326 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-05-20 08:12:59,716 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-20 08:12:59,718 WARN com.zaxxer.hikari.HikariConfig [main] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-20 08:12:59,719 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-05-20 08:13:00,078 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-05-20 08:13:00,112 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-20 08:13:02,145 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-20 08:13:02,160 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:13:02,507 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-20 08:13:07,336 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
+2022-05-20 08:13:08,354 INFO com.hosting.rest.api.BookingSystemApiRestApplicationTests [main] Started BookingSystemApiRestApplicationTests in 14.263 seconds (JVM running for 16.188)
+2022-05-20 08:13:08,970 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:13:08,974 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-05-20 08:13:09,012 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-05-20 08:13:28,631 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 16028 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-05-20 08:13:28,633 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-05-20 08:13:28,711 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-20 08:13:28,712 INFO org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-20 08:13:29,865 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-20 08:13:30,100 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 224 ms. Found 25 JPA repository interfaces.
+2022-05-20 08:13:30,904 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2022-05-20 08:13:30,916 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-05-20 08:13:30,916 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-05-20 08:13:31,020 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-05-20 08:13:31,021 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2309 ms
+2022-05-20 08:13:31,224 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-20 08:13:31,375 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-20 08:13:31,437 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-05-20 08:13:31,639 INFO org.hibernate.annotations.common.Version [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-05-20 08:13:31,775 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-20 08:13:31,777 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-20 08:13:31,777 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2022-05-20 08:13:31,966 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2022-05-20 08:13:31,985 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-20 08:13:33,227 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-20 08:13:33,239 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:13:35,716 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-05-20 08:13:36,281 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-05-20 08:13:36,418 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-05-20 08:13:36,431 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 8.409 seconds (JVM running for 9.439)
+2022-05-20 08:14:20,789 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-20 08:14:20,789 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-05-20 08:14:20,793 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-2] Completed initialization in 2 ms
+2022-05-20 08:14:30,838 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-9] La contraseña actual es incorrecta
+2022-05-20 08:14:30,845 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:15:34,307 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-4] La contraseña actual es incorrecta
+2022-05-20 08:15:34,310 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:15:55,703 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-7] La contraseña actual es incorrecta
+2022-05-20 08:15:55,706 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:16:12,409 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-10] La contraseña actual es incorrecta
+2022-05-20 08:16:12,412 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-10] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:16:41,678 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-5] La contraseña actual es incorrecta
+2022-05-20 08:16:41,680 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-5] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:18:08,246 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-6] La contraseña actual es incorrecta
+2022-05-20 08:18:08,248 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:18:56,403 WARN org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public void com.hosting.rest.api.controllers.Auth.AuthController.resetPasswordLoggedUser(java.lang.String,com.hosting.rest.api.models.Auth.ResetPasswordPayload): [Field error in object 'resetPasswordPayload' on field 'newPasswordRepeated': rejected value [ ]; codes [NotBlank.resetPasswordPayload.newPasswordRepeated,NotBlank.newPasswordRepeated,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [resetPasswordPayload.newPasswordRepeated,newPasswordRepeated]; arguments []; default message [newPasswordRepeated]]; default message [Es obligatorio repetir la nueva contraseña]] ]
+2022-05-20 08:19:45,945 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:19:45,951 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2022-05-20 08:19:45,968 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2022-05-20 08:19:50,229 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 16028 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-05-20 08:19:50,229 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-05-20 08:19:50,575 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-20 08:19:50,723 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 147 ms. Found 25 JPA repository interfaces.
+2022-05-20 08:19:50,888 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2022-05-20 08:19:50,889 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-05-20 08:19:50,889 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-05-20 08:19:50,920 INFO org.apache.catalina.core.ContainerBase.[Tomcat-1].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-05-20 08:19:50,920 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 688 ms
+2022-05-20 08:19:51,014 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-20 08:19:51,087 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-20 08:19:51,098 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-2 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-20 08:19:51,098 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-2 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-20 08:19:51,098 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2022-05-20 08:19:51,105 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2022-05-20 08:19:51,106 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-20 08:19:51,432 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-20 08:19:51,433 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:19:52,891 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-05-20 08:19:53,033 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-05-20 08:19:53,075 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-05-20 08:19:53,082 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.885 seconds (JVM running for 386.095)
+2022-05-20 08:19:53,086 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-05-20 08:20:38,073 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [Thread-7] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:20:38,074 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown initiated...
+2022-05-20 08:20:38,077 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown completed.
+2022-05-20 08:20:38,232 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Starting BookingSystemApiRestApplication using Java 17.0.2 on S-PTDES1 with PID 16028 (C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api\target\classes started by practicassoftware1 in C:\Users\practicassoftware1\Documents\proyecto_daw_francisco\booking-app-restApi\api)
+2022-05-20 08:20:38,233 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-05-20 08:20:38,575 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-20 08:20:38,715 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 139 ms. Found 25 JPA repository interfaces.
+2022-05-20 08:20:38,856 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2022-05-20 08:20:38,857 INFO org.apache.catalina.core.StandardService [restartedMain] Starting service [Tomcat]
+2022-05-20 08:20:38,857 INFO org.apache.catalina.core.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-05-20 08:20:38,889 INFO org.apache.catalina.core.ContainerBase.[Tomcat-1].[localhost].[/api] [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-05-20 08:20:38,890 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 653 ms
+2022-05-20 08:20:38,956 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-20 08:20:39,015 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-20 08:20:39,027 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-3 - maxLifetime is less than 30000ms, setting to default 1800000ms.
+2022-05-20 08:20:39,028 WARN com.zaxxer.hikari.HikariConfig [restartedMain] HikariPool-3 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2022-05-20 08:20:39,028 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2022-05-20 08:20:39,033 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2022-05-20 08:20:39,033 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2022-05-20 08:20:39,325 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-20 08:20:39,326 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 08:20:40,673 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will not secure any request
+2022-05-20 08:20:40,771 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-05-20 08:20:40,808 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-05-20 08:20:40,814 INFO com.hosting.rest.api.BookingSystemApiRestApplication [restartedMain] Started BookingSystemApiRestApplication in 2.63 seconds (JVM running for 433.826)
+2022-05-20 08:20:40,815 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-05-20 08:22:25,036 INFO org.apache.catalina.core.ContainerBase.[Tomcat-1].[localhost].[/api] [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-20 08:22:25,037 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-05-20 08:22:25,039 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-1] Completed initialization in 2 ms
+2022-05-20 08:23:38,038 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-9] La contraseña actual es incorrecta
+2022-05-20 08:23:38,042 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:23:46,439 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-10] La contraseña actual es incorrecta
+2022-05-20 08:23:46,442 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-10] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:24:03,519 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-1] La contraseña actual es incorrecta
+2022-05-20 08:24:03,521 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-1] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:27:23,548 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-3] La contraseña actual es incorrecta
+2022-05-20 08:27:23,550 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-3] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:27:34,306 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-4] Las contraseñas no coinciden
+2022-05-20 08:27:34,308 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: Las contraseñas no coinciden]
+2022-05-20 08:37:20,125 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-7] La contraseña actual es incorrecta
+2022-05-20 08:37:20,127 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:37:27,569 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-8] La contraseña actual es incorrecta
+2022-05-20 08:37:27,571 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:37:54,284 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-9] Las contraseñas no coinciden
+2022-05-20 08:37:54,285 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: Las contraseñas no coinciden]
+2022-05-20 08:40:48,138 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-7] Las contraseñas no coinciden
+2022-05-20 08:40:48,140 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: Las contraseñas no coinciden]
+2022-05-20 08:41:26,840 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-9] La contraseña actual es incorrecta
+2022-05-20 08:41:26,843 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: La contraseña actual es incorrecta]
+2022-05-20 08:41:38,018 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-10] Las contraseñas no coinciden
+2022-05-20 08:41:38,020 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-10] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: Las contraseñas no coinciden]
+2022-05-20 09:58:03,582 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-8] El id del usuario [ accomodations ] no es un número.
+2022-05-20 09:58:03,584 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 09:59:17,976 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-6] El id del usuario [ accomodations ] no es un número.
+2022-05-20 09:59:17,978 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 10:00:03,488 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-2] El id del usuario [ accomodations ] no es un número.
+2022-05-20 10:00:03,490 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-2] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 10:34:33,521 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-8] El id del usuario [ accomodations ] no es un número.
+2022-05-20 10:34:33,524 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 11:26:38,832 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:26:39,131 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:26:39,134 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:29:57,021 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:29:57,338 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:29:57,347 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:07,431 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:07,730 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:07,730 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:36,303 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:36,533 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:30:36,537 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:29,226 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:29,275 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:29,296 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:29,317 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:29,453 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:34,871 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:35,031 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:34:35,038 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:36:17,480 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:36:17,667 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:36:17,675 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:35,755 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:36,013 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:36,019 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:42,006 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:42,339 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:37:42,342 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:32,435 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:32,540 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:32,601 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:32,633 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:32,954 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:35,453 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:35,968 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:46:35,969 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:47,578 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:48,092 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:48,092 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:56,665 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:56,902 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:50:56,907 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:52:11,113 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:52:11,403 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:52:11,405 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:53:58,667 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:53:59,007 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:53:59,018 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:54:11,396 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:54:11,789 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:54:11,800 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:56:57,541 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:56:57,711 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:56:57,713 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:03,441 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:03,699 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:03,701 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:08,841 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:09,064 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:09,072 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:56,831 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:56,997 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:57:57,000 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:04,040 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:04,387 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:04,391 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:21,125 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:21,388 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:21,396 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:34,283 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:34,481 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 11:58:34,481 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:20,094 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:20,175 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:20,204 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:20,229 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:20,349 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:22,497 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:22,662 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:22,671 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:26,935 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:27,101 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:00:27,106 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:19,970 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:20,144 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:20,151 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:32,942 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:33,052 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:01:33,057 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:12:47,408 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:12:47,897 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:12:47,899 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:55,181 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:55,389 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:55,515 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:55,576 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:56,016 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:58,151 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:58,307 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:15:58,314 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:13,664 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:13,851 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:13,863 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:47,514 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:47,708 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:47,708 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:59,042 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:59,585 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:16:59,586 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:18:39,655 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:18:39,836 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:18:39,847 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:07,202 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:07,297 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:07,325 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:07,340 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:07,461 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:09,737 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:10,001 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:10,009 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:42,364 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-6] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:42,526 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:20:42,532 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:21:28,136 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:23:14,723 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-7] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:23:14,953 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:23:14,954 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:24:31,963 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-5] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:24:32,304 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:24:32,312 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 12:27:21,021 WARN org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<?> com.hosting.rest.api.controllers.Auth.AuthController.signUp(com.hosting.rest.api.models.Auth.SignUpRequest) with 5 errors: [Field error in object 'signUpRequest' on field 'repeatedPassword': rejected value []; codes [NotBlank.signUpRequest.repeatedPassword,NotBlank.repeatedPassword,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [signUpRequest.repeatedPassword,repeatedPassword]; arguments []; default message [repeatedPassword]]; default message [Es obligatorio que repetir la contraseña]] [Field error in object 'signUpRequest' on field 'password': rejected value []; codes [NotBlank.signUpRequest.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [signUpRequest.password,password]; arguments []; default message [password]]; default message [La contraseña es obligatoria]] [Field error in object 'signUpRequest' on field 'surname': rejected value []; codes [NotBlank.signUpRequest.surname,NotBlank.surname,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [signUpRequest.surname,surname]; arguments []; default message [surname]]; default message [Los apellidos son obligatorios]] [Field error in object 'signUpRequest' on field 'name': rejected value []; codes [NotBlank.signUpRequest.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [signUpRequest.name,name]; arguments []; default message [name]]; default message [El nombre es obligatorio]] [Field error in object 'signUpRequest' on field 'email': rejected value []; codes [NotBlank.signUpRequest.email,NotBlank.email,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [signUpRequest.email,email]; arguments []; default message [email]]; default message [El correo electrónico es obligatorio]] ]
+2022-05-20 12:29:47,604 ERROR com.hosting.rest.api.configuration.security.AuthEntryPoint [http-nio-8080-exec-5] Unauthorized error: Bad credentials
+2022-05-20 12:30:34,217 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:30:49,948 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-1] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:30:50,589 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-4] No existe un usuario con id 8
+2022-05-20 12:30:50,590 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: No existe un usuario con id 8]
+2022-05-20 12:31:20,299 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-2] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:31:20,441 ERROR com.hosting.rest.api.Utils.ServiceParamValidator [http-nio-8080-exec-9] No existe ningún usuario host con el id 8
+2022-05-20 12:31:20,442 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: No existe ningún usuario host con el id 8]
+2022-05-20 12:31:23,309 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:33:55,513 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-5] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:33:56,496 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:34:25,994 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-7] El id del usuario [ accomodations ] no es un número.
+2022-05-20 12:34:25,995 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 12:34:28,733 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-8] El id del usuario [ accomodations ] no es un número.
+2022-05-20 12:34:28,735 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 12:34:42,656 ERROR com.hosting.rest.api.controllers.User.UserReview.UserReviewController [http-nio-8080-exec-6] El id del usuario [ accomodations ] no es un número.
+2022-05-20 12:34:42,658 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException: El id del usuario [ accomodations ] no es un número.]
+2022-05-20 12:35:18,833 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:35:22,220 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-2] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:35:22,255 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-10] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:35:24,970 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:35:57,535 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:36:03,809 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:36:06,322 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-4] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:20,329 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-9] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:21,470 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-3] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:21,564 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:21,637 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-5] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:21,647 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-10] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:28,628 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:35,640 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-7] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:37:36,135 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-8] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:38:15,596 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-3] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:38:19,765 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-6] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 12:38:20,125 WARN org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [http-nio-8080-exec-1] Resolved [com.hosting.rest.api.exceptions.NotFound.NotFoundCustomException: El usuario con id [ 8 ] no existe.]
+2022-05-20 13:24:30,506 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:30,741 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:30,742 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:42,005 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-1] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:42,061 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-4] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:42,069 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-2] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:42,083 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:24:42,159 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-8] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:47:32,828 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-9] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:47:33,652 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-3] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:47:33,661 ERROR com.hosting.rest.api.configuration.security.JwtUtils [http-nio-8080-exec-10] Invalid JWT token: JWT strings must contain exactly 2 period characters. Found: 0
+2022-05-20 13:59:33,915 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(349)-127.0.0.1] Application shutdown requested.
+2022-05-20 13:59:33,950 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [RMI TCP Connection(349)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-20 13:59:33,951 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(349)-127.0.0.1] HikariPool-3 - Shutdown initiated...
+2022-05-20 13:59:33,955 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(349)-127.0.0.1] HikariPool-3 - Shutdown completed.
