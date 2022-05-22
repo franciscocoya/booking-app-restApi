@@ -102,6 +102,16 @@ public class UserController {
 	public UserDetails getUserByEmail(@PathVariable(name = "userEmail") final String emailToSearch) {
 		return userService.loadUserByUsername(emailToSearch);
 	}
+	
+	@GetMapping("exists")
+	public boolean checkUserExistsByEmail(@RequestParam(name = "email") final String emailToSearch) {
+		return userService.loadUserByUsername(emailToSearch) != null;
+	}
+	
+	@GetMapping("load")
+	public Integer getUserIdByEmail(@RequestParam(name = "email") final String emailToSearch) {
+		return userService.getUserIdByEmail(emailToSearch);
+	}
 
 	@PatchMapping("profileImage")
 	public void updateProfileImage(@RequestParam(name = "user") final Integer userId,

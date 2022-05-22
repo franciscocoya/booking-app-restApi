@@ -103,4 +103,10 @@ public class PromoCodeController {
 			@PathVariable(name = "regNumber") final String accomodationRegisterNumber) {
 		return promoCodeService.findByAccomodation(accomodationRegisterNumber);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("{regNumber}/exists")
+	public boolean checkPromoCodeIsValid(@PathVariable(name = "regNumber") final String accomodationRegisterNumber, @RequestParam(name = "code") final String promoCode) {
+		return promoCodeService.checkPromoCodeValid(accomodationRegisterNumber, promoCode);
+	}
 }

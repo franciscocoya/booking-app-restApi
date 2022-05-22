@@ -185,4 +185,27 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 
 		return promoCodes.getResultList();
 	}
+
+	@Override
+	public boolean checkPromoCodeValid(final String regNumber, final String promoCodeValue) {
+		// Validar número de registro del alojamiento
+		validateParam(isStringNotBlank(regNumber),
+				"El número de registro del alojamiento " + regNumber + " a a buscar está vacío.");
+
+		// Comprobar que existe un alohamiento con el número de registro pasado como
+		// parámetro.
+		validateParamNotFound(accomodationRepo.existsById(regNumber),
+				"No existe ningún alojamiento registrado con el número " + regNumber + " en la aplicación.");
+
+		validateParam(isStringNotBlank(promoCodeValue), "El código promocional no es válido.");
+
+		String checkPromoCodeValidQuery = "SELECT pcamid FROM PromoCodeAccomodationModel pcamid "
+				+ "INNER JOIN pcamid.promoCodeAccomodationId.idPromoCode pcm" + " WHERE pcamid.promoCodeAccomodationId.idAccomodation.registerNumber = :regNumber "
+				+ "AND pcamid.promoCodeAccomodationId.idPromoCode.serial_num = :promoCodeValue";
+
+		TypedQuery<PromoCodeModel> promoCode = em.createQuery(checkPromoCodeValidQuery, PromoCodeModel.class)
+				.setParameter("regNumber", regNumber).setParameter("promoCodeValue", promoCodeValue);
+
+		return promoCode.getSingleResult() != null;
+	}
 }

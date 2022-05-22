@@ -24,11 +24,15 @@ public class JwtResponse implements Serializable {
 	public JwtResponse(final String accessToken) {
 		this.token = accessToken;
 	}
-
-	public JwtResponse(String accessToken, Integer id, String email, List<String> roles) {
-		this.token = accessToken;
+	
+	public JwtResponse(String accessToken, Integer id, String email) {
+		this(accessToken);
 		this.id = id;
 		this.email = email;
+	}
+
+	public JwtResponse(String accessToken, Integer id, String email, List<String> roles) {
+		this(accessToken, id, email);
 		this.roles = roles;
 	}
 }

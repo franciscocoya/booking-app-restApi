@@ -20,5 +20,7 @@ public interface IPromoCodeService {
 	public List<PromoCodeModel> findByAccomodation(final String accomodationRegNumber);
 
 	public List<PromoCodeModel> findAllPromoCodes();
+	
+	public boolean checkPromoCodeValid(final String regNumber, final String promoCodeValue);
 
 }

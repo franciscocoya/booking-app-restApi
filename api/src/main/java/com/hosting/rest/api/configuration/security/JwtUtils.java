@@ -59,6 +59,18 @@ public class JwtUtils {
 	public static String getUserNameFromJwtToken(final String token) {
 		return Jwts.parser().setSigningKey(SIGNING_KEY).parseClaimsJws(token).getBody().getSubject();
 	}
+	
+	public static String generateTokenFromUsername(String username) {
+	    return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+	        .setExpiration(new Date((new Date()).getTime() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000)).signWith(SignatureAlgorithm.HS512, SIGNING_KEY)
+	        .compact();
+	  }
+	
+	public static String generateTokenFromId(Integer userId) {
+	    return Jwts.builder().setSubject(String.valueOf(userId)).setIssuedAt(new Date())
+	        .setExpiration(new Date((new Date()).getTime() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000)).signWith(SignatureAlgorithm.HS512, SIGNING_KEY)
+	        .compact();
+	  }
 
 	/**
 	 * Valida el token JWT <code>authToken</code> pasado como parámetro.

@@ -179,4 +179,15 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		.setParameter("userId", userId)
 		.executeUpdate();
 	}
+
+	@Override
+	public Integer getUserIdByEmail(final String email) {
+		String findUserIdByEmail = "SELECT um.id " + " FROM UserModel um"
+				+ " WHERE TYPE(um) IN (UserModel, UserHostModel) AND um.email = :email";
+
+		TypedQuery<Integer> allUsers = em.createQuery(findUserIdByEmail, Integer.class)
+				.setParameter("email", email);
+
+		return allUsers.getSingleResult();
+	}
 }

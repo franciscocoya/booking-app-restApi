@@ -18,6 +18,8 @@ public interface IUserService {
 	public List<UserModel> findAllStartedUsers();
 
 	public UserModel getUserById(final Integer userId);
+	
+	public Integer getUserIdByEmail(final String email);
 
 	public List<UserModel> findAllUsers();
 	

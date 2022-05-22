@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "*" })
 @RequestMapping("users/hosts")
 @Slf4j
 public class UserHostController {
@@ -39,24 +39,25 @@ public class UserHostController {
 	@Autowired
 	private IUserHostServiceImpl userHostService;
 
-	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("{userId}/upgrade")
 	public UserHostModel upgradeExistingUserToUserHost(@PathVariable(value = "userId") final String userId,
 			@RequestParam(name = "dni") final String userHostDni,
 			@RequestParam(name = "direction") final String useHostDirection) {
 
-		UserHostModel userHostAdded = null;
+//		UserHostModel userHostAdded = null;
+		UserHostModel res = null;
 
 		try {
-			userHostAdded = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostDni,
-					useHostDirection);
+			res = userHostService.upgradeUserToUserHost(Integer.parseInt(userId), userHostDni, useHostDirection);
 
 		} catch (NumberFormatException nfe) {
 			log.error("El id de usuario [ " + userId + " ] a añadir no es un número.");
 			throw new IllegalArgumentsCustomException("El id de usuario [ " + userId + " ] a añadir no es un número.");
 		}
 
-		return userHostAdded;
+//		return userHostAdded;
+		return res;
 	}
 
 	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
@@ -82,7 +83,8 @@ public class UserHostController {
 			updatedUserHost = userHostService.updateUserHostById(Integer.parseInt(userId), userHostToUpdate);
 
 		} catch (NumberFormatException nfe) {
-			log.error("El id de usuario [ " + userId + " ] a actualizar no es un número.");;
+			log.error("El id de usuario [ " + userId + " ] a actualizar no es un número.");
+			;
 			throw new IllegalArgumentsCustomException(
 					"El id de usuario [ " + userId + " ] a actualizar no es un número.");
 		}

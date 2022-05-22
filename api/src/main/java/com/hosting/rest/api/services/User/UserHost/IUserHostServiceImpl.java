@@ -14,11 +14,17 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.hosting.rest.api.configuration.security.JwtUtils;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
+import com.hosting.rest.api.models.User.UserConfiguration.UserConfigurationModel;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
 import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
@@ -49,6 +55,8 @@ public class IUserHostServiceImpl implements IUserHostService {
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
 
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	/**
 	 * Actualización de los datos de un usuario "starter" a usuario host dado su id
 	 * <code>userId</code>, el dni y la direccion.
@@ -61,7 +69,6 @@ public class IUserHostServiceImpl implements IUserHostService {
 	 * 
 	 * @throws NumberFormatException Si el id de usuario no es un número.
 	 */
-	@Transactional
 	@Override
 	public UserHostModel upgradeUserToUserHost(final Integer userId, final String userHostDni,
 			final String userHostDirection) {
@@ -77,26 +84,25 @@ public class IUserHostServiceImpl implements IUserHostService {
 		// Comprobar si existe el usuario
 		validateParamNotFound(userRepo.existsById(userId), "El usuario a actualizar a host no existe.");
 
-		UserModel oldUser = userRepo.findById(userId).get();
+//		em.createQuery("INSERT INTO UserHostModel uhm SET uhm.dni = :dni, uhm.direction = :direction WHERE uhm.id = :userId")
+//				.setParameter("dni", userHostDni).setParameter("direction", userHostDirection)
+//				.setParameter("userId", userId).executeUpdate();
+		UserModel oldUser = userRepo.getById(userId);
 
-		UserHostModel newUserHost = new UserHostModel();
+		String name = oldUser.getName();
+		String surname = oldUser.getSurname();
+		String email = oldUser.getEmail();
+		String password = oldUser.getPass();
+		String phone = oldUser.getPhone();
+		UserConfigurationModel userConfig = oldUser.getIdUserConfiguration();
 
-		newUserHost.setId(userId);
-		newUserHost.setName(oldUser.getName());
-		newUserHost.setSurname(oldUser.getSurname());
-		newUserHost.setEmail(oldUser.getEmail());
-		newUserHost.setPhone(oldUser.getPhone());
-		newUserHost.setPass(oldUser.getPass());
-		newUserHost.setProfileImage(oldUser.getProfileImage());
+		userRepo.deleteById(userId);
 
-		// Atributos usuario host.
-		((UserHostModel) newUserHost).setDni(userHostDni);
-		((UserHostModel) newUserHost).setDirection(userHostDirection);
+		SecurityContextHolder.clearContext();
 		
+		return userHostRepo.save(new UserHostModel(userId, name, surname, email, phone, userConfig, password, userHostDni,
+				userHostDirection));
 
-		userRepo.deleteById(userId);	
-
-		return userHostRepo.save(newUserHost);
 	}
 
 	/**
@@ -167,8 +173,8 @@ public class IUserHostServiceImpl implements IUserHostService {
 
 		// Eliminar alojamientos del usuario
 		List<AccomodationModel> userAccomodations = accomodationService.findByUserId(userId);
-		
-		for(AccomodationModel acc : userAccomodations) {
+
+		for (AccomodationModel acc : userAccomodations) {
 			accomodationRepo.delete(acc);
 		}
 

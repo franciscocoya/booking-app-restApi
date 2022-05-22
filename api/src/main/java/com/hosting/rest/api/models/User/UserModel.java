@@ -78,4 +78,11 @@ public class UserModel implements Serializable {
 		this(name, surname, email, password);
 		this.idUserConfiguration = userConfig;
 	}
+	
+	public UserModel(final Integer id, final String name, final String surname, final String email, final String phone, final UserConfigurationModel userConfig, final String password) {
+		this(name, surname, email, password);
+		this.id = id;
+		this.phone = phone;
+		this.idUserConfiguration = userConfig;
+	}
 }
