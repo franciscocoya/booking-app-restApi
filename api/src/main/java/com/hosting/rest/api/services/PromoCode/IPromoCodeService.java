@@ -21,6 +21,6 @@ public interface IPromoCodeService {
 
 	public List<PromoCodeModel> findAllPromoCodes();
 	
-	public boolean checkPromoCodeValid(final String regNumber, final String promoCodeValue);
+	public PromoCodeModel checkPromoCodeValid(final String regNumber, final String promoCodeValue);
 
 }

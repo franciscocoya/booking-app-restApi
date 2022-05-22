@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -187,7 +188,9 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 	}
 
 	@Override
-	public boolean checkPromoCodeValid(final String regNumber, final String promoCodeValue) {
+	public PromoCodeModel checkPromoCodeValid(final String regNumber, final String promoCodeValue) {
+		PromoCodeModel existsCode = null;
+		
 		// Validar número de registro del alojamiento
 		validateParam(isStringNotBlank(regNumber),
 				"El número de registro del alojamiento " + regNumber + " a a buscar está vacío.");
@@ -199,13 +202,21 @@ public class PromoCodeServiceImpl implements IPromoCodeService {
 
 		validateParam(isStringNotBlank(promoCodeValue), "El código promocional no es válido.");
 
-		String checkPromoCodeValidQuery = "SELECT pcamid FROM PromoCodeAccomodationModel pcamid "
-				+ "INNER JOIN pcamid.promoCodeAccomodationId.idPromoCode pcm" + " WHERE pcamid.promoCodeAccomodationId.idAccomodation.registerNumber = :regNumber "
-				+ "AND pcamid.promoCodeAccomodationId.idPromoCode.serial_num = :promoCodeValue";
+		String checkPromoCodeValidQuery = "SELECT pcm FROM PromoCodeAccomodationModel pcam"
+				+ ", PromoCodeModel pcm "
+				+ "INNER JOIN pcam.promoCodeAccomodationId pcaid" + " WHERE pcaid.idAccomodation = :regNumber "
+				+ "AND pcm.serial_num = :promoCodeValue ";
 
 		TypedQuery<PromoCodeModel> promoCode = em.createQuery(checkPromoCodeValidQuery, PromoCodeModel.class)
 				.setParameter("regNumber", regNumber).setParameter("promoCodeValue", promoCodeValue);
+		
+		try {
+			existsCode = promoCode.getSingleResult();
+			
+		} catch (NoResultException nre) {
+			existsCode = null;
+		}
 
-		return promoCode.getSingleResult() != null;
+		return existsCode;
 	}
 }

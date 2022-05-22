@@ -1,6 +1,6 @@
 /**
 * Author: Francisco Coya.
-* Description: SQL script to create the booking database for the application LeonCamp.
+* Description: SQL script to create the booking database for the LeonCamp application.
 * Version: v1.0.4
 * License: 2022 All Rights Reserved.
 */
