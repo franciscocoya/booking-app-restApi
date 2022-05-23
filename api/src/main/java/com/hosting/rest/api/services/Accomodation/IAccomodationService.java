@@ -2,6 +2,7 @@ package com.hosting.rest.api.services.Accomodation;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -32,9 +33,9 @@ public interface IAccomodationService {
 	public AccomodationModel addNewAccomodation(final AccomodationModel accomodationModel);
 
 	public Page<AccomodationModel> findAllAccomodations(final Integer pageNumber, final Integer size);
-	
+
 	public List<String> findAllAccomodationCities();
-	
+
 	public List<AccomodationModel> findNAccomodations(final Integer maxNumberOfAccomodations);
 
 	public AccomodationModel getAccomodationById(final String regNumber);
@@ -43,9 +44,10 @@ public interface IAccomodationService {
 			final AccomodationModel accomodationToUpdate);
 
 	public String removeAccomodationById(final String regNumber);
-	
-	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber, final AccomodationImageModel imageToAdd);
-	
+
+	public AccomodationModel addNewImageToExistingAccomodation(final String regNumber,
+			final AccomodationImageModel imageToAdd);
+
 	public void removeAccomodationImage(final String regNumber, final Integer imageId);
 
 	public Page<AccomodationModel> findByCity(final String cityToSearch, final Integer pageNumber, final Integer size);
@@ -56,6 +58,10 @@ public interface IAccomodationService {
 	public List<AccomodationModel> findByCategory(final String accomodationCategory);
 
 	public List<AccomodationModel> findByPriceRange(final BigDecimal minPrice, final BigDecimal maxPrice);
-	
+
 	public List<AccomodationModel> findByUserId(final Integer userId);
+
+	public List<AccomodationModel> findAllByMultipleFilters(final Optional<BigDecimal> minPrice,
+			final Optional<BigDecimal> maxPrice, final Optional<Integer> beds, final Optional<Integer> bedrooms,
+			final Optional<Integer> bathrooms, final Optional<Integer> guests);
 }

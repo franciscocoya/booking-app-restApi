@@ -5,6 +5,7 @@ import static com.hosting.rest.api.Utils.PaginationConstants.DEFAULT_PAGE_SIZE;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -87,6 +88,18 @@ public class AccomodationController {
 			throw new IllegalArgumentsCustomException("El número máximo de resultados a mostrar no es válido");
 		}
 		return accomodations;
+	}
+
+	@GetMapping("all/filter")
+	public List<AccomodationModel> findAccomodationByMultipleFilters(
+			@RequestParam(value = "minprice") final Optional<BigDecimal> minPrice,
+			@RequestParam(value = "maxprice") final Optional<BigDecimal> maxPrice,
+			@RequestParam(value = "beds") final Optional<Integer> beds,
+			@RequestParam(value = "bedrooms") final Optional<Integer> bedrooms,
+			@RequestParam(value = "bathrooms") final Optional<Integer> bathrooms,
+			@RequestParam(value = "guests") final Optional<Integer> guests) {
+
+		return accomodationService.findAllByMultipleFilters(minPrice, maxPrice, beds, bedrooms, bathrooms, guests);
 	}
 
 	@GetMapping("{regNumber}")

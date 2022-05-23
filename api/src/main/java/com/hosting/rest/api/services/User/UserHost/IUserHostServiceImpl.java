@@ -14,13 +14,9 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.hosting.rest.api.configuration.security.JwtUtils;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.User.UserHostModel;
 import com.hosting.rest.api.models.User.UserModel;
@@ -54,9 +50,7 @@ public class IUserHostServiceImpl implements IUserHostService {
 
 	@Autowired
 	private AccomodationServiceImpl accomodationService;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	
 	/**
 	 * Actualización de los datos de un usuario "starter" a usuario host dado su id
 	 * <code>userId</code>, el dni y la direccion.

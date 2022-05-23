@@ -12,11 +12,17 @@ import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParam;
 import static com.hosting.rest.api.Utils.ServiceParamValidator.validateParamNotFound;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,7 +160,7 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		String listAccomodationsByCityQuery = "SELECT ac "
 				+ "FROM AccomodationModel ac INNER JOIN ac.idAccomodationLocation al " + "WHERE LOWER(al.city) "
-						+ "LIKE LOWER(:city)";
+				+ "LIKE LOWER(:city)";
 
 		TypedQuery<AccomodationModel> accomodations = em.createQuery(listAccomodationsByCityQuery,
 				AccomodationModel.class);
@@ -359,7 +365,6 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		TypedQuery<AccomodationModel> accomodationsByUserId = em.createQuery(
 				"SELECT am FROM AccomodationModel am WHERE am.idUserHost.id = :userId", AccomodationModel.class);
 
-		
 		accomodationsByUserId.setParameter("userId", userId);
 
 		return accomodationsByUserId.getResultList();
@@ -422,13 +427,60 @@ public class AccomodationServiceImpl implements IAccomodationService {
 	 * Listado de todas las ciudades donde se han publicado alojamientos en la app.
 	 */
 	@Override
-	public List<String> findAllAccomodationCities() {		
+	public List<String> findAllAccomodationCities() {
 		String getAccomodationCitiesQuery = "SELECT DISTINCT al.city "
 				+ "FROM AccomodationModel am INNER JOIN am.idAccomodationLocation al";
-		
+
 		TypedQuery<String> citiesToReturn = em.createQuery(getAccomodationCitiesQuery, String.class);
-		
+
 		return citiesToReturn.getResultList();
+	}
+
+	@Override
+	public List<AccomodationModel> findAllByMultipleFilters(final Optional<BigDecimal> minPrice,
+			final Optional<BigDecimal> maxPrice, final Optional<Integer> beds, final Optional<Integer> bedrooms,
+			final Optional<Integer> bathrooms, final Optional<Integer> guests) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<AccomodationModel> query = builder.createQuery(AccomodationModel.class);
+
+		Root<AccomodationModel> root = query.from(AccomodationModel.class);
+
+		List<Predicate> predicates = new ArrayList<>();
+		
+
+		// Rango de precios [min, max]
+		if (minPrice.isPresent() && maxPrice.isPresent() 
+				&& minPrice.get().compareTo(BigDecimal.ZERO) > 0
+				&& maxPrice.get().compareTo(BigDecimal.ZERO) > 0) {
+			predicates.add(builder.between(root.get("pricePerNight"), minPrice.get(), maxPrice.get()));
+
+		} else if (!minPrice.isPresent() && maxPrice.isPresent() && maxPrice.get().compareTo(BigDecimal.ZERO) > 0) {
+			predicates.add(builder.lessThanOrEqualTo(root.get("pricePerNight"), maxPrice.get()));
+
+		} else if (minPrice.isPresent() && !maxPrice.isPresent() && minPrice.get().compareTo(BigDecimal.ZERO) > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("pricePerNight"), minPrice.get()));
+		}
+
+		// Número de camas
+		if (beds.isPresent() && beds.get() > 0 ) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBeds"), beds.get()));
+		}
+
+		// Número de habitaciones
+		if(bedrooms.isPresent() && bedrooms.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBedRooms"), bedrooms.get()));
+		}
+
+		// Número de baños
+		if(bathrooms.isPresent() && bathrooms.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBathRooms"), bathrooms.get()));
+		}
+		
+		// Huéspedes
+	
+		query.where(builder.and(predicates.toArray(new Predicate[0])));
+		
+		return em.createQuery(query.select(root)).getResultList();
 	}
 
 }
