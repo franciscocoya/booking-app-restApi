@@ -28,6 +28,7 @@ import com.hosting.rest.api.models.Booking.BookingStatus;
 import com.hosting.rest.api.repositories.Accomodation.IAccomodationRepository;
 import com.hosting.rest.api.repositories.Booking.IBookingRepository;
 import com.hosting.rest.api.repositories.User.IUserRepository;
+import com.hosting.rest.api.repositories.User.UserHost.IUserHostRepository;
 
 /**
  * 
@@ -48,6 +49,9 @@ public class BookingServiceImpl implements IBookingService {
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private IUserHostRepository userHostRepo;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -390,9 +394,8 @@ public class BookingServiceImpl implements IBookingService {
 				"No existe un alojamiento con número de registro " + regNumber);
 
 		String listAllAvaibleBookingDatesByRegNumberQuery = "SELECT bm " + "FROM BookingModel bm "
-				+ "WHERE bm.idAccomodation.registerNumber = :regNumber "
-				+ "AND bm.bookingStatus = '" + BookingStatus.CONFIRMADA + "' "
-				+ "OR bm.bookingStatus = '" + BookingStatus.PENDIENTE + "' "
+				+ "WHERE bm.idAccomodation.registerNumber = :regNumber " + "AND bm.bookingStatus = '"
+				+ BookingStatus.CONFIRMADA + "' " + "OR bm.bookingStatus = '" + BookingStatus.PENDIENTE + "' "
 				+ "OR bm.bookingStatus = '" + BookingStatus.COMPLETADA + "'";
 
 		TypedQuery<BookingModel> listAvailableBookingDates = em.createQuery(listAllAvaibleBookingDatesByRegNumberQuery,
@@ -411,5 +414,55 @@ public class BookingServiceImpl implements IBookingService {
 		}
 
 		return bookingDates;
+	}
+
+	/**
+	 * Listado de todas las reservas que tienen los alojamientos de un usuario host.
+	 * 
+	 * @param userId
+	 */
+	@Override
+	public List<BookingModel> findAllBookingFromHostAccomodations(final Integer userId) {
+
+		// Validar id de usuario
+		validateParam(isIntegerValidAndPositive(userId), "El id de usuario no es válido");
+
+		// Comprobar si existe el usuario
+		validateParamNotFound(userHostRepo.existsById(userId), "No existe el usuario especificado");
+
+		String findAllBookingByUserQuery = "SELECT bm from BookingModel bm INNER JOIN bm.idAccomodation am "
+				+ "WHERE am.idUserHost.id = :userId";
+
+		TypedQuery<BookingModel> bookings = em.createQuery(findAllBookingByUserQuery, BookingModel.class)
+				.setParameter("userId", userId);
+
+		return bookings.getResultList();
+	}
+
+	/**
+	 * Actualización del estado de una reserva.
+	 * 
+	 * @param bookingId
+	 * @param newBookingStatus
+	 * 
+	 * @return
+	 * 
+	 * @throws NumberFormatException Si el id de la reserva no es un número.
+	 */
+	@Transactional
+	@Override
+	public void updateBookingStatus(final Integer bookingId, final BookingStatus newBookingStatus)
+			throws NumberFormatException {
+		// Validar id de reserva
+		validateParam(isIntegerValidAndPositive(bookingId), "El id de reserva [ " + bookingId + " ] no es válido.");
+
+		// Comprobar si existe la reserva
+		validateParamNotFound(bookingRepo.existsById(bookingId), "No existe la reserva a actualizar.");
+
+		// Validar nuevo estado de reserva
+		validateParam(isNotNull(newBookingStatus), "El nuevo estado para la reserva no es válido.");
+
+		em.createQuery("UPDATE BookingModel bm SET bm.bookingStatus = :bookingStatus WHERE id = :bookingId")
+				.setParameter("bookingId", bookingId).setParameter("bookingStatus", newBookingStatus).executeUpdate();
 	}
 }

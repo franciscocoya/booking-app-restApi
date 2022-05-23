@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hosting.rest.api.exceptions.IllegalArguments.IllegalArgumentsCustomException;
 import com.hosting.rest.api.models.Booking.BookingModel;
+import com.hosting.rest.api.models.Booking.BookingStatus;
 import com.hosting.rest.api.services.Booking.BookingServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -130,7 +132,38 @@ public class BookingController {
 
 	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("{regNumber}/dates")
-	public Set<List<LocalDateTime>> checkBookingDateIsAvailable(@PathVariable(name = "regNumber") final String regNumber) {
+	public Set<List<LocalDateTime>> checkBookingDateIsAvailable(
+			@PathVariable(name = "regNumber") final String regNumber) {
 		return bookingService.checkAccomodationAvailability(regNumber);
+	}
+
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("{userId}/received")
+	public List<BookingModel> findAllBookingFromHostAccomodations(@PathVariable(name = "userId") final String userId) {
+		List<BookingModel> userAccomodationBookingReceived = null;
+
+		try {
+			userAccomodationBookingReceived = bookingService
+					.findAllBookingFromHostAccomodations(Integer.parseInt(userId));
+		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario no es un número");
+			throw new IllegalArgumentsCustomException("El id de usuario no es un número");
+		}
+
+		return userAccomodationBookingReceived;
+	}
+
+	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PatchMapping("{bookingId}/status")
+	public void updateBookingStatus(@PathVariable(name = "bookingId") final String bookingId,
+			@RequestParam(value = "value") final BookingStatus newBookingStatus) {
+
+		try {
+			bookingService.updateBookingStatus(Integer.parseInt(bookingId), newBookingStatus);
+			
+		} catch (NumberFormatException nfe) {
+			log.error("El id de la reserva no es un número");
+			throw new IllegalArgumentsCustomException("El id de la reserva no es un número");
+		}
 	}
 }

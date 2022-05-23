@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.hosting.rest.api.models.Booking.BookingModel;
+import com.hosting.rest.api.models.Booking.BookingStatus;
 
 public interface IBookingService {
 
@@ -27,6 +28,8 @@ public interface IBookingService {
 	public BookingModel addNewBooking(final BookingModel bookingToAdd);
 
 	public BookingModel updateBookingDataById(final Integer bookingId, final BookingModel bookingToUpdate);
+	
+	public void updateBookingStatus(final Integer bookingId, final BookingStatus newBookingStatus);
 
 	public BookingModel getBookingById(final Integer bookingId);
 
@@ -37,5 +40,7 @@ public interface IBookingService {
 	public List<BookingModel> findAllBookingByUser(final Integer userId);
 
 	public Set<List<LocalDateTime>> checkAccomodationAvailability(final String regNumber);
-
+	
+	public List<BookingModel> findAllBookingFromHostAccomodations(final Integer userId);
+ 
 }
