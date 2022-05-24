@@ -447,7 +447,6 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		List<Predicate> predicates = new ArrayList<>();
 		
-
 		// Rango de precios [min, max]
 		if (minPrice.isPresent() && maxPrice.isPresent() 
 				&& minPrice.get().compareTo(BigDecimal.ZERO) > 0
@@ -463,17 +462,17 @@ public class AccomodationServiceImpl implements IAccomodationService {
 
 		// Número de camas
 		if (beds.isPresent() && beds.get() > 0 ) {
-			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBeds"), beds.get()));
+			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBeds"), beds.get()));
 		}
 
 		// Número de habitaciones
 		if(bedrooms.isPresent() && bedrooms.get() > 0) {
-			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBedRooms"), bedrooms.get()));
+			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBedRooms"), bedrooms.get()));
 		}
 
 		// Número de baños
 		if(bathrooms.isPresent() && bathrooms.get() > 0) {
-			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBathRooms"), bathrooms.get()));
+			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBathRooms"), bathrooms.get()));
 		}
 		
 		// Huéspedes
