@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserServiceImpl userService;
-	
+
 	@Autowired
 	private AuthEntryPoint authEntryPoint;
 
@@ -45,17 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(final HttpSecurity httpSecurity) throws Exception {	
-//		.requiresChannel()
-//	      .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-//	      .requiresSecure().and()
-		httpSecurity.cors().and().csrf().disable()
-	      .exceptionHandling()
-	      .authenticationEntryPoint(authEntryPoint).and()
-	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	      .and().authorizeRequests().antMatchers(GRANTED_AUTH_PATH).permitAll()
-	      .antMatchers(HttpMethod.GET, "/accomodations/**", "/users/**").permitAll()
-	      .anyRequest().authenticated();
+	protected void configure(final HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null).requiresSecure()
+				.and().cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers(GRANTED_AUTH_PATH).permitAll()
+				.antMatchers(HttpMethod.GET, "/accomodations/**", "/users/**").permitAll().anyRequest().authenticated();
 
 		// Configuración de CORS
 		httpSecurity.addFilterBefore(new CorsFilter(corsConfigurationSource(CORS_ALLOWED_ORIGINS_PATH)),

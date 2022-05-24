@@ -215,4 +215,18 @@ public class IUserHostServiceImpl implements IUserHostService {
 		return userHostRepo.findAll();
 	}
 
+	/**
+	 * Comprueba si el usuario con id <code>userId</code> es host.
+	 * 
+	 * @param userId
+	 * 
+	 * @return 
+	 * 
+	 * @throws NumberFormatException Si el id de usuario no es un número.
+	 */
+	@Override
+	public boolean checkUserIsHost(final Integer userId) throws NumberFormatException{
+		return userHostRepo.existsById(userId);
+	}
+
 }

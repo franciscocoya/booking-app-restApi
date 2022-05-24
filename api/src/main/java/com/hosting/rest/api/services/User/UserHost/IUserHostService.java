@@ -13,4 +13,6 @@ public interface IUserHostService {
 	public void downgradeUserHostToUser(final Integer userId);
 	
 	public List<UserHostModel> findAll();
+	
+	public boolean checkUserIsHost(final Integer userId);
 }

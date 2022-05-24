@@ -42,7 +42,7 @@ public class BookingController {
 	@Autowired
 	private BookingServiceImpl bookingService;
 
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
 	public BookingModel addNewBooking(@Valid @RequestBody final BookingModel bookingToAdd) {
 		return bookingService.addNewBooking(bookingToAdd);
@@ -153,7 +153,7 @@ public class BookingController {
 		return userAccomodationBookingReceived;
 	}
 
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PatchMapping("{bookingId}/status")
 	public void updateBookingStatus(@PathVariable(name = "bookingId") final String bookingId,
 			@RequestParam(value = "value") final BookingStatus newBookingStatus) {

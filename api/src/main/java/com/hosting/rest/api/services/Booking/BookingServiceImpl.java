@@ -396,7 +396,8 @@ public class BookingServiceImpl implements IBookingService {
 		String listAllAvaibleBookingDatesByRegNumberQuery = "SELECT bm " + "FROM BookingModel bm "
 				+ "WHERE bm.idAccomodation.registerNumber = :regNumber " + "AND bm.bookingStatus = '"
 				+ BookingStatus.CONFIRMADA + "' " + "OR bm.bookingStatus = '" + BookingStatus.PENDIENTE + "' "
-				+ "OR bm.bookingStatus = '" + BookingStatus.COMPLETADA + "'";
+				+ "OR bm.bookingStatus = '" + BookingStatus.COMPLETADA + "'"
+				+ "OR bm.bookingStatus = '" + BookingStatus.CONFIRMADA + "'";
 
 		TypedQuery<BookingModel> listAvailableBookingDates = em.createQuery(listAllAvaibleBookingDatesByRegNumberQuery,
 				BookingModel.class);

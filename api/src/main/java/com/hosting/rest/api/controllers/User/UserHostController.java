@@ -97,4 +97,21 @@ public class UserHostController {
 	public List<UserHostModel> findAll() {
 		return userHostService.findAll();
 	}
+	
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@GetMapping("{userId}/exists")
+	public boolean checkUserIsHost(@PathVariable(value = "userId") final String userId) {
+		boolean existsUser = false;
+		
+		try {
+			
+			existsUser = userHostService.checkUserIsHost(Integer.parseInt(userId));
+			
+		} catch (NumberFormatException nfe) {
+			log.error("El id de usuario no es un número");
+			throw new IllegalArgumentsCustomException("El id de usuario no es un número");
+		}
+		
+		return existsUser;
+	}
 }

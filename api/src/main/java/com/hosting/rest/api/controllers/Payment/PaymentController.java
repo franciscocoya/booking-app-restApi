@@ -37,13 +37,13 @@ public class PaymentController {
 	@Autowired
 	private PaymentServiceImpl paymentService;
 
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@PostMapping("new")
 	public PaymentModel addNewPaymentMethod(@Valid @RequestBody final PaymentModel paymentToAdd) {
 		return paymentService.addNewPayment(paymentToAdd);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_BASE_USER') or hasRole('ROLE_HOST_USER') or hasRole('ROLE_ADMIN_USER')")
 	@GetMapping("lastPaymentId")
 	public Integer getLastPaymentId() {
 		return paymentService.getLastPaymentId();
