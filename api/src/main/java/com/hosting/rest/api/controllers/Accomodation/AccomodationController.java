@@ -131,6 +131,11 @@ public class AccomodationController {
 	public List<String> findAllAccomodationCities() {
 		return accomodationService.findAllAccomodationCities();
 	}
+	
+	@GetMapping("city")
+	public List<String> findAllByCitySearchMatch(@RequestParam(value="q") final String searchCriteria){
+		return accomodationService.findByCityMatch(searchCriteria);
+	}
 
 	@GetMapping("nearby")
 	public List<AccomodationModel> findNearbyAccomodations(@RequestParam(name = "lat") final BigDecimal latitude,

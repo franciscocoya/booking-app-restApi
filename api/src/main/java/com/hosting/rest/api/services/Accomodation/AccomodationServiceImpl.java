@@ -436,6 +436,17 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		return citiesToReturn.getResultList();
 	}
 
+	/**
+	 * Listado filtrado de los alojamientos de la aplicación.
+	 * 
+	 * Los filtros pueden ser:
+	 * <ul>
+	 * <li>Rango precios (Mínimo, máximo).</li>
+	 * <li>Número de camas</li>
+	 * <li>Número de habitaciones</li>
+	 * <li>Número de baños</li>
+	 * <li>Número de huéspedes</li>
+	 */
 	@Override
 	public List<AccomodationModel> findAllByMultipleFilters(final Optional<BigDecimal> minPrice,
 			final Optional<BigDecimal> maxPrice, final Optional<Integer> beds, final Optional<Integer> bedrooms,
@@ -446,10 +457,9 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		Root<AccomodationModel> root = query.from(AccomodationModel.class);
 
 		List<Predicate> predicates = new ArrayList<>();
-		
+
 		// Rango de precios [min, max]
-		if (minPrice.isPresent() && maxPrice.isPresent() 
-				&& minPrice.get().compareTo(BigDecimal.ZERO) > 0
+		if (minPrice.isPresent() && maxPrice.isPresent() && minPrice.get().compareTo(BigDecimal.ZERO) > 0
 				&& maxPrice.get().compareTo(BigDecimal.ZERO) > 0) {
 			predicates.add(builder.between(root.get("pricePerNight"), minPrice.get(), maxPrice.get()));
 
@@ -461,25 +471,51 @@ public class AccomodationServiceImpl implements IAccomodationService {
 		}
 
 		// Número de camas
-		if (beds.isPresent() && beds.get() > 0 ) {
-			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBeds"), beds.get()));
+		if (beds.isPresent() && beds.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBeds"), beds.get()));
 		}
 
 		// Número de habitaciones
-		if(bedrooms.isPresent() && bedrooms.get() > 0) {
-			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBedRooms"), bedrooms.get()));
+		if (bedrooms.isPresent() && bedrooms.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBedRooms"), bedrooms.get()));
 		}
 
 		// Número de baños
-		if(bathrooms.isPresent() && bathrooms.get() > 0) {
-			predicates.add(builder.lessThanOrEqualTo(root.get("numOfBathRooms"), bathrooms.get()));
+		if (bathrooms.isPresent() && bathrooms.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfBathRooms"), bathrooms.get()));
 		}
-		
+
 		// Huéspedes
-	
+		if (guests.isPresent() && guests.get() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("numOfGuests"), guests.get()));
+		}
+
 		query.where(builder.and(predicates.toArray(new Predicate[0])));
-		
+
 		return em.createQuery(query.select(root)).getResultList();
+	}
+
+	/**
+	 * Listado de todos los alojamientos cuya ciudad contiene el criterio de
+	 * búsqueda.
+	 * 
+	 * @param match
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<String> findByCityMatch(final String match) {
+
+		// Validar criterio búsqueda
+		validateParam(isStringNotBlank(match), "Introduce una ciudad a buscar");
+
+//		String findCityNatchQuery = "SELECT am FROM AccomodationModel am INNER JOIN am.idAccomodationLocation alm WHERE aml.city LIKE %:match% ";
+//
+//		TypedQuery<AccomodationModel> accomodations = em.createQuery(findCityNatchQuery, AccomodationModel.class);
+//
+//		accomodations.setParameter("match", match);
+
+		return accomodationRepo.findBySearchCriteria(match);
 	}
 
 }

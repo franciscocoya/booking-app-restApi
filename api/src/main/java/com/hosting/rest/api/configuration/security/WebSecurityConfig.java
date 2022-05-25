@@ -46,8 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null).requiresSecure()
-				.and().cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
+		// .requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null).requiresSecure()
+		//.and()
+		httpSecurity.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers(GRANTED_AUTH_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, "/accomodations/**", "/users/**").permitAll().anyRequest().authenticated();

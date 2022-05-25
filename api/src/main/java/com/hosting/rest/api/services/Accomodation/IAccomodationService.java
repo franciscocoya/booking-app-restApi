@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
+import com.hosting.rest.api.models.Accomodation.AccomodationLocationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 
@@ -52,6 +53,8 @@ public interface IAccomodationService {
 
 	public Page<AccomodationModel> findByCity(final String cityToSearch, final Integer pageNumber, final Integer size);
 
+	public List<String> findByCityMatch(final String match);
+	
 	public List<AccomodationModel> findByNearby(final BigDecimal lat, final BigDecimal lng,
 			final double distanceRadius);
 
