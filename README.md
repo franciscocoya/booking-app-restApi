@@ -1,6 +1,7 @@
 # Accomodation booking REST API · SpringBoot
+*Updated: 2022-05-26. Francisco Coya*
 
-API Rest using SpringBoot framework for booking system management.
+API Rest using Spring Boot framework for booking system management.
 
 ## Requirements
 
