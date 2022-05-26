@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
-import com.hosting.rest.api.models.Accomodation.AccomodationLocationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationModel;
 import com.hosting.rest.api.models.Accomodation.AccomodationImage.AccomodationImageModel;
 
