@@ -8,7 +8,7 @@ API Rest using SpringBoot framework for booking system management.
   - Verify Node version: `node -v`
   - Verify NPM version: `npm -v`
  
- - Code Editor(e.g. VS Code). [https://code.visualstu-dio.com/download](https://code.visualstu-dio.com/download)
+ - Code Editor(e.g. VS Code). [https://code.visualstudio.com/download](https://code.visualstu-dio.com/download)
  - MySQL Workbench (Version 8 or higher). [https://dev.mysql.com/downloads/workbench/](https://dev.mysql.com/downloads/workbench/)
  - Java JDK version 8 or higher.
 
