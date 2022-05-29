@@ -8,7 +8,7 @@
 -- SET sql_mode = '';
 -- SET FOREIGN_KEY_CHECKS = 0;
 
--- DEVELOP DATABASE
+-- DEVELOP DATABASEaccomodationaccomodation_image
 -- DROP DATABASE IF EXISTS DB_BOOKING;
 -- CREATE DATABASE DB_BOOKING;
 
